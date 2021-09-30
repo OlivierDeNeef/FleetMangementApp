@@ -10,6 +10,14 @@ Projectwerk - Graduaatsproef
 
 
 
+## Todo's
+
+- UML Klassen diagram ontwerpen 
+- ERD diagram ontwerpen (databank)
+- Userinterface ontwerpen
+
+
+
 
 
 ## Vragen
