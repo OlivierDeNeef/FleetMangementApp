@@ -4,6 +4,6 @@ namespace Domain
 {
     public class Class1
     {
-        //test
+        public string Naam { get; set; }
     }
 }
