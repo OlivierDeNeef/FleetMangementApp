@@ -1,4 +1,4 @@
-# FleedMangementApp
+# FleetMangementApp
 Projectwerk - Graduaatsproef
 
 | Roles            | Naam            | Email                              |
