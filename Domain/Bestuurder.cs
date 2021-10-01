@@ -68,6 +68,32 @@ namespace DomainLayer
         }
 
         /// <summary>
+        /// Veranderd het rijksregisternummer van de bestuurder.
+        /// We controleren het rijksregisternummer via de volgende regels --> https://nl.wikipedia.org/wiki/Rijksregisternummer#Samenstelling
+        /// </summary>
+        /// <param name="rijksregisternummer">Het rijksregisternummer voor de bestuurder</param>
+        public void SetRijksregisternummer(string rijksregisternummer)
+        {
+            if (string.IsNullOrEmpty(rijksregisternummer.Trim())) throw new BestuurderException($"{nameof(Rijksregisternummer)} kan niet leeg of null zijn.");
+            var cleanRijksregisternummer = rijksregisternummer.Trim().Replace(".","").Replace("-","").Replace(" ","");
+            if (cleanRijksregisternummer.Length != 11) throw new BestuurderException($"Het {nameof(Rijksregisternummer)} moet 11 karakters hebben");
+            if (int.TryParse(cleanRijksregisternummer, out _)) throw new BestuurderException($"Het {nameof(rijksregisternummer)} kan alleen maar cijfer bevatten");
+            if (Geboortedatum.ToString("yyMMdd") != cleanRijksregisternummer.Substring(0, 6)) throw new BestuurderException($"Het {Rijksregisternummer} komt niet overeen met de geboortedatum");
+
+            var tweedeDeel =  int.Parse(cleanRijksregisternummer.Substring(6, 3));
+            if (1 > tweedeDeel || tweedeDeel > 998) throw new BestuurderException($"Het {nameof(rijksregisternummer)} heeft niet het juist formaat");
+
+
+            var aaneengeschakeldGetal = Geboortedatum.Year >1999 ? int.Parse("2" + cleanRijksregisternummer.Substring(0, 9)) : int.Parse(cleanRijksregisternummer.Substring(0, 9));
+
+            var controlGetal = 97-(aaneengeschakeldGetal % 97);
+            if (controlGetal.ToString() != cleanRijksregisternummer.Substring(9, 2)) throw new BestuurderException($"Het {nameof(Rijksregisternummer)} is ongeldig het controle getal klopt niet");
+            this.Rijksregisternummer = cleanRijksregisternummer;
+
+
+        }
+
+        /// <summary>
         /// Zoekt op of het rijbewijs type voorkomt in de lijst van rijbewijs types van deze bestuurder.
         /// Controleert of het rijbewijs type dat we zoeken niet null is anders geeft deze een BestuurderException.
         /// </summary>
