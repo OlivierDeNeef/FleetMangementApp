@@ -1,6 +1,7 @@
-﻿<Application x:Class="FleetMangementAppWpf.App"
+﻿<Application x:Class="FleetMangementApp.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:FleetMangementApp"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
          
