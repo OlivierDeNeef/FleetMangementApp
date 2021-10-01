@@ -10,15 +10,19 @@ Projectwerk - Graduaatsproef
 
 
 
-## Todo's
+## Todo's 
 
-- UML Klassen diagram ontwerpen 
+- Classen diagram van de data access layer
+
 - ERD diagram ontwerpen (databank)
 - Userinterface ontwerpen
-
-
-
-
+- Implementatie van Voertuig + Tests
+- Implementatie van Tankkaart + Tests
+- 
 
 ## Vragen
 
+- Wanneer men een rijbewijs type wilt toevoegen aan een bestuurder maar deze bestuurder heeft dit type al in zijn lijst, wat doen we dan ? 
+  1. Exception geven omdat men iets wilt toevoegen dat er al is.
+  2. Het programma gewoon laten lopen zonder dat er iets veranderd.
+- Mogen we dependency injection en  Mok-items gebruiken ?
