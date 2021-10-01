@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection.Metadata.Ecma335;
+using DomainLayer.Exceptions;
 
 namespace DomainLayer
 {
@@ -20,12 +21,16 @@ namespace DomainLayer
         public Voertuig Voertuig { get; set; }
         public bool IsDeleted { get; set; }
         
+        /// <summary>
+        /// Veranderd id van de bestuurder.
+        /// Controleert of de id positief is anders geeft deze methode een BestuurderException.
+        /// </summary>
+        /// <param name="id">Id van de bestuurder</param>
         public void SetId(int id)
         {
-            
+            if (id < 0) throw  new BestuurderException( $"{nameof(Bestuurder)}.{nameof(Id)} kan geen negatieve waarde bevatten", new ArgumentOutOfRangeException());
+            this.Id = id;
         }
 
     }
-    
-    
 }
