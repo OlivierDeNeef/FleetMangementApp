@@ -33,14 +33,25 @@ namespace DomainLayer
         }
 
         /// <summary>
-        /// Veranderd naam van de bestuurder.
-        /// Controleert of de naam niet leef is of null is anders geeft deze methode een BestuurderExection.
+        /// Veranderd achternaam van de bestuurder.
+        /// Controleert of de achternaam niet leeg is of null is anders geeft deze methode een BestuurderExection.
         /// </summary>
-        /// <param name="naam">De Achternaam van de bestuurder</param>
+        /// <param name="naam">De achternaam van de bestuurder</param>
         public void SetNaam(string naam)
         {
             if(string.IsNullOrEmpty(naam.Trim()))throw  new BestuurderException($"{nameof(Bestuurder)}.{nameof(naam)} Kan niet null of leeg zijn");
             this.Naam = naam;
+        }
+
+        /// <summary>
+        /// Veranderd voornaam van de bestuurder.
+        /// Controleert of de voornaam niet leeg is of null is anders geeft deze methode een BestuurderExection.
+        /// </summary>
+        /// <param name="voornaam">De voornaam van de bestuurder</param>
+        public void SetVoornaam(string voornaam)
+        {
+            if (string.IsNullOrEmpty(voornaam.Trim())) throw new BestuurderException($"{nameof(Bestuurder)}.{nameof(voornaam)} Kan niet null of leeg zijn");
+            this.Voornaam = voornaam;
         }
 
     }
