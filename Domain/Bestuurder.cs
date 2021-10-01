@@ -32,5 +32,16 @@ namespace DomainLayer
             this.Id = id;
         }
 
+        /// <summary>
+        /// Veranderd naam van de bestuurder.
+        /// Controleert of de naam niet leef is of null is anders geeft deze methode een BestuurderExection.
+        /// </summary>
+        /// <param name="naam">De Achternaam van de bestuurder</param>
+        public void SetNaam(string naam)
+        {
+            if(string.IsNullOrEmpty(naam.Trim()))throw  new BestuurderException($"{nameof(Bestuurder)}.{nameof(naam)} Kan niet null of leeg zijn");
+            this.Naam = naam;
+        }
+
     }
 }
