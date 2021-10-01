@@ -5,9 +5,11 @@ VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DomainLayer", "Domain\DomainLayer.csproj", "{6BE9B9F3-2417-46E3-8F6F-E61653866B74}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FleetMangementApp", "FleetMangementApp\FleetMangementApp.csproj", "{BB86905F-6132-40F0-B9F5-65656965B865}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FleetMangementApp", "FleetMangementApp\FleetMangementApp.csproj", "{BB86905F-6132-40F0-B9F5-65656965B865}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessLayer", "DataAccessLayer\DataAccessLayer.csproj", "{22187A9D-B67F-4130-8BE4-8319AB274938}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccessLayer", "DataAccessLayer\DataAccessLayer.csproj", "{22187A9D-B67F-4130-8BE4-8319AB274938}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestConsole", "TestConsole\TestConsole.csproj", "{B4B41178-499D-4891-B111-1273EAB2B1E7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{22187A9D-B67F-4130-8BE4-8319AB274938}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22187A9D-B67F-4130-8BE4-8319AB274938}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22187A9D-B67F-4130-8BE4-8319AB274938}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4B41178-499D-4891-B111-1273EAB2B1E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4B41178-499D-4891-B111-1273EAB2B1E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4B41178-499D-4891-B111-1273EAB2B1E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4B41178-499D-4891-B111-1273EAB2B1E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
