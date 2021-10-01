@@ -54,7 +54,17 @@ namespace DomainLayer
             this.Voornaam = voornaam;
         }
 
-
+        /// <summary>
+        /// Zoekt op of het rijbewijs type voorkomt in de lijst van rijbewijs types van deze bestuurder.
+        /// Controleert of het rijbewijs type dat we zoeken niet null is anders geeft deze een BestuurderException.
+        /// </summary>
+        /// <param name="rijbewijsType">Het rijbewijs type dat je zoekt.</param>
+        /// <returns>True als rijbewijs type voorkomt, False als rijbewijs type niet voor komt.</returns>
+        public bool HasRijbewijsType(RijbewijsType rijbewijsType)
+        {
+            if (rijbewijsType == null) throw new BestuurderException($"Zoeken op {nameof(RijbewijsType)} gaat niet wanneer de null is.");
+            return _rijbewijsTypes.Contains(rijbewijsType);
+        }
 
     }
 }
