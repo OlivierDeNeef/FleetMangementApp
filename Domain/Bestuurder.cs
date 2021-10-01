@@ -21,7 +21,8 @@ namespace DomainLayer
         public Tankkaart Tankkaart { get;private set; }
         public Voertuig Voertuig { get; private set; }
         public bool IsDeleted { get; private set; }
-        
+        //Todo:Postcode
+
         /// <summary>
         /// Veranderd id van de bestuurder.
         /// Controleert of de id positief is anders geeft deze methode een BestuurderException.
@@ -138,7 +139,7 @@ namespace DomainLayer
         /// <param name="straat">De straat van de bestuurder.</param>
         public void SetStraat(string straat)
         {
-            this.Straat = straat.Trim();
+            this.Straat = straat?.Trim();
         }
 
         /// <summary>
@@ -147,7 +148,7 @@ namespace DomainLayer
         /// <param name="huisnummer">Huisnummer van de bestuurder.</param>
         public void SetHuisnummer(string huisnummer)
         {
-            this.Huisnummer = huisnummer.Trim();
+            this.Huisnummer = huisnummer?.Trim();
         }
 
         /// <summary>
@@ -156,7 +157,7 @@ namespace DomainLayer
         /// <param name="stad">De stad van de bestuurder.</param>
         public void SetStad(string stad)
         {
-            this.Stad = stad.Trim();
+            this.Stad = stad?.Trim();
         }
 
         /// <summary>
@@ -165,7 +166,7 @@ namespace DomainLayer
         /// <param name="land">Het land van de bestuurder.</param>
         public void SetLand(string land)
         {
-            this.Land = land.Trim();
+            this.Land = land?.Trim();
         }
 
         /// <summary>

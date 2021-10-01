@@ -9,6 +9,10 @@ namespace DomainLayerTests
     public class BestuurderTests
     {
         private readonly Bestuurder _bestuurder;
+        
+        /// <summary>
+        /// Setup voor elke test
+        /// </summary>
         public BestuurderTests()
         {
             _bestuurder =  new Bestuurder();
@@ -18,6 +22,7 @@ namespace DomainLayerTests
         public void SetIdTest_GeldigeId_BestuurderIdVeranderd()
         {
             _bestuurder.SetId(132);
+
             Assert.Equal(132,_bestuurder.Id);
         }
 
@@ -34,6 +39,7 @@ namespace DomainLayerTests
         public void SetNaamTest_GeldigeNaam_BestuurderNaamVeranderd(string naam)
         {
             _bestuurder.SetNaam(naam);
+
             Assert.Equal("De Neef", _bestuurder.Naam);
         }
 
@@ -50,6 +56,7 @@ namespace DomainLayerTests
         public void SetVoornaamTest_GeldigeVoornaam_BestuurderVoornaamVeranderd(string voornaam)
         {
             _bestuurder.SetVoornaam(voornaam);
+
             Assert.Equal("Olivier", _bestuurder.Voornaam);
         }
 
@@ -66,6 +73,7 @@ namespace DomainLayerTests
         {
             var geboortedatum = new DateTime(1999, 10, 6);
             _bestuurder.SetGeboortedatum(geboortedatum);
+
             Assert.Equal( geboortedatum, _bestuurder.Geboortedatum );
         }
 
@@ -86,6 +94,7 @@ namespace DomainLayerTests
         {
             _bestuurder.SetGeboortedatum(new DateTime(1999,10,06));
             _bestuurder.SetRijksregisternummer(rijksregisternummer);
+
             Assert.Equal("99100630515", _bestuurder.Rijksregisternummer);
         }
 
@@ -99,67 +108,143 @@ namespace DomainLayerTests
         public void SetRijksregisternummer_OnGeldigeRijksregisternummer_ThrowsBestuurderException(string rijksregisternummer)
         {
             _bestuurder.SetGeboortedatum(new DateTime(1999, 10, 06));
+
             Assert.Throws<BestuurderException>(()=> _bestuurder.SetRijksregisternummer(rijksregisternummer));
         }
 
-        [Fact()]
-        public void HasRijbewijsTypeTest()
+        [Fact]
+        public void HasRijbewijsTypeTest_HeeftRijbewijsType_ReturnsTrue()
         {
-            throw new NotImplementedException();
+            var rijbewijsType = new RijbewijsType(){Id = 1, Type = "B"};
+            _bestuurder.AddRijbewijsType(rijbewijsType);
+            var result = _bestuurder.HasRijbewijsType(rijbewijsType);
+
+            Assert.True(result);
+        }
+
+        [Fact]
+        public void HasRijbewijsTypeTest_HeeftRijbewijsTypeNiet_ReturnsFalse()
+        {
+            var rijbewijsType = new RijbewijsType() { Id = 1, Type = "B" };
+            var result = _bestuurder.HasRijbewijsType(rijbewijsType);
+
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void HasRijbewijsTypeTest_OngeldigRijbewijstype_ThrowBestuurderException()
+        {
+            Assert.Throws<BestuurderException>(()=> _bestuurder.HasRijbewijsType(null));
         }
 
         [Fact()]
-        public void AddRijbewijsTypeTest()
+        public void AddRijbewijsTypeTest_NogNietInDeLijst_RijbewijsTypeToegvoegdAanBestuurder()
         {
-            throw new NotImplementedException();
+            var rijbewijsType = new RijbewijsType() { Id = 1, Type = "B" };
+            _bestuurder.AddRijbewijsType(rijbewijsType);
+
+            Assert.True(_bestuurder.HasRijbewijsType(rijbewijsType));
         }
 
-        [Fact()]
-        public void RemoveRijbewijsTypeTest()
+        [Fact]
+        public void AddRijbewijsTypeTest_AlInDeLijst_ThrowsBestuurdersExcetion()
         {
-            throw new NotImplementedException();
+            var rijbewijsType = new RijbewijsType() { Id = 1, Type = "B" };
+            _bestuurder.AddRijbewijsType(rijbewijsType);
+
+            Assert.Throws<BestuurderException>(()=> _bestuurder.AddRijbewijsType(rijbewijsType));
         }
 
-        [Fact()]
-        public void SetStraatTest()
+        [Fact]
+        public void AddRijbewijsTypeTest_OngeldigRijbewijsType_ThrowsBestuurderException()
         {
-            throw new NotImplementedException();
+            Assert.Throws<BestuurderException>(() => _bestuurder.AddRijbewijsType(null));
         }
 
-        [Fact()]
-        public void SetHuisnummerTest()
+
+        [Fact]
+        public void RemoveRijbewijsTypeTest_RijbewijsTypeIsInDeLijst_RijbewijsTypeVerwijderdBijBestuurder()
         {
-            throw new NotImplementedException();
+            var rijbewijsType = new RijbewijsType() { Id = 1, Type = "B" };
+            _bestuurder.AddRijbewijsType(rijbewijsType);
+            _bestuurder.RemoveRijbewijsType(rijbewijsType);
+
+            Assert.False(_bestuurder.HasRijbewijsType(rijbewijsType));
         }
 
-        [Fact()]
-        public void SetStadTest()
+        [Fact]
+        public void RemoveRijbewijsTypeTest_RijbewijsTypeNietInDeLijst_ThrowBestuurderException()
         {
-            throw new NotImplementedException();
+            var rijbewijsType = new RijbewijsType() { Id = 1, Type = "B" };
+
+            Assert.Throws<BestuurderException>(() => _bestuurder.RemoveRijbewijsType(rijbewijsType));
+        }
+
+        [Fact]
+        public void RemoveRijbewijsTypeTest_OngeldigRijbewijsType_ThrowBestuurderException()
+        {
+            Assert.Throws<BestuurderException>(() => _bestuurder.RemoveRijbewijsType(null));
+        }
+
+        [Theory]
+        [InlineData("     test    ","test")]
+        [InlineData("test","test")]
+        [InlineData("","")]
+        [InlineData(null,null)]
+        public void SetStraatTest_GeldigeStraat_BestuurderStraatVeranderd(string straat, string output)
+        {
+            _bestuurder.SetStraat(straat);
+
+            Assert.Equal(output,_bestuurder.Straat);
+        }
+
+
+        [Theory]
+        [InlineData("","")]
+        [InlineData(null,null)]
+        [InlineData("2     ","2")]
+        [InlineData("2A","2A")]
+        public void SetHuisnummerTest_GeldigHuisnummer_BestuurderHuisnummerVeranderd(string huisnummer, string output)
+        {
+            _bestuurder.SetHuisnummer(huisnummer);
+
+            Assert.Equal(output,_bestuurder.Huisnummer);
+        }
+
+        [Theory]
+        [InlineData("   Gent", "Gent")]
+        [InlineData("Gent", "Gent")]
+        [InlineData(null, null)]
+        [InlineData("", "")]
+        public void SetStadTest_GeldigeStad_BestuurdersStadVeranderd(string stad, string output)
+        {
+            _bestuurder.SetStad(stad);
+
+            Assert.Equal(output,_bestuurder.Stad);
         }
 
         [Fact()]
         public void SetLandTest()
         {
-            throw new NotImplementedException();
+            
         }
 
         [Fact()]
         public void SetTankkaartTest()
         {
-            throw new NotImplementedException();
+            
         }
 
         [Fact()]
         public void SetVoertuigTest()
         {
-            throw new NotImplementedException();
+            
         }
 
         [Fact()]
         public void SetDeletedTest()
         {
-            throw new NotImplementedException();
+            
         }
     }
 }
