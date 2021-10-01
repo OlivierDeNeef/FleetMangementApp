@@ -107,13 +107,20 @@ namespace DomainLayer
 
         /// <summary>
         /// Veranderd de straat van de bestuurder.
-        /// Controleert of de straat niet null of leeg anders geeft deze een BestuurderException.
         /// </summary>
         /// <param name="straat">De straat van de bestuurder</param>
         public void SetStraat(string straat)
         {
-            if (string.IsNullOrEmpty(straat.Trim())) throw new BestuurderException($"{nameof(Bestuurder)}.{nameof(Straat)} Kan niet null of leeg zijn");
-            this.Straat = straat;
+            this.Straat = straat.Trim();
+        }
+
+        /// <summary>
+        /// Veranderd de huisnummer van de bestuurder
+        /// </summary>
+        /// <param name="huisnummer">Huisnummer van de bestuurder</param>
+        public void SetHuisnummer(string huisnummer)
+        {
+            this.Huisnummer = huisnummer.Trim();
         }
         
         
