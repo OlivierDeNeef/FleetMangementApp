@@ -7,19 +7,19 @@ namespace DomainLayer
 {
     public class Bestuurder
     {
-        public int Id { get; set; }
-        public string Naam { get; set; }
-        public string Voornaam { get; set; }
+        public int Id { get; private set; }
+        public string Naam { get; private set; }
+        public string Voornaam { get; private set; }
         private readonly List<RijbewijsType> _rijbewijsTypes = new();
-        public DateTime Geboortedatum { get; set; }
-        public string Rijksregisternummer { get; set; }
-        public string Straat { get; set; }
-        public string Huisnummer { get; set; }
-        public string Stad { get; set; }
-        public string Land { get; set; }
-        public Tankkaart Tankkaart { get; set; }
-        public Voertuig Voertuig { get; set; }
-        public bool IsDeleted { get; set; }
+        public DateTime Geboortedatum { get; private set; }
+        public string Rijksregisternummer { get; private set; }
+        public string Straat { get; private set; }
+        public string Huisnummer { get; private set; }
+        public string Stad { get; private set; }
+        public string Land { get; private set; }
+        public Tankkaart Tankkaart { get;private set; }
+        public Voertuig Voertuig { get; private set; }
+        public bool IsDeleted { get; private set; }
         
         /// <summary>
         /// Veranderd id van de bestuurder.
@@ -53,6 +53,8 @@ namespace DomainLayer
             if (string.IsNullOrEmpty(voornaam.Trim())) throw new BestuurderException($"{nameof(Bestuurder)}.{nameof(voornaam)} Kan niet null of leeg zijn");
             this.Voornaam = voornaam;
         }
+
+
 
     }
 }
