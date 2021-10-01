@@ -19,6 +19,13 @@ namespace DomainLayer
         public Tankkaart Tankkaart { get; set; }
         public Voertuig Voertuig { get; set; }
         public bool IsDeleted { get; set; }
+        
+        public void SetId(int id)
+        {
+            
+        }
 
     }
+    
+    
 }
