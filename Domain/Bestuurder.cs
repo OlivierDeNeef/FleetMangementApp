@@ -62,8 +62,21 @@ namespace DomainLayer
         /// <returns>True als rijbewijs type voorkomt, False als rijbewijs type niet voor komt.</returns>
         public bool HasRijbewijsType(RijbewijsType rijbewijsType)
         {
-            if (rijbewijsType == null) throw new BestuurderException($"Zoeken op {nameof(RijbewijsType)} gaat niet wanneer de null is.");
+            if (rijbewijsType == null) throw new BestuurderException($"Zoeken op {nameof(RijbewijsType)} gaat niet wanneer deze null is.");
             return _rijbewijsTypes.Contains(rijbewijsType);
+        }
+
+        /// <summary>
+        /// Voegt rijbewijs type toe aan de  lijst van rijbewijs types van de bestuurder.
+        /// Controleert of het rijbewijs type niet null anders geeft deze een BestuurderException.
+        /// Controleert of het rijbewijs type niet al in de lijst staat anders geeft deze een BestuurderException.
+        /// </summary>
+        /// <param name="rijbewijsType"></param>
+        public void AddRijbewijsType(RijbewijsType rijbewijsType)
+        {
+            if (rijbewijsType == null) throw new BestuurderException($"Een {nameof(RijbewijsType)} toevoegen gaat niet wanneer deze null is.");
+            if (HasRijbewijsType(rijbewijsType)) throw new BestuurderException($"{nameof(RijbewijsType)} bevindt zich al in de lijst"); //Ask: Exception of kan men gewoon verder
+            _rijbewijsTypes.Add(rijbewijsType);
         }
 
     }
