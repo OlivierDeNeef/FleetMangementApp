@@ -62,7 +62,7 @@ namespace DomainLayerTests
 
 
         [Fact]
-        public void SetGeboortedatumTest_GeldigeGeboortedatum_BestuurderGebrootedatumVeranderd()
+        public void SetGeboortedatumTest_GeldigeGeboortedatum_BestuurderGeboortedatumVeranderd()
         {
             var geboortedatum = new DateTime(1999, 10, 6);
             _bestuurder.SetGeboortedatum(geboortedatum);
@@ -75,6 +75,31 @@ namespace DomainLayerTests
         public void SetGeboortedatumTest_OngeldigeGeboortedatum_ThrowsBestuurderException(int years)
         {
             Assert.ThrowsAny<BestuurderException>(() => _bestuurder.SetGeboortedatum(DateTime.Today.AddYears(-years)));
+        }
+
+        [Theory]
+        [InlineData("99.10.06-305.15")]
+        [InlineData("99 10 06 305 15  ")]
+        [InlineData("    99100630515    ")]
+        [InlineData("99100630515")]
+        public void SetRijksregisternummer_GeldigeRijksregisternummer_BestuurderRijksregisternummerVeranderd(string rijksregisternummer)
+        {
+            _bestuurder.SetGeboortedatum(new DateTime(1999,10,06));
+            _bestuurder.SetRijksregisternummer(rijksregisternummer);
+            Assert.Equal("99100630515", _bestuurder.Rijksregisternummer);
+        }
+
+        [Theory]
+        [InlineData(" ")]
+        [InlineData("99110630515")]
+        [InlineData("99100699915")]
+        [InlineData("99100630514")]
+        [InlineData("99100630dd4")]
+        [InlineData("991006305142163")]
+        public void SetRijksregisternummer_OnGeldigeRijksregisternummer_ThrowsBestuurderException(string rijksregisternummer)
+        {
+            _bestuurder.SetGeboortedatum(new DateTime(1999, 10, 06));
+            Assert.Throws<BestuurderException>(()=> _bestuurder.SetRijksregisternummer(rijksregisternummer));
         }
 
         [Fact()]

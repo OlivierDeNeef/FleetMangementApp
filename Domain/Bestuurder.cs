@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using DomainLayer.Exceptions;
 
@@ -77,7 +78,7 @@ namespace DomainLayer
             if (string.IsNullOrEmpty(rijksregisternummer.Trim())) throw new BestuurderException($"{nameof(Rijksregisternummer)} kan niet leeg of null zijn.");
             var cleanRijksregisternummer = rijksregisternummer.Trim().Replace(".","").Replace("-","").Replace(" ","");
             if (cleanRijksregisternummer.Length != 11) throw new BestuurderException($"Het {nameof(Rijksregisternummer)} moet 11 karakters hebben");
-            if (int.TryParse(cleanRijksregisternummer, out _)) throw new BestuurderException($"Het {nameof(rijksregisternummer)} kan alleen maar cijfer bevatten");
+            if (!cleanRijksregisternummer.All(char.IsDigit)) throw new BestuurderException($"Het {nameof(rijksregisternummer)} kan alleen maar cijfer bevatten");
             if (Geboortedatum.ToString("yyMMdd") != cleanRijksregisternummer.Substring(0, 6)) throw new BestuurderException($"Het {Rijksregisternummer} komt niet overeen met de geboortedatum");
 
             var tweedeDeel =  int.Parse(cleanRijksregisternummer.Substring(6, 3));
