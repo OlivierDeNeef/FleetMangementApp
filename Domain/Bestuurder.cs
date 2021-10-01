@@ -55,6 +55,19 @@ namespace DomainLayer
         }
 
         /// <summary>
+        /// Veranderd de geboortedatum van de bestuurder.
+        /// Controleert of de bestuurder ouder is dan 18 jaar.
+        /// Controleert of de bestuurder jonger is dan 100 jaar.
+        /// </summary>
+        /// <param name="geboortedatum">De geboortedatum van de bestuurder</param>
+        public void SetGeboortedatum(DateTime geboortedatum)
+        {
+            if (DateTime.Today.AddYears(-18) < geboortedatum) throw new BestuurderException("Niet oud genoeg om bestuurder te zijn");
+            if (DateTime.Today.AddYears(-100) > geboortedatum) throw new BestuurderException("Onjuiste geboortedatum");
+            this.Geboortedatum = geboortedatum;
+        }
+
+        /// <summary>
         /// Zoekt op of het rijbewijs type voorkomt in de lijst van rijbewijs types van deze bestuurder.
         /// Controleert of het rijbewijs type dat we zoeken niet null is anders geeft deze een BestuurderException.
         /// </summary>
@@ -63,7 +76,7 @@ namespace DomainLayer
         public bool HasRijbewijsType(RijbewijsType rijbewijsType)
         {
             if (rijbewijsType == null) throw new BestuurderException($"Zoeken op {nameof(RijbewijsType)} gaat niet wanneer deze null is.");
-            return _rijbewijsTypes.Contains(rijbewijsType);
+            return this._rijbewijsTypes.Contains(rijbewijsType);
         }
 
         /// <summary>
@@ -76,7 +89,7 @@ namespace DomainLayer
         {
             if (rijbewijsType == null) throw new BestuurderException($"Een {nameof(RijbewijsType)} toevoegen gaat niet wanneer deze null is.");
             if (HasRijbewijsType(rijbewijsType)) throw new BestuurderException($"Het {nameof(RijbewijsType)} bevindt zich al in de lijst"); //Ask: Exception of kan men gewoon verder
-            _rijbewijsTypes.Add(rijbewijsType);
+            this._rijbewijsTypes.Add(rijbewijsType);
         }
 
         /// <summary>
@@ -89,9 +102,20 @@ namespace DomainLayer
         {
             if (rijbewijsType == null) throw new BestuurderException($"Een {nameof(RijbewijsType)} verwijderen gaat niet wanneer deze null is.");
             if (!HasRijbewijsType(rijbewijsType)) throw new BestuurderException($"Het {nameof(RijbewijsType)} bevindt zich niet in de lijst"); //Ask: Exception of kan men gewoon verder
-            _rijbewijsTypes.Remove(rijbewijsType);
+            this._rijbewijsTypes.Remove(rijbewijsType);
         }
 
+        /// <summary>
+        /// Veranderd de straat van de bestuurder.
+        /// Controleert of de straat niet null of leeg anders geeft deze een BestuurderException.
+        /// </summary>
+        /// <param name="straat">De straat van de bestuurder</param>
+        public void SetStraat(string straat)
+        {
+            if (string.IsNullOrEmpty(straat.Trim())) throw new BestuurderException($"{nameof(Bestuurder)}.{nameof(Straat)} Kan niet null of leeg zijn");
+            this.Straat = straat;
+        }
+        
         
     }
 }
