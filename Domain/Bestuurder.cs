@@ -71,13 +71,27 @@ namespace DomainLayer
         /// Controleert of het rijbewijs type niet null anders geeft deze een BestuurderException.
         /// Controleert of het rijbewijs type niet al in de lijst staat anders geeft deze een BestuurderException.
         /// </summary>
-        /// <param name="rijbewijsType"></param>
+        /// <param name="rijbewijsType">Het rijbewijs type dat moet worden toegevoegt</param>
         public void AddRijbewijsType(RijbewijsType rijbewijsType)
         {
             if (rijbewijsType == null) throw new BestuurderException($"Een {nameof(RijbewijsType)} toevoegen gaat niet wanneer deze null is.");
-            if (HasRijbewijsType(rijbewijsType)) throw new BestuurderException($"{nameof(RijbewijsType)} bevindt zich al in de lijst"); //Ask: Exception of kan men gewoon verder
+            if (HasRijbewijsType(rijbewijsType)) throw new BestuurderException($"Het {nameof(RijbewijsType)} bevindt zich al in de lijst"); //Ask: Exception of kan men gewoon verder
             _rijbewijsTypes.Add(rijbewijsType);
         }
 
+        /// <summary>
+        /// Verwijderd rijbewijs type uit de  lijst van rijbewijs types van de bestuurder.
+        /// Controleert of het rijbewijs type niet null anders geeft deze een BestuurderException.
+        /// Controleert of het rijbewijs type al in de lijst staat anders geeft deze een BestuurderException.
+        /// </summary>
+        /// <param name="rijbewijsType">Het rijbewijs type dat moet worden verwijderd.</param>
+        public void RemoveRijbewijsType(RijbewijsType rijbewijsType)
+        {
+            if (rijbewijsType == null) throw new BestuurderException($"Een {nameof(RijbewijsType)} verwijderen gaat niet wanneer deze null is.");
+            if (!HasRijbewijsType(rijbewijsType)) throw new BestuurderException($"Het {nameof(RijbewijsType)} bevindt zich niet in de lijst"); //Ask: Exception of kan men gewoon verder
+            _rijbewijsTypes.Remove(rijbewijsType);
+        }
+
+        
     }
 }
