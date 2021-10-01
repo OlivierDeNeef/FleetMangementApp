@@ -40,7 +40,7 @@ namespace DomainLayer
         public void SetNaam(string naam)
         {
             if(string.IsNullOrEmpty(naam.Trim()))throw  new BestuurderException($"{nameof(Bestuurder)}.{nameof(naam)} Kan niet null of leeg zijn");
-            this.Naam = naam;
+            this.Naam = naam.Trim();
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace DomainLayer
         public void SetVoornaam(string voornaam)
         {
             if (string.IsNullOrEmpty(voornaam.Trim())) throw new BestuurderException($"{nameof(Bestuurder)}.{nameof(voornaam)} Kan niet null of leeg zijn");
-            this.Voornaam = voornaam;
+            this.Voornaam = voornaam.Trim();
         }
 
         /// <summary>
