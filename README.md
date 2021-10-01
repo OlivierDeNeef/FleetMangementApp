@@ -26,3 +26,4 @@ Projectwerk - Graduaatsproef
   1. Exception geven omdat men iets wilt toevoegen dat er al is.
   2. Het programma gewoon laten lopen zonder dat er iets veranderd.
 - Mogen we dependency injection en  Mok-items gebruiken ?
+- Wat is de minimumleeftijd van een bestuurder en maximum leeftijd?
