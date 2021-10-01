@@ -18,7 +18,7 @@ Projectwerk - Graduaatsproef
 - Userinterface ontwerpen
 - Implementatie van Voertuig + Tests
 - Implementatie van Tankkaart + Tests
-- 
+
 
 ## Vragen
 
