@@ -22,6 +22,7 @@ namespace DomainLayer
         public Voertuig Voertuig { get; private set; }
         public bool IsDeleted { get; private set; }
         //Todo:Postcode
+        public int Postcode { get; set; }
 
         /// <summary>
         /// Veranderd id van de bestuurder.
