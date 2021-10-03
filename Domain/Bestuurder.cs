@@ -18,11 +18,10 @@ namespace DomainLayer
         public string Huisnummer { get; private set; }
         public string Stad { get; private set; }
         public string Land { get; private set; }
-        public Tankkaart Tankkaart { get;private set; }
+        public Tankkaart Tankkaart { get; private set; }
         public Voertuig Voertuig { get; private set; }
         public bool IsDeleted { get; private set; }
-        //Todo:Postcode
-        public int Postcode { get; set; }
+        public string Postcode { get; private set; }
 
         /// <summary>
         /// Veranderd id van de bestuurder.
@@ -31,7 +30,7 @@ namespace DomainLayer
         /// <param name="id">Id van de bestuurder.</param>
         public void SetId(int id)
         {
-            if (id < 0) throw  new BestuurderException( $"{nameof(Bestuurder)}.{nameof(Id)} kan geen negatieve waarde bevatten", new ArgumentOutOfRangeException());
+            if (id < 0) throw new BestuurderException($"{nameof(Bestuurder)}.{nameof(Id)} kan geen negatieve waarde bevatten", new ArgumentOutOfRangeException());
             this.Id = id;
         }
 
@@ -42,7 +41,7 @@ namespace DomainLayer
         /// <param name="naam">De achternaam van de bestuurder.</param>
         public void SetNaam(string naam)
         {
-            if(string.IsNullOrEmpty(naam.Trim()))throw  new BestuurderException($"{nameof(Bestuurder)}.{nameof(naam)} Kan niet null of leeg zijn");
+            if (string.IsNullOrEmpty(naam.Trim())) throw new BestuurderException($"{nameof(Bestuurder)}.{nameof(naam)} Kan niet null of leeg zijn");
             this.Naam = naam.Trim();
         }
 
@@ -78,18 +77,18 @@ namespace DomainLayer
         public void SetRijksregisternummer(string rijksregisternummer)
         {
             if (string.IsNullOrEmpty(rijksregisternummer.Trim())) throw new BestuurderException($"{nameof(Rijksregisternummer)} kan niet leeg of null zijn.");
-            var cleanRijksregisternummer = rijksregisternummer.Trim().Replace(".","").Replace("-","").Replace(" ","");
+            var cleanRijksregisternummer = rijksregisternummer.Trim().Replace(".", "").Replace("-", "").Replace(" ", "");
             if (cleanRijksregisternummer.Length != 11) throw new BestuurderException($"Het {nameof(Rijksregisternummer)} moet 11 karakters hebben");
             if (!cleanRijksregisternummer.All(char.IsDigit)) throw new BestuurderException($"Het {nameof(rijksregisternummer)} kan alleen maar cijfer bevatten");
             if (Geboortedatum.ToString("yyMMdd") != cleanRijksregisternummer.Substring(0, 6)) throw new BestuurderException($"Het {Rijksregisternummer} komt niet overeen met de geboortedatum");
 
-            var tweedeDeel =  int.Parse(cleanRijksregisternummer.Substring(6, 3));
+            var tweedeDeel = int.Parse(cleanRijksregisternummer.Substring(6, 3));
             if (1 > tweedeDeel || tweedeDeel > 998) throw new BestuurderException($"Het {nameof(rijksregisternummer)} heeft niet het juist formaat");
 
 
-            var aaneengeschakeldGetal = Geboortedatum.Year >1999 ? int.Parse("2" + cleanRijksregisternummer.Substring(0, 9)) : int.Parse(cleanRijksregisternummer.Substring(0, 9));
+            var aaneengeschakeldGetal = Geboortedatum.Year > 1999 ? int.Parse("2" + cleanRijksregisternummer.Substring(0, 9)) : int.Parse(cleanRijksregisternummer.Substring(0, 9));
 
-            var controlGetal = 97-(aaneengeschakeldGetal % 97);
+            var controlGetal = 97 - (aaneengeschakeldGetal % 97);
             if (controlGetal.ToString() != cleanRijksregisternummer.Substring(9, 2)) throw new BestuurderException($"Het {nameof(Rijksregisternummer)} is ongeldig het controle getal klopt niet");
             this.Rijksregisternummer = cleanRijksregisternummer;
 
@@ -196,6 +195,14 @@ namespace DomainLayer
         {
             this.IsDeleted = isDeleted;
         }
-        
+
+        /// <summary>
+        /// Veranderd de toestand van de bestuurders postcode
+        /// </summary>
+        /// <param name="postcode">De postcode van de bestuurder</param>
+        public void SetPostcode(string postcode)
+        {
+            this.Postcode = postcode?.Trim();
+        }
     }
 }
