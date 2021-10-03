@@ -30,14 +30,20 @@ namespace DomainLayer
                 throw new VoertuigExceptions($"{nameof(Voertuig)}.{nameof(Id)} kan geen negatieve waarde hebben", new ArgumentException());
             this.Id = id;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="merk"></param>
         public void SetMerk(string merk)
         {
             if (string.IsNullOrEmpty(merk.Trim()))
                 throw new VoertuigExceptions($"{nameof(merk)} kan niet null of leeg zijn");
             this.Merk = merk.Trim();
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
         public void SetModel(string model)
         {
             if (string.IsNullOrEmpty(model.Trim()))
@@ -45,6 +51,10 @@ namespace DomainLayer
             this.Model = model.Trim();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="chassiesnummer"></param>
         public void SetChassisnummer(string chassiesnummer)
         {
             if (string.IsNullOrEmpty(chassiesnummer.Trim()))
@@ -54,6 +64,11 @@ namespace DomainLayer
             this.Chassisnummer = chassiesnummer.Trim();
         }
 
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="wagenType"></param>
         public void SetWagenType(WagenType wagenType)
         {
             if (wagenType == null)
@@ -61,5 +76,6 @@ namespace DomainLayer
 
             }
         }
+      
     }
 }
