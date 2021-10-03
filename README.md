@@ -16,8 +16,7 @@ Projectwerk - Graduaatsproef
 
 - ERD diagram ontwerpen (databank)
 - Userinterface ontwerpen
-- Implementatie van Voertuig + Tests
-- Implementatie van Tankkaart + Tests
+
 
 
 ## Vragen
