@@ -1,17 +1,65 @@
-﻿namespace DomainLayer
+﻿using System;
+using System.Buffers;
+using DomainLayer.Exceptions;
+
+namespace DomainLayer
 {
     public class Voertuig
     {
-        public int Id { get; set; }
-        public string Merk { get; set; }
-        public string Model { get; set; }
-        public string Chassisnummer { get; set; }
-        public WagenType WagenType { get; set; }
-        public BrandstofType BrandstofType { get; set; }
-        public string Nummerplaat { get; set; }
-        public string Kleur { get; set; }
-        public int AantalDeuren { get; set; }
-        public Bestuurder Bestuurder { get; set; }
-        public bool IsDeleted { get; set; }
+        public int Id { get; private set; } //verplicht ingevuld
+        public string Merk { get; private set; } //verplicht ingevuld
+        public string Model { get; private set; } //verplicht ingevuld
+        public string Chassisnummer { get; private set; }//verplicht ingevuld
+        public WagenType WagenType { get; private set; }//verplicht ingevuld
+        public BrandstofType BrandstofType { get; private set; } //verplicht ingevuld
+        public string Nummerplaat { get; private set; } //verplicht ingevuld
+        public string Kleur { get; private set; }
+        public int AantalDeuren { get; private set; }
+        public Bestuurder Bestuurder { get; private set; }
+        public bool IsDeleted { get; private set; }
+
+
+        /// <summary>
+        /// Veranderd id van het voertuig
+        /// Controleert of de id positief is, anders geeft deze methode een BestuurderException
+        /// </summary>
+        /// <param name="id">Id van het voertuig</param>
+        public void SetId(int id)
+        {
+            if (id < 0)
+                throw new VoertuigExceptions($"{nameof(Voertuig)}.{nameof(Id)} kan geen negatieve waarde hebben", new ArgumentException());
+            this.Id = id;
+        }
+
+        public void SetMerk(string merk)
+        {
+            if (string.IsNullOrEmpty(merk.Trim()))
+                throw new VoertuigExceptions($"{nameof(merk)} kan niet null of leeg zijn");
+            this.Merk = merk.Trim();
+        }
+
+        public void SetModel(string model)
+        {
+            if (string.IsNullOrEmpty(model.Trim()))
+                throw new VoertuigExceptions($"{nameof(model)} kan niet null of leeg zijn");
+            this.Model = model.Trim();
+        }
+
+        public void SetChassisnummer(string chassiesnummer)
+        {
+            if (string.IsNullOrEmpty(chassiesnummer.Trim()))
+                throw new VoertuigExceptions($"{nameof(chassiesnummer)} bestaat kan niet null of leeg zijn");
+            
+
+            this.Chassisnummer = chassiesnummer.Trim();
+        }
+
+        public void SetWagenType(WagenType wagenType)
+        {
+            if (wagenType == null)
+            {
+
+            }
+        }
     }
 }
