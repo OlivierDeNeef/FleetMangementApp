@@ -31,7 +31,7 @@ namespace DomainLayer
             this.Id = id;
         }
         /// <summary>
-        /// 
+        /// check of het merk bestaat in de lijst
         /// </summary>
         /// <param name="merk"></param>
         public void SetMerk(string merk)
@@ -41,9 +41,9 @@ namespace DomainLayer
             this.Merk = merk.Trim();
         }
         /// <summary>
-        /// 
+        /// checking van het automodel, of het in de lijst staat
         /// </summary>
-        /// <param name="model"></param>
+        /// <param name="model">het automodel</param>
         public void SetModel(string model)
         {
             if (string.IsNullOrEmpty(model.Trim()))
@@ -52,13 +52,13 @@ namespace DomainLayer
         }
 
         /// <summary>
-        /// 
+        /// de check of het chassiesnummer bestaat
         /// </summary>
         /// <param name="chassiesnummer"></param>
         public void SetChassisnummer(string chassiesnummer)
         {
             if (string.IsNullOrEmpty(chassiesnummer.Trim()))
-                throw new VoertuigExceptions($"{nameof(chassiesnummer)} bestaat kan niet null of leeg zijn");
+                throw new VoertuigExceptions($"{nameof(chassiesnummer)} bestaat niet en kan niet null of leeg zijn");
             
 
             this.Chassisnummer = chassiesnummer.Trim();
@@ -66,15 +66,27 @@ namespace DomainLayer
 
         
         /// <summary>
-        /// 
+        /// check of het wagentype bestaat in de lijst
         /// </summary>
-        /// <param name="wagenType"></param>
+        /// <param name="wagenType">personenwagen, bestelwagen etc</param>
         public void SetWagenType(WagenType wagenType)
         {
             if (wagenType == null)
             {
-
+                throw new VoertuigExceptions($"{nameof(wagenType)} moet ingevuld zijn ");
             }
+
+            if (wagenType.Id <= 0)
+            {
+                throw new VoertuigExceptions($"{nameof(wagenType.Type)} heeft een ongeldig id");
+            }
+
+            if (wagenType.Type.Trim().Length == 0)
+            {
+                throw new VoertuigExceptions($"Ongeldige waarde van het wagentype");
+            }
+            this.WagenType.Id = wagenType.Id;
+            this.WagenType.Type = wagenType.Type.Trim();
         }
       
     }
