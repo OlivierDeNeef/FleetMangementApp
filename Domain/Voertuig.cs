@@ -73,7 +73,7 @@ namespace DomainLayer
         {
             if (wagenType == null)
             {
-                throw new VoertuigExceptions($"{nameof(wagenType)} moet ingevuld zijn ");
+                throw new VoertuigExceptions($"Het wagentype moet ingevuld zijn ");
             }
 
             if (wagenType.Id <= 0)
@@ -87,6 +87,14 @@ namespace DomainLayer
             }
             this.WagenType.Id = wagenType.Id;
             this.WagenType.Type = wagenType.Type.Trim();
+        }
+
+        public void SetBrandstofType(BrandstofType brandstofType)
+        {
+            if (brandstofType == null)
+            {
+                throw new VoertuigExceptions("Het brandstoftype moet ingevuld zijn");
+            }
         }
       
     }
