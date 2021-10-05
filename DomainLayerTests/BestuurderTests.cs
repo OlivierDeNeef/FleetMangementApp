@@ -2,7 +2,6 @@
 using DomainLayer;
 using DomainLayer.Exceptions;
 using Xunit;
-using Xunit.Sdk;
 
 namespace DomainLayerTests
 {
@@ -246,10 +245,15 @@ namespace DomainLayerTests
             
         }
 
-        [Fact()]
-        public void SetDeletedTest()
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        [InlineData(null)]
+        public void SetDeletedTest_VeranderdBestuurderIsDeleted(bool isDeleted)
         {
+            _bestuurder.SetDeleted(isDeleted);
             
+            Assert.Equal(isDeleted , _bestuurder.IsDeleted);
         }
     }
 }
