@@ -175,6 +175,7 @@ namespace DomainLayer
         /// <param name="tankkaart">De tankkaart van de bestuurder.</param>
         public void SetTankkaart(Tankkaart tankkaart)
         {
+            //Todo : Tankkaart.Bestuurder aanpassen
             this.Tankkaart = tankkaart;
         }
 
@@ -184,6 +185,7 @@ namespace DomainLayer
         /// <param name="voertuig">Het voertuig van de bestuurder</param>
         public void SetVoertuig(Voertuig voertuig)
         {
+            //TODO : voertuig.bestuurder aanpassen
             this.Voertuig = voertuig;
         }
 
