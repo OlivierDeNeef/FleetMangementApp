@@ -129,6 +129,7 @@ namespace DomainLayer
 
         public void SetBestuurder(Bestuurder bestuurder)
         {
+            //Todo: afstellen op bestuurder
             Bestuurder = bestuurder;
         }
 
