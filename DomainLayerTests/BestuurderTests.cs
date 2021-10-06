@@ -2,7 +2,6 @@
 using DomainLayer;
 using DomainLayer.Exceptions;
 using Xunit;
-using Xunit.Sdk;
 
 namespace DomainLayerTests
 {
@@ -223,28 +222,38 @@ namespace DomainLayerTests
             Assert.Equal(output,_bestuurder.Stad);
         }
 
-        [Fact()]
-        public void SetLandTest()
+        [Theory]
+        [InlineData("belgie","belgie")]
+        [InlineData("   belgie","belgie")]
+        [InlineData(null,null)]
+        public void SetLandTest_GeldigLand_BestuurdersLandVeranderd(string land , string output)
         {
-            
+            _bestuurder.SetLand(land);
+
+            Assert.Equal(output, _bestuurder.Land);
         }
 
         [Fact()]
         public void SetTankkaartTest()
         {
-            
+            //Todo: test voor set Tankkart
         }
 
         [Fact()]
         public void SetVoertuigTest()
         {
-            
+            //Todo: test voor set voertuig
         }
 
-        [Fact()]
-        public void SetDeletedTest()
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        [InlineData(null)]
+        public void SetDeletedTest_VeranderdBestuurderIsDeleted(bool isDeleted)
         {
+            _bestuurder.SetDeleted(isDeleted);
             
+            Assert.Equal(isDeleted , _bestuurder.IsDeleted);
         }
     }
 }
