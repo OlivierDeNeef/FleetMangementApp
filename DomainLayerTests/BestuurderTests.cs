@@ -236,13 +236,13 @@ namespace DomainLayerTests
         [Fact()]
         public void SetTankkaartTest()
         {
-            
+            //Todo: test voor set Tankkart
         }
 
         [Fact()]
         public void SetVoertuigTest()
         {
-            
+            //Todo: test voor set voertuig
         }
 
         [Theory]
