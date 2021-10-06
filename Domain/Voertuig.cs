@@ -96,6 +96,15 @@ namespace DomainLayer
                 throw new VoertuigExceptions("Het brandstoftype moet ingevuld zijn");
             }
         }
-      
+
+        public void SetNummerplaat(string nummerplaat)
+        {
+            if (string.IsNullOrEmpty(nummerplaat))
+                throw new VoertuigExceptions("Nummerplaat moet verplicht ingevuld zijn");
+            if (nummerplaat.Length < 7)
+                throw new VoertuigExceptions("Nummerplaat is niet lang genoeg volgens formaat (1)-ABC-123");
+            
+            Nummerplaat = nummerplaat;
+        }
     }
 }
