@@ -126,6 +126,15 @@ namespace DomainLayer
                 throw new VoertuigExceptions("Voertuig mag maximaal 5 deuren hebben");
             AantalDeuren = aantalDeuren;
         }
-        
+
+        public void SetBestuurder(Bestuurder bestuurder)
+        {
+            Bestuurder = bestuurder;
+        }
+
+        public void SetIsDeleted(bool isDeleted)
+        {
+            IsDeleted = isDeleted;
+        }
     }
 }
