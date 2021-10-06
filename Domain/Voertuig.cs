@@ -85,8 +85,9 @@ namespace DomainLayer
             {
                 throw new VoertuigExceptions($"Ongeldige waarde van het wagentype");
             }
-            this.WagenType.Id = wagenType.Id;
-            this.WagenType.Type = wagenType.Type.Trim();
+
+            WagenType = wagenType;
+            
         }
 
         public void SetBrandstofType(BrandstofType brandstofType)
@@ -95,6 +96,8 @@ namespace DomainLayer
             {
                 throw new VoertuigExceptions("Het brandstoftype moet ingevuld zijn");
             }
+
+            BrandstofType = brandstofType;
         }
 
         public void SetNummerplaat(string nummerplaat)
@@ -102,9 +105,27 @@ namespace DomainLayer
             if (string.IsNullOrEmpty(nummerplaat))
                 throw new VoertuigExceptions("Nummerplaat moet verplicht ingevuld zijn");
             if (nummerplaat.Length < 7)
-                throw new VoertuigExceptions("Nummerplaat is niet lang genoeg volgens formaat (1)-ABC-123");
+                throw new VoertuigExceptions("Nummerplaat is niet lang genoeg volgens formaat (1-)ABC-123");
             
             Nummerplaat = nummerplaat;
         }
+        
+        public void SetKleur(string kleur)
+        {
+            Kleur = kleur.Trim();
+        }
+
+        public void SetAantalDeuren(int aantalDeuren)
+        {
+            if (aantalDeuren < 3)
+            {
+                throw new VoertuigExceptions("Voertuig heeft minstens 3 deuren");
+            }
+
+            if (aantalDeuren > 5)
+                throw new VoertuigExceptions("Voertuig mag maximaal 5 deuren hebben");
+            AantalDeuren = aantalDeuren;
+        }
+        
     }
 }
