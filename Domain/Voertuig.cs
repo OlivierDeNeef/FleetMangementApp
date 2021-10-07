@@ -58,7 +58,9 @@ namespace DomainLayer
         public void SetChassisnummer(string chassiesnummer)
         {
             if (string.IsNullOrEmpty(chassiesnummer.Trim()))
-                throw new VoertuigExceptions($"{nameof(chassiesnummer)} bestaat niet en kan niet null of leeg zijn");
+                throw new VoertuigExceptions("Het nummer kan niet null of leeg zijn");
+            if (chassiesnummer.Length != 17)
+                throw new VoertuigExceptions($"{nameof(chassiesnummer)} heef een exacte lengte van 17 karakters");
             
 
             this.Chassisnummer = chassiesnummer.Trim();

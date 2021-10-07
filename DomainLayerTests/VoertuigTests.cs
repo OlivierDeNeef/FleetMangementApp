@@ -38,7 +38,12 @@ namespace DomainLayer.Tests
            _voertuig.SetMerk("Mercedez");
            Assert.Equal("Mercedez", _voertuig.Merk);
         }
-        
+
+        [Fact()]
+        public void SetMerkIsNull()
+        {
+            Assert.ThrowsAny<VoertuigExceptions>(() => _voertuig.SetMerk(""));
+        }
 
         [Fact()]
         public void SetModelTest()
@@ -48,9 +53,25 @@ namespace DomainLayer.Tests
         }
 
         [Fact()]
+        public void SetModelIsNull()
+        {
+            Assert.ThrowsAny<VoertuigExceptions>(() => _voertuig.SetModel(""));
+        }
+
+        [Fact()]
         public void SetChassisnummerTest()
         {
-            Assert.True(false, "This test needs an implementation");
+            _voertuig.SetChassisnummer("123456ABCDEF789GH");
+            Assert.Equal("123456ABCDEF789GH", _voertuig.Chassisnummer);
+        }
+
+        [Theory]
+        [InlineData("123456ABCDEF78")]
+        [InlineData("")]
+        public void SetChassisnummerInValid(string nummer)
+        {
+            
+            Assert.ThrowsAny<VoertuigExceptions>(() => _voertuig.SetChassisnummer(nummer));
         }
 
         [Fact()]
