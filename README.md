@@ -32,3 +32,5 @@ Projectwerk - Graduaatsproef
 opmerkingen van Docent
 
 Maak klasse Adres van Bestuurder
+IsDeleted moet andere en betere naam krijgen
+Pincode geen INT maar string (bv code is 0014, int geeft 14)
