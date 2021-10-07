@@ -34,7 +34,9 @@ opmerkingen van Docent
 - Maak klasse Adres van Bestuurder
 - IsDeleted moet andere en betere naam krijgen
 - Pincode geen INT maar string (bv code is 0014, int geeft 14)
-- HasBrandstofType -> Heeft...
+- HasBrandstofType -> Heeft... Betere naam ervoor geven
 - Hoort rijksreg. nummer bij "Bestuurder"? -> static class rijksgestisterChecker en static class chassisnummerChecker
 - Controleren of bestuurder voertuig heeft voor het voertuig dat is toegewezen
+
+-- Vermijdt Engels en Nederlands door elkaar
 
