@@ -26,3 +26,9 @@ Projectwerk - Graduaatsproef
   2. Het programma gewoon laten lopen zonder dat er iets veranderd.
 - Mogen we dependency injection en  Mok-items gebruiken ?
 - Wat is de minimumleeftijd van een bestuurder en maximum leeftijd?
+
+
+
+opmerkingen van Docent
+
+Maak klasse Adres van Bestuurder
