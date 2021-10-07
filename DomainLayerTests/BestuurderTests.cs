@@ -18,60 +18,60 @@ namespace DomainLayerTests
         }
 
         [Fact]
-        public void SetIdTest_GeldigeId_BestuurderIdVeranderd()
+        public void ZetIdTest_GeldigeId_BestuurderIdVeranderd()
         {
-            _bestuurder.SetId(132);
+            _bestuurder.ZetId(132);
 
             Assert.Equal(132,_bestuurder.Id);
         }
 
         [Fact]
-        public void SetIdTest_NegatieveId_ThrowsBestuurderException()
+        public void ZetIdTest_NegatieveId_ThrowsBestuurderException()
         {
-            Assert.ThrowsAny<BestuurderException>(()=> _bestuurder.SetId(-1));
+            Assert.ThrowsAny<BestuurderException>(()=> _bestuurder.ZetId(-1));
         }
 
 
         [Theory]
         [InlineData("De Neef")]
         [InlineData("   De Neef    ")]
-        public void SetNaamTest_GeldigeNaam_BestuurderNaamVeranderd(string naam)
+        public void ZetNaamTest_GeldigeNaam_BestuurderNaamVeranderd(string naam)
         {
-            _bestuurder.SetNaam(naam);
+            _bestuurder.ZetNaam(naam);
 
             Assert.Equal("De Neef", _bestuurder.Naam);
         }
 
         [Fact]
-        public void SetNaamTest_OngeldigeNaam_ThrowsBestuurderException()
+        public void ZetNaamTest_OngeldigeNaam_ThrowsBestuurderException()
         {
-            Assert.ThrowsAny<BestuurderException>(() => _bestuurder.SetNaam("    "));
+            Assert.ThrowsAny<BestuurderException>(() => _bestuurder.ZetNaam("    "));
         }
 
 
         [Theory]
         [InlineData("   Olivier    ")]
         [InlineData("Olivier")]
-        public void SetVoornaamTest_GeldigeVoornaam_BestuurderVoornaamVeranderd(string voornaam)
+        public void ZetVoornaamTest_GeldigeVoornaam_BestuurderVoornaamVeranderd(string voornaam)
         {
-            _bestuurder.SetVoornaam(voornaam);
+            _bestuurder.ZetVoornaam(voornaam);
 
             Assert.Equal("Olivier", _bestuurder.Voornaam);
         }
 
 
         [Fact]
-        public void SetVoornaamTest_OngeldigeVoornaam_ThrowsBestuurderException()
+        public void ZetVoornaamTest_OngeldigeVoornaam_ThrowsBestuurderException()
         {
-            Assert.ThrowsAny<BestuurderException>(() => _bestuurder.SetVoornaam("    "));
+            Assert.ThrowsAny<BestuurderException>(() => _bestuurder.ZetVoornaam("    "));
         }
 
 
         [Fact]
-        public void SetGeboortedatumTest_GeldigeGeboortedatum_BestuurderGeboortedatumVeranderd()
+        public void ZetGeboortedatumTest_GeldigeGeboortedatum_BestuurderGeboortedatumVeranderd()
         {
             var geboortedatum = new DateTime(1999, 10, 6);
-            _bestuurder.SetGeboortedatum(geboortedatum);
+            _bestuurder.ZetGeboortedatum(geboortedatum);
 
             Assert.Equal( geboortedatum, _bestuurder.Geboortedatum );
         }
@@ -79,9 +79,9 @@ namespace DomainLayerTests
         [Theory]
         [InlineData(110)]
         [InlineData(9)]
-        public void SetGeboortedatumTest_OngeldigeGeboortedatum_ThrowsBestuurderException(int years)
+        public void ZetGeboortedatumTest_OngeldigeGeboortedatum_ThrowsBestuurderException(int years)
         {
-            Assert.ThrowsAny<BestuurderException>(() => _bestuurder.SetGeboortedatum(DateTime.Today.AddYears(-years)));
+            Assert.ThrowsAny<BestuurderException>(() => _bestuurder.ZetGeboortedatum(DateTime.Today.AddYears(-years)));
         }
 
         [Theory]
@@ -89,10 +89,10 @@ namespace DomainLayerTests
         [InlineData("99 10 06 305 15  ")]
         [InlineData("    99100630515    ")]
         [InlineData("99100630515")]
-        public void SetRijksregisternummer_GeldigeRijksregisternummer_BestuurderRijksregisternummerVeranderd(string rijksregisternummer)
+        public void ZetRijksregisternummer_GeldigeRijksregisternummer_BestuurderRijksregisternummerVeranderd(string rijksregisternummer)
         {
-            _bestuurder.SetGeboortedatum(new DateTime(1999,10,06));
-            _bestuurder.SetRijksregisternummer(rijksregisternummer);
+            _bestuurder.ZetGeboortedatum(new DateTime(1999,10,06));
+            _bestuurder.ZetRijksregisternummer(rijksregisternummer);
 
             Assert.Equal("99100630515", _bestuurder.Rijksregisternummer);
         }
@@ -104,143 +104,97 @@ namespace DomainLayerTests
         [InlineData("99100630514")]
         [InlineData("99100630dd4")]
         [InlineData("991006305142163")]
-        public void SetRijksregisternummer_OnGeldigeRijksregisternummer_ThrowsBestuurderException(string rijksregisternummer)
+        public void ZetRijksregisternummer_OnGeldigeRijksregisternummer_ThrowsBestuurderException(string rijksregisternummer)
         {
-            _bestuurder.SetGeboortedatum(new DateTime(1999, 10, 06));
+            _bestuurder.ZetGeboortedatum(new DateTime(1999, 10, 06));
 
-            Assert.Throws<BestuurderException>(()=> _bestuurder.SetRijksregisternummer(rijksregisternummer));
+            Assert.Throws<BestuurderException>(()=> _bestuurder.ZetRijksregisternummer(rijksregisternummer));
         }
 
         [Fact]
-        public void HasRijbewijsTypeTest_HeeftRijbewijsType_ReturnsTrue()
+        public void HeeftRijbewijsTypeTest_HeeftRijbewijsType_ReturnsTrue()
         {
             var rijbewijsType = new RijbewijsType(){Id = 1, Type = "B"};
-            _bestuurder.AddRijbewijsType(rijbewijsType);
-            var result = _bestuurder.HasRijbewijsType(rijbewijsType);
+            _bestuurder.ToevoegenRijbewijsType(rijbewijsType);
+            var result = _bestuurder.HeeftRijbewijsType(rijbewijsType);
 
             Assert.True(result);
         }
 
         [Fact]
-        public void HasRijbewijsTypeTest_HeeftRijbewijsTypeNiet_ReturnsFalse()
+        public void HeeftRijbewijsTypeTest_HeeftRijbewijsTypeNiet_ReturnsFalse()
         {
             var rijbewijsType = new RijbewijsType() { Id = 1, Type = "B" };
-            var result = _bestuurder.HasRijbewijsType(rijbewijsType);
+            var result = _bestuurder.HeeftRijbewijsType(rijbewijsType);
 
             Assert.False(result);
         }
 
         [Fact]
-        public void HasRijbewijsTypeTest_OngeldigRijbewijstype_ThrowBestuurderException()
+        public void HeeftRijbewijsTypeTest_OngeldigRijbewijstype_ThrowBestuurderException()
         {
-            Assert.Throws<BestuurderException>(()=> _bestuurder.HasRijbewijsType(null));
+            Assert.Throws<BestuurderException>(()=> _bestuurder.HeeftRijbewijsType(null));
         }
 
         [Fact()]
-        public void AddRijbewijsTypeTest_NogNietInDeLijst_RijbewijsTypeToegvoegdAanBestuurder()
+        public void ToevoegenRijbewijsTypeTest_NogNietInDeLijst_RijbewijsTypeToegvoegdAanBestuurder()
         {
             var rijbewijsType = new RijbewijsType() { Id = 1, Type = "B" };
-            _bestuurder.AddRijbewijsType(rijbewijsType);
+            _bestuurder.ToevoegenRijbewijsType(rijbewijsType);
 
-            Assert.True(_bestuurder.HasRijbewijsType(rijbewijsType));
+            Assert.True(_bestuurder.HeeftRijbewijsType(rijbewijsType));
         }
 
         [Fact]
-        public void AddRijbewijsTypeTest_AlInDeLijst_ThrowsBestuurdersExcetion()
+        public void ToevoegenRijbewijsTypeTest_AlInDeLijst_ThrowsBestuurdersExcetion()
         {
             var rijbewijsType = new RijbewijsType() { Id = 1, Type = "B" };
-            _bestuurder.AddRijbewijsType(rijbewijsType);
+            _bestuurder.ToevoegenRijbewijsType(rijbewijsType);
 
-            Assert.Throws<BestuurderException>(()=> _bestuurder.AddRijbewijsType(rijbewijsType));
+            Assert.Throws<BestuurderException>(()=> _bestuurder.ToevoegenRijbewijsType(rijbewijsType));
         }
 
         [Fact]
-        public void AddRijbewijsTypeTest_OngeldigRijbewijsType_ThrowsBestuurderException()
+        public void ToevoegenRijbewijsTypeTest_OngeldigRijbewijsType_ThrowsBestuurderException()
         {
-            Assert.Throws<BestuurderException>(() => _bestuurder.AddRijbewijsType(null));
+            Assert.Throws<BestuurderException>(() => _bestuurder.ToevoegenRijbewijsType(null));
         }
 
 
         [Fact]
-        public void RemoveRijbewijsTypeTest_RijbewijsTypeIsInDeLijst_RijbewijsTypeVerwijderdBijBestuurder()
+        public void VerwijderRijbewijsTypeTest_RijbewijsTypeIsInDeLijst_RijbewijsTypeVerwijderdBijBestuurder()
         {
             var rijbewijsType = new RijbewijsType() { Id = 1, Type = "B" };
-            _bestuurder.AddRijbewijsType(rijbewijsType);
-            _bestuurder.RemoveRijbewijsType(rijbewijsType);
+            _bestuurder.ToevoegenRijbewijsType(rijbewijsType);
+            _bestuurder.VerwijderRijbewijsType(rijbewijsType);
 
-            Assert.False(_bestuurder.HasRijbewijsType(rijbewijsType));
+            Assert.False(_bestuurder.HeeftRijbewijsType(rijbewijsType));
         }
 
         [Fact]
-        public void RemoveRijbewijsTypeTest_RijbewijsTypeNietInDeLijst_ThrowBestuurderException()
+        public void VerwijderRijbewijsTypeTest_RijbewijsTypeNietInDeLijst_ThrowBestuurderException()
         {
             var rijbewijsType = new RijbewijsType() { Id = 1, Type = "B" };
 
-            Assert.Throws<BestuurderException>(() => _bestuurder.RemoveRijbewijsType(rijbewijsType));
+            Assert.Throws<BestuurderException>(() => _bestuurder.VerwijderRijbewijsType(rijbewijsType));
         }
 
         [Fact]
-        public void RemoveRijbewijsTypeTest_OngeldigRijbewijsType_ThrowBestuurderException()
+        public void VerwijderRijbewijsTypeTest_OngeldigRijbewijsType_ThrowBestuurderException()
         {
-            Assert.Throws<BestuurderException>(() => _bestuurder.RemoveRijbewijsType(null));
+            Assert.Throws<BestuurderException>(() => _bestuurder.VerwijderRijbewijsType(null));
         }
 
-        [Theory]
-        [InlineData("     test    ","test")]
-        [InlineData("test","test")]
-        [InlineData("","")]
-        [InlineData(null,null)]
-        public void SetStraatTest_GeldigeStraat_BestuurderStraatVeranderd(string straat, string output)
-        {
-            _bestuurder.SetStraat(straat);
-
-            Assert.Equal(output,_bestuurder.Straat);
-        }
-
-
-        [Theory]
-        [InlineData("","")]
-        [InlineData(null,null)]
-        [InlineData("2     ","2")]
-        [InlineData("2A","2A")]
-        public void SetHuisnummerTest_GeldigHuisnummer_BestuurderHuisnummerVeranderd(string huisnummer, string output)
-        {
-            _bestuurder.SetHuisnummer(huisnummer);
-
-            Assert.Equal(output,_bestuurder.Huisnummer);
-        }
-
-        [Theory]
-        [InlineData("   Gent", "Gent")]
-        [InlineData("Gent", "Gent")]
-        [InlineData(null, null)]
-        [InlineData("", "")]
-        public void SetStadTest_GeldigeStad_BestuurdersStadVeranderd(string stad, string output)
-        {
-            _bestuurder.SetStad(stad);
-
-            Assert.Equal(output,_bestuurder.Stad);
-        }
-
-        [Theory]
-        [InlineData("belgie","belgie")]
-        [InlineData("   belgie","belgie")]
-        [InlineData(null,null)]
-        public void SetLandTest_GeldigLand_BestuurdersLandVeranderd(string land , string output)
-        {
-            _bestuurder.SetLand(land);
-
-            Assert.Equal(output, _bestuurder.Land);
-        }
+      
 
         [Fact()]
-        public void SetTankkaartTest()
+        public void ZetTankkaartTest()
         {
             //Todo: test voor set Tankkart
         }
 
         [Fact()]
-        public void SetVoertuigTest()
+        public void ZetVoertuigTest()
         {
             //Todo: test voor set voertuig
         }
@@ -249,11 +203,11 @@ namespace DomainLayerTests
         [InlineData(true)]
         [InlineData(false)]
         [InlineData(null)]
-        public void SetDeletedTest_VeranderdBestuurderIsDeleted(bool isDeleted)
+        public void ZetGearchiveerdTest_VeranderdBestuurderIsDeleted(bool isDeleted)
         {
-            _bestuurder.SetDeleted(isDeleted);
+            _bestuurder.ZetGearchiveerd(isDeleted);
             
-            Assert.Equal(isDeleted , _bestuurder.IsDeleted);
+            Assert.Equal(isDeleted , _bestuurder.IsGearchiveerd);
         }
     }
 }
