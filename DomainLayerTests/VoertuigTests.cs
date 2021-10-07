@@ -98,7 +98,7 @@ namespace DomainLayer.Tests
         [Theory]
         [InlineData(0, "Bestelbus")]
         [InlineData(1, "")]
-        public void SetWagenTypeIdInvalid(int id, string type)
+        public void SetWagenTypeIdInvalidAndInvalidType(int id, string type)
         {
             WagenType w = new WagenType();
             w.Id = id;
