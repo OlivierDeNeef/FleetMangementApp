@@ -5,27 +5,46 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DomainLayer.Exceptions;
 
 namespace DomainLayer.Tests
 {
     public class VoertuigTests
     {
+        private readonly Voertuig _voertuig;
+
+      
+        public VoertuigTests()
+        {
+            _voertuig = new Voertuig();
+        } 
         [Fact()]
         public void SetIdTest()
         {
-            Assert.True(false, "This test needs an implementation");
+            _voertuig.SetId(4);
+            Assert.Equal(4, _voertuig.Id);
+
+        }
+
+        [Fact()]
+        public void SetId_NegatieveId_ThrowException()
+        {
+            Assert.ThrowsAny<VoertuigExceptions>(() => _voertuig.SetId(-4));
         }
 
         [Fact()]
         public void SetMerkTest()
         {
-            Assert.True(false, "This test needs an implementation");
+           _voertuig.SetMerk("Mercedez");
+           Assert.Equal("Mercedez", _voertuig.Merk);
         }
+        
 
         [Fact()]
         public void SetModelTest()
         {
-            Assert.True(false, "This test needs an implementation");
+            _voertuig.SetModel("A-Klasse");
+            Assert.Equal("A-Klasse", _voertuig.Model);
         }
 
         [Fact()]
