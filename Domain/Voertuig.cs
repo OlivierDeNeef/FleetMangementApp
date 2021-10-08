@@ -27,7 +27,7 @@ namespace DomainLayer
         public void SetId(int id)
         {
             if (id < 0)
-                throw new VoertuigExceptions($"{nameof(Voertuig)}.{nameof(Id)} kan geen negatieve waarde hebben", new ArgumentException());
+                throw new VoertuigException($"{nameof(Voertuig)}.{nameof(Id)} kan geen negatieve waarde hebben", new ArgumentException());
             this.Id = id;
         }
         /// <summary>
@@ -37,7 +37,7 @@ namespace DomainLayer
         public void SetMerk(string merk)
         {
             if (string.IsNullOrEmpty(merk.Trim()))
-                throw new VoertuigExceptions($"{nameof(merk)} kan niet null of leeg zijn");
+                throw new VoertuigException($"{nameof(merk)} kan niet null of leeg zijn");
             this.Merk = merk.Trim();
         }
         /// <summary>
@@ -47,7 +47,7 @@ namespace DomainLayer
         public void SetModel(string model)
         {
             if (string.IsNullOrEmpty(model.Trim()))
-                throw new VoertuigExceptions($"{nameof(model)} kan niet null of leeg zijn");
+                throw new VoertuigException($"{nameof(model)} kan niet null of leeg zijn");
             this.Model = model.Trim();
         }
 
@@ -58,7 +58,7 @@ namespace DomainLayer
         public void SetChassisnummer(string chassiesnummer)
         {
             if (string.IsNullOrEmpty(chassiesnummer.Trim()))
-                throw new VoertuigExceptions($"{nameof(chassiesnummer)} bestaat niet en kan niet null of leeg zijn");
+                throw new VoertuigException($"{nameof(chassiesnummer)} bestaat niet en kan niet null of leeg zijn");
             
 
             this.Chassisnummer = chassiesnummer.Trim();
@@ -73,17 +73,17 @@ namespace DomainLayer
         {
             if (wagenType == null)
             {
-                throw new VoertuigExceptions($"Het wagentype moet ingevuld zijn ");
+                throw new VoertuigException($"Het wagentype moet ingevuld zijn ");
             }
 
             if (wagenType.Id <= 0)
             {
-                throw new VoertuigExceptions($"{nameof(wagenType.Type)} heeft een ongeldig id");
+                throw new VoertuigException($"{nameof(wagenType.Type)} heeft een ongeldig id");
             }
 
             if (wagenType.Type.Trim().Length == 0)
             {
-                throw new VoertuigExceptions($"Ongeldige waarde van het wagentype");
+                throw new VoertuigException($"Ongeldige waarde van het wagentype");
             }
 
             WagenType = wagenType;
@@ -94,7 +94,7 @@ namespace DomainLayer
         {
             if (brandstofType == null)
             {
-                throw new VoertuigExceptions("Het brandstoftype moet ingevuld zijn");
+                throw new VoertuigException("Het brandstoftype moet ingevuld zijn");
             }
 
             BrandstofType = brandstofType;
@@ -103,9 +103,9 @@ namespace DomainLayer
         public void SetNummerplaat(string nummerplaat)
         {
             if (string.IsNullOrEmpty(nummerplaat))
-                throw new VoertuigExceptions("Nummerplaat moet verplicht ingevuld zijn");
+                throw new VoertuigException("Nummerplaat moet verplicht ingevuld zijn");
             if (nummerplaat.Length < 7)
-                throw new VoertuigExceptions("Nummerplaat is niet lang genoeg volgens formaat (1-)ABC-123");
+                throw new VoertuigException("Nummerplaat is niet lang genoeg volgens formaat (1-)ABC-123");
             
             Nummerplaat = nummerplaat;
         }
@@ -119,18 +119,22 @@ namespace DomainLayer
         {
             if (aantalDeuren < 3)
             {
-                throw new VoertuigExceptions("Voertuig heeft minstens 3 deuren");
+                throw new VoertuigException("Voertuig heeft minstens 3 deuren");
             }
 
             if (aantalDeuren > 5)
-                throw new VoertuigExceptions("Voertuig mag maximaal 5 deuren hebben");
+                throw new VoertuigException("Voertuig mag maximaal 5 deuren hebben");
             AantalDeuren = aantalDeuren;
         }
 
         public void SetBestuurder(Bestuurder bestuurder)
         {
-            //Todo: afstellen op bestuurder
+            if (bestuurder == Bestuurder) throw new VoertuigException("Bestuurder is dezelde als de huidige");
             Bestuurder = bestuurder;
+            if (bestuurder.Voertuig != this)
+            {
+                bestuurder.ZetVoertuig(this);
+            }
         }
 
         public void SetIsDeleted(bool isDeleted)

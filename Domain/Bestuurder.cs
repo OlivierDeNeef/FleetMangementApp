@@ -73,23 +73,16 @@ namespace DomainLayer
         /// <param name="rijksregisternummer">Het rijksregisternummer voor de bestuurder</param>
         public void ZetRijksregisternummer(string rijksregisternummer)
         {
-            if (string.IsNullOrEmpty(rijksregisternummer.Trim())) throw new BestuurderException($"{nameof(Rijksregisternummer)} kan niet leeg of null zijn.");
-            var cleanRijksregisternummer = rijksregisternummer.Trim().Replace(".", "").Replace("-", "").Replace(" ", "");
-            if (cleanRijksregisternummer.Length != 11) throw new BestuurderException($"Het {nameof(Rijksregisternummer)} moet 11 karakters hebben");
-            if (!cleanRijksregisternummer.All(char.IsDigit)) throw new BestuurderException($"Het {nameof(rijksregisternummer)} kan alleen maar cijfer bevatten");
-            if (Geboortedatum.ToString("yyMMdd") != cleanRijksregisternummer.Substring(0, 6)) throw new BestuurderException($"Het {Rijksregisternummer} komt niet overeen met de geboortedatum");
-
-            var tweedeDeel = int.Parse(cleanRijksregisternummer.Substring(6, 3));
-            if (1 > tweedeDeel || tweedeDeel > 998) throw new BestuurderException($"Het {nameof(rijksregisternummer)} heeft niet het juist formaat");
+            this.Rijksregisternummer = RijksregisternummerChecker.Parse(rijksregisternummer, Geboortedatum);
+        }
 
 
-            var aaneengeschakeldGetal = Geboortedatum.Year > 1999 ? int.Parse("2" + cleanRijksregisternummer.Substring(0, 9)) : int.Parse(cleanRijksregisternummer.Substring(0, 9));
+        public void ZetAdres(Adres adres)
+        {
+            //Todo : ZetAdres uitgeschrijven
 
-            var controlGetal = 97 - (aaneengeschakeldGetal % 97);
-            if (controlGetal.ToString() != cleanRijksregisternummer.Substring(9, 2)) throw new BestuurderException($"Het {nameof(Rijksregisternummer)} is ongeldig het controle getal klopt niet");
-            this.Rijksregisternummer = cleanRijksregisternummer;
-
-
+            if (adres == null)
+                throw new BestuurderException("Het adres kan niet null zijn", new NullReferenceException());
         }
 
         /// <summary>
@@ -138,8 +131,12 @@ namespace DomainLayer
         /// <param name="tankkaart">De tankkaart van de bestuurder.</param>
         public void ZetTankkaart(Tankkaart tankkaart)
         {
-            //Todo : Tankkaart.Bestuurder aanpassen
+            if (tankkaart == Tankkaart) throw new BestuurderException();
             this.Tankkaart = tankkaart;
+            if (tankkaart.Bestuurder != this)
+            {
+                //Todo : wachten op tankkaart class
+            }
         }
 
         /// <summary>
@@ -148,8 +145,12 @@ namespace DomainLayer
         /// <param name="voertuig">Het voertuig van de bestuurder</param>
         public void ZetVoertuig(Voertuig voertuig)
         {
-            //TODO : voertuig.bestuurder aanpassen
+            if (voertuig == Voertuig) throw new BestuurderException();
             this.Voertuig = voertuig;
+            if (voertuig.Bestuurder != this)
+            {
+                voertuig.SetBestuurder(this);
+            }
         }
 
         /// <summary>

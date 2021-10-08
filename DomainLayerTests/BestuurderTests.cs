@@ -108,8 +108,15 @@ namespace DomainLayerTests
         {
             _bestuurder.ZetGeboortedatum(new DateTime(1999, 10, 06));
 
-            Assert.Throws<BestuurderException>(()=> _bestuurder.ZetRijksregisternummer(rijksregisternummer));
+            Assert.Throws<RijksregisternummerCheckerException>(()=> _bestuurder.ZetRijksregisternummer(rijksregisternummer));
         }
+
+        [Fact]
+        public void ZetAdresTest_GeldigAdres_BestuurdersAdresVeranderd()
+        {
+            //Todo : test class schrijven voor Zet adres
+        }
+
 
         [Fact]
         public void HeeftRijbewijsTypeTest_HeeftRijbewijsType_ReturnsTrue()
@@ -194,10 +201,31 @@ namespace DomainLayerTests
         }
 
         [Fact()]
-        public void ZetVoertuigTest()
+        public void ZetVoertuigTest_GeldigVoetuig_BestuurdersVoertuigVeranderd()
         {
-            //Todo: test voor set voertuig
+            var auto = new Voertuig();
+            _bestuurder.ZetVoertuig(auto);
+
+            Assert.Equal(auto, _bestuurder.Voertuig);
+            Assert.Equal(_bestuurder, auto.Bestuurder);
         }
+
+        [Fact()]
+        public void ZetVoertuigTest_OnGeldigVoetuig_ThrowBestuurderException()
+        {
+            Voertuig auto = null;
+            Assert.Throws<BestuurderException>(() => _bestuurder.ZetVoertuig(auto));
+        }
+
+
+        [Fact()]
+        public void ZetVoertuigTest_ZelfdeVoertuig_ThrowBestuurderException()
+        {
+            var auto = new Voertuig();
+            _bestuurder.ZetVoertuig(auto);
+            Assert.Throws<BestuurderException>(() => _bestuurder.ZetVoertuig(auto));
+        }
+
 
         [Theory]
         [InlineData(true)]
