@@ -62,7 +62,6 @@ namespace DomainLayer
             if (chassiesnummer.Length != 17)
                 throw new VoertuigExceptions($"{nameof(chassiesnummer)} heef een exacte lengte van 17 karakters");
             
-
             this.Chassisnummer = chassiesnummer.Trim();
         }
 

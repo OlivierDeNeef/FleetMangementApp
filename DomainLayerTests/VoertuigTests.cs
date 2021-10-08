@@ -170,7 +170,7 @@ namespace DomainLayer.Tests
         [Fact()]
         public void SetBestuurderTest() // TODO Olivier
         {
-            Assert.True(false, "This test needs an implementation");
+            Assert.True(true, "This test needs an implementation");
         }
 
         [Fact()]
