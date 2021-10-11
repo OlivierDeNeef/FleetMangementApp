@@ -106,7 +106,7 @@ namespace DomainLayer
         public void ToevoegenRijbewijsType(RijbewijsType rijbewijsType)
         {
             if (rijbewijsType == null) throw new BestuurderException($"Een {nameof(RijbewijsType)} toevoegen gaat niet wanneer deze null is.");
-            if (HeeftRijbewijsType(rijbewijsType)) throw new BestuurderException($"Het {nameof(RijbewijsType)} bevindt zich al in de lijst"); //Ask: Exception of kan men gewoon verder
+            if (HeeftRijbewijsType(rijbewijsType)) throw new BestuurderException($"Het {nameof(RijbewijsType)} bevindt zich al in de lijst"); 
             this._rijbewijsTypes.Add(rijbewijsType);
         }
 
@@ -119,7 +119,7 @@ namespace DomainLayer
         public void VerwijderRijbewijsType(RijbewijsType rijbewijsType)
         {
             if (rijbewijsType == null) throw new BestuurderException($"Een {nameof(RijbewijsType)} verwijderen gaat niet wanneer deze null is.");
-            if (!HeeftRijbewijsType(rijbewijsType)) throw new BestuurderException($"Het {nameof(RijbewijsType)} bevindt zich niet in de lijst"); //Ask: Exception of kan men gewoon verder
+            if (!HeeftRijbewijsType(rijbewijsType)) throw new BestuurderException($"Het {nameof(RijbewijsType)} bevindt zich niet in de lijst"); 
             this._rijbewijsTypes.Remove(rijbewijsType);
         }
 
