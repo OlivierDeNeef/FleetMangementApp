@@ -13,7 +13,7 @@ Projectwerk - Graduaatsproef
 ## Todo's 
 
 - Classen diagram van de data access layer
-
+- Classdiagram uitbreiden van domain laag VoertuigManager, BestuurderManager, TankkaartManager BrandstofTypeManager en VoertuigTypeManager 
 - ERD diagram ontwerpen (databank)
 - Userinterface ontwerpen
 
@@ -31,11 +31,11 @@ Projectwerk - Graduaatsproef
 
 opmerkingen van Docent
 
-- Maak klasse Adres van Bestuurder
+- Maak klasse Adres van Bestuurder **Done**
 - IsDeleted moet andere en betere naam krijgen
 - Pincode geen INT maar string (bv code is 0014, int geeft 14)
 - HasBrandstofType -> Heeft... Betere naam ervoor geven
-- Hoort rijksreg. nummer bij "Bestuurder"? -> static class rijksgestisterChecker en static class chassisnummerChecker
+- Hoort rijksreg. nummer bij "Bestuurder"? -> static class rijksgestisterChecker en static class chassisnummerChecker **Done**
 - Controleren of bestuurder voertuig heeft voor het voertuig dat is toegewezen
 
 -- Vermijdt Engels en Nederlands door elkaar
