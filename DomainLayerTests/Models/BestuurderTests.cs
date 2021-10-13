@@ -1,6 +1,5 @@
 ﻿using System;
 using DomainLayer;
-using DomainLayer.Exceptions;
 using DomainLayer.Exceptions.Models;
 using DomainLayer.Exceptions.Utilities;
 using DomainLayer.Models;
@@ -201,7 +200,7 @@ namespace DomainLayerTests.Models
       
 
         [Fact()]
-        public void ZetTankkaartTest()
+        public void ZetTankkaartTest_GeldigeTankkaart_TankkaartVeranderd()
         {
             var tankkaart = new Tankkaart(1, "123", DateTime.Now);
             var tankkaart2 = new Tankkaart(2, "123", DateTime.Now);
@@ -218,10 +217,14 @@ namespace DomainLayerTests.Models
         public void ZetVoertuigTest_GeldigVoetuig_BestuurdersVoertuigVeranderd()
         {
             var auto = new Voertuig();
+            var auto1 = new Voertuig();
             _bestuurder.ZetVoertuig(auto);
+            _bestuurder.ZetVoertuig(auto1);
 
-            Assert.Equal(auto, _bestuurder.Voertuig);
-            Assert.Equal(_bestuurder, auto.Bestuurder);
+           
+            Assert.Equal(auto1, _bestuurder.Voertuig);
+            Assert.Equal(_bestuurder, auto1.Bestuurder);
+            Assert.Null(auto.Bestuurder);
         }
 
         [Fact()]
@@ -253,7 +256,7 @@ namespace DomainLayerTests.Models
         }
 
         [Fact]
-        public void VerwijderTankkaartTest_ZetTankkaartOpNull()
+        public void VerwijderTankkaartTest_TankkaartIsNietNull_ZetTankkaartOpNull()
         {
             var tankkaart = new Tankkaart(1,"123",DateTime.Now);
             _bestuurder.ZetTankkaart(tankkaart);
@@ -263,7 +266,14 @@ namespace DomainLayerTests.Models
         }
 
         [Fact]
-        public void VerwijderVoertuigTest_ZetVoertuigOpNull()
+        public void VerwijderTankkaartTest_TankkaartIsAlNull_ThrowsBestuurderException()
+        {
+            var tankkaart = new Tankkaart(1, "123", DateTime.Now);
+            Assert.Throws<BestuurderException>(() => _bestuurder.VerwijderTankkaart()) ;
+        }
+
+        [Fact]
+        public void VerwijderVoertuigTest_VoertuigIsNietNull_ZetVoertuigOpNull()
         {
             var voertuig = new Voertuig();
             _bestuurder.ZetVoertuig(voertuig);
@@ -271,6 +281,13 @@ namespace DomainLayerTests.Models
             _bestuurder.VerwijderVoertuig();
             Assert.Null(_bestuurder.Voertuig);
 
+        }
+
+        [Fact]
+        public void VerwijderVoertuigTest_VoertuigIsAlNull_ThrowBestuurderException()
+        {
+            var voertuig = new Voertuig();
+            Assert.Throws<BestuurderException>(() =>_bestuurder.VerwijderVoertuig());
         }
     }
 }

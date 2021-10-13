@@ -27,7 +27,7 @@ namespace DomainLayer.Models
         /// <param name="id">Id van de bestuurder.</param>
         public void ZetId(int id)
         {
-            if (id < 0) throw new BestuurderException($"{nameof(Bestuurder)}.{nameof(Id)} kan geen negatieve waarde bevatten", new ArgumentOutOfRangeException());
+            if (id < 0) throw new BestuurderException("ZetId - id < 0", new ArgumentOutOfRangeException());
             this.Id = id;
         }
 
@@ -38,7 +38,7 @@ namespace DomainLayer.Models
         /// <param name="naam">De achternaam van de bestuurder.</param>
         public void ZetNaam(string naam)
         {
-            if (string.IsNullOrWhiteSpace(naam)) throw new BestuurderException($"{nameof(Bestuurder)}.{nameof(naam)} Kan niet null of leeg zijn");
+            if (string.IsNullOrWhiteSpace(naam)) throw new BestuurderException("ZetNaam - Naam is leeg");
             this.Naam = naam.Trim();
         }
 
@@ -49,7 +49,7 @@ namespace DomainLayer.Models
         /// <param name="voornaam">De voornaam van de bestuurder.</param>
         public void ZetVoornaam(string voornaam)
         {
-            if (string.IsNullOrWhiteSpace(voornaam)) throw new BestuurderException($"{nameof(Bestuurder)}.{nameof(voornaam)} Kan niet null of leeg zijn");
+            if (string.IsNullOrWhiteSpace(voornaam)) throw new BestuurderException("ZetVoornaam - Voornaam is leeg");
             this.Voornaam = voornaam.Trim();
         }
 
@@ -61,7 +61,7 @@ namespace DomainLayer.Models
         /// <param name="geboortedatum">De geboortedatum van de bestuurder.</param>
         public void ZetGeboortedatum(DateTime geboortedatum)
         {
-            if (DateTime.Today.AddYears(-18) < geboortedatum) throw new BestuurderException("Niet oud genoeg om bestuurder te zijn");
+            if (DateTime.Today.AddYears(-18) < geboortedatum) throw new BestuurderException("ZetGeboorteDatum - Leeftijd < 18 jaar");
             this.Geboortedatum = geboortedatum;
         }
 
@@ -92,7 +92,7 @@ namespace DomainLayer.Models
         /// <returns>True als rijbewijs type voorkomt, False als rijbewijs type niet voor komt.</returns>
         public bool HeeftRijbewijsType(RijbewijsType rijbewijsType)
         {
-            if (rijbewijsType == null) throw new BestuurderException($"Zoeken op {nameof(RijbewijsType)} gaat niet wanneer deze null is.");
+            if (rijbewijsType == null) throw new BestuurderException($"HeeftRijbewijs - rijbewijsType = null");
             return this._rijbewijsTypes.Contains(rijbewijsType);
         }
 
@@ -104,8 +104,8 @@ namespace DomainLayer.Models
         /// <param name="rijbewijsType">Het rijbewijs type dat moet worden toegevoegt.</param>
         public void VoegRijbewijsTypeToe(RijbewijsType rijbewijsType)
         {
-            if (rijbewijsType == null) throw new BestuurderException($"Een {nameof(RijbewijsType)} toevoegen gaat niet wanneer deze null is.");
-            if (HeeftRijbewijsType(rijbewijsType)) throw new BestuurderException($"Het {nameof(RijbewijsType)} bevindt zich al in de lijst"); 
+            if (rijbewijsType == null) throw new BestuurderException("VoegRijbewijsTypeToe - rijbewijsType = null");
+            if (HeeftRijbewijsType(rijbewijsType)) throw new BestuurderException("VoegRijbewijsTypeToe - rijbewijsType bestaat al"); 
             this._rijbewijsTypes.Add(rijbewijsType);
         }
 
@@ -117,8 +117,8 @@ namespace DomainLayer.Models
         /// <param name="rijbewijsType">Het rijbewijs type dat moet worden verwijderd.</param>
         public void VerwijderRijbewijsType(RijbewijsType rijbewijsType)
         {
-            if (rijbewijsType == null) throw new BestuurderException($"Een {nameof(RijbewijsType)} verwijderen gaat niet wanneer deze null is.");
-            if (!HeeftRijbewijsType(rijbewijsType)) throw new BestuurderException($"Het {nameof(RijbewijsType)} bevindt zich niet in de lijst"); 
+            if (rijbewijsType == null) throw new BestuurderException("VerwijderRijbewijsType - rijbewijsType = null");
+            if (!HeeftRijbewijsType(rijbewijsType)) throw new BestuurderException("VerwijderRijbewijsType - rijbewijsType bestaat niet"); 
             this._rijbewijsTypes.Remove(rijbewijsType);
         }
 
@@ -130,7 +130,8 @@ namespace DomainLayer.Models
         /// <param name="tankkaart">De tankkaart van de bestuurder.</param>
         public void ZetTankkaart(Tankkaart tankkaart)
         {
-            if (tankkaart == Tankkaart) throw new BestuurderException();//TODO : extra test
+            if (tankkaart == null) throw new BestuurderException("ZetTankkaart - tankkaart = null");
+            if (tankkaart == Tankkaart) throw new BestuurderException("ZetTankkaart - Zelfde tankkaart als huidige");//TODO : extra test
             if (Tankkaart?.Bestuurder != null) Tankkaart.VerwijderBestuurder(); 
             this.Tankkaart = tankkaart;
             if (tankkaart.Bestuurder != this)
@@ -146,9 +147,9 @@ namespace DomainLayer.Models
         /// <param name="voertuig">Het voertuig van de bestuurder</param>
         public void ZetVoertuig(Voertuig voertuig)
         {
-            if (voertuig == null) throw new BestuurderException();
-            if (voertuig == Voertuig) throw new BestuurderException();
-            if (Voertuig?.Bestuurder != null) Voertuig.VerwijderBestuurder(); //Todo : Extra test
+            if (voertuig == null) throw new BestuurderException("ZetVoertuig - tankkaart = null");
+            if (voertuig == Voertuig) throw new BestuurderException("ZetVoertuig - Zelfde tankkaart als huidige");
+            if (Voertuig?.Bestuurder != null) Voertuig.VerwijderBestuurder(); 
             this.Voertuig = voertuig;
             if (voertuig.Bestuurder != this)
             {
@@ -171,7 +172,7 @@ namespace DomainLayer.Models
         /// </summary>
         public void VerwijderVoertuig()
         {
-            if (Voertuig == null) throw new BestuurderException(); //Todo : extra test
+            if (Voertuig == null) throw new BestuurderException("VerwijderVoetuig - Voertuig is al null"); 
             Voertuig = null;
         }
 
@@ -180,7 +181,7 @@ namespace DomainLayer.Models
         /// </summary>
         public void VerwijderTankkaart()
         {
-            if (Tankkaart == null) throw new BestuurderException(); //Todo: extra test
+            if (Tankkaart == null) throw new BestuurderException("VerwijderTankkaart - Tankkaart is al null"); 
             Tankkaart = null;
         }
     }
