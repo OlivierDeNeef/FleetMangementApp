@@ -1,11 +1,18 @@
-﻿using DomainLayer;
-using DomainLayer.Exceptions;
-using DomainLayer.Exceptions.Models;
+﻿using DomainLayer.Exceptions.Models;
 using DomainLayer.Models;
 using Xunit;
 
-namespace DomainLayerTests
+namespace DomainLayerTests.Models
 {
+    /// <summary>
+    /// Todo : Failed test SetNummerplaat
+    /// Todo : SetNummerplaat uitgebreider testen
+    /// Todo : SetBestuurder uitgebreider testen
+    /// Todo : Tests schrijven voor verwijder bestuurder
+    /// Todo : Ook testen op null waarde
+    /// </summary>
+
+
     public class VoertuigTests
     {
         private readonly Voertuig _voertuig;

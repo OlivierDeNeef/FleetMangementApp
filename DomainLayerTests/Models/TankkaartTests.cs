@@ -1,14 +1,24 @@
 ﻿using System;
-using DomainLayer;
-using DomainLayer.Exceptions;
-using Xunit;
 using System.Collections.Generic;
+using DomainLayer.Exceptions;
+using DomainLayer.Models;
+using Xunit;
 
-namespace DomainLayerTests
+namespace DomainLayerTests.Models
 {
     public class TankkaartTests
     {
-        
+        /// <summary>
+        /// Todo : Zet instantiation van tankkaart in ctor
+        /// Todo : ZetPincode uitgebeider testen
+        /// Todo : ZetBrandstofType uitgebeider testen
+        /// Todo : VoegToeBrandstofType uitgebeider testen
+        /// Todo : VerwijderBrandstofType uitgebeider testen
+        /// Todo : Zetbestuurder uitgebeider testen
+        /// Todo : BlokkeerKaart uitgebeider testen
+        /// </summary>
+
+
         public TankkaartTests()
         {
             

@@ -4,6 +4,11 @@ using DomainLayer.Exceptions.Models;
 
 namespace DomainLayer.Models
 {
+    /// <summary>
+    /// Todo : Zet methodenamen Zoals in class diagram 
+    /// </summary>
+
+
     public class Voertuig
     {
         public int Id { get; private set; } //verplicht ingevuld
@@ -26,8 +31,7 @@ namespace DomainLayer.Models
         /// <param name="id">Id van het voertuig</param>
         public void SetId(int id)
         {
-            if (id < 0)
-                throw new VoertuigException($"{nameof(Voertuig)}.{nameof(Id)} kan geen negatieve waarde hebben", new ArgumentException());
+            if (id < 0) throw new VoertuigException($"{nameof(Voertuig)}.{nameof(Id)} kan geen negatieve waarde hebben", new ArgumentException());
             this.Id = id;
         }
         /// <summary>
@@ -36,8 +40,7 @@ namespace DomainLayer.Models
         /// <param name="merk"></param>
         public void SetMerk(string merk)
         {
-            if (string.IsNullOrEmpty(merk.Trim()))
-                throw new VoertuigException($"{nameof(merk)} kan niet null of leeg zijn");
+            if (string.IsNullOrWhiteSpace(merk)) throw new VoertuigException($"{nameof(merk)} kan niet null of leeg zijn");
             this.Merk = merk.Trim();
         }
         /// <summary>
@@ -46,8 +49,7 @@ namespace DomainLayer.Models
         /// <param name="model">het automodel</param>
         public void SetModel(string model)
         {
-            if (string.IsNullOrEmpty(model.Trim()))
-                throw new VoertuigException($"{nameof(model)} kan niet null of leeg zijn");
+            if (string.IsNullOrWhiteSpace(model)) throw new VoertuigException($"{nameof(model)} kan niet null of leeg zijn");
             this.Model = model.Trim();
         }
 
@@ -57,10 +59,8 @@ namespace DomainLayer.Models
         /// <param name="chassiesnummer"></param>
         public void SetChassisnummer(string chassiesnummer)
         {
-            if (string.IsNullOrEmpty(chassiesnummer.Trim()))
-                throw new VoertuigException("Het nummer kan niet null of leeg zijn");
-            if (chassiesnummer.Length != 17)
-                throw new VoertuigException($"{nameof(chassiesnummer)} heef een exacte lengte van 17 karakters");
+            if (string.IsNullOrWhiteSpace(chassiesnummer)) throw new VoertuigException("Het nummer kan niet null of leeg zijn");
+            if (chassiesnummer.Length != 17) throw new VoertuigException($"{nameof(chassiesnummer)} heef een exacte lengte van 17 karakters");
             this.Chassisnummer = chassiesnummer.Trim();
         }
 
@@ -71,43 +71,21 @@ namespace DomainLayer.Models
         /// <param name="wagenType">personenwagen, bestelwagen etc</param>
         public void SetWagenType(WagenType wagenType)
         {
-            if (wagenType == null)
-            {
-                throw new VoertuigException($"Het wagentype moet ingevuld zijn ");
-            }
-
-            if (wagenType.Id <= 0)
-            {
-                throw new VoertuigException($"{nameof(wagenType.Type)} heeft een ongeldig id");
-            }
-
-            if (wagenType.Type.Trim().Length == 0)
-            {
-                throw new VoertuigException($"Ongeldige waarde van het wagentype");
-            }
-
+            if (wagenType == null) throw new VoertuigException($"Het wagentype moet ingevuld zijn ");
+            if (wagenType.Id <= 0) throw new VoertuigException($"{nameof(wagenType.Type)} heeft een ongeldig id");
+            if (wagenType.Type.Trim().Length == 0) throw new VoertuigException($"Ongeldige waarde van het wagentype");
             WagenType = wagenType;
-            
         }
 
         public void SetBrandstofType(BrandstofType brandstofType)
         {
-            if (brandstofType == null)
-            {
-                throw new VoertuigException("Het brandstoftype moet ingevuld zijn");
-            }
-
-            BrandstofType = brandstofType;
+            BrandstofType = brandstofType ?? throw new VoertuigException("Het brandstoftype moet ingevuld zijn");
         }
 
         public void SetNummerplaat(string nummerplaat)
         {
-            if (string.IsNullOrEmpty(nummerplaat))
-
-                throw new VoertuigException("Nummerplaat moet verplicht ingevuld zijn");
-            if (nummerplaat.Length != 7 || nummerplaat.Length != 9) throw new VoertuigException("Nummerplaat is niet lang genoeg volgens formaat (1-)ABC-123");
-
-            
+            if (string.IsNullOrEmpty(nummerplaat)) throw new VoertuigException("Nummerplaat moet verplicht ingevuld zijn");
+            if ((nummerplaat.Length != 7 && nummerplaat.Length != 9)) throw new VoertuigException("Nummerplaat is niet lang genoeg volgens formaat (1-)ABC-123");
             Nummerplaat = nummerplaat;
         }
         
@@ -118,14 +96,12 @@ namespace DomainLayer.Models
 
         public void SetAantalDeuren(int aantalDeuren)
         {
-            if (aantalDeuren < 3)
+            AantalDeuren = aantalDeuren switch
             {
-                throw new VoertuigException("Voertuig heeft minstens 3 deuren");
-            }
-
-            if (aantalDeuren > 5)
-                throw new VoertuigException("Voertuig mag maximaal 5 deuren hebben");
-            AantalDeuren = aantalDeuren;
+                < 3 => throw new VoertuigException("Voertuig heeft minstens 3 deuren"),
+                > 5 => throw new VoertuigException("Voertuig mag maximaal 5 deuren hebben"),
+                _ => aantalDeuren
+            };
         }
 
         public void SetBestuurder(Bestuurder bestuurder)

@@ -1,10 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using DomainLayer.Exceptions;
-using DomainLayer.Models;
 
-namespace DomainLayer
+namespace DomainLayer.Models
 {
+    /// <summary>
+    /// Todo : isGerarchiveerd toevoegen + methodes
+    /// ASK : Kaart kan niet gedeblokkeerd worden?
+    /// ASK : ZetBrandstofTypes hebben we deze methode nodige?
+    /// </summary>
+
+
     public class Tankkaart
     {
         public int Id { get; private set; } // verplicht
@@ -13,7 +19,7 @@ namespace DomainLayer
         public string Pincode { get; private set; }
         private List<BrandstofType> _brandstofTypes = new();
         public Bestuurder Bestuurder { get; private set; }
-        public bool IsGeblokkeerd { get; private set; } = false;
+        public bool IsGeblokkeerd { get; private set; }
 
         public Tankkaart(int id, string kaartnummer, DateTime geldigheidsDatum)
         {
@@ -56,7 +62,7 @@ namespace DomainLayer
             Geldigheidsdatum = datum;
         }
 
-        public void ZetBrandstofTypes(List<BrandstofType> brandstofTypes)
+        public void ZetBrandstofTypes(List<BrandstofType> brandstofTypes) 
         {
             if (brandstofTypes == null) throw new TankkaartException("ZetBrandstofTypes - brandstofTypes is null");
             if (_brandstofTypes.Count > 0) throw new TankkaartException("ZetBrandstofTypes - zitten al brandstoffen in de lijst");
@@ -88,11 +94,12 @@ namespace DomainLayer
         public void ZetBestuurder(Bestuurder bestuurder)
         {
             if(bestuurder == null) throw new TankkaartException("SetBestuurder - bestuurder is null ");
-            if(Bestuurder != null)
+            if(Bestuurder?.Tankkaart != null)
             {
-                //Bestuurder.RemoveTankkaart();
+                Bestuurder.VerwijderTankkaart();
             }
             Bestuurder = bestuurder;
+            if(bestuurder.Tankkaart != this) bestuurder.ZetTankkaart(this);
         }
 
         public void BlokkeerKaart()
@@ -100,6 +107,12 @@ namespace DomainLayer
             if(IsGeblokkeerd) throw new TankkaartException("kaart is al geblokkeerd");
             IsGeblokkeerd = true;
 
+        }
+
+        public void VerwijderBestuurder()
+        {
+            if (Bestuurder == null) throw new TankkaartException("VerwijderBestuurder - Bestuurder is al null");
+            Bestuurder = null;
         }
     }
 }

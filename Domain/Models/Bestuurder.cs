@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using DomainLayer.Exceptions;
 using DomainLayer.Exceptions.Models;
+using DomainLayer.Utilities;
 
 namespace DomainLayer.Models
 {
@@ -102,7 +103,7 @@ namespace DomainLayer.Models
         /// Controleert of het rijbewijs type niet al in de lijst staat anders geeft deze een BestuurderException.
         /// </summary>
         /// <param name="rijbewijsType">Het rijbewijs type dat moet worden toegevoegt.</param>
-        public void ToevoegenRijbewijsType(RijbewijsType rijbewijsType)
+        public void VoegRijbewijsTypeToe(RijbewijsType rijbewijsType)
         {
             if (rijbewijsType == null) throw new BestuurderException($"Een {nameof(RijbewijsType)} toevoegen gaat niet wanneer deze null is.");
             if (HeeftRijbewijsType(rijbewijsType)) throw new BestuurderException($"Het {nameof(RijbewijsType)} bevindt zich al in de lijst"); 
@@ -131,8 +132,7 @@ namespace DomainLayer.Models
         public void ZetTankkaart(Tankkaart tankkaart)
         {
             if (tankkaart == Tankkaart) throw new BestuurderException();//TODO : extra test
-            //TODO: Tankkart methode toevoegen.
-            //if (Tankkaart.Bestuurder != null) Tankkaart.VerwijderBestuurder(); 
+            if (Tankkaart?.Bestuurder != null) Tankkaart.VerwijderBestuurder(); 
             this.Tankkaart = tankkaart;
             if (tankkaart.Bestuurder != this)
             {
@@ -179,7 +179,7 @@ namespace DomainLayer.Models
         /// <summary>
         /// Verwijderd de tankkaart van de bestuurder
         /// </summary>
-        public void RemoveTankkaart()
+        public void VerwijderTankkaart()
         {
             if (Tankkaart == null) throw new BestuurderException(); //Todo: extra test
             Tankkaart = null;

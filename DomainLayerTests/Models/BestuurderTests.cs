@@ -5,7 +5,7 @@ using DomainLayer.Exceptions.Models;
 using DomainLayer.Models;
 using Xunit;
 
-namespace DomainLayerTests
+namespace DomainLayerTests.Models
 {
     public class BestuurderTests
     {
@@ -128,7 +128,7 @@ namespace DomainLayerTests
         public void HeeftRijbewijsTypeTest_HeeftRijbewijsType_ReturnsTrue()
         {
             var rijbewijsType = new RijbewijsType(){Id = 1, Type = "B"};
-            _bestuurder.ToevoegenRijbewijsType(rijbewijsType);
+            _bestuurder.VoegRijbewijsTypeToe(rijbewijsType);
             var result = _bestuurder.HeeftRijbewijsType(rijbewijsType);
 
             Assert.True(result);
@@ -153,24 +153,24 @@ namespace DomainLayerTests
         public void ToevoegenRijbewijsTypeTest_NogNietInDeLijst_RijbewijsTypeToegvoegdAanBestuurder()
         {
             var rijbewijsType = new RijbewijsType() { Id = 1, Type = "B" };
-            _bestuurder.ToevoegenRijbewijsType(rijbewijsType);
+            _bestuurder.VoegRijbewijsTypeToe(rijbewijsType);
 
             Assert.True(_bestuurder.HeeftRijbewijsType(rijbewijsType));
         }
 
         [Fact]
-        public void ToevoegenRijbewijsTypeTest_AlInDeLijst_ThrowsBestuurdersExcetion()
+        public void VoegRijbewijsTypeToeTest_AlInDeLijst_ThrowsBestuurdersExcetion()
         {
             var rijbewijsType = new RijbewijsType() { Id = 1, Type = "B" };
-            _bestuurder.ToevoegenRijbewijsType(rijbewijsType);
+            _bestuurder.VoegRijbewijsTypeToe(rijbewijsType);
 
-            Assert.Throws<BestuurderException>(()=> _bestuurder.ToevoegenRijbewijsType(rijbewijsType));
+            Assert.Throws<BestuurderException>(()=> _bestuurder.VoegRijbewijsTypeToe(rijbewijsType));
         }
 
         [Fact]
-        public void ToevoegenRijbewijsTypeTest_OngeldigRijbewijsType_ThrowsBestuurderException()
+        public void VoegRijbewijsTypeToeTest_OngeldigRijbewijsType_ThrowsBestuurderException()
         {
-            Assert.Throws<BestuurderException>(() => _bestuurder.ToevoegenRijbewijsType(null));
+            Assert.Throws<BestuurderException>(() => _bestuurder.VoegRijbewijsTypeToe(null));
         }
 
 
@@ -178,7 +178,7 @@ namespace DomainLayerTests
         public void VerwijderRijbewijsTypeTest_RijbewijsTypeIsInDeLijst_RijbewijsTypeVerwijderdBijBestuurder()
         {
             var rijbewijsType = new RijbewijsType() { Id = 1, Type = "B" };
-            _bestuurder.ToevoegenRijbewijsType(rijbewijsType);
+            _bestuurder.VoegRijbewijsTypeToe(rijbewijsType);
             _bestuurder.VerwijderRijbewijsType(rijbewijsType);
 
             Assert.False(_bestuurder.HeeftRijbewijsType(rijbewijsType));
@@ -203,8 +203,15 @@ namespace DomainLayerTests
         [Fact()]
         public void ZetTankkaartTest()
         {
-            //Todo: test voor set Tankkart
-            throw new NotImplementedException();
+            var tankkaart = new Tankkaart(1, "123", DateTime.Now);
+            var tankkaart2 = new Tankkaart(2, "123", DateTime.Now);
+            _bestuurder.ZetTankkaart(tankkaart);
+            _bestuurder.ZetTankkaart(tankkaart2);
+
+            Assert.Null(tankkaart.Bestuurder);
+            Assert.Equal(tankkaart2, _bestuurder.Tankkaart);
+            Assert.Equal(_bestuurder, tankkaart2.Bestuurder);
+
         }
 
         [Fact()]
@@ -251,7 +258,7 @@ namespace DomainLayerTests
             var tankkaart = new Tankkaart(1,"123",DateTime.Now);
             _bestuurder.ZetTankkaart(tankkaart);
             Assert.Equal(tankkaart , _bestuurder.Tankkaart);
-            _bestuurder.RemoveTankkaart();
+            _bestuurder.VerwijderTankkaart();
             Assert.Null(_bestuurder.Tankkaart);
         }
 
