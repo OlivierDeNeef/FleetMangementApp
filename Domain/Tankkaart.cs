@@ -9,7 +9,7 @@ namespace DomainLayer
         public int Id { get; private set; } // verplicht
         public string Kaartnummer { get; private set; } //verplicht
         public DateTime Geldigheidsdatum { get; private set; } //verplicht
-        public int Pincode { get; private set; }
+        public string Pincode { get; private set; }
         private List<BrandstofType> _brandstofTypes = new();
         public Bestuurder Bestuurder { get; private set; }
         public bool IsGeblokkeerd { get; private set; } = false;
@@ -20,7 +20,13 @@ namespace DomainLayer
             ZetKaartnummer(kaartnummer);
             ZetGeldigheidsdatum(geldigheidsDatum);
         }
-
+        public Tankkaart(int id, string kaartnummer, DateTime geldigheidsDatum, string pincode, List<BrandstofType> brandstofTypes, Bestuurder bestuurder) : this(id, kaartnummer, geldigheidsDatum)
+        {
+            ZetPincode(pincode);
+            ZetBrandstofTypes(brandstofTypes);
+            ZetBestuurder(bestuurder);
+            
+        }
         public void ZetId(int id)
         {
             if(id <= 0) throw new TankkaartException("Id mag niet kleiner zijn dan 1");
@@ -33,11 +39,12 @@ namespace DomainLayer
             Kaartnummer = kaartnummer.Trim();
         }
 
-        public void ZetPincode(int pincode) //moet 4 cijfers zijn
+        public void ZetPincode(string pincode) //moet 4 cijfers zijn
         {
             
-            if(pincode>9999) throw new TankkaartException("pincode mag maar 4 cijfers bevatten");
-            if(pincode < 1000) throw new TankkaartException("pincode moet 4 cijfers bevatten");
+            if (!int.TryParse(pincode, out int pinAsNumber)) throw new TankkaartException("pincode mag enkel cijfers bevatten");
+            if(pincode.Length > 4) throw new TankkaartException("pincode mag maar 4 cijfers bevatten");
+            if(pincode.Length < 4) throw new TankkaartException("pincode moet 4 cijfers bevatten");
             
             Pincode = pincode;
         }
@@ -46,6 +53,13 @@ namespace DomainLayer
         public void ZetGeldigheidsdatum(DateTime datum)
         {
             Geldigheidsdatum = datum;
+        }
+
+        public void ZetBrandstofTypes(List<BrandstofType> brandstofTypes)
+        {
+            if (brandstofTypes == null) throw new TankkaartException("ZetBrandstofTypes - brandstofTypes is null");
+            if (_brandstofTypes.Count > 0) throw new TankkaartException("ZetBrandstofTypes - zitten al brandstoffen in de lijst");
+            _brandstofTypes = brandstofTypes;
         }
 
         public void VoegBrandstofTypeToe(BrandstofType brandstof)
@@ -75,7 +89,7 @@ namespace DomainLayer
             if(bestuurder == null) throw new TankkaartException("SetBestuurder - bestuurder is null ");
             if(Bestuurder != null)
             {
-                Bestuurder.RemoveTankkaart();
+                //Bestuurder.RemoveTankkaart();
             }
             Bestuurder = bestuurder;
         }
