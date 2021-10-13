@@ -38,7 +38,7 @@ namespace DomainLayer.Models
         /// <param name="naam">De achternaam van de bestuurder.</param>
         public void ZetNaam(string naam)
         {
-            if (string.IsNullOrEmpty(naam.Trim())) throw new BestuurderException($"{nameof(Bestuurder)}.{nameof(naam)} Kan niet null of leeg zijn");
+            if (string.IsNullOrWhiteSpace(naam)) throw new BestuurderException($"{nameof(Bestuurder)}.{nameof(naam)} Kan niet null of leeg zijn");
             this.Naam = naam.Trim();
         }
 
@@ -49,7 +49,7 @@ namespace DomainLayer.Models
         /// <param name="voornaam">De voornaam van de bestuurder.</param>
         public void ZetVoornaam(string voornaam)
         {
-            if (string.IsNullOrEmpty(voornaam.Trim())) throw new BestuurderException($"{nameof(Bestuurder)}.{nameof(voornaam)} Kan niet null of leeg zijn");
+            if (string.IsNullOrWhiteSpace(voornaam)) throw new BestuurderException($"{nameof(Bestuurder)}.{nameof(voornaam)} Kan niet null of leeg zijn");
             this.Voornaam = voornaam.Trim();
         }
 
@@ -62,7 +62,6 @@ namespace DomainLayer.Models
         public void ZetGeboortedatum(DateTime geboortedatum)
         {
             if (DateTime.Today.AddYears(-18) < geboortedatum) throw new BestuurderException("Niet oud genoeg om bestuurder te zijn");
-            if (DateTime.Today.AddYears(-100) > geboortedatum) throw new BestuurderException("Onjuiste geboortedatum");
             this.Geboortedatum = geboortedatum;
         }
 
@@ -161,10 +160,10 @@ namespace DomainLayer.Models
         /// <summary>
         /// Veranderd de toestand van de bestuurder naar verwijderd of niet verwijderd
         /// </summary>
-        /// <param name="isDeleted">De status van verwijderd</param>
-        public void ZetGearchiveerd(bool isDeleted)
+        /// <param name="isGearchiveerd">De status van verwijderd</param>
+        public void ZetGearchiveerd(bool isGearchiveerd)
         {
-            this.IsGearchiveerd = isDeleted;
+            this.IsGearchiveerd = isGearchiveerd;
         }
 
         /// <summary>

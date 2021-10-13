@@ -1,6 +1,7 @@
 ﻿using DomainLayer.Interfaces;
+using DomainLayer.Interfaces.Repos;
 
-namespace DomainLayer
+namespace DomainLayer.Managers
 {
     public class BestuurderManager
     {

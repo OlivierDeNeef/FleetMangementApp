@@ -2,6 +2,7 @@
 using DomainLayer;
 using DomainLayer.Exceptions;
 using DomainLayer.Exceptions.Models;
+using DomainLayer.Exceptions.Utilities;
 using DomainLayer.Models;
 using Xunit;
 
@@ -79,7 +80,6 @@ namespace DomainLayerTests.Models
         }
 
         [Theory]
-        [InlineData(110)]
         [InlineData(9)]
         public void ZetGeboortedatumTest_OngeldigeGeboortedatum_ThrowsBestuurderException(int years)
         {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DomainLayer.Exceptions
+namespace DomainLayer.Exceptions.Utilities
 {
     public class RijksregisternummerCheckerException : Exception
     {

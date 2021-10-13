@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using DomainLayer.Exceptions;
+using DomainLayer.Exceptions.Models;
 using DomainLayer.Models;
 using Xunit;
 

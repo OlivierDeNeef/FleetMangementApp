@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using DomainLayer.Exceptions;
+using DomainLayer.Exceptions.Utilities;
 
 namespace DomainLayer.Utilities
 {

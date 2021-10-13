@@ -1,4 +1,4 @@
-﻿namespace DomainLayer.Interfaces
+﻿namespace DomainLayer.Interfaces.Repos
 {
     public interface IWagenTypeRepo
     {

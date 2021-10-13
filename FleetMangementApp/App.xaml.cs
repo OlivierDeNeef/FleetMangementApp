@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using DomainLayer.Interfaces;
+using DomainLayer.Interfaces.Repos;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FleetMangementApp
