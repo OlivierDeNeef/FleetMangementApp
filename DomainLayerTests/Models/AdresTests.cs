@@ -1,5 +1,6 @@
 ﻿using DomainLayer;
 using DomainLayer.Exceptions;
+using DomainLayer.Exceptions.Models;
 using Xunit;
 
 namespace DomainLayerTests

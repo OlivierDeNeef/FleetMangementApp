@@ -1,14 +1,10 @@
-﻿using Xunit;
-using DomainLayer;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DomainLayer;
 using DomainLayer.Exceptions;
+using DomainLayer.Exceptions.Models;
+using DomainLayer.Models;
+using Xunit;
 
-namespace DomainLayer.Tests
+namespace DomainLayerTests
 {
     public class VoertuigTests
     {
@@ -30,7 +26,7 @@ namespace DomainLayer.Tests
         [Fact()]
         public void SetId_NegatieveId_ThrowException()
         {
-            Assert.ThrowsAny<VoertuigExceptions>(() => _voertuig.SetId(-4));
+            Assert.ThrowsAny<VoertuigException>(() => _voertuig.SetId(-4));
         }
 
         [Fact()]
@@ -43,7 +39,7 @@ namespace DomainLayer.Tests
         [Fact()]
         public void SetMerkIsNull()
         {
-            Assert.ThrowsAny<VoertuigExceptions>(() => _voertuig.SetMerk(""));
+            Assert.ThrowsAny<VoertuigException>(() => _voertuig.SetMerk(""));
         }
 
         [Fact()]
@@ -56,7 +52,7 @@ namespace DomainLayer.Tests
         [Fact()]
         public void SetModelIsNull()
         {
-            Assert.ThrowsAny<VoertuigExceptions>(() => _voertuig.SetModel(""));
+            Assert.ThrowsAny<VoertuigException>(() => _voertuig.SetModel(""));
         }
 
         [Fact()]
@@ -72,7 +68,7 @@ namespace DomainLayer.Tests
         public void SetChassisnummerInValid(string nummer)
         {
             
-            Assert.ThrowsAny<VoertuigExceptions>(() => _voertuig.SetChassisnummer(nummer));
+            Assert.ThrowsAny<VoertuigException>(() => _voertuig.SetChassisnummer(nummer));
         }
 
         [Fact()]
@@ -91,7 +87,7 @@ namespace DomainLayer.Tests
         public void SetWagenTypeNullTest()
         {
             WagenType w = null;
-            Assert.ThrowsAny<VoertuigExceptions>(() => _voertuig.SetWagenType(w));
+            Assert.ThrowsAny<VoertuigException>(() => _voertuig.SetWagenType(w));
 
         }
 
@@ -105,7 +101,7 @@ namespace DomainLayer.Tests
             w.Type = type;
            // _voertuig.SetWagenType(w);
 
-            Assert.ThrowsAny<VoertuigExceptions>(() => _voertuig.SetWagenType(w));
+            Assert.ThrowsAny<VoertuigException>(() => _voertuig.SetWagenType(w));
 
         }
         
@@ -113,7 +109,7 @@ namespace DomainLayer.Tests
         public void SetBrandstofTypeNull()
         {
             BrandstofType b = null;
-            Assert.ThrowsAny<VoertuigExceptions>(() => _voertuig.SetBrandstofType(b));
+            Assert.ThrowsAny<VoertuigException>(() => _voertuig.SetBrandstofType(b));
         }
         [Fact()]
         public void SetBrandstofTypeTest()
@@ -130,7 +126,6 @@ namespace DomainLayer.Tests
         [Theory]
         [InlineData("1-123-DEF")]
         [InlineData("123-ABC")]
-        
         public void SetNummerplaatTest(string plaat)
         {
             _voertuig.SetNummerplaat(plaat);
@@ -142,7 +137,7 @@ namespace DomainLayer.Tests
         [InlineData("")]
         public void SetNummerplaatInvalid(string plaat)
         {
-            Assert.ThrowsAny<VoertuigExceptions>(() => _voertuig.SetNummerplaat(plaat));
+            Assert.ThrowsAny<VoertuigException>(() => _voertuig.SetNummerplaat(plaat));
         }
         [Fact()]
         public void SetKleurTest()
@@ -165,10 +160,10 @@ namespace DomainLayer.Tests
         [InlineData(7)]
         public void SetAantalDeurenInvalid(int aantal)
         {
-            Assert.ThrowsAny<VoertuigExceptions>(() => _voertuig.SetAantalDeuren(aantal));
+            Assert.ThrowsAny<VoertuigException>(() => _voertuig.SetAantalDeuren(aantal));
         }
         [Fact()]
-        public void SetBestuurderTest() // TODO Olivier
+        public void SetBestuurderTest() // TODO: Olivier
         {
             Assert.True(true, "This test needs an implementation");
         }

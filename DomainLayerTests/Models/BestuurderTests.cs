@@ -1,6 +1,8 @@
 ﻿using System;
 using DomainLayer;
 using DomainLayer.Exceptions;
+using DomainLayer.Exceptions.Models;
+using DomainLayer.Models;
 using Xunit;
 
 namespace DomainLayerTests

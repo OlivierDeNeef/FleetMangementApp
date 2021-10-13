@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Buffers;
 using DomainLayer.Exceptions;
+using DomainLayer.Exceptions.Models;
 
-namespace DomainLayer
+namespace DomainLayer.Models
 {
     public class Voertuig
     {
@@ -58,9 +58,9 @@ namespace DomainLayer
         public void SetChassisnummer(string chassiesnummer)
         {
             if (string.IsNullOrEmpty(chassiesnummer.Trim()))
-                throw new VoertuigExceptions("Het nummer kan niet null of leeg zijn");
+                throw new VoertuigException("Het nummer kan niet null of leeg zijn");
             if (chassiesnummer.Length != 17)
-                throw new VoertuigExceptions($"{nameof(chassiesnummer)} heef een exacte lengte van 17 karakters");
+                throw new VoertuigException($"{nameof(chassiesnummer)} heef een exacte lengte van 17 karakters");
             this.Chassisnummer = chassiesnummer.Trim();
         }
 
@@ -104,8 +104,8 @@ namespace DomainLayer
         {
             if (string.IsNullOrEmpty(nummerplaat))
 
-                throw new VoertuigExceptions("Nummerplaat moet verplicht ingevuld zijn");
-            if (nummerplaat.Length != 7 || nummerplaat.Length != 9) throw new VoertuigExceptions("Nummerplaat is niet lang genoeg volgens formaat (1-)ABC-123");
+                throw new VoertuigException("Nummerplaat moet verplicht ingevuld zijn");
+            if (nummerplaat.Length != 7 || nummerplaat.Length != 9) throw new VoertuigException("Nummerplaat is niet lang genoeg volgens formaat (1-)ABC-123");
 
             
             Nummerplaat = nummerplaat;

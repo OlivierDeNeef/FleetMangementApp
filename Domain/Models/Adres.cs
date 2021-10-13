@@ -1,5 +1,6 @@
 ﻿using System;
 using DomainLayer.Exceptions;
+using DomainLayer.Exceptions.Models;
 
 namespace DomainLayer
 {

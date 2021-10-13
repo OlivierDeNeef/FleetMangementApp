@@ -1,6 +1,6 @@
-﻿namespace DomainLayer
+﻿namespace DomainLayer.Models
 {
-    public class WagenType
+    public class RijbewijsType
     {
         public int Id { get; set; }
         public string Type { get; set; }

@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Reflection.Metadata.Ecma335;
 
-namespace DomainLayer.Exceptions
+namespace DomainLayer.Exceptions.Models
 {
     public class AdresException : Exception
     {
