@@ -76,13 +76,13 @@ namespace DomainLayer
             this.Rijksregisternummer = RijksregisternummerChecker.Parse(rijksregisternummer, Geboortedatum);
         }
 
-
+        /// <summary>
+        /// Veranderd het adres van de bestuurder
+        /// </summary>
+        /// <param name="adres">Het adres van de bestuurder</param>
         public void ZetAdres(Adres adres)
         {
-            //Todo : ZetAdres uitgeschrijven
-
-            if (adres == null)
-                throw new BestuurderException("Het adres kan niet null zijn", new NullReferenceException());
+            this.Adres = adres;
         }
 
         /// <summary>

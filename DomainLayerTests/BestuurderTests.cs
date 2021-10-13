@@ -114,7 +114,11 @@ namespace DomainLayerTests
         [Fact]
         public void ZetAdresTest_GeldigAdres_BestuurdersAdresVeranderd()
         {
-            //Todo : test class schrijven voor Zet adres
+            var adres = new Adres();
+            adres.ZetLand("belgie");
+            _bestuurder.ZetAdres(adres);
+
+            Assert.Equal(adres, _bestuurder.Adres);
         }
 
 
@@ -198,6 +202,7 @@ namespace DomainLayerTests
         public void ZetTankkaartTest()
         {
             //Todo: test voor set Tankkart
+            throw new NotImplementedException();
         }
 
         [Fact()]
