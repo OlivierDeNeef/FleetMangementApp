@@ -130,16 +130,25 @@ namespace DomainLayer
         public void SetBestuurder(Bestuurder bestuurder)
         {
             if (bestuurder == Bestuurder) throw new VoertuigException("Bestuurder is dezelde als de huidige");
+            if (Bestuurder?.Voertuig != null) Bestuurder.VerwijderVoertuig();
             Bestuurder = bestuurder;
             if (bestuurder.Voertuig != this)
             {
                 bestuurder.ZetVoertuig(this);
             }
+           
         }
 
         public void SetIsDeleted(bool isDeleted)
         {
             IsDeleted = isDeleted;
+        }
+
+        public void VerwijderBestuurder()
+        {
+            if (Bestuurder == null) throw new VoertuigException();
+            Bestuurder = null;
+
         }
     }
 }

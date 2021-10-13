@@ -131,12 +131,15 @@ namespace DomainLayer
         /// <param name="tankkaart">De tankkaart van de bestuurder.</param>
         public void ZetTankkaart(Tankkaart tankkaart)
         {
-            if (tankkaart == Tankkaart) throw new BestuurderException();
+            if (tankkaart == Tankkaart) throw new BestuurderException();//TODO : extra test
+            //TODO: Tankkart methode toevoegen.
+            //if (Tankkaart.Bestuurder != null) Tankkaart.VerwijderBestuurder(); 
             this.Tankkaart = tankkaart;
             if (tankkaart.Bestuurder != this)
             {
-                //Todo : wachten op tankkaart class
+                tankkaart.ZetBestuurder(this);
             }
+          
         }
 
         /// <summary>
@@ -145,12 +148,15 @@ namespace DomainLayer
         /// <param name="voertuig">Het voertuig van de bestuurder</param>
         public void ZetVoertuig(Voertuig voertuig)
         {
+            if (voertuig == null) throw new BestuurderException();
             if (voertuig == Voertuig) throw new BestuurderException();
+            if (Voertuig?.Bestuurder != null) Voertuig.VerwijderBestuurder(); //Todo : Extra test
             this.Voertuig = voertuig;
             if (voertuig.Bestuurder != this)
             {
                 voertuig.SetBestuurder(this);
             }
+           
         }
 
         /// <summary>
@@ -162,6 +168,22 @@ namespace DomainLayer
             this.IsGearchiveerd = isDeleted;
         }
 
-      
+        /// <summary>
+        /// Verwijder het voertuig van de bestuurder
+        /// </summary>
+        public void VerwijderVoertuig()
+        {
+            if (Voertuig == null) throw new BestuurderException(); //Todo : extra test
+            Voertuig = null;
+        }
+
+        /// <summary>
+        /// Verwijderd de tankkaart van de bestuurder
+        /// </summary>
+        public void RemoveTankkaart()
+        {
+            if (Tankkaart == null) throw new BestuurderException(); //Todo: extra test
+            Tankkaart = null;
+        }
     }
 }

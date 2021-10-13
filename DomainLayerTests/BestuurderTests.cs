@@ -242,5 +242,26 @@ namespace DomainLayerTests
             
             Assert.Equal(isDeleted , _bestuurder.IsGearchiveerd);
         }
+
+        [Fact]
+        public void VerwijderTankkaartTest_ZetTankkaartOpNull()
+        {
+            var tankkaart = new Tankkaart(1,"123",DateTime.Now);
+            _bestuurder.ZetTankkaart(tankkaart);
+            Assert.Equal(tankkaart , _bestuurder.Tankkaart);
+            _bestuurder.RemoveTankkaart();
+            Assert.Null(_bestuurder.Tankkaart);
+        }
+
+        [Fact]
+        public void VerwijderVoertuigTest_ZetVoertuigOpNull()
+        {
+            var voertuig = new Voertuig();
+            _bestuurder.ZetVoertuig(voertuig);
+            Assert.Equal(voertuig, _bestuurder.Voertuig);
+            _bestuurder.VerwijderVoertuig();
+            Assert.Null(_bestuurder.Voertuig);
+
+        }
     }
 }
