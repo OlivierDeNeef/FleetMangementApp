@@ -47,7 +47,7 @@ namespace DomainLayer.Models
         /// checking van het automodel, of het in de lijst staat
         /// </summary>
         /// <param name="model">het automodel</param>
-        public void SetModel(string model)
+        public void ZedModel(string model)
         {
             if (string.IsNullOrWhiteSpace(model)) throw new VoertuigException($"{nameof(model)} kan niet null of leeg zijn");
             this.Model = model.Trim();

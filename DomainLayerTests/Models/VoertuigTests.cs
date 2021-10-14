@@ -52,14 +52,14 @@ namespace DomainLayerTests.Models
         [Fact()]
         public void SetModelTest()
         {
-            _voertuig.SetModel("A-Klasse");
+            _voertuig.ZedModel("A-Klasse");
             Assert.Equal("A-Klasse", _voertuig.Model);
         }
 
         [Fact()]
         public void SetModelIsNull()
         {
-            Assert.ThrowsAny<VoertuigException>(() => _voertuig.SetModel(""));
+            Assert.ThrowsAny<VoertuigException>(() => _voertuig.ZedModel(""));
         }
 
         [Fact()]
