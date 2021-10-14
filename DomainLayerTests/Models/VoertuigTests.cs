@@ -64,7 +64,7 @@ namespace DomainLayerTests.Models
         [Fact()]
         public void SetChassisnummerTest()
         {
-            _voertuig.SetChassisnummer("123456ABCDEF789GH");
+            _voertuig.ZetChassisnummer("123456ABCDEF789GH");
             Assert.Equal("123456ABCDEF789GH", _voertuig.Chassisnummer);
         }
 
@@ -74,7 +74,7 @@ namespace DomainLayerTests.Models
         public void SetChassisnummerInValid(string nummer)
         {
             
-            Assert.ThrowsAny<VoertuigException>(() => _voertuig.SetChassisnummer(nummer));
+            Assert.ThrowsAny<VoertuigException>(() => _voertuig.ZetChassisnummer(nummer));
         }
 
         [Fact()]

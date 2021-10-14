@@ -57,7 +57,7 @@ namespace DomainLayer.Models
         /// de check of het chassiesnummer bestaat
         /// </summary>
         /// <param name="chassiesnummer"></param>
-        public void SetChassisnummer(string chassiesnummer)
+        public void ZetChassisnummer(string chassiesnummer)
         {
             if (string.IsNullOrWhiteSpace(chassiesnummer)) throw new VoertuigException("Het nummer kan niet null of leeg zijn");
             if (chassiesnummer.Length != 17) throw new VoertuigException($"{nameof(chassiesnummer)} heef een exacte lengte van 17 karakters");
