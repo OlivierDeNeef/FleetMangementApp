@@ -6,7 +6,12 @@ namespace DomainLayer.Models
     {
         public int Id { get; private set; }
         public string Type { get; private set; }
-        
+
+
+        public BrandstofType(string type)
+        {
+            ZetType(type);
+        }
 
         /// <summary>
         /// Dit veranderd de id van het brandstofType
@@ -19,10 +24,16 @@ namespace DomainLayer.Models
             this.Id = id;
         }
 
+
+        /// <summary>
+        /// Dit veranderd het type van de brandstof
+        /// Controlleert of het niet null of leeg is.
+        /// </summary>
+        /// <param name="type"></param>
         public void ZetType(string type)
         {
             if (string.IsNullOrWhiteSpace(type)) throw new BrandstofTypeException("ZetType - Type is null of leeg");
-            this.Type = type;
+            this.Type = type.Trim().ToUpper();
         }
     }
 

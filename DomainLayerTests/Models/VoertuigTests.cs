@@ -120,13 +120,12 @@ namespace DomainLayerTests.Models
         [Fact()]
         public void SetBrandstofTypeTest()
         {
-            BrandstofType b = new BrandstofType();
+            BrandstofType b = new BrandstofType("Benzine");
             b.ZetId(1);
-            b.ZetType("Benzine");
-           _voertuig.SetBrandstofType(b);
+            _voertuig.SetBrandstofType(b);
 
             Assert.Equal(1, _voertuig.BrandstofType.Id);
-            Assert.Equal("Benzine", _voertuig.BrandstofType.Type);
+            Assert.Equal("BENZINE", _voertuig.BrandstofType.Type);
         }
 
         [Theory]

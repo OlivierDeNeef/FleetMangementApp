@@ -15,7 +15,7 @@ namespace DomainLayerTests.Models
         /// </summary>
         public BestuurderTests()
         {
-            _bestuurder =  new Bestuurder();
+            _bestuurder =  new Bestuurder("De Neef", "Olivier", new DateTime(1999,10,6), "99100630515");
         }
 
         [Fact]
