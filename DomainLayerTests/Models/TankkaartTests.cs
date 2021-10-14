@@ -40,13 +40,12 @@ namespace DomainLayerTests.Models
             List<BrandstofType> brandstofTypes = new() {new BrandstofType("benzine") };
             Bestuurder bestuurder = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515");
 
-            Tankkaart tankkaart = new Tankkaart(5, "123ABC98", new DateTime(2022, 12, 31), "1111", brandstofTypes, bestuurder);
+            Tankkaart tankkaart = new Tankkaart(5,"123ABC98",new DateTime(2022,12,31),"1111",bestuurder);
 
             Assert.Equal(5, tankkaart.Id);
             Assert.Equal("123ABC98", tankkaart.Kaartnummer);
             Assert.Equal(new DateTime(2022, 12, 31), tankkaart.Geldigheidsdatum);
             Assert.Equal("1111", tankkaart.Pincode);
-            Assert.Equal(brandstofTypes, tankkaart.GeefBrandstofTypes());
             Assert.Equal(bestuurder, tankkaart.Bestuurder);
         }
 
@@ -85,7 +84,99 @@ namespace DomainLayerTests.Models
             Assert.Throws<TankkaartException>(() => tankkaart.ZetKaartnummer(kaartnummer));
         }
 
+        [Fact]
+        public void Test_ZetPincode_valid()
+        {
+            Bestuurder bestuurder = new Bestuurder();
 
+            Tankkaart tankkaart = new Tankkaart(5,"123ABC98",new DateTime(2022,12,31),"1111",bestuurder);
+
+            tankkaart.ZetPincode("1234");
+
+            Assert.Equal("1234",tankkaart.Pincode);
+        }
+
+        [Theory]
+        [InlineData("")]
+        [InlineData("ABCD")]
+        [InlineData("12345")]
+        [InlineData("123")]
+        public void Test_ZetPincode_invalid(string pincode)
+        {
+            Bestuurder bestuurder = new Bestuurder();
+
+            Tankkaart tankkaart = new Tankkaart(5,"123ABC98",new DateTime(2022,12,31),"1111",bestuurder);
+
+            Assert.Throws<TankkaartException>(() => tankkaart.ZetPincode(pincode));
+        }
+
+        [Fact]
+        public void Test_VoegBrandstofTypeToe_valid()
+        {
+            Tankkaart tankkaart = new Tankkaart(5,"123ABC98",new DateTime(2022,12,31));
+            BrandstofType brandstofType = new BrandstofType();
+            
+            tankkaart.VoegBrandstofTypeToe(brandstofType);
+            Assert.Equal(brandstofType,tankkaart.GeefBrandstofTypes()[0]);
+        }
+
+        [Fact]
+        public void Test_VoegBrandstofTypeToe_invalid_brandstofNull()
+        {
+            Tankkaart tankkaart = new Tankkaart(5,"123ABC98",new DateTime(2022,12,31));
+            BrandstofType brandstofType = null;
+
+            Assert.Throws<TankkaartException>(() => tankkaart.VoegBrandstofTypeToe(brandstofType));
+        }
+
+        [Fact]
+        public void Test_VoegBrandstofTypeToe_invalid_brandstofBestaatAl()
+        {
+            Tankkaart tankkaart = new Tankkaart(5,"123ABC98",new DateTime(2022,12,31));
+            BrandstofType diesel = new BrandstofType();
+            diesel.Id = 2;
+            diesel.Type = "Diesel";
+            tankkaart.VoegBrandstofTypeToe(diesel);
+
+            Assert.Throws<TankkaartException>(() => tankkaart.VoegBrandstofTypeToe(diesel));
+        }
+
+        [Fact]
+        public void Test_VoegBrandstofTypeToe_invalid_brandstofMetTypeBestaatAl()
+        {
+            Tankkaart tankkaart = new Tankkaart(5,"123ABC98",new DateTime(2022,12,31));
+            BrandstofType diesel = new BrandstofType();
+            diesel.Id = 2;
+            diesel.Type = "Diesel";
+            tankkaart.VoegBrandstofTypeToe(diesel);
+            BrandstofType diesel2 = new BrandstofType();
+            diesel2.Id = 8;
+            diesel2.Type = "Diesel";
+            Assert.Throws<TankkaartException>(() => tankkaart.VoegBrandstofTypeToe(diesel2));
+        }
+
+        [Fact]
+        public void Test_VerwijderBrandstofType_valid()
+        {
+            Tankkaart tankkaart = new Tankkaart(5,"123ABC98",new DateTime(2022,12,31));
+            BrandstofType brandstofType = new BrandstofType();
+
+            tankkaart.VoegBrandstofTypeToe(brandstofType);
+            tankkaart.VerwijderBrandstofType(brandstofType);
+            Assert.DoesNotContain(brandstofType,tankkaart.GeefBrandstofTypes());
+        }
+
+        [Fact]
+        public void Test_VerwijderBrandstofType_invalid_brandstofTypeNull()
+        {
+            Tankkaart tankkaart = new Tankkaart(5,"123ABC98",new DateTime(2022,12,31));
+            BrandstofType brandstofType = null;
+
+            Assert.Throws<TankkaartException>(() => tankkaart.VerwijderBrandstofType(brandstofType));
+        }
+
+        [Fact]
+        //public void Test_Ver
 
     }
 }
