@@ -124,6 +124,11 @@ namespace DomainLayer.Models
 
         public void ZetGearchiveerd(bool isGearchiveerd)
         {
+            if (isGearchiveerd)
+            {
+                Bestuurder.VerwijderVoertuig();
+                VerwijderBestuurder();
+            }
             IsGearchiveerd = isGearchiveerd;
         }
 
