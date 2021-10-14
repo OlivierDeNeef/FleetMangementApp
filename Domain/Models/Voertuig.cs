@@ -5,9 +5,9 @@ using DomainLayer.Exceptions.Models;
 namespace DomainLayer.Models
 {
     /// <summary>
-    /// Todo : Zet methodenamen Zoals in class diagram 
+    /// Todo : Zet methodenamen Zoals in class diagram
+    /// 
     /// </summary>
-
 
     public class Voertuig
     {
@@ -84,8 +84,10 @@ namespace DomainLayer.Models
 
         public void ZetNummerplaat(string nummerplaat)
         {
-            if (string.IsNullOrEmpty(nummerplaat)) throw new VoertuigException("Nummerplaat moet verplicht ingevuld zijn");
-            if ((nummerplaat.Length != 7 && nummerplaat.Length != 9)) throw new VoertuigException("Nummerplaat is niet lang genoeg volgens formaat (1-)ABC-123");
+            if (string.IsNullOrWhiteSpace(nummerplaat))
+                throw new VoertuigException("Nummerplaat moet verplicht ingevuld zijn");
+            if ((nummerplaat.Length != 7 && nummerplaat.Length != 9)) 
+                throw new VoertuigException("Nummerplaat is niet lang genoeg volgens formaat (1-)ABC-123");
             Nummerplaat = nummerplaat;
         }
         

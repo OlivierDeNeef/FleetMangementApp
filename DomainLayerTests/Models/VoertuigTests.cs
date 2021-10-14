@@ -6,6 +6,7 @@ namespace DomainLayerTests.Models
 {
     /// <summary>
     /// Todo : ZetNummerplaat uitgebreider testen
+    /// ASK : Rekening houden met gepersonaliseerde nummerplaten? (bv enkel letters)
     /// Todo : ZetBestuurder uitgebreider testen
     /// Todo : Tests schrijven voor verwijder bestuurder
     /// Todo : Ook testen op null waarde
@@ -139,7 +140,8 @@ namespace DomainLayerTests.Models
 
         [Theory]
         [InlineData("12-CD")]
-        [InlineData("")]
+        [InlineData(" ")]
+        [InlineData(null)]
         public void ZetNummerplaatInvalid(string plaat)
         {
             Assert.ThrowsAny<VoertuigException>(() => _voertuig.ZetNummerplaat(plaat));
