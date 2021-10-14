@@ -153,7 +153,7 @@ namespace DomainLayer.Models
             this.Voertuig = voertuig;
             if (voertuig.Bestuurder != this)
             {
-                voertuig.SetBestuurder(this);
+                voertuig.ZetBestuurder(this);
             }
            
         }

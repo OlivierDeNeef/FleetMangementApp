@@ -94,7 +94,7 @@ namespace DomainLayer.Models
 
         public void ZetBestuurder(Bestuurder bestuurder)
         {
-            if(bestuurder == null) throw new TankkaartException("SetBestuurder - bestuurder is null ");
+            if(bestuurder == null) throw new TankkaartException("ZetBestuurder - bestuurder is null ");
             if(Bestuurder?.Tankkaart != null)
             {
                 Bestuurder.VerwijderTankkaart();
