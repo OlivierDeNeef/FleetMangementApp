@@ -11,7 +11,7 @@ namespace DomainLayerTests.Models
 
         public AdresTests()
         {
-            _adres = new Adres();
+            _adres = new Adres("Rosstraat","65","Dendermonde","9200","Belgie");
         }
 
 
@@ -34,8 +34,6 @@ namespace DomainLayerTests.Models
         [Theory]
         [InlineData("     test    ", "test")]
         [InlineData("test", "test")]
-        [InlineData("", "")]
-        [InlineData(null, null)]
         public void ZetStraatTest_GeldigeStraat_AdresStraatVeranderd(string straat, string output)
         {
             _adres.ZetStraat(straat);
@@ -43,10 +41,16 @@ namespace DomainLayerTests.Models
             Assert.Equal(output, _adres.Straat);
         }
 
+        [Theory]
+        [InlineData("     ")]
+        [InlineData(null)]
+        public void ZetStraatTest_OnGeldigeStraat_ThrowsAdresException(string straat)
+        {
+            Assert.Throws<AdresException>(() => _adres.ZetStraat(straat));
+        }
+
 
         [Theory]
-        [InlineData("", "")]
-        [InlineData(null, null)]
         [InlineData("2     ", "2")]
         [InlineData("2A", "2A")]
         public void ZetHuisnummerTest_GeldigHuisnummer_AdresHuisnummerVeranderd(string huisnummer, string output)
@@ -57,10 +61,17 @@ namespace DomainLayerTests.Models
         }
 
         [Theory]
-        [InlineData("   Gent", "Gent")]
-        [InlineData("Gent", "Gent")]
-        [InlineData(null, null)]
-        [InlineData("", "")]
+        [InlineData("    ")]
+        [InlineData(null)]
+        [InlineData("A")]
+        public void ZetHuisnummerTest_OnGeldigHuisnummer_ThrowsAdresException(string huisnummer)
+        {
+            Assert.Throws<AdresException>(() => _adres.ZetHuisnummer(huisnummer));
+        }
+
+        [Theory]
+        [InlineData("   Gent", "GENT")]
+        [InlineData("Gent", "GENT")]
         public void ZetStadTest_GeldigeStad_AdresStadVeranderd(string stad, string output)
         {
             _adres.ZetStad(stad);
@@ -69,9 +80,17 @@ namespace DomainLayerTests.Models
         }
 
         [Theory]
-        [InlineData("belgie", "belgie")]
-        [InlineData("   belgie", "belgie")]
-        [InlineData(null, null)]
+        [InlineData("  ")]
+        [InlineData(null)]
+        public void ZetStadTest_OnGeldigeStad_ThrowsAdresException(string stad)
+        {
+            Assert.Throws<AdresException>(() => _adres.ZetStad(stad));
+        }
+
+        [Theory]
+        [InlineData("belgie", "BELGIE")]
+        [InlineData("   belgie", "BELGIE")]
+       
         public void ZetLandTest_GeldigLand_AdresLandVeranderd(string land, string output)
         {
             _adres.ZetLand(land);
@@ -80,14 +99,30 @@ namespace DomainLayerTests.Models
         }
 
         [Theory]
+        [InlineData("  ")]
+        [InlineData(null)]
+
+        public void ZetLandTest_OnGeldigLand_ThrowsAdresException(string land)
+        {
+            Assert.Throws<AdresException>(() => _adres.ZetLand(land));
+        }
+
+        [Theory]
         [InlineData("9200", "9200")]
         [InlineData("   9200", "9200")]
-        [InlineData(null, null)]
         public void ZetPostcodeTest_GeldigePostcode_AdresPostcodeveranderd(string postcode, string output)
         {
             _adres.ZetPostcode(postcode);
 
             Assert.Equal(output, _adres.Postcode);
+        }
+
+        [Theory]
+        [InlineData("  ")]
+        [InlineData(null)]
+        public void ZetPostcodeTest_OnGeldigePostcode_ThrowAdresException(string postcode)
+        {
+            Assert.Throws<AdresException>(()=> _adres.ZetPostcode(postcode));
         }
     }
 }

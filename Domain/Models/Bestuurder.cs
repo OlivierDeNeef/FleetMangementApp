@@ -6,10 +6,6 @@ using DomainLayer.Utilities;
 
 namespace DomainLayer.Models
 {
-    /// <summary>
-    /// TODO: VerwijderRijbewijs toevoegen 
-    /// </summary>
-
     public class Bestuurder
     {
         public int Id { get; private set; }
@@ -85,7 +81,14 @@ namespace DomainLayer.Models
         /// <param name="adres">Het adres van de bestuurder</param>
         public void ZetAdres(Adres adres)
         {
-            this.Adres = adres;
+            this.Adres = adres ?? throw new BestuurderException("ZetAdres - Adres is null");
+        }
+
+
+        public void VerwijderAdres()
+        {
+            if (Adres == null) throw new BestuurderException("VerwijderAdres - Adres is al null");
+            Adres = null;
         }
 
         /// <summary>

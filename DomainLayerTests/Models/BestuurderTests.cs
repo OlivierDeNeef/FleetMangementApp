@@ -1,5 +1,4 @@
 ﻿using System;
-using DomainLayer;
 using DomainLayer.Exceptions.Models;
 using DomainLayer.Exceptions.Utilities;
 using DomainLayer.Models;
@@ -115,13 +114,29 @@ namespace DomainLayerTests.Models
         [Fact]
         public void ZetAdresTest_GeldigAdres_BestuurdersAdresVeranderd()
         {
-            var adres = new Adres();
+            var adres = new Adres("Rosstraat","65","Dendermonde","9200","Belgie");
             adres.ZetLand("belgie");
             _bestuurder.ZetAdres(adres);
 
             Assert.Equal(adres, _bestuurder.Adres);
         }
 
+        [Fact]
+        public void ZetAdresTest_OnGeldigAdres_ThrowsBeException()
+        {
+            Assert.Throws<BestuurderException>(() => _bestuurder.ZetAdres(null));
+        }
+
+        [Fact]
+        public void VerwijderAdresTest_GeldigAdres_BestuurdersAdresVeranderd()
+        {
+            var adres = new Adres("Rosstraat", "65", "Dendermonde", "9200", "Belgie");
+            adres.ZetLand("belgie");
+            _bestuurder.ZetAdres(adres);
+            _bestuurder.VerwijderAdres();
+
+            Assert.Null(_bestuurder.Adres);
+        }
 
         [Fact]
         public void HeeftRijbewijsTypeTest_HeeftRijbewijsType_ReturnsTrue()

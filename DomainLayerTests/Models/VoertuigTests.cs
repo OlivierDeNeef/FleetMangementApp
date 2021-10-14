@@ -121,8 +121,8 @@ namespace DomainLayerTests.Models
         public void SetBrandstofTypeTest()
         {
             BrandstofType b = new BrandstofType();
-            b.Id = 1;
-            b.Type = "Benzine";
+            b.ZetId(1);
+            b.ZetType("Benzine");
            _voertuig.SetBrandstofType(b);
 
             Assert.Equal(1, _voertuig.BrandstofType.Id);
