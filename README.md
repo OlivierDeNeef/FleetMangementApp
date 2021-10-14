@@ -21,8 +21,7 @@ Projectwerk - Graduaatsproef
 
 ## Vragen
 
-- Wat is de minimumleeftijd van een bestuurder en maximum leeftijd? 18
-  - Geen check nodig bij max
+
 
 
 
