@@ -37,8 +37,8 @@ namespace DomainLayerTests.Models
         [Fact]
         public void Test_ctor_valid()
         {
-            List<BrandstofType> brandstofTypes = new() {new BrandstofType() };
-            Bestuurder bestuurder = new Bestuurder();
+            List<BrandstofType> brandstofTypes = new() {new BrandstofType("benzine") };
+            Bestuurder bestuurder = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515");
 
             Tankkaart tankkaart = new Tankkaart(5, "123ABC98", new DateTime(2022, 12, 31), "1111", brandstofTypes, bestuurder);
 

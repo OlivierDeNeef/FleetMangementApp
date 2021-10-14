@@ -15,7 +15,7 @@ namespace DomainLayer.Utilities
         /// <param name="rijksregisternummer"></param>
         /// <param name="geboortedatum"></param>
         /// <returns>Geeft een geformateerde rijksregisternummer terug</returns>
-        public static string Parse(string rijksregisternummer, DateTime geboortedatum ) //ASK: Deze manier goed ?
+        public static string Parse(string rijksregisternummer, DateTime geboortedatum ) 
         {
             if (string.IsNullOrEmpty(rijksregisternummer.Trim())) throw new RijksregisternummerCheckerException($"{nameof(rijksregisternummer)} kan niet leeg of null zijn.");
             rijksregisternummer = rijksregisternummer.Trim().Replace(".", "").Replace("-", "").Replace(" ", "");
