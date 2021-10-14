@@ -1,15 +1,16 @@
-﻿using DomainLayer.Exceptions.Models;
+﻿using System.Runtime.InteropServices;
+using DomainLayer.Exceptions.Models;
 using DomainLayer.Models;
 using Xunit;
 
 namespace DomainLayerTests.Models
 {
     /// <summary>
-    /// Todo : ZetNummerplaat uitgebreider testen
+    /// Todo : ZetNummerplaat uitgebreider testen// Done
     /// ASK : Rekening houden met gepersonaliseerde nummerplaten? (bv enkel letters)
-    /// Todo : ZetBestuurder uitgebreider testen
-    /// Todo : Tests schrijven voor verwijder bestuurder
-    /// Todo : Ook testen op null waarde
+    /// Todo : ZetBestuurder uitgebreider testen //Dome
+    /// Todo : Tests schrijven voor verwijder bestuurder//Dome
+    /// Todo : Ook testen op null waarde//Dome
     /// </summary>
 
 
@@ -31,35 +32,39 @@ namespace DomainLayerTests.Models
         }
 
         [Fact()]
-        public void ZetId_NegatieveId_ThrowException()
+        public void ZetId_NegatieveId_GooitException()
         {
             Assert.ThrowsAny<VoertuigException>(() => _voertuig.ZetId(-4));
         }
 
         [Fact()]
-        public void ZetMerkTest()
+        public void ZetMerkTestGeldig()
         {
            _voertuig.ZetMerk("Mercedez");
            Assert.Equal("Mercedez", _voertuig.Merk);
         }
 
-        [Fact()]
-        public void ZetMerkIsNull()
+         [Theory]
+         [InlineData("  ")]
+         [InlineData(null)]
+        public void ZetMerkOngeldig(string merk)
         {
-            Assert.ThrowsAny<VoertuigException>(() => _voertuig.ZetMerk(null));
+            Assert.ThrowsAny<VoertuigException>(() => _voertuig.ZetMerk(merk));
         }
 
         [Fact()]
-        public void ZetModelTest()
+        public void ZetModelGeldig()
         {
             _voertuig.ZetModel("A-Klasse");
             Assert.Equal("A-Klasse", _voertuig.Model);
         }
 
-        [Fact()]
-        public void ZetModelIsNull()
+        [Theory]
+        [InlineData("  ")]
+        [InlineData(null)]
+        public void ZetModelOngeldig(string model)
         {
-            Assert.ThrowsAny<VoertuigException>(() => _voertuig.ZetModel(null));
+            Assert.ThrowsAny<VoertuigException>(() => _voertuig.ZetModel(model));
         }
 
         [Fact()]
@@ -72,6 +77,7 @@ namespace DomainLayerTests.Models
         [Theory]
         [InlineData("123456ABCDEF78")]
         [InlineData("")]
+        [InlineData(null)]
         public void ZetChassisnummerInValid(string nummer)
         {
             
@@ -165,14 +171,46 @@ namespace DomainLayerTests.Models
         [Theory]
         [InlineData(2)]
         [InlineData(7)]
-        public void ZetAantalDeurenInvalid(int aantal)
+        public void ZetAantalDeurenOngeldig(int aantal)
         {
             Assert.ThrowsAny<VoertuigException>(() => _voertuig.ZetAantalDeuren(aantal));
         }
         [Fact()]
-        public void ZetBestuurderTest() // TODO: Olivier
+        public void ZetBestuurderTestGeldig() // TODO: Olivier
         {
-            Assert.True(true, "This test needs an implementation");
+            Bestuurder b = new Bestuurder();
+            _voertuig.ZetBestuurder(b);
+
+            Assert.Equal(b, _voertuig.Bestuurder);
+            
+        }
+
+        [Fact()]
+        
+        public void ZetBestuurderTestOngeldig()
+        {
+            Bestuurder b = new Bestuurder();
+            _voertuig.ZetBestuurder(b);
+            Assert.ThrowsAny<VoertuigException>(() => _voertuig.ZetBestuurder(b));
+        }
+
+
+
+        [Fact()]
+        public void VerwijderBestuurder()
+        {
+            Bestuurder b = new Bestuurder();
+            _voertuig.ZetBestuurder(b);
+            _voertuig.VerwijderBestuurder();
+            Assert.Null(_voertuig.Bestuurder);
+        }
+
+
+        [Fact()]
+        public void VerwijderBestuurderIsNull(){
+           
+            Assert.ThrowsAny<VoertuigException>(() => _voertuig.VerwijderBestuurder());
+
         }
 
         [Fact()]

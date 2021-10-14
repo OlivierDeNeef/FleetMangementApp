@@ -82,8 +82,10 @@ namespace DomainLayer.Models
             BrandstofType = brandstofType ?? throw new VoertuigException("Het brandstoftype moet ingevuld zijn");
         }
 
-        public void ZetNummerplaat(string nummerplaat)
+        public void ZetNummerplaat(string nummerplaat) //Docent besliste dat het enkel via de gewone manier mag zijn
         {
+            if (!char.IsDigit(nummerplaat[0]))
+                throw new VoertuigException("Nummerplaat NOET beginnen met een cijfer");
             if (string.IsNullOrWhiteSpace(nummerplaat))
                 throw new VoertuigException("Nummerplaat moet verplicht ingevuld zijn");
             if ((nummerplaat.Length != 7 && nummerplaat.Length != 9)) 
@@ -108,8 +110,10 @@ namespace DomainLayer.Models
 
         public void ZetBestuurder(Bestuurder bestuurder)
         {
-            if (bestuurder == Bestuurder) throw new VoertuigException("Bestuurder is dezelde als de huidige");
-            if (Bestuurder?.Voertuig != null) Bestuurder.VerwijderVoertuig();
+            if (bestuurder == Bestuurder) 
+                throw new VoertuigException("Bestuurder is dezelde als de huidige");
+            if (Bestuurder?.Voertuig != null) 
+                Bestuurder.VerwijderVoertuig();
             Bestuurder = bestuurder;
             if (bestuurder.Voertuig != this)
             {
