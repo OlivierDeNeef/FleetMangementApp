@@ -5,7 +5,6 @@ using Xunit;
 namespace DomainLayerTests.Models
 {
     /// <summary>
-    /// Todo : Failed test SetNummerplaat
     /// Todo : SetNummerplaat uitgebreider testen
     /// Todo : SetBestuurder uitgebreider testen
     /// Todo : Tests schrijven voor verwijder bestuurder
