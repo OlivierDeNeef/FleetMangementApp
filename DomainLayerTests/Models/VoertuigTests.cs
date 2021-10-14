@@ -51,20 +51,20 @@ namespace DomainLayerTests.Models
         [Fact()]
         public void SetModelTest()
         {
-            _voertuig.SetModel("A-Klasse");
+            _voertuig.ZedModel("A-Klasse");
             Assert.Equal("A-Klasse", _voertuig.Model);
         }
 
         [Fact()]
         public void SetModelIsNull()
         {
-            Assert.ThrowsAny<VoertuigException>(() => _voertuig.SetModel(""));
+            Assert.ThrowsAny<VoertuigException>(() => _voertuig.ZedModel(""));
         }
 
         [Fact()]
         public void SetChassisnummerTest()
         {
-            _voertuig.SetChassisnummer("123456ABCDEF789GH");
+            _voertuig.ZetChassisnummer("123456ABCDEF789GH");
             Assert.Equal("123456ABCDEF789GH", _voertuig.Chassisnummer);
         }
 
@@ -74,7 +74,7 @@ namespace DomainLayerTests.Models
         public void SetChassisnummerInValid(string nummer)
         {
             
-            Assert.ThrowsAny<VoertuigException>(() => _voertuig.SetChassisnummer(nummer));
+            Assert.ThrowsAny<VoertuigException>(() => _voertuig.ZetChassisnummer(nummer));
         }
 
         [Fact()]

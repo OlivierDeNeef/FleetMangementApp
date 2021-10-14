@@ -47,7 +47,7 @@ namespace DomainLayer.Models
         /// checking van het automodel, of het in de lijst staat
         /// </summary>
         /// <param name="model">het automodel</param>
-        public void SetModel(string model)
+        public void ZedModel(string model)
         {
             if (string.IsNullOrWhiteSpace(model)) throw new VoertuigException($"{nameof(model)} kan niet null of leeg zijn");
             this.Model = model.Trim();
@@ -57,7 +57,7 @@ namespace DomainLayer.Models
         /// de check of het chassiesnummer bestaat
         /// </summary>
         /// <param name="chassiesnummer"></param>
-        public void SetChassisnummer(string chassiesnummer)
+        public void ZetChassisnummer(string chassiesnummer)
         {
             if (string.IsNullOrWhiteSpace(chassiesnummer)) throw new VoertuigException("Het nummer kan niet null of leeg zijn");
             if (chassiesnummer.Length != 17) throw new VoertuigException($"{nameof(chassiesnummer)} heef een exacte lengte van 17 karakters");
