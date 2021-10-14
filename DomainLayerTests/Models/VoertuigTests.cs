@@ -1,14 +1,16 @@
-﻿using DomainLayer.Exceptions.Models;
+﻿using System.Runtime.InteropServices;
+using DomainLayer.Exceptions.Models;
 using DomainLayer.Models;
 using Xunit;
 
 namespace DomainLayerTests.Models
 {
     /// <summary>
-    /// Todo : SetNummerplaat uitgebreider testen
-    /// Todo : SetBestuurder uitgebreider testen
-    /// Todo : Tests schrijven voor verwijder bestuurder
-    /// Todo : Ook testen op null waarde
+    /// Todo : ZetNummerplaat uitgebreider testen// Done
+    /// ASK : Rekening houden met gepersonaliseerde nummerplaten? (bv enkel letters)
+    /// Todo : ZetBestuurder uitgebreider testen //Dome
+    /// Todo : Tests schrijven voor verwijder bestuurder//Dome
+    /// Todo : Ook testen op null waarde//Dome
     /// </summary>
 
 
@@ -22,47 +24,51 @@ namespace DomainLayerTests.Models
             _voertuig = new Voertuig();
         } 
         [Fact()]
-        public void SetIdTest()
+        public void ZetIdTest()
         {
-            _voertuig.SetId(4);
+            _voertuig.ZetId(4);
             Assert.Equal(4, _voertuig.Id);
 
         }
 
         [Fact()]
-        public void SetId_NegatieveId_ThrowException()
+        public void ZetId_NegatieveId_GooitException()
         {
-            Assert.ThrowsAny<VoertuigException>(() => _voertuig.SetId(-4));
+            Assert.ThrowsAny<VoertuigException>(() => _voertuig.ZetId(-4));
         }
 
         [Fact()]
-        public void SetMerkTest()
+        public void ZetMerkTestGeldig()
         {
-           _voertuig.SetMerk("Mercedez");
+           _voertuig.ZetMerk("Mercedez");
            Assert.Equal("Mercedez", _voertuig.Merk);
         }
 
-        [Fact()]
-        public void SetMerkIsNull()
+         [Theory]
+         [InlineData("  ")]
+         [InlineData(null)]
+        public void ZetMerkOngeldig(string merk)
         {
-            Assert.ThrowsAny<VoertuigException>(() => _voertuig.SetMerk(""));
+            Assert.ThrowsAny<VoertuigException>(() => _voertuig.ZetMerk(merk));
         }
 
         [Fact()]
-        public void SetModelTest()
+        public void ZetModelGeldig()
         {
-            _voertuig.ZedModel("A-Klasse");
+            _voertuig.ZetModel("A-Klasse");
             Assert.Equal("A-Klasse", _voertuig.Model);
         }
 
-        [Fact()]
-        public void SetModelIsNull()
+        [Theory]
+        [InlineData("  ")]
+        [InlineData(null)]
+        public void ZetModelOngeldig(string model)
         {
-            Assert.ThrowsAny<VoertuigException>(() => _voertuig.ZedModel(""));
+            Assert.ThrowsAny<VoertuigException>(() => _voertuig.ZetModel(model));
         }
 
         [Fact()]
-        public void SetChassisnummerTest()
+        public void ZetChassisnummerTest()
         {
             _voertuig.ZetChassisnummer("123456ABCDEF789GH");
             Assert.Equal("123456ABCDEF789GH", _voertuig.Chassisnummer);
@@ -71,92 +77,92 @@ namespace DomainLayerTests.Models
         [Theory]
         [InlineData("123456ABCDEF78")]
         [InlineData("")]
-        public void SetChassisnummerInValid(string nummer)
+        [InlineData(null)]
+        public void ZetChassisnummerInValid(string nummer)
         {
             
             Assert.ThrowsAny<VoertuigException>(() => _voertuig.ZetChassisnummer(nummer));
         }
 
         [Fact()]
-        public void SetWagenTypeTest()
+        public void ZetWagenTypeTest()
         {
             WagenType w = new WagenType();
             w.Id = 1;
             w.Type = "Bestelbus";
-            _voertuig.SetWagenType(w);
+            _voertuig.ZetWagenType(w);
 
             Assert.Equal(1, _voertuig.WagenType.Id);
             Assert.Equal("Bestelbus", _voertuig.WagenType.Type);
         }
 
         [Fact()]
-        public void SetWagenTypeNullTest()
+        public void ZetWagenTypeNullTest()
         {
             WagenType w = null;
-            Assert.ThrowsAny<VoertuigException>(() => _voertuig.SetWagenType(w));
+            Assert.ThrowsAny<VoertuigException>(() => _voertuig.ZetWagenType(w));
 
         }
 
         [Theory]
         [InlineData(0, "Bestelbus")]
         [InlineData(1, "")]
-        public void SetWagenTypeIdInvalidAndInvalidType(int id, string type)
+        public void ZetWagenTypeIdInvalidAndInvalidType(int id, string type)
         {
             WagenType w = new WagenType();
             w.Id = id;
             w.Type = type;
-           // _voertuig.SetWagenType(w);
-
-            Assert.ThrowsAny<VoertuigException>(() => _voertuig.SetWagenType(w));
+           
+            Assert.ThrowsAny<VoertuigException>(() => _voertuig.ZetWagenType(w));
 
         }
         
         [Fact()]
-        public void SetBrandstofTypeNull()
+        public void ZetBrandstofTypeNull()
         {
-            BrandstofType b = null;
-            Assert.ThrowsAny<VoertuigException>(() => _voertuig.SetBrandstofType(b));
+         
+            Assert.ThrowsAny<VoertuigException>(() => _voertuig.ZetBrandstofType(null));
         }
         [Fact()]
-        public void SetBrandstofTypeTest()
+        public void ZetBrandstofTypeTest()
         {
-            BrandstofType b = new BrandstofType();
-            b.Id = 1;
-            b.Type = "Benzine";
-           _voertuig.SetBrandstofType(b);
+            BrandstofType b = new BrandstofType("Benzine");
+            b.ZetId(1);
+            _voertuig.SetBrandstofType(b);
 
             Assert.Equal(1, _voertuig.BrandstofType.Id);
-            Assert.Equal("Benzine", _voertuig.BrandstofType.Type);
+            Assert.Equal("BENZINE", _voertuig.BrandstofType.Type);
         }
 
         [Theory]
         [InlineData("1-123-DEF")]
         [InlineData("123-ABC")]
-        public void SetNummerplaatTest(string plaat)
+        public void ZetNummerplaatTest(string plaat)
         {
-            _voertuig.SetNummerplaat(plaat);
+            _voertuig.ZetNummerplaat(plaat);
             Assert.Equal(plaat, _voertuig.Nummerplaat);
         }
 
         [Theory]
         [InlineData("12-CD")]
-        [InlineData("")]
-        public void SetNummerplaatInvalid(string plaat)
+        [InlineData(" ")]
+        [InlineData(null)]
+        public void ZetNummerplaatInvalid(string plaat)
         {
-            Assert.ThrowsAny<VoertuigException>(() => _voertuig.SetNummerplaat(plaat));
+            Assert.ThrowsAny<VoertuigException>(() => _voertuig.ZetNummerplaat(plaat));
         }
         [Fact()]
-        public void SetKleurTest()
+        public void ZetKleurTest()
         {
-            _voertuig.SetKleur("Rood");
+            _voertuig.ZetKleur("Rood");
             Assert.Equal("Rood", _voertuig.Kleur);
 
         }
 
         [Fact()]
-        public void SetAantalDeurenTest()
+        public void ZetAantalDeurenTest()
         {
-            _voertuig.SetAantalDeuren(4);
+            _voertuig.ZetAantalDeuren(4);
             Assert.Equal(4, _voertuig.AantalDeuren);
 
         }
@@ -164,27 +170,59 @@ namespace DomainLayerTests.Models
         [Theory]
         [InlineData(2)]
         [InlineData(7)]
-        public void SetAantalDeurenInvalid(int aantal)
+        public void ZetAantalDeurenOngeldig(int aantal)
         {
-            Assert.ThrowsAny<VoertuigException>(() => _voertuig.SetAantalDeuren(aantal));
+            Assert.ThrowsAny<VoertuigException>(() => _voertuig.ZetAantalDeuren(aantal));
         }
         [Fact()]
-        public void SetBestuurderTest() // TODO: Olivier
+        public void ZetBestuurderTestGeldig() // TODO: Olivier
         {
-            Assert.True(true, "This test needs an implementation");
+            Bestuurder b = new Bestuurder();
+            _voertuig.ZetBestuurder(b);
+
+            Assert.Equal(b, _voertuig.Bestuurder);
+            
         }
 
         [Fact()]
-        public void SetIsDeletedTestTrue()
+        
+        public void ZetBestuurderTestOngeldig()
         {
-            _voertuig.SetIsDeleted(true);
-            Assert.True(_voertuig.IsDeleted);
+            Bestuurder b = new Bestuurder();
+            _voertuig.ZetBestuurder(b);
+            Assert.ThrowsAny<VoertuigException>(() => _voertuig.ZetBestuurder(b));
+        }
+
+
+
+        [Fact()]
+        public void VerwijderBestuurder()
+        {
+            Bestuurder b = new Bestuurder();
+            _voertuig.ZetBestuurder(b);
+            _voertuig.VerwijderBestuurder();
+            Assert.Null(_voertuig.Bestuurder);
+        }
+
+
+        [Fact()]
+        public void VerwijderBestuurderIsNull(){
+           
+            Assert.ThrowsAny<VoertuigException>(() => _voertuig.VerwijderBestuurder());
+
+        }
+
+        [Fact()]
+        public void ZetIsGearchiveerdGeslaagd()
+        {
+            _voertuig.ZetGearchiveerd(true);
+            Assert.True(_voertuig.IsGearchiveerd);
         }
         [Fact()]
-        public void SetIsDeletedTestFalse()
+        public void ZetIsGearchiveerdGefaald()
         {
-            _voertuig.SetIsDeleted(false);
-            Assert.False(_voertuig.IsDeleted);
+            _voertuig.ZetGearchiveerd(false);
+            Assert.False(_voertuig.IsGearchiveerd);
         }
     }
 }

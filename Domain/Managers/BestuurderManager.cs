@@ -1,5 +1,8 @@
-﻿using DomainLayer.Interfaces;
+﻿using System;
+using DomainLayer.Exceptions.Models;
+using DomainLayer.Interfaces;
 using DomainLayer.Interfaces.Repos;
+using DomainLayer.Models;
 
 namespace DomainLayer.Managers
 {
@@ -9,6 +12,19 @@ namespace DomainLayer.Managers
         public BestuurderManager(IBestuurderRepo bestuurderRepo)
         {
             _bestuurderRepo = bestuurderRepo;
+        }
+
+        public void VoegBestuurderToe(IBestuurderRepo bestuurderRepo)
+        {
+            try
+            {
+               
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw new BestuurderException("VoegBestuurderToe - Er ging iets mis bij het toevoegen", e);
+            }
         }
     }
 }

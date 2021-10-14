@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using DomainLayer.Exceptions;
 using DomainLayer.Exceptions.Models;
+using DomainLayer.Exceptions.Utilities;
 using DomainLayer.Utilities;
 
 namespace DomainLayer.Models
@@ -18,7 +19,15 @@ namespace DomainLayer.Models
         public Tankkaart Tankkaart { get; private set; }
         public Voertuig Voertuig { get; private set; }
         public bool IsGearchiveerd { get; private set; }
-        
+
+
+        public Bestuurder(string naam, string voornaam, DateTime geboortedatum, string rijksregisternummer)
+        {
+            ZetNaam(naam);
+            ZetVoornaam(voornaam);
+            ZetGeboortedatum(geboortedatum);
+            ZetRijksregisternummer(rijksregisternummer);
+        }
 
         /// <summary>
         /// Veranderd id van de bestuurder.
@@ -72,7 +81,17 @@ namespace DomainLayer.Models
         /// <param name="rijksregisternummer">Het rijksregisternummer voor de bestuurder</param>
         public void ZetRijksregisternummer(string rijksregisternummer)
         {
-            this.Rijksregisternummer = RijksregisternummerChecker.Parse(rijksregisternummer, Geboortedatum);
+            try
+            {
+                this.Rijksregisternummer = RijksregisternummerChecker.Parse(rijksregisternummer, Geboortedatum);
+            }
+            catch (RijksregisternummerCheckerException e)
+            {
+
+                throw new BestuurderException("ZetRijksregisternummer - inner Exception", e);
+            }
+
+            
         }
 
         /// <summary>
@@ -81,7 +100,14 @@ namespace DomainLayer.Models
         /// <param name="adres">Het adres van de bestuurder</param>
         public void ZetAdres(Adres adres)
         {
-            this.Adres = adres;
+            this.Adres = adres ?? throw new BestuurderException("ZetAdres - Adres is null");
+        }
+
+
+        public void VerwijderAdres()
+        {
+            if (Adres == null) throw new BestuurderException("VerwijderAdres - Adres is al null");
+            Adres = null;
         }
 
         /// <summary>
@@ -153,7 +179,7 @@ namespace DomainLayer.Models
             this.Voertuig = voertuig;
             if (voertuig.Bestuurder != this)
             {
-                voertuig.SetBestuurder(this);
+                voertuig.ZetBestuurder(this);
             }
            
         }
