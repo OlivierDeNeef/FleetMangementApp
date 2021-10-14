@@ -1,12 +1,17 @@
 ﻿using System;
-using DomainLayer.Exceptions;
 using DomainLayer.Exceptions.Models;
 
-namespace DomainLayer
+namespace DomainLayer.Models
 {
+    /// <summary>
+    /// TODO: als Adres wordt toegevoed moet het volledige zijn
+    /// TODO: controlleer beter op huis nummer
+    /// 
+    /// </summary>
+
     public class Adres
     {
-        public int Id { get; set; }
+        public int Id { get; private set; }
         public string Straat { get; private set; }
         public string Huisnummer { get; private set; }
         public string Stad { get; private set; } 

@@ -6,6 +6,10 @@ using DomainLayer.Utilities;
 
 namespace DomainLayer.Models
 {
+    /// <summary>
+    /// TODO: VerwijderRijbewijs toevoegen 
+    /// </summary>
+
     public class Bestuurder
     {
         public int Id { get; private set; }
