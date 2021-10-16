@@ -263,11 +263,11 @@ namespace DomainLayerTests.Models
         [InlineData(true)]
         [InlineData(false)]
         [InlineData(null)]
-        public void ZetGearchiveerdTest_VeranderdBestuurderIsDeleted(bool isDeleted)
+        public void ZetGearchiveerdTest_VeranderdBestuurderIsDeleted(bool isGearchiveerd)
         {
-            _bestuurder.ZetGearchiveerd(isDeleted);
+            _bestuurder.ZetGearchiveerd(isGearchiveerd);
             
-            Assert.Equal(isDeleted , _bestuurder.IsGearchiveerd);
+            Assert.Equal(isGearchiveerd , _bestuurder.IsGearchiveerd);
         }
 
         [Fact]

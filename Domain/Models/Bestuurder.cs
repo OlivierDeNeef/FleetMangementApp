@@ -190,6 +190,14 @@ namespace DomainLayer.Models
         /// <param name="isGearchiveerd">De status van verwijderd</param>
         public void ZetGearchiveerd(bool isGearchiveerd)
         {
+            if (isGearchiveerd)
+            {
+                Voertuig.VerwijderBestuurder();
+                Tankkaart.VerwijderBestuurder();
+                VerwijderVoertuig();
+                VerwijderTankkaart();
+            }
+            
             this.IsGearchiveerd = isGearchiveerd;
         }
 
