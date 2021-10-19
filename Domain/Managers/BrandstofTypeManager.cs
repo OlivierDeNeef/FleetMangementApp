@@ -24,7 +24,7 @@ namespace DomainLayer.Managers
         {
             try
             {
-                if (!_brandstofTypeRepo.BestaatBrandstofType(brandstofType))
+                if (!_brandstofTypeRepo.BestaatBrandstofType(brandstofType)) //ASK : controle hier uitvoeren of op in repo.VoegbranstofTypeToe
                 {
                     _brandstofTypeRepo.VoegBrandstofTypeToe(brandstofType);
                 }

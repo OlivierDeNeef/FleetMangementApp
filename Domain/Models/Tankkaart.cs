@@ -10,6 +10,7 @@ namespace DomainLayer.Models
     /// Todo : isGerarchiveerd toevoegen + methodes
     /// ASK : Kaart kan niet gedeblokkeerd worden?
     /// ASK : ZetBrandstofTypes hebben we deze methode nodige?
+    /// TODO: commentaren bij zetten
     /// </summary>
 
 
@@ -23,11 +24,15 @@ namespace DomainLayer.Models
         public Bestuurder Bestuurder { get; private set; }
         public bool IsGeblokkeerd { get; private set; }
 
-        public Tankkaart(int id, string kaartnummer, DateTime geldigheidsDatum)
+        public Tankkaart(string kaartnummer, DateTime geldigheidsDatum)
         {
-            ZetId(id);
             ZetKaartnummer(kaartnummer);
             ZetGeldigheidsdatum(geldigheidsDatum);
+        }
+
+        public Tankkaart(int id, string kaartnummer, DateTime geldigheidsDatum) : this(kaartnummer, geldigheidsDatum)
+        {
+            ZetId(id);
         }
         public Tankkaart(int id, string kaartnummer, DateTime geldigheidsDatum, string pincode, Bestuurder bestuurder) : this(id, kaartnummer, geldigheidsDatum)
         {

@@ -20,13 +20,18 @@ namespace DomainLayer.Models
         public Voertuig Voertuig { get; private set; }
         public bool IsGearchiveerd { get; private set; }
 
+        public Bestuurder(int id, string naam, string voornaam, DateTime geboortedatum, string rijksregisternummer, List<RijbewijsType> rijbewijsTypes) : this( naam,  voornaam, geboortedatum, rijksregisternummer, rijbewijsTypes)
+        {
+            ZetId(id);
+        }
 
-        public Bestuurder(string naam, string voornaam, DateTime geboortedatum, string rijksregisternummer)
+        public Bestuurder(string naam, string voornaam, DateTime geboortedatum, string rijksregisternummer,List<RijbewijsType> rijbewijsTypes)
         {
             ZetNaam(naam);
             ZetVoornaam(voornaam);
             ZetGeboortedatum(geboortedatum);
             ZetRijksregisternummer(rijksregisternummer);
+            _rijbewijsTypes = rijbewijsTypes;
         }
 
         /// <summary>

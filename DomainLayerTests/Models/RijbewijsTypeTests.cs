@@ -17,7 +17,7 @@ namespace DomainLayer.Models.Tests
 
         public RijbewijsTypeTests()
         {
-            _rijbewijsType = new RijbewijsType();
+            _rijbewijsType = new RijbewijsType("B");
         }
 
         [Fact()]

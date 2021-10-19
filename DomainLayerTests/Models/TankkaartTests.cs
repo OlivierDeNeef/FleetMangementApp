@@ -38,7 +38,7 @@ namespace DomainLayerTests.Models
         public void Test_ctor_valid()
         {
             List<BrandstofType> brandstofTypes = new() {new BrandstofType("benzine") };
-            Bestuurder bestuurder = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515");
+            Bestuurder bestuurder = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515",new List<RijbewijsType>());
 
             Tankkaart tankkaart = new Tankkaart(5,"123ABC98",new DateTime(2022,12,31),"1111",bestuurder);
 
@@ -87,7 +87,7 @@ namespace DomainLayerTests.Models
         [Fact]
         public void Test_ZetPincode_valid()
         {
-            Bestuurder bestuurder = new Bestuurder();
+            Bestuurder bestuurder = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515", new List<RijbewijsType>());
 
             Tankkaart tankkaart = new Tankkaart(5,"123ABC98",new DateTime(2022,12,31),"1111",bestuurder);
 
@@ -103,7 +103,7 @@ namespace DomainLayerTests.Models
         [InlineData("123")]
         public void Test_ZetPincode_invalid(string pincode)
         {
-            Bestuurder bestuurder = new Bestuurder();
+            Bestuurder bestuurder = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515", new List<RijbewijsType>());
 
             Tankkaart tankkaart = new Tankkaart(5,"123ABC98",new DateTime(2022,12,31),"1111",bestuurder);
 
@@ -114,7 +114,7 @@ namespace DomainLayerTests.Models
         public void Test_VoegBrandstofTypeToe_valid()
         {
             Tankkaart tankkaart = new Tankkaart(5,"123ABC98",new DateTime(2022,12,31));
-            BrandstofType brandstofType = new BrandstofType();
+            BrandstofType brandstofType = new BrandstofType("benzine");
             
             tankkaart.VoegBrandstofTypeToe(brandstofType);
             Assert.Equal(brandstofType,tankkaart.GeefBrandstofTypes()[0]);
@@ -133,9 +133,7 @@ namespace DomainLayerTests.Models
         public void Test_VoegBrandstofTypeToe_invalid_brandstofBestaatAl()
         {
             Tankkaart tankkaart = new Tankkaart(5,"123ABC98",new DateTime(2022,12,31));
-            BrandstofType diesel = new BrandstofType();
-            diesel.Id = 2;
-            diesel.Type = "Diesel";
+            BrandstofType diesel = new BrandstofType("diesel");
             tankkaart.VoegBrandstofTypeToe(diesel);
 
             Assert.Throws<TankkaartException>(() => tankkaart.VoegBrandstofTypeToe(diesel));
@@ -145,13 +143,9 @@ namespace DomainLayerTests.Models
         public void Test_VoegBrandstofTypeToe_invalid_brandstofMetTypeBestaatAl()
         {
             Tankkaart tankkaart = new Tankkaart(5,"123ABC98",new DateTime(2022,12,31));
-            BrandstofType diesel = new BrandstofType();
-            diesel.Id = 2;
-            diesel.Type = "Diesel";
+            BrandstofType diesel = new BrandstofType("Diesel");
             tankkaart.VoegBrandstofTypeToe(diesel);
-            BrandstofType diesel2 = new BrandstofType();
-            diesel2.Id = 8;
-            diesel2.Type = "Diesel";
+            BrandstofType diesel2 = new BrandstofType("Diesel");
             Assert.Throws<TankkaartException>(() => tankkaart.VoegBrandstofTypeToe(diesel2));
         }
 
@@ -159,7 +153,7 @@ namespace DomainLayerTests.Models
         public void Test_VerwijderBrandstofType_valid()
         {
             Tankkaart tankkaart = new Tankkaart(5,"123ABC98",new DateTime(2022,12,31));
-            BrandstofType brandstofType = new BrandstofType();
+            BrandstofType brandstofType = new BrandstofType("Diesel");
 
             tankkaart.VoegBrandstofTypeToe(brandstofType);
             tankkaart.VerwijderBrandstofType(brandstofType);
@@ -175,8 +169,7 @@ namespace DomainLayerTests.Models
             Assert.Throws<TankkaartException>(() => tankkaart.VerwijderBrandstofType(brandstofType));
         }
 
-        [Fact]
-        //public void Test_Ver
+       
 
     }
 }

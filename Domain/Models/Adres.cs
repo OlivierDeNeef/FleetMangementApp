@@ -21,6 +21,11 @@ namespace DomainLayer.Models
            ZetLand(land);
         }
 
+        public Adres( int id ,string straat, string huisnummer, string stad, string postcode, string land) : this(straat, huisnummer, stad, postcode, land)
+        {
+            ZetId(id);
+        }
+
 
         /// <summary>
         /// Veranderd id van het adres.
