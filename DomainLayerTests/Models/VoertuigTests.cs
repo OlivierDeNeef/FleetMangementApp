@@ -14,7 +14,7 @@ namespace DomainLayerTests.Models
       
         public VoertuigTests()
         {
-            _voertuig = new Voertuig();
+            _voertuig = new Voertuig("Bmw", "X5", "wauzzz8v5ka106598", "1-abc-123", new BrandstofType("diezel"), new WagenType("Auto"));
         } 
         [Fact()]
         public void ZetIdTest()

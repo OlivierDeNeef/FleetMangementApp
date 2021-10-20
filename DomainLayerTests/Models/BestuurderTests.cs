@@ -109,7 +109,7 @@ namespace DomainLayerTests.Models
         {
             _bestuurder.ZetGeboortedatum(new DateTime(1999, 10, 06));
 
-            Assert.Throws<RijksregisternummerCheckerException>(()=> _bestuurder.ZetRijksregisternummer(rijksregisternummer));
+            Assert.Throws<BestuurderException>(()=> _bestuurder.ZetRijksregisternummer(rijksregisternummer));
         }
 
         [Fact]
@@ -232,8 +232,8 @@ namespace DomainLayerTests.Models
         [Fact()]
         public void ZetVoertuigTest_GeldigVoetuig_BestuurdersVoertuigVeranderd()
         {
-            var auto = new Voertuig();
-            var auto1 = new Voertuig();
+            var auto = new Voertuig("Bmw","X5","wauzzz8v5ka106598","1-abc-123",new BrandstofType("diezel"),new WagenType("Auto"));
+            var auto1 = new Voertuig("Bmw", "X5", "wauzzz8v5ka106598", "1-abc-123", new BrandstofType("diezel"), new WagenType("Auto"));
             _bestuurder.ZetVoertuig(auto);
             _bestuurder.ZetVoertuig(auto1);
 
@@ -254,7 +254,7 @@ namespace DomainLayerTests.Models
         [Fact()]
         public void ZetVoertuigTest_ZelfdeVoertuig_ThrowBestuurderException()
         {
-            var auto = new Voertuig();
+            var auto = new Voertuig("Bmw", "X5", "wauzzz8v5ka106598", "1-abc-123", new BrandstofType("diezel"), new WagenType("Auto"));
             _bestuurder.ZetVoertuig(auto);
             Assert.Throws<BestuurderException>(() => _bestuurder.ZetVoertuig(auto));
         }
@@ -263,7 +263,6 @@ namespace DomainLayerTests.Models
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        [InlineData(null)]
         public void ZetGearchiveerdTest_VeranderdBestuurderIsDeleted(bool isGearchiveerd)
         {
             _bestuurder.ZetGearchiveerd(isGearchiveerd);
@@ -291,7 +290,7 @@ namespace DomainLayerTests.Models
         [Fact]
         public void VerwijderVoertuigTest_VoertuigIsNietNull_ZetVoertuigOpNull()
         {
-            var voertuig = new Voertuig();
+            var voertuig = new Voertuig("Bmw", "X5", "wauzzz8v5ka106598", "1-abc-123", new BrandstofType("diezel"), new WagenType("Auto"));
             _bestuurder.ZetVoertuig(voertuig);
             Assert.Equal(voertuig, _bestuurder.Voertuig);
             _bestuurder.VerwijderVoertuig();
@@ -302,7 +301,7 @@ namespace DomainLayerTests.Models
         [Fact]
         public void VerwijderVoertuigTest_VoertuigIsAlNull_ThrowBestuurderException()
         {
-            var voertuig = new Voertuig();
+            var voertuig = new Voertuig("Bmw", "X5", "wauzzz8v5ka106598", "1-abc-123", new BrandstofType("diezel"), new WagenType("Auto"));
             Assert.Throws<BestuurderException>(() =>_bestuurder.VerwijderVoertuig());
         }
     }

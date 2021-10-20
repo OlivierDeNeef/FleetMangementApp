@@ -94,11 +94,11 @@ namespace DomainLayer.Models
         }
 
         public void ZetNummerplaat(string nummerplaat) //Docent besliste dat het enkel via de gewone manier mag zijn
-        {
-            if (!char.IsDigit(nummerplaat[0]))
-                throw new VoertuigException("ZetNummerplaat - Nummerplaat moet beginnen met een cijfer");
+        { 
             if (string.IsNullOrWhiteSpace(nummerplaat))
                 throw new VoertuigException("ZetNummerplaat - Nummerplaat moet verplicht ingevuld zijn");
+            if (!char.IsDigit(nummerplaat[0]))
+                throw new VoertuigException("ZetNummerplaat - Nummerplaat moet beginnen met een cijfer");
             if ((nummerplaat.Length != 7 && nummerplaat.Length != 9)) 
                 throw new VoertuigException("ZetNummerplaat - Nummerplaat is niet lang genoeg volgens formaat (1-)ABC-123");
             Nummerplaat = nummerplaat;
@@ -135,7 +135,7 @@ namespace DomainLayer.Models
 
         public void ZetGearchiveerd(bool isGearchiveerd)
         {
-            if (isGearchiveerd)
+            if (isGearchiveerd && Bestuurder != null)
             {
                 Bestuurder.VerwijderVoertuig();
                 VerwijderBestuurder();

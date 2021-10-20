@@ -24,7 +24,7 @@ namespace DomainLayer.Managers
         {
             try
             {
-                if (!_brandstofTypeRepo.BestaatBrandstofType(brandstofType)) //ASK : controle hier uitvoeren of op in repo.VoegbranstofTypeToe
+                if (!_brandstofTypeRepo.BestaatBrandstofType(brandstofType)) 
                 {
                     _brandstofTypeRepo.VoegBrandstofTypeToe(brandstofType);
                 }
@@ -74,7 +74,10 @@ namespace DomainLayer.Managers
             }
         }
 
-    
+        /// <summary>
+        /// Geeft alle brandstoftype van de data source
+        /// </summary>
+        /// <returns>List van branstoffen</returns>
         public IEnumerable<BrandstofType> GeefAlleBrandstofTypes()
         {
             try

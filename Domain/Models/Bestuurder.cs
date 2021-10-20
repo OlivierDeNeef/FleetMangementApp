@@ -197,10 +197,17 @@ namespace DomainLayer.Models
         {
             if (isGearchiveerd)
             {
-                Voertuig.VerwijderBestuurder();
-                Tankkaart.VerwijderBestuurder();
-                VerwijderVoertuig();
-                VerwijderTankkaart();
+                if (Voertuig != null)
+                {
+                    Voertuig.VerwijderBestuurder();
+                    VerwijderVoertuig();
+                }
+
+                if (Tankkaart != null)
+                {
+                    Tankkaart.VerwijderBestuurder();
+                    VerwijderTankkaart();
+                }
             }
             
             this.IsGearchiveerd = isGearchiveerd;

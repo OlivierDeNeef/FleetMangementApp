@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using DomainLayer.Exceptions.Models;
 
 namespace DomainLayer.Models
@@ -8,6 +9,7 @@ namespace DomainLayer.Models
         public int Id { get; private set; }
         public string Straat { get; private set; }
         public string Huisnummer { get; private set; }
+        public string Busnummer { get; set; }   
         public string Stad { get; private set; } 
         public string Postcode { get; private set; }
         public string Land { get; private set; }
@@ -47,6 +49,16 @@ namespace DomainLayer.Models
             if (string.IsNullOrWhiteSpace(straat)) throw new AdresException("ZetStraat - straat is null of leeg");
             this.Straat = straat.Trim();
         }
+
+        /// <summary>
+        /// Veranderd het busnummer van het adres
+        /// </summary>
+        /// <param name="busnummer">Busnummer van het adres</param>
+        public void ZetBusnummer(string busnummer)
+        {
+            Busnummer = busnummer;
+        }
+
 
         /// <summary>
         /// Veranderd de huisnummer van het adres.

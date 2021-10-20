@@ -4,8 +4,8 @@ namespace DomainLayer.Models
 {
     public class RijbewijsType
     {
-        public int Id { get; set; }
-        public string Type { get; set; }
+        public int Id { get; private set; }
+        public string Type { get; private set; }
 
 
         public RijbewijsType(string type)
