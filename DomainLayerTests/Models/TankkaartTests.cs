@@ -38,7 +38,7 @@ namespace DomainLayerTests.Models
         public void Test_ctor_valid()
         {
             List<BrandstofType> brandstofTypes = new() {new BrandstofType("benzine") };
-            Bestuurder bestuurder = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515");
+            Bestuurder bestuurder = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515",new List<RijbewijsType>());
 
             Tankkaart tankkaart = new Tankkaart(5,"123ABC98",new DateTime(2022,12,31),"1111",bestuurder);
 
@@ -87,6 +87,7 @@ namespace DomainLayerTests.Models
         [Fact]
         public void Test_ZetPincode_valid()
         {
+            Bestuurder bestuurder = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515", new List<RijbewijsType>());
             Bestuurder bestuurder = new Bestuurder("De Neef","Olivier",new DateTime(1999,10,6),"99100630515");
 
             Tankkaart tankkaart = new Tankkaart(5,"123ABC98",new DateTime(2022,12,31),"1111",bestuurder);
@@ -103,6 +104,7 @@ namespace DomainLayerTests.Models
         [InlineData("123")]
         public void Test_ZetPincode_invalid(string pincode)
         {
+            Bestuurder bestuurder = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515", new List<RijbewijsType>());
             Bestuurder bestuurder = new Bestuurder("De Neef","Olivier",new DateTime(1999,10,6),"99100630515");
 
             Tankkaart tankkaart = new Tankkaart(5,"123ABC98",new DateTime(2022,12,31),"1111",bestuurder);
@@ -171,6 +173,7 @@ namespace DomainLayerTests.Models
 
         //[Fact]
         //public void Test_Ver
+       
 
     }
 }

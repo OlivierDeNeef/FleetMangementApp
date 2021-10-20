@@ -16,22 +16,30 @@ namespace DomainLayer.Managers
             _brandstofTypeRepo = brandstofTypeRepo;
         }
 
+        /// <summary>
+        /// Voeg een brandstof type aan de data source
+        /// </summary>
+        /// <param name="brandstofType">Brandstof dat toegevoegd moet worden</param>
         public void VoegBrandstofTypeToe(BrandstofType brandstofType)
         {
             try
             {
-                if (!_brandstofTypeRepo.BestaatBrandstofType(brandstofType))
+                if (!_brandstofTypeRepo.BestaatBrandstofType(brandstofType)) //ASK : controle hier uitvoeren of op in repo.VoegbranstofTypeToe
                 {
                     _brandstofTypeRepo.VoegBrandstofTypeToe(brandstofType);
                 }
             }
             catch (Exception e)
             {
-               
                 throw new BrandstofTypeManagerException("VoegBrandstofTypeToe - Er ging iets mis bij het toevoegen", e);
             }
         }
 
+
+        /// <summary>
+        /// Verwijder een brandstof type van de data source
+        /// </summary>
+        /// <param name="brandstofType">Brandstof dat verwijderd moet worden</param>
         public void VerwijderBrandstofType(BrandstofType brandstofType)
         {
             try
@@ -47,6 +55,10 @@ namespace DomainLayer.Managers
             }
         }
 
+        /// <summary>
+        /// Update een brandstof in de data source
+        /// </summary>
+        /// <param name="brandstofType">Brandstof dat geupdate moet worden</param>
         public void UpdateBrandstofType(BrandstofType brandstofType)
         {
             try
@@ -62,6 +74,7 @@ namespace DomainLayer.Managers
             }
         }
 
+    
         public IEnumerable<BrandstofType> GeefAlleBrandstofTypes()
         {
             try

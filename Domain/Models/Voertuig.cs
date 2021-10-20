@@ -4,10 +4,7 @@ using DomainLayer.Exceptions.Models;
 
 namespace DomainLayer.Models
 {
-    /// <summary>
-    /// Todo : Zet methodenamen Zoals in class diagram
-    /// 
-    /// </summary>
+   
 
     public class Voertuig
     {
@@ -22,6 +19,22 @@ namespace DomainLayer.Models
         public int AantalDeuren { get; private set; }
         public Bestuurder Bestuurder { get; private set; }
         public bool IsGearchiveerd { get; private set; }
+
+
+        public Voertuig(int id, string merk, string model, string chassisnummer, string nummerplaat, BrandstofType brandstofType, WagenType wagenType) : this(merk, model, chassisnummer, nummerplaat, brandstofType, wagenType)
+        {
+            ZetId(id);
+        }
+
+        public Voertuig(string merk,string model, string chassisnummer, string nummerplaat,BrandstofType brandstofType,WagenType wagenType)
+        {
+            ZetMerk(merk);
+            ZetModel(model);
+            ZetChassisnummer(chassisnummer);
+            ZetNummerplaat(nummerplaat);
+            ZetBrandstofType(brandstofType);
+            ZetWagenType(wagenType);
+        }
 
 
         /// <summary>
@@ -72,8 +85,6 @@ namespace DomainLayer.Models
         public void ZetWagenType(WagenType wagenType)
         {
             if (wagenType == null) throw new VoertuigException("ZetWagentype - Het wagentype moet ingevuld zijn ");
-            if (wagenType.Id <= 0) throw new VoertuigException($"ZetWagenType - {nameof(wagenType.Type)} heeft een ongeldig id");
-            if (wagenType.Type.Trim().Length == 0) throw new VoertuigException("ZetWageType - Ongeldige waarde van het wagentype");
             WagenType = wagenType;
         }
 
@@ -124,6 +135,11 @@ namespace DomainLayer.Models
 
         public void ZetGearchiveerd(bool isGearchiveerd)
         {
+            if (isGearchiveerd)
+            {
+                Bestuurder.VerwijderVoertuig();
+                VerwijderBestuurder();
+            }
             IsGearchiveerd = isGearchiveerd;
         }
 

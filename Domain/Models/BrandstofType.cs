@@ -7,6 +7,11 @@ namespace DomainLayer.Models
         public int Id { get; private set; }
         public string Type { get; private set; }
 
+        public BrandstofType(int id, string type) : this(type)
+        {
+            ZetId(id);
+        }
+
 
         public BrandstofType(string type)
         {

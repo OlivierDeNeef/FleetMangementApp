@@ -1,19 +1,12 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using DomainLayer.Exceptions.Models;
 using DomainLayer.Models;
 using Xunit;
 
 namespace DomainLayerTests.Models
 {
-    /// <summary>
-    /// Todo : ZetNummerplaat uitgebreider testen// Done
-    /// ASK : Rekening houden met gepersonaliseerde nummerplaten? (bv enkel letters)
-    /// Todo : ZetBestuurder uitgebreider testen //Dome
-    /// Todo : Tests schrijven voor verwijder bestuurder//Dome
-    /// Todo : Ook testen op null waarde//Dome
-    /// </summary>
-
-
     public class VoertuigTests
     {
         private readonly Voertuig _voertuig;
@@ -87,13 +80,9 @@ namespace DomainLayerTests.Models
         [Fact()]
         public void ZetWagenTypeTest()
         {
-            WagenType w = new WagenType();
-            w.Id = 1;
-            w.Type = "Bestelbus";
+            WagenType w = new WagenType("Bestelbus");
             _voertuig.ZetWagenType(w);
-
-            Assert.Equal(1, _voertuig.WagenType.Id);
-            Assert.Equal("Bestelbus", _voertuig.WagenType.Type);
+            Assert.Equal(w, _voertuig.WagenType );
         }
 
         [Fact()]
@@ -104,17 +93,10 @@ namespace DomainLayerTests.Models
 
         }
 
-        [Theory]
-        [InlineData(0, "Bestelbus")]
-        [InlineData(1, "")]
-        public void ZetWagenTypeIdInvalidAndInvalidType(int id, string type)
+        [Fact]
+        public void ZetWagenTypeIdInvalidAndInvalidType()
         {
-            WagenType w = new WagenType();
-            w.Id = id;
-            w.Type = type;
-           
-            Assert.ThrowsAny<VoertuigException>(() => _voertuig.ZetWagenType(w));
-
+            Assert.ThrowsAny<VoertuigException>(() => _voertuig.ZetWagenType(null));
         }
         
         [Fact()]
@@ -128,7 +110,7 @@ namespace DomainLayerTests.Models
         {
             BrandstofType b = new BrandstofType("Benzine");
             b.ZetId(1);
-            _voertuig.SetBrandstofType(b);
+            _voertuig.ZetBrandstofType(b);
 
             Assert.Equal(1, _voertuig.BrandstofType.Id);
             Assert.Equal("BENZINE", _voertuig.BrandstofType.Type);
@@ -177,7 +159,7 @@ namespace DomainLayerTests.Models
         [Fact()]
         public void ZetBestuurderTestGeldig() // TODO: Olivier
         {
-            Bestuurder b = new Bestuurder();
+            Bestuurder b = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515", new List<RijbewijsType>());
             _voertuig.ZetBestuurder(b);
 
             Assert.Equal(b, _voertuig.Bestuurder);
@@ -188,7 +170,7 @@ namespace DomainLayerTests.Models
         
         public void ZetBestuurderTestOngeldig()
         {
-            Bestuurder b = new Bestuurder();
+            Bestuurder b = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515", new List<RijbewijsType>());
             _voertuig.ZetBestuurder(b);
             Assert.ThrowsAny<VoertuigException>(() => _voertuig.ZetBestuurder(b));
         }
@@ -198,7 +180,7 @@ namespace DomainLayerTests.Models
         [Fact()]
         public void VerwijderBestuurder()
         {
-            Bestuurder b = new Bestuurder();
+            Bestuurder b = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515", new List<RijbewijsType>());
             _voertuig.ZetBestuurder(b);
             _voertuig.VerwijderBestuurder();
             Assert.Null(_voertuig.Bestuurder);
