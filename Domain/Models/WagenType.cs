@@ -7,9 +7,9 @@ namespace DomainLayer.Models
         public int Id { get; set; } // private maken!
         public string Type { get; set; } //private maken!
 
-        public WagenType()
+        public WagenType(string type)
         {
-
+            ZetType(type);
         }
         public WagenType(int id, string type)
         {
