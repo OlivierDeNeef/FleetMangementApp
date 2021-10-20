@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using DomainLayer.Exceptions;
 using DomainLayer.Exceptions.Models;
 
@@ -9,6 +10,7 @@ namespace DomainLayer.Models
     /// Todo : isGerarchiveerd toevoegen + methodes
     /// ASK : Kaart kan niet gedeblokkeerd worden?
     /// ASK : ZetBrandstofTypes hebben we deze methode nodige?
+    /// TODO: commentaren bij zetten
     /// </summary>
 
 
@@ -18,20 +20,23 @@ namespace DomainLayer.Models
         public string Kaartnummer { get; private set; } //verplicht
         public DateTime Geldigheidsdatum { get; private set; } //verplicht
         public string Pincode { get; private set; }
-        private List<BrandstofType> _brandstofTypes = new();
+        private readonly List<BrandstofType> _brandstofTypes = new();
         public Bestuurder Bestuurder { get; private set; }
         public bool IsGeblokkeerd { get; private set; }
 
-        public Tankkaart(int id, string kaartnummer, DateTime geldigheidsDatum)
+        public Tankkaart(string kaartnummer, DateTime geldigheidsDatum)
         {
-            ZetId(id);
             ZetKaartnummer(kaartnummer);
             ZetGeldigheidsdatum(geldigheidsDatum);
         }
-        public Tankkaart(int id, string kaartnummer, DateTime geldigheidsDatum, string pincode, List<BrandstofType> brandstofTypes, Bestuurder bestuurder) : this(id, kaartnummer, geldigheidsDatum)
+
+        public Tankkaart(int id, string kaartnummer, DateTime geldigheidsDatum) : this(kaartnummer, geldigheidsDatum)
+        {
+            ZetId(id);
+        }
+        public Tankkaart(int id, string kaartnummer, DateTime geldigheidsDatum, string pincode, Bestuurder bestuurder) : this(id, kaartnummer, geldigheidsDatum)
         {
             ZetPincode(pincode);
-            ZetBrandstofTypes(brandstofTypes);
             ZetBestuurder(bestuurder);
             
         }
@@ -63,27 +68,27 @@ namespace DomainLayer.Models
             Geldigheidsdatum = datum;
         }
 
-        public void ZetBrandstofTypes(List<BrandstofType> brandstofTypes) 
-        {
-            if (brandstofTypes == null) throw new TankkaartException("ZetBrandstofTypes - brandstofTypes is null");
-            if (_brandstofTypes.Count > 0) throw new TankkaartException("ZetBrandstofTypes - zitten al brandstoffen in de lijst");
-            _brandstofTypes = brandstofTypes;
-        }
-
         public void VoegBrandstofTypeToe(BrandstofType brandstof)
         {
-            if(brandstof == null) throw new TankkaartException("AddBrandstofType - brandstof is null");
+            if(brandstof == null) throw new TankkaartException("VoegBrandstofTypeToe - brandstof is null");
 
             if(_brandstofTypes.Contains(brandstof))
-                throw new TankkaartException("brandstofType bestaat al");
-            else
-                _brandstofTypes.Add(brandstof);
+                throw new TankkaartException("brandstofType zit al in de tankkaart");
+
+            if (_brandstofTypes.Select(b => b.Type == brandstof.Type).Any()) throw new TankkaartException("VoegBrandstofTypeToe - er is al een brandstof van dit type");
+            
+            _brandstofTypes.Add(brandstof);
         }
 
         public IReadOnlyList<BrandstofType> GeefBrandstofTypes()
         {
             return _brandstofTypes;
         }
+
+        /*public bool HeeftBrandstofType(BrandstofType type)
+        {
+            //if(type == null)
+        }*/
 
         public void VerwijderBrandstofType(BrandstofType type)
         {
@@ -105,9 +110,14 @@ namespace DomainLayer.Models
 
         public void BlokkeerKaart()
         {
-            if(IsGeblokkeerd) throw new TankkaartException("kaart is al geblokkeerd");
+            if(IsGeblokkeerd) throw new TankkaartException("BlokkeerKaart - kaart is al geblokkeerd");
             IsGeblokkeerd = true;
+        }
 
+        public void DeblokkeerKaart()
+        {
+            if (!IsGeblokkeerd) throw new TankkaartException("DeblokkeerKaart - kaart is niet geblokkeerd");
+            IsGeblokkeerd = false;
         }
 
         public void VerwijderBestuurder()

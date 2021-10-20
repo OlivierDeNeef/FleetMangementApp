@@ -1,17 +1,30 @@
 ﻿using System;
-using DomainLayer.Exceptions;
 using DomainLayer.Exceptions.Models;
 
-namespace DomainLayer
+namespace DomainLayer.Models
 {
     public class Adres
     {
-        public int Id { get; set; }
+        public int Id { get; private set; }
         public string Straat { get; private set; }
         public string Huisnummer { get; private set; }
         public string Stad { get; private set; } 
         public string Postcode { get; private set; }
         public string Land { get; private set; }
+
+        public Adres(string straat, string huisnummer, string stad, string postcode, string land)
+        {
+           ZetStraat(straat);
+           ZetHuisnummer(huisnummer);
+           ZetStad(stad);
+           ZetPostcode(postcode);
+           ZetLand(land);
+        }
+
+        public Adres( int id ,string straat, string huisnummer, string stad, string postcode, string land) : this(straat, huisnummer, stad, postcode, land)
+        {
+            ZetId(id);
+        }
 
 
         /// <summary>
@@ -21,7 +34,7 @@ namespace DomainLayer
         /// <param name="id">Id van het adres.</param>
         public void ZetId(int id)
         {
-            if (id < 0) throw new AdresException($"{nameof(Adres)}.{nameof(Id)} kan geen negatieve waarde bevatten", new ArgumentOutOfRangeException());
+            if (id < 0) throw new AdresException("ZetId - kan geen negatieve waarde bevatten", new ArgumentOutOfRangeException());
             this.Id = id;
         }
 
@@ -31,7 +44,8 @@ namespace DomainLayer
         /// <param name="straat">De straat van het adres.</param>
         public void ZetStraat(string straat)
         {
-            this.Straat = straat?.Trim();
+            if (string.IsNullOrWhiteSpace(straat)) throw new AdresException("ZetStraat - straat is null of leeg");
+            this.Straat = straat.Trim();
         }
 
         /// <summary>
@@ -40,7 +54,12 @@ namespace DomainLayer
         /// <param name="huisnummer">Huisnummer van het adres.</param>
         public void ZetHuisnummer(string huisnummer)
         {
-            this.Huisnummer = huisnummer?.Trim();
+            if (string.IsNullOrWhiteSpace(huisnummer))
+                throw new AdresException("ZetHuisnummer - huisnummer is null of leeg");
+
+            if (!char.IsDigit(huisnummer[0]))
+                throw new AdresException("ZetHuisnummer - huisnummer begint niet met getal");
+            this.Huisnummer = huisnummer.Trim();
         }
 
         /// <summary>
@@ -49,7 +68,8 @@ namespace DomainLayer
         /// <param name="stad">De stad van het adres.</param>
         public void ZetStad(string stad)
         {
-            this.Stad = stad?.Trim();
+            if (string.IsNullOrWhiteSpace(stad)) throw new AdresException("ZetAdres - stad is null of leeg");
+            this.Stad = stad.Trim().ToUpper();
         }
 
         /// <summary>
@@ -58,7 +78,9 @@ namespace DomainLayer
         /// <param name="postcode">De postcode van de bestuurder</param>
         public void ZetPostcode(string postcode)
         {
-            this.Postcode = postcode?.Trim();
+            if (string.IsNullOrWhiteSpace(postcode))
+                throw new AdresException("ZetPostcoder - postcode is null of leef");
+            this.Postcode = postcode.Trim();
         }
 
         /// <summary>
@@ -67,7 +89,8 @@ namespace DomainLayer
         /// <param name="land">Het land van de bestuurder.</param>
         public void ZetLand(string land)
         {
-            this.Land = land?.Trim();
+            if (string.IsNullOrWhiteSpace(land)) throw new AdresException("ZetLand - land is null of leef");
+            this.Land = land.Trim().ToUpper();
         }
 
     }

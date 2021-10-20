@@ -8,15 +8,14 @@ namespace DomainLayer.Models
         public string Type { get; set; }
 
 
-        public RijbewijsType()
+        public RijbewijsType(string type)
         {
-
+            ZetType(type);
         }
 
-        public RijbewijsType(int id, string type)
+        public RijbewijsType(int id, string type) : this(type)
         {
             ZetId(id);
-            ZetType(type);
         }
         /// <summary>
         /// Dit veranderd de id van het rijbewijstype

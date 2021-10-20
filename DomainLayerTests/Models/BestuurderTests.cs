@@ -1,5 +1,5 @@
 ﻿using System;
-using DomainLayer;
+using System.Collections.Generic;
 using DomainLayer.Exceptions.Models;
 using DomainLayer.Exceptions.Utilities;
 using DomainLayer.Models;
@@ -16,7 +16,7 @@ namespace DomainLayerTests.Models
         /// </summary>
         public BestuurderTests()
         {
-            _bestuurder =  new Bestuurder();
+            _bestuurder =  new Bestuurder("De Neef", "Olivier", new DateTime(1999,10,6), "99100630515", new List<RijbewijsType>());
         }
 
         [Fact]
@@ -115,18 +115,34 @@ namespace DomainLayerTests.Models
         [Fact]
         public void ZetAdresTest_GeldigAdres_BestuurdersAdresVeranderd()
         {
-            var adres = new Adres();
+            var adres = new Adres("Rosstraat","65","Dendermonde","9200","Belgie");
             adres.ZetLand("belgie");
             _bestuurder.ZetAdres(adres);
 
             Assert.Equal(adres, _bestuurder.Adres);
         }
 
+        [Fact]
+        public void ZetAdresTest_OnGeldigAdres_ThrowsBeException()
+        {
+            Assert.Throws<BestuurderException>(() => _bestuurder.ZetAdres(null));
+        }
+
+        [Fact]
+        public void VerwijderAdresTest_GeldigAdres_BestuurdersAdresVeranderd()
+        {
+            var adres = new Adres("Rosstraat", "65", "Dendermonde", "9200", "Belgie");
+            adres.ZetLand("belgie");
+            _bestuurder.ZetAdres(adres);
+            _bestuurder.VerwijderAdres();
+
+            Assert.Null(_bestuurder.Adres);
+        }
 
         [Fact]
         public void HeeftRijbewijsTypeTest_HeeftRijbewijsType_ReturnsTrue()
         {
-            var rijbewijsType = new RijbewijsType(){Id = 1, Type = "B"};
+            var rijbewijsType = new RijbewijsType("B");
             _bestuurder.VoegRijbewijsTypeToe(rijbewijsType);
             var result = _bestuurder.HeeftRijbewijsType(rijbewijsType);
 
@@ -136,7 +152,7 @@ namespace DomainLayerTests.Models
         [Fact]
         public void HeeftRijbewijsTypeTest_HeeftRijbewijsTypeNiet_ReturnsFalse()
         {
-            var rijbewijsType = new RijbewijsType() { Id = 1, Type = "B" };
+            var rijbewijsType = new RijbewijsType("b");
             var result = _bestuurder.HeeftRijbewijsType(rijbewijsType);
 
             Assert.False(result);
@@ -151,7 +167,7 @@ namespace DomainLayerTests.Models
         [Fact()]
         public void ToevoegenRijbewijsTypeTest_NogNietInDeLijst_RijbewijsTypeToegvoegdAanBestuurder()
         {
-            var rijbewijsType = new RijbewijsType() { Id = 1, Type = "B" };
+            var rijbewijsType = new RijbewijsType("b");
             _bestuurder.VoegRijbewijsTypeToe(rijbewijsType);
 
             Assert.True(_bestuurder.HeeftRijbewijsType(rijbewijsType));
@@ -160,7 +176,7 @@ namespace DomainLayerTests.Models
         [Fact]
         public void VoegRijbewijsTypeToeTest_AlInDeLijst_ThrowsBestuurdersExcetion()
         {
-            var rijbewijsType = new RijbewijsType() { Id = 1, Type = "B" };
+            var rijbewijsType = new RijbewijsType("b");
             _bestuurder.VoegRijbewijsTypeToe(rijbewijsType);
 
             Assert.Throws<BestuurderException>(()=> _bestuurder.VoegRijbewijsTypeToe(rijbewijsType));
@@ -176,7 +192,7 @@ namespace DomainLayerTests.Models
         [Fact]
         public void VerwijderRijbewijsTypeTest_RijbewijsTypeIsInDeLijst_RijbewijsTypeVerwijderdBijBestuurder()
         {
-            var rijbewijsType = new RijbewijsType() { Id = 1, Type = "B" };
+            var rijbewijsType = new RijbewijsType("b");
             _bestuurder.VoegRijbewijsTypeToe(rijbewijsType);
             _bestuurder.VerwijderRijbewijsType(rijbewijsType);
 
@@ -186,7 +202,7 @@ namespace DomainLayerTests.Models
         [Fact]
         public void VerwijderRijbewijsTypeTest_RijbewijsTypeNietInDeLijst_ThrowBestuurderException()
         {
-            var rijbewijsType = new RijbewijsType() { Id = 1, Type = "B" };
+            var rijbewijsType = new RijbewijsType("b");
 
             Assert.Throws<BestuurderException>(() => _bestuurder.VerwijderRijbewijsType(rijbewijsType));
         }
@@ -248,11 +264,11 @@ namespace DomainLayerTests.Models
         [InlineData(true)]
         [InlineData(false)]
         [InlineData(null)]
-        public void ZetGearchiveerdTest_VeranderdBestuurderIsDeleted(bool isDeleted)
+        public void ZetGearchiveerdTest_VeranderdBestuurderIsDeleted(bool isGearchiveerd)
         {
-            _bestuurder.ZetGearchiveerd(isDeleted);
+            _bestuurder.ZetGearchiveerd(isGearchiveerd);
             
-            Assert.Equal(isDeleted , _bestuurder.IsGearchiveerd);
+            Assert.Equal(isGearchiveerd , _bestuurder.IsGearchiveerd);
         }
 
         [Fact]
