@@ -6,14 +6,6 @@ using DomainLayer.Exceptions.Models;
 
 namespace DomainLayer.Models
 {
-    /// <summary>
-    /// Todo : isGerarchiveerd toevoegen + methodes
-    /// ASK : Kaart kan niet gedeblokkeerd worden?
-    /// ASK : ZetBrandstofTypes hebben we deze methode nodige?
-    /// TODO: commentaren bij zetten
-    /// </summary>
-
-
     public class Tankkaart
     {
         public int Id { get; private set; } // verplicht
