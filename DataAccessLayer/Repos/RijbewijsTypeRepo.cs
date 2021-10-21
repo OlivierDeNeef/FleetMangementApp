@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Data.SqlClient;
 using DomainLayer.Interfaces.Repos;
 using DomainLayer.Models;
 using Microsoft.Extensions.Configuration;
@@ -14,6 +15,12 @@ namespace DataAccessLayer.Repos
         {
             _configuration = config;
             connectionString = config.GetConnectionString("defaultConnection");
+        }
+
+        private SqlConnection GetConnection()
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            return connection;
         }
         public void VoegRijbewijsToe(RijbewijsType rijbewijsType)
         {
