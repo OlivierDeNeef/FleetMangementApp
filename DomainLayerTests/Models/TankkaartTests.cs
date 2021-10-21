@@ -246,5 +246,11 @@ namespace DomainLayerTests.Models
             Assert.Throws<TankkaartException>(() => tankkaart.DeblokkeerKaart());
         }
 
+        [Fact()]
+        public void Test_HeeftBrandstofType()
+        {
+
+        }
+
     }
 }

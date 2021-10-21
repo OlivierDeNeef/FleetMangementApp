@@ -23,6 +23,8 @@ namespace DomainLayer.Models
         private readonly List<BrandstofType> _brandstofTypes = new();
         public Bestuurder Bestuurder { get; private set; }
         public bool IsGeblokkeerd { get; private set; }
+        public bool IsGearchiveerd { get; set; }
+
 
         public Tankkaart(string kaartnummer, DateTime geldigheidsDatum)
         {
@@ -40,18 +42,33 @@ namespace DomainLayer.Models
             ZetBestuurder(bestuurder);
             
         }
+
+
+        /// <summary>
+        /// Check en zet het id van de tankkaart
+        /// </summary>
+        /// <param name="id">TankkaartId</param>
         public void ZetId(int id)
         {
             if(id <= 0) throw new TankkaartException("Id mag niet kleiner zijn dan 1");
             Id = id;
         }
 
+        /// <summary>
+        /// Check van he kaartnummer
+        /// </summary>
+        /// <param name="kaartnummer">Kaartnummer van de tankkaart</param>
         public void ZetKaartnummer(string kaartnummer)
         {
             if(String.IsNullOrWhiteSpace(kaartnummer)) throw new TankkaartException("Het kaartnummer mag niet leeg zijn");
             Kaartnummer = kaartnummer.Trim();
         }
 
+
+        /// <summary>
+        /// check van de pincode van de tankkaart
+        /// </summary>
+        /// <param name="pincode">pincode van de tankkaart</param>
         public void ZetPincode(string pincode) //moet 4 cijfers zijn
         {
             
@@ -62,12 +79,20 @@ namespace DomainLayer.Models
             Pincode = pincode;
         }
 
-        
+        /// <summary>
+        /// Zet de geldigheidsdatum van de tankkaart
+        /// </summary>
+        /// <param name="datum">geldigheidsdatum van de tankkkaart</param>
         public void ZetGeldigheidsdatum(DateTime datum)
         {
             Geldigheidsdatum = datum;
         }
 
+
+        /// <summary>
+        /// Voegt een geldig brandstoftype toe aan de tankkkaart
+        /// </summary>
+        /// <param name="brandstof">Brandstoftype waarmee de tankkaart kan tanken</param>
         public void VoegBrandstofTypeToe(BrandstofType brandstof)
         {
             if(brandstof == null) throw new TankkaartException("VoegBrandstofTypeToe - brandstof is null");
@@ -80,16 +105,48 @@ namespace DomainLayer.Models
             _brandstofTypes.Add(brandstof);
         }
 
+        /// <summary>
+        /// Geeft de brandstoftypes van de tankkaart
+        /// </summary>
+        /// <returns></returns>
         public IReadOnlyList<BrandstofType> GeefBrandstofTypes()
         {
             return _brandstofTypes;
         }
 
-        /*public bool HeeftBrandstofType(BrandstofType type)
+        /// <summary>
+        /// Controlleert of de tankkaart een brandstoftype bevat
+        /// 
+        /// </summary>
+        /// <param name="type">brandstoftype van de tankkaart</param>
+        /// <returns></returns>
+        public bool HeeftBrandstofType(BrandstofType type)
         {
-            //if(type == null)
-        }*/
+            if (type == null)
+                throw new TankkaartException("HeeftBrandstoftype - er ging iets mis met de check");
 
+            return _brandstofTypes.Contains(type);
+        }
+
+        /// <summary>
+        /// Archiveerd een bestuurder van een tankkaart en omgekeerd
+        /// </summary>
+        /// <param name="isGearchiveerd"></param>
+        public void ZetGearchiveerd(bool isGearchiveerd)
+        {
+            if (isGearchiveerd && Bestuurder != null)
+            {
+                Bestuurder.VerwijderTankkaart();
+                VerwijderBestuurder();
+            }
+            IsGearchiveerd = isGearchiveerd;
+        }
+
+
+        /// <summary>
+        /// Verwijdert een brandstoftype van een tankkaart
+        /// </summary>
+        /// <param name="type">Brandstoftype die verwijderd wordt</param>
         public void VerwijderBrandstofType(BrandstofType type)
         {
             if(type == null) throw new TankkaartException("VerwijderBrandstofType - type is null");
@@ -97,6 +154,11 @@ namespace DomainLayer.Models
             _brandstofTypes.Remove(type);
         }
 
+
+        /// <summary>
+        /// Voegt een bestuurder toe aan een tankkaart
+        /// </summary>
+        /// <param name="bestuurder">Bestuurder waartoe de tankkaart is toegewezen</param>
         public void ZetBestuurder(Bestuurder bestuurder)
         {
             if(bestuurder == null) throw new TankkaartException("ZetBestuurder - bestuurder is null ");
@@ -108,18 +170,29 @@ namespace DomainLayer.Models
             if(bestuurder.Tankkaart != this) bestuurder.ZetTankkaart(this);
         }
 
+
+        /// <summary>
+        /// status van het blokkeeren van een kaart 
+        /// </summary>
         public void BlokkeerKaart()
         {
             if(IsGeblokkeerd) throw new TankkaartException("BlokkeerKaart - kaart is al geblokkeerd");
             IsGeblokkeerd = true;
         }
 
+        /// <summary>
+        /// status van het deblokkeeren van een kaart 
+        /// </summary>
         public void DeblokkeerKaart()
         {
             if (!IsGeblokkeerd) throw new TankkaartException("DeblokkeerKaart - kaart is niet geblokkeerd");
             IsGeblokkeerd = false;
         }
 
+
+        /// <summary>
+        /// verwijderd een bestuurder van een tankkaart
+        /// </summary>
         public void VerwijderBestuurder()
         {
             if (Bestuurder == null) throw new TankkaartException("VerwijderBestuurder - Bestuurder is al null");
