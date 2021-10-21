@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DomainLayer.Exceptions.Managers;
 
-namespace DomainLayer.Models.Tests
+namespace DomainLayerTests.Models
 {
     public class RijbewijsTypeTests
     {

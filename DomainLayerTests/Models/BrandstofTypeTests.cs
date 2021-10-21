@@ -39,7 +39,9 @@ namespace DomainLayerTests.Models
         [InlineData(null)]
         public void ZetTypeTest_OnGeldigType_ThrowsBranstofTypeException(string type)
         {
-            Assert.Throws<BrandstofTypeException>(() => _brandstofType.ZetType(type));
+            _brandstofType.ZetType("Benzine");
+
+            Assert.Equal("BENZINE", _brandstofType.Type);
         }
     }
 }
