@@ -159,9 +159,14 @@ namespace DomainLayerTests.Models
         [Fact()]
         public void ZetBestuurderTestGeldig() // TODO: Olivier
         {
-            Bestuurder b = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515", new List<RijbewijsType>());
+            
+            Bestuurder b = new Bestuurder("De Nef", "Olivier", new DateTime(1999, 10, 6), "99100630515", new List<RijbewijsType>());
+            Bestuurder c = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515", new List<RijbewijsType>());
+            c.ZetVoertuig(new Voertuig("Mercedez", "X5", "wauzzz8v5ka106598", "1-abc-123", new BrandstofType("diezel"),
+                new WagenType("Auto")));
+            _voertuig.ZetBestuurder(c);
             _voertuig.ZetBestuurder(b);
-
+            
             Assert.Equal(b, _voertuig.Bestuurder);
             
         }
@@ -197,6 +202,10 @@ namespace DomainLayerTests.Models
         [Fact()]
         public void ZetIsGearchiveerdGeslaagd()
         {
+            Bestuurder b = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515",
+                new List<RijbewijsType>());
+            _voertuig.ZetBestuurder(b);
+
             _voertuig.ZetGearchiveerd(true);
             Assert.True(_voertuig.IsGearchiveerd);
         }

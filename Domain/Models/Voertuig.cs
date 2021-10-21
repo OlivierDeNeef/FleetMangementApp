@@ -88,12 +88,19 @@ namespace DomainLayer.Models
             if (wagenType == null) throw new VoertuigException("ZetWagentype - Het wagentype moet ingevuld zijn ");
             WagenType = wagenType;
         }
-
+        /// <summary>
+        /// Check of het brandstofTypebestaat
+        /// </summary>
+        /// <param name="brandstofType">het brandstoftype van het voertuig</param>
         public void ZetBrandstofType(BrandstofType brandstofType)
         {
             BrandstofType = brandstofType ?? throw new VoertuigException("ZetBrandstofType - Het brandstoftype moet ingevuld zijn");
         }
 
+        /// <summary>
+        /// Check of het nummerplaat het correcte formaat heeft
+        /// </summary>
+        /// <param name="nummerplaat">nummerplaat van het voertuig</param>
         public void ZetNummerplaat(string nummerplaat) //Docent besliste dat het enkel via de gewone manier mag zijn
         { 
             if (string.IsNullOrWhiteSpace(nummerplaat))
@@ -104,12 +111,18 @@ namespace DomainLayer.Models
                 throw new VoertuigException("ZetNummerplaat - Nummerplaat is niet lang genoeg volgens formaat (1-)ABC-123");
             Nummerplaat = nummerplaat;
         }
-        
+        /// <summary>
+        /// Trim functie op de kleur van de auto
+        /// </summary>
+        /// <param name="kleur">kleur van de auto</param>
         public void ZetKleur(string kleur)
         {
             Kleur = kleur.Trim();
         }
-
+        /// <summary>
+        /// check aantal deuren van het voertuig dat minstens 3 en max 5 mag zijn
+        /// </summary>
+        /// <param name="aantalDeuren">aantal deuren van het voertuig</param>
         public void ZetAantalDeuren(int aantalDeuren)
         {
             AantalDeuren = aantalDeuren switch
@@ -120,6 +133,10 @@ namespace DomainLayer.Models
             };
         }
 
+        /// <summary>
+        /// Zet de bestuurder aan een voertuig
+        /// </summary>
+        /// <param name="bestuurder">de bestuurder van het voertuig</param>
         public void ZetBestuurder(Bestuurder bestuurder)
         {
             if (bestuurder == Bestuurder) 
@@ -133,7 +150,10 @@ namespace DomainLayer.Models
             }
            
         }
-
+        /// <summary>
+        /// Verwijderd de bestuurder bij een voertuig, verwijderd een voertuig bij een bestuurder
+        /// </summary>
+        /// <param name="isGearchiveerd">archiefstatus van de bestuurder of het voertuig</param>
         public void ZetGearchiveerd(bool isGearchiveerd)
         {
             if (isGearchiveerd && Bestuurder != null)
@@ -143,7 +163,9 @@ namespace DomainLayer.Models
             }
             IsGearchiveerd = isGearchiveerd;
         }
-
+        /// <summary>
+        /// Verwijderd een bestuurder bij een voertuig
+        /// </summary>
         public void VerwijderBestuurder()
         {
             if (Bestuurder == null) throw new VoertuigException("VerwijderBestuurder - Bestuurder bestaat niet");
