@@ -52,7 +52,7 @@ namespace DomainLayer.Models
         /// <param name="kaartnummer">Kaartnummer van de tankkaart</param>
         public void ZetKaartnummer(string kaartnummer)
         {
-            if(String.IsNullOrWhiteSpace(kaartnummer)) throw new TankkaartException("Het kaartnummer mag niet leeg zijn");
+            if(string.IsNullOrWhiteSpace(kaartnummer)) throw new TankkaartException("Het kaartnummer mag niet leeg zijn");
             Kaartnummer = kaartnummer.Trim();
         }
 
