@@ -200,7 +200,7 @@ namespace DomainLayerTests.Models
         }
 
         [Fact()]
-        public void ZetIsGearchiveerdGeslaagd()
+        public void ZetIsGearchiveerdTrue()
         {
             Bestuurder b = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515",
                 new List<RijbewijsType>());
@@ -210,7 +210,7 @@ namespace DomainLayerTests.Models
             Assert.True(_voertuig.IsGearchiveerd);
         }
         [Fact()]
-        public void ZetIsGearchiveerdGefaald()
+        public void ZetIsGearchiveerdFalse()
         {
             _voertuig.ZetGearchiveerd(false);
             Assert.False(_voertuig.IsGearchiveerd);

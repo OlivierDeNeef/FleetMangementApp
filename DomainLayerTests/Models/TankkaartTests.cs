@@ -10,10 +10,6 @@ namespace DomainLayerTests.Models
     public class TankkaartTests
     {
 
-        public TankkaartTests()
-        {
-            
-        }
 
         [Fact]
         public void Test_ctor_valid_noBestuurder_noBrandstoftypes_noPincode()
@@ -249,8 +245,41 @@ namespace DomainLayerTests.Models
         [Fact()]
         public void Test_HeeftBrandstofType()
         {
-
+            Tankkaart tankkaart = new Tankkaart(5, "123ABC98", new DateTime(2022, 12, 31));
+            BrandstofType brandstof = new BrandstofType("Benzine");
+            tankkaart.VoegBrandstofTypeToe(brandstof);
+            Assert.True(tankkaart.HeeftBrandstofType(brandstof));
         }
 
+        [Fact]
+        public void Test_HeefBranstofTypeNull()
+        {
+            Tankkaart tankkaart = new Tankkaart(5, "123ABC98", new DateTime(2022, 12, 31));
+          
+            Assert.ThrowsAny<TankkaartException>(() => tankkaart.HeeftBrandstofType(null));
+
+        }
+        [Fact]
+        public void IsGearchiveerdTrue()
+        {
+            Bestuurder b = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515",
+                new List<RijbewijsType>());
+            Tankkaart tankkaart = new Tankkaart(5, "123ABC98", new DateTime(2022, 12, 31));
+                
+                tankkaart.ZetBestuurder(b);
+
+            tankkaart.ZetGearchiveerd(true);
+            Assert.True(tankkaart.IsGearchiveerd);
+        }
+
+        [Fact()]
+        public void ZetIsGearchiveerdFalse()
+        {
+            Tankkaart tankkaart = new Tankkaart(5, "123ABC98", new DateTime(2022, 12, 31));
+
+            tankkaart.ZetGearchiveerd(false);
+            Assert.False(tankkaart.IsGearchiveerd);
+        }
     }
-}
+
+    }
