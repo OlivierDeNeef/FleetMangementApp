@@ -189,6 +189,27 @@ namespace DomainLayerTests.Models
             Assert.Throws<TankkaartException>(() => tankkaart.ZetBestuurder(bestuurder));
         }
 
+
+        [Fact]
+        public void Test_VerwijderBestuurder_valid()
+        {
+            Tankkaart tankkaart = new Tankkaart(5,"123ABC98",new DateTime(2022,12,31));
+            Bestuurder bestuurder = new Bestuurder("De Neef","Olivier",new DateTime(1999,10,6),"99100630515",new List<RijbewijsType>());
+
+            tankkaart.ZetBestuurder(bestuurder);
+            tankkaart.VerwijderBestuurder();
+
+            Assert.Null(tankkaart.Bestuurder);
+        }
+
+        [Fact]
+        public void Test_VerwijderBestuurder_invalid_bestuurderNull()
+        {
+            Tankkaart tankkaart = new Tankkaart(5,"123ABC98",new DateTime(2022,12,31));
+
+            Assert.Throws<TankkaartException>(() => tankkaart.VerwijderBestuurder());
+        }
+
         [Fact]
         public void Test_BlokkeerKaart_valid()
         {
