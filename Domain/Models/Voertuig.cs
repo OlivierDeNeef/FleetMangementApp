@@ -36,10 +36,7 @@ namespace DomainLayer.Models
             ZetWagenType(wagenType);
         }
 
-        public Voertuig()
-        {
-
-        }
+     
 
         /// <summary>
         /// Veranderd id van het voertuig
