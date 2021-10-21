@@ -175,7 +175,7 @@ namespace DomainLayerTests.Models
         {
             Tankkaart tankkaart = new Tankkaart(5, "123ABC98", new DateTime(2022, 12, 31));
             Bestuurder bestuurder = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515", new List<RijbewijsType>());
-
+            bestuurder.ZetTankkaart(tankkaart);
             tankkaart.ZetBestuurder(bestuurder);
             Assert.Equal(bestuurder, tankkaart.Bestuurder);
         }
