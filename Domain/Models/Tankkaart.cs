@@ -18,7 +18,7 @@ namespace DomainLayer.Models
         public bool IsGearchiveerd { get; set; }
 
 
-        public Tankkaart(string kaartnummer, DateTime geldigheidsDatum)
+        public Tankkaart(string kaartnummer, DateTime geldigheidsDatum)//Todo: tests schrijven
         {
             ZetKaartnummer(kaartnummer);
             ZetGeldigheidsdatum(geldigheidsDatum);
@@ -101,7 +101,7 @@ namespace DomainLayer.Models
         /// Geeft de brandstoftypes van de tankkaart
         /// </summary>
         /// <returns></returns>
-        public IReadOnlyList<BrandstofType> GeefBrandstofTypes()
+        public IReadOnlyList<BrandstofType> GeefBrandstofTypes()//Todo: tests schrijven
         {
             return _brandstofTypes;
         }
@@ -128,7 +128,6 @@ namespace DomainLayer.Models
         {
             if (isGearchiveerd && Bestuurder != null)
             {
-                Bestuurder.VerwijderTankkaart();
                 VerwijderBestuurder();
             }
             IsGearchiveerd = isGearchiveerd;
@@ -151,7 +150,7 @@ namespace DomainLayer.Models
         /// Voegt een bestuurder toe aan een tankkaart
         /// </summary>
         /// <param name="bestuurder">Bestuurder waartoe de tankkaart is toegewezen</param>
-        public void ZetBestuurder(Bestuurder bestuurder)
+        public void ZetBestuurder(Bestuurder bestuurder)//Todo: tests uitbereiden
         {
             if(bestuurder == null) throw new TankkaartException("ZetBestuurder - bestuurder is null ");
             if(Bestuurder?.Tankkaart != null)
@@ -159,7 +158,7 @@ namespace DomainLayer.Models
                 Bestuurder.VerwijderTankkaart();
             }
             Bestuurder = bestuurder;
-            if(bestuurder.Tankkaart != this) bestuurder.ZetTankkaart(this);
+            if(!Equals(bestuurder.Tankkaart, this)) bestuurder.ZetTankkaart(this);
         }
 
 
@@ -188,7 +187,34 @@ namespace DomainLayer.Models
         public void VerwijderBestuurder()
         {
             if (Bestuurder == null) throw new TankkaartException("VerwijderBestuurder - Bestuurder is al null");
+            var bestuurder = Bestuurder;
             Bestuurder = null;
+            if (bestuurder.Tankkaart != null) bestuurder.VerwijderTankkaart();
+        }
+
+        /// <summary>
+        /// Controlleerd of 2 tankkaarten hetzelfde zijn 
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public override bool Equals(object obj)//Todo: tests schrijven
+        {
+            
+            var result = obj is Tankkaart other && _brandstofTypes.All(other._brandstofTypes.Contains) &&
+                         _brandstofTypes.Count == other._brandstofTypes.Count && Id == other.Id &&
+                         Kaartnummer == other.Kaartnummer && Geldigheidsdatum.Equals(other.Geldigheidsdatum) &&
+                         Pincode == other.Pincode && Equals(Bestuurder, other.Bestuurder) &&
+                         IsGeblokkeerd == other.IsGeblokkeerd && IsGearchiveerd == other.IsGearchiveerd;
+             return result;
+        }
+
+        /// <summary>
+        /// Geeft de hashcode van een tankkaart
+        /// </summary>
+        /// <returns></returns>
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(_brandstofTypes, Id, Kaartnummer, Geldigheidsdatum, Pincode, Bestuurder, IsGeblokkeerd, IsGearchiveerd);
         }
     }
 }

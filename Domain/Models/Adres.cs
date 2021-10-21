@@ -14,7 +14,7 @@ namespace DomainLayer.Models
         public string Postcode { get; private set; }
         public string Land { get; private set; }
 
-        public Adres(string straat, string huisnummer, string stad, string postcode, string land)
+        public Adres(string straat, string huisnummer, string stad, string postcode, string land)//Todo: tests schrijven
         {
            ZetStraat(straat);
            ZetHuisnummer(huisnummer);
@@ -23,7 +23,7 @@ namespace DomainLayer.Models
            ZetLand(land);
         }
 
-        public Adres( int id ,string straat, string huisnummer, string stad, string postcode, string land) : this(straat, huisnummer, stad, postcode, land)
+        public Adres( int id ,string straat, string huisnummer, string stad, string postcode, string land) : this(straat, huisnummer, stad, postcode, land)//Todo: tests schrijven
         {
             ZetId(id);
         }
@@ -37,7 +37,7 @@ namespace DomainLayer.Models
         public void ZetId(int id)
         {
             if (id < 0) throw new AdresException("ZetId - kan geen negatieve waarde bevatten", new ArgumentOutOfRangeException());
-            this.Id = id;
+            Id = id;
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace DomainLayer.Models
         public void ZetStraat(string straat)
         {
             if (string.IsNullOrWhiteSpace(straat)) throw new AdresException("ZetStraat - straat is null of leeg");
-            this.Straat = straat.Trim();
+            Straat = straat.Trim();
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace DomainLayer.Models
 
             if (!char.IsDigit(huisnummer[0]))
                 throw new AdresException("ZetHuisnummer - huisnummer begint niet met getal");
-            this.Huisnummer = huisnummer.Trim();
+            Huisnummer = huisnummer.Trim();
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace DomainLayer.Models
         public void ZetStad(string stad)
         {
             if (string.IsNullOrWhiteSpace(stad)) throw new AdresException("ZetAdres - stad is null of leeg");
-            this.Stad = stad.Trim().ToUpper();
+            Stad = stad.Trim().ToUpper();
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace DomainLayer.Models
         {
             if (string.IsNullOrWhiteSpace(postcode))
                 throw new AdresException("ZetPostcoder - postcode is null of leef");
-            this.Postcode = postcode.Trim();
+            Postcode = postcode.Trim();
         }
 
         /// <summary>
@@ -102,8 +102,26 @@ namespace DomainLayer.Models
         public void ZetLand(string land)
         {
             if (string.IsNullOrWhiteSpace(land)) throw new AdresException("ZetLand - land is null of leef");
-            this.Land = land.Trim().ToUpper();
+            Land = land.Trim().ToUpper();
         }
 
+        /// <summary>
+        /// Controlleert of 2 adressen hetzelfde zijn 
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public override bool Equals(object obj)//Todo: tests schrijven
+        {
+            return obj is Adres other && Id == other.Id && Straat == other.Straat && Huisnummer == other.Huisnummer && Busnummer == other.Busnummer && Stad == other.Stad && Postcode == other.Postcode && Land == other.Land;
+        }
+
+        /// <summary>
+        /// Geeft de hashcode voor een adres
+        /// </summary>
+        /// <returns></returns>
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id, Straat, Huisnummer, Busnummer, Stad, Postcode, Land);
+        }
     }
 }

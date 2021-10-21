@@ -1,4 +1,5 @@
-﻿using DomainLayer.Exceptions.Models;
+﻿using System;
+using DomainLayer.Exceptions.Models;
 
 namespace DomainLayer.Models
 {
@@ -7,7 +8,7 @@ namespace DomainLayer.Models
         public int Id { get; private set; } // private maken!
         public string Type { get; private set; } //private maken!
 
-        public WagenType(string type)
+        public WagenType(string type) //Todo : tests schrijven
         {
             ZetType(type);
         }
@@ -34,8 +35,29 @@ namespace DomainLayer.Models
         public void ZetType(string type)
         {
             if (string.IsNullOrWhiteSpace(type)) throw new WagenTypeException("ZetType - mag niet leeg zijn");
+            if(type.Trim() == Type) throw new WagenTypeException("ZetType - zelfde type als huidig type");
             Type = type.Trim();
         }
 
+        /// <summary>
+        /// Controlleer twee wagentypes of deze hetzelfde zijn
+        /// </summary>
+        /// <param name="obj">Obeject om te vergelijken</param>
+        /// <returns></returns>
+        public override bool Equals(object obj) //Todo : tests schrijven
+        {
+            return obj is WagenType other && Id == other.Id && Type == other.Type;
+        }
+
+        /// <summary>
+        /// Geeft de hashcode van wagentype
+        /// </summary>
+        /// <returns></returns>
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id, Type);
+        }
+
+      
     }
 }
