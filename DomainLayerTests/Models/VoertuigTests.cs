@@ -156,19 +156,27 @@ namespace DomainLayerTests.Models
         {
             Assert.ThrowsAny<VoertuigException>(() => _voertuig.ZetAantalDeuren(aantal));
         }
+
         [Fact()]
         public void ZetBestuurderTestGeldig() // TODO: Olivier
         {
-            
-            Bestuurder b = new Bestuurder("De Nef", "Olivier", new DateTime(1999, 10, 6), "99100630515", new List<RijbewijsType>());
-            Bestuurder c = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515", new List<RijbewijsType>());
-            c.ZetVoertuig(new Voertuig("Mercedez", "X5", "wauzzz8v5ka106598", "1-abc-123", new BrandstofType("diezel"),
-                new WagenType("Auto")));
-            _voertuig.ZetBestuurder(c);
+
+            Bestuurder b = new Bestuurder("De Nef", "Olivier", new DateTime(1999, 10, 6), "99100630515",
+                new List<RijbewijsType>());
+            Bestuurder c = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515",
+                new List<RijbewijsType>());
+            var voertuig = new Voertuig("Mercedez", "X5", "wauzzz8v5ka106598", "1-abc-123", new BrandstofType("diezel"),
+                new WagenType("Auto"));
+            c.ZetVoertuig(voertuig);
+            // _voertuig.ZetBestuurder(c);
             _voertuig.ZetBestuurder(b);
-            
+
             Assert.Equal(b, _voertuig.Bestuurder);
-            
+            Assert.Equal(voertuig, b.Voertuig);
+            _voertuig.ZetBestuurder(c);
+            Assert.Equal(c, _voertuig.Bestuurder);
+            Assert.Equal(voertuig, c.Voertuig);
+            Assert.Null(b.Voertuig);
         }
 
         [Fact()]
