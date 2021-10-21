@@ -127,7 +127,7 @@ namespace DomainLayerTests.Models
 
         [Theory]
         [InlineData("12-CD")]
-        [InlineData(" ")]
+        [InlineData("ABC-123-195")]
         [InlineData(null)]
         public void ZetNummerplaatInvalid(string plaat)
         {
