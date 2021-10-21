@@ -17,7 +17,10 @@ namespace DomainLayer.Managers
         {
             _rijbewijsTypeRepo = rijbewijsTypeRepo;
         }
-
+        /// <summary>
+        /// Voeg een rijbewijstype toe aan de data source.
+        /// </summary>
+        /// <param name="rijbewijsType">rijbewijstype dat moet worden toegevoegd</param>
         public void VoegRijbewijsTypeToe(RijbewijsType rijbewijsType)
         {
             try
@@ -33,6 +36,10 @@ namespace DomainLayer.Managers
             }
         }
 
+        /// <summary>
+        /// Verwijder een rijbewijstype aan de data source.
+        /// </summary>
+        /// <param name="rijbewijsType">rijbewijstype dat moet worden verwijderd</param>
         public void VerwijderRijbewijsType(RijbewijsType rijbewijsType)
         {
             try
@@ -48,6 +55,10 @@ namespace DomainLayer.Managers
             }
         }
 
+        /// <summary>
+        /// Update een rijbewijstype in de data source
+        /// </summary>
+        /// <param name="rijbewijsType">rijbewijstype dat moet worden geupdate</param>
         public void UpdateRijbewijsType(RijbewijsType rijbewijsType)
         {
             try
@@ -63,6 +74,10 @@ namespace DomainLayer.Managers
             }
         }
 
+        /// <summary>
+        /// Geef alle rijbewijstypes terug
+        /// </summary>
+        /// <returns>een IEnumerable van RijbewijsType</returns>
         public IEnumerable<RijbewijsType> GeefAlleRijsbewijsTypes()
         {
             try
