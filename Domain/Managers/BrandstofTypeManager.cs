@@ -77,7 +77,7 @@ namespace DomainLayer.Managers
         /// <summary>
         /// Geeft alle brandstoftype van de data source
         /// </summary>
-        /// <returns>List van branstoffen</returns>
+        /// <returns>List van brandstoffen</returns>
         public IEnumerable<BrandstofType> GeefAlleBrandstofTypes()
         {
             try

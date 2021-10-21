@@ -16,6 +16,10 @@ namespace DomainLayer.Managers
             _wagenTypeRepo = wagenTypeRepo;
         }
 
+        /// <summary>
+        /// Voeg een wagentype toe aan de data source
+        /// </summary>
+        /// <param name="wagenType">wagentype dat moet toegevoegd worden</param>
         public void VoegWagenTypeToe(WagenType wagenType)
         {
             try
@@ -32,6 +36,10 @@ namespace DomainLayer.Managers
             }
         }
 
+        /// <summary>
+        /// Verwijder een wagentype uit de data source
+        /// </summary>
+        /// <param name="wagenType">wagentype dat moet verwijderd worden</param>
         public void VerwijderWagenType(WagenType wagenType)
         {
             try
@@ -47,6 +55,10 @@ namespace DomainLayer.Managers
             }
         }
 
+        /// <summary>
+        /// Update een wagentype uit de data source
+        /// </summary>
+        /// <param name="wagenType">het up te daten wagentype</param>
         public void UpdateWagenType(WagenType wagenType)
         {
             try
@@ -62,6 +74,10 @@ namespace DomainLayer.Managers
             }
         }
 
+        /// <summary>
+        /// Geeft een overzicht van alle wagentypes
+        /// </summary>
+        /// <returns>een IEnumerable van Wagentypes</returns>
         public IEnumerable<WagenType> GeefAlleWagenTypes()
         {
             try

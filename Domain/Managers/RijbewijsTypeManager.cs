@@ -77,7 +77,7 @@ namespace DomainLayer.Managers
         /// <summary>
         /// Geef alle rijbewijstypes terug
         /// </summary>
-        /// <returns>een IEnumerable van RijbewijsTypes</returns>
+        /// <returns>een IEnumerable van RijbewijsType</returns>
         public IEnumerable<RijbewijsType> GeefAlleRijsbewijsTypes()
         {
             try
