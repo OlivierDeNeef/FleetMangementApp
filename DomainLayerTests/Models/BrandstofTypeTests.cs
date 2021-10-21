@@ -21,7 +21,9 @@ namespace DomainLayerTests.Models
         [Fact()]
         public void ZetTypeTest()
         {
-            Assert.True(false, "This test needs an implementation");
+            _brandstofType.ZetType("Benzine");
+
+            Assert.Equal("BENZINE", _brandstofType.Type);
         }
     }
 }
