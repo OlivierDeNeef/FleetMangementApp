@@ -1,4 +1,6 @@
-﻿using DomainLayer.Exceptions.Managers;
+﻿using System;
+using DomainLayer.Exceptions.Managers;
+using DomainLayer.Exceptions.Models;
 
 namespace DomainLayer.Models
 {
@@ -8,12 +10,12 @@ namespace DomainLayer.Models
         public string Type { get; private set; }
 
 
-        public RijbewijsType(string type)
+        public RijbewijsType(string type)//Todo: tests schrijven
         {
             ZetType(type);
         }
 
-        public RijbewijsType(int id, string type) : this(type)
+        public RijbewijsType(int id, string type) : this(type)//Todo: tests schrijven
         {
             ZetId(id);
         }
@@ -25,7 +27,7 @@ namespace DomainLayer.Models
         public void ZetId(int id)
         {
             if (id < 1)
-                throw new RijbewijsTypeManagerException("ZetId - id < 1");
+                throw new RijbewijsTypeException("ZetId - id < 1");
             Id = id;
         }
         /// <summary>
@@ -35,10 +37,28 @@ namespace DomainLayer.Models
         /// <param name="type"></param>
         public void ZetType(string type)
         {
-            if (string.IsNullOrWhiteSpace(type))
-                throw new RijbewijsTypeManagerException("Zet Type - Type is null of leeg");
+            if (string.IsNullOrWhiteSpace(type)) throw new RijbewijsTypeException("Zet Type - Type is null of leeg");
+            if(type.Trim() == Type) throw new RijbewijsTypeException("ZetType - type mag niet hetzelfde zijn als huidig type");
             Type = type.Trim();
         }
-        
+
+        /// <summary>
+        /// Controlleert of 2 wagen types het zelfde zijn 
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public override bool Equals(object obj)//Todo: tests schrijven
+        {
+            return obj is RijbewijsType other && Id == other.Id && Type == other.Type;
+        }
+
+        /// <summary>
+        /// Geeft de hash code van een wagen type
+        /// </summary>
+        /// <returns></returns>
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id, Type);
+        }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using DomainLayer.Exceptions.Models;
 using DomainLayer.Models;
 using Xunit;
@@ -19,7 +18,10 @@ namespace DomainLayerTests.Models
         [Fact()]
         public void ZetIdTest()
         {
+            Assert.Equal(0,_voertuig.Id);
+
             _voertuig.ZetId(4);
+
             Assert.Equal(4, _voertuig.Id);
 
         }
@@ -27,14 +29,17 @@ namespace DomainLayerTests.Models
         [Fact()]
         public void ZetId_NegatieveId_GooitException()
         {
-            Assert.ThrowsAny<VoertuigException>(() => _voertuig.ZetId(-4));
+            Assert.ThrowsAny<VoertuigException>(() => _voertuig.ZetId(0));
         }
 
         [Fact()]
         public void ZetMerkTestGeldig()
         {
-           _voertuig.ZetMerk("Mercedez");
-           Assert.Equal("Mercedez", _voertuig.Merk);
+            Assert.Equal("Bmw", _voertuig.Merk);
+
+            _voertuig.ZetMerk("Mercedez");
+
+            Assert.Equal("Mercedez", _voertuig.Merk);
         }
 
          [Theory]
@@ -48,7 +53,10 @@ namespace DomainLayerTests.Models
         [Fact()]
         public void ZetModelGeldig()
         {
+            Assert.Equal("X5", _voertuig.Model);
+
             _voertuig.ZetModel("A-Klasse");
+
             Assert.Equal("A-Klasse", _voertuig.Model);
         }
 
@@ -63,7 +71,10 @@ namespace DomainLayerTests.Models
         [Fact()]
         public void ZetChassisnummerTest()
         {
+            Assert.Equal("wauzzz8v5ka106598", _voertuig.Chassisnummer);
+
             _voertuig.ZetChassisnummer("123456ABCDEF789GH");
+
             Assert.Equal("123456ABCDEF789GH", _voertuig.Chassisnummer);
         }
 
@@ -73,24 +84,24 @@ namespace DomainLayerTests.Models
         [InlineData(null)]
         public void ZetChassisnummerInValid(string nummer)
         {
-            
             Assert.ThrowsAny<VoertuigException>(() => _voertuig.ZetChassisnummer(nummer));
         }
 
         [Fact()]
         public void ZetWagenTypeTest()
         {
-            WagenType w = new WagenType("Bestelbus");
+            Assert.Equal(new WagenType("Auto"), _voertuig.WagenType);
+            var w = new WagenType("Bestelbus");
+
             _voertuig.ZetWagenType(w);
+
             Assert.Equal(w, _voertuig.WagenType );
         }
 
         [Fact()]
         public void ZetWagenTypeNullTest()
         {
-            WagenType w = null;
-            Assert.ThrowsAny<VoertuigException>(() => _voertuig.ZetWagenType(w));
-
+            Assert.ThrowsAny<VoertuigException>(() => _voertuig.ZetWagenType(null));
         }
 
         [Fact]
@@ -102,32 +113,39 @@ namespace DomainLayerTests.Models
         [Fact()]
         public void ZetBrandstofTypeNull()
         {
-         
             Assert.ThrowsAny<VoertuigException>(() => _voertuig.ZetBrandstofType(null));
         }
+
         [Fact()]
         public void ZetBrandstofTypeTest()
         {
-            BrandstofType b = new BrandstofType("Benzine");
-            b.ZetId(1);
-            _voertuig.ZetBrandstofType(b);
+            var brandstofType = new BrandstofType("Benzine");
 
-            Assert.Equal(1, _voertuig.BrandstofType.Id);
-            Assert.Equal("BENZINE", _voertuig.BrandstofType.Type);
+            Assert.Equal(new BrandstofType("diezel"), _voertuig.BrandstofType);
+
+            _voertuig.ZetBrandstofType(brandstofType);
+
+            Assert.Equal(brandstofType, _voertuig.BrandstofType);
+            
         }
 
         [Theory]
-        [InlineData("1-123-DEF")]
+        [InlineData("1-123-DEF")]// Ask : ongeldige formaat toch
         [InlineData("123-ABC")]
         public void ZetNummerplaatTest(string plaat)
         {
+            Assert.Equal("1-abc-123",_voertuig.Nummerplaat);
+
             _voertuig.ZetNummerplaat(plaat);
+
             Assert.Equal(plaat, _voertuig.Nummerplaat);
         }
 
         [Theory]
         [InlineData("12-CD")]
         [InlineData("ABC-123-195")]
+        [InlineData("  ")]
+        [InlineData("")]
         [InlineData(null)]
         public void ZetNummerplaatInvalid(string plaat)
         {
@@ -136,7 +154,10 @@ namespace DomainLayerTests.Models
         [Fact()]
         public void ZetKleurTest()
         {
+            Assert.Null(_voertuig.Kleur);
+
             _voertuig.ZetKleur("Rood");
+
             Assert.Equal("Rood", _voertuig.Kleur);
 
         }
@@ -144,7 +165,10 @@ namespace DomainLayerTests.Models
         [Fact()]
         public void ZetAantalDeurenTest()
         {
+            Assert.Equal(0,_voertuig.AantalDeuren);
+
             _voertuig.ZetAantalDeuren(4);
+
             Assert.Equal(4, _voertuig.AantalDeuren);
 
         }
@@ -156,28 +180,36 @@ namespace DomainLayerTests.Models
         {
             Assert.ThrowsAny<VoertuigException>(() => _voertuig.ZetAantalDeuren(aantal));
         }
+
         [Fact()]
-        public void ZetBestuurderTestGeldig() // TODO: Olivier
+        public void ZetBestuurderTestGeldig() 
         {
+
+            var bestuurder1 = new Bestuurder("De Nef", "Olivier", new DateTime(1999, 10, 6), "99100630515", new List<RijbewijsType>());
+            var bestuurder2 = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515",new List<RijbewijsType>());
             
-            Bestuurder b = new Bestuurder("De Nef", "Olivier", new DateTime(1999, 10, 6), "99100630515", new List<RijbewijsType>());
-            Bestuurder c = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515", new List<RijbewijsType>());
-            c.ZetVoertuig(new Voertuig("Mercedez", "X5", "wauzzz8v5ka106598", "1-abc-123", new BrandstofType("diezel"),
-                new WagenType("Auto")));
-            _voertuig.ZetBestuurder(c);
-            _voertuig.ZetBestuurder(b);
-            
-            Assert.Equal(b, _voertuig.Bestuurder);
-            
+            bestuurder2.ZetVoertuig(_voertuig);
+            _voertuig.ZetBestuurder(bestuurder1);
+
+            Assert.Equal(bestuurder1, _voertuig.Bestuurder);
+            Assert.Equal(_voertuig, bestuurder1.Voertuig);
+
+            _voertuig.ZetBestuurder(bestuurder2);
+
+            Assert.Equal(bestuurder2, _voertuig.Bestuurder);
+            Assert.Equal(_voertuig, bestuurder2.Voertuig);
+            Assert.Null(bestuurder1.Voertuig);
         }
 
         [Fact()]
         
         public void ZetBestuurderTestOngeldig()
         {
-            Bestuurder b = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515", new List<RijbewijsType>());
-            _voertuig.ZetBestuurder(b);
-            Assert.ThrowsAny<VoertuigException>(() => _voertuig.ZetBestuurder(b));
+            var bestuurder = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515", new List<RijbewijsType>());
+            _voertuig.ZetBestuurder(bestuurder);
+
+            Assert.Equal(bestuurder, _voertuig.Bestuurder);
+            Assert.ThrowsAny<VoertuigException>(() => _voertuig.ZetBestuurder(bestuurder));
         }
 
 
@@ -185,34 +217,51 @@ namespace DomainLayerTests.Models
         [Fact()]
         public void VerwijderBestuurder()
         {
-            Bestuurder b = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515", new List<RijbewijsType>());
-            _voertuig.ZetBestuurder(b);
+            var bestuurder = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515", new List<RijbewijsType>());
+            _voertuig.ZetBestuurder(bestuurder);
+
+            Assert.Equal(bestuurder,_voertuig.Bestuurder);
+            Assert.Equal(_voertuig,bestuurder.Voertuig);
+
             _voertuig.VerwijderBestuurder();
+
             Assert.Null(_voertuig.Bestuurder);
+            Assert.Null(bestuurder.Voertuig);
         }
 
 
         [Fact()]
-        public void VerwijderBestuurderIsNull(){
-           
+        public void VerwijderBestuurderIsNull()
+        {
+            Assert.Null(_voertuig.Bestuurder);
             Assert.ThrowsAny<VoertuigException>(() => _voertuig.VerwijderBestuurder());
-
         }
 
         [Fact()]
         public void ZetIsGearchiveerdTrue()
         {
-            Bestuurder b = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515",
+            var bestuurder = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515",
                 new List<RijbewijsType>());
-            _voertuig.ZetBestuurder(b);
+            _voertuig.ZetBestuurder(bestuurder);
+
+            Assert.Equal(bestuurder, _voertuig.Bestuurder);
+            Assert.Equal(_voertuig, bestuurder.Voertuig);
 
             _voertuig.ZetGearchiveerd(true);
+
             Assert.True(_voertuig.IsGearchiveerd);
+            Assert.Null(_voertuig.Bestuurder);
+            Assert.Null(bestuurder.Voertuig);
         }
         [Fact()]
         public void ZetIsGearchiveerdFalse()
         {
+            _voertuig.ZetGearchiveerd(true);
+
+            Assert.True(_voertuig.IsGearchiveerd);
+
             _voertuig.ZetGearchiveerd(false);
+
             Assert.False(_voertuig.IsGearchiveerd);
         }
     }
