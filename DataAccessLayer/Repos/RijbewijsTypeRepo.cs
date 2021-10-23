@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using DomainLayer.Exceptions.Managers;
 using DomainLayer.Interfaces.Repos;
 using DomainLayer.Models;
 
@@ -8,7 +9,9 @@ namespace DataAccessLayer.Repos
     {
         public void VoegRijbewijsToe(RijbewijsType rijbewijsType)
         {
-            throw new System.NotImplementedException();
+            //SQL statement ExecuteNonQuery
+          
+            
         }
 
         public void VerwijderRijbewijsType(RijbewijsType rijbewijsType)
