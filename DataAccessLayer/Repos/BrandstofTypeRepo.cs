@@ -15,6 +15,7 @@ namespace DataAccessLayer.Repos
             _connection = connection;
         }
 
+        //return type aangepast void => BrandstofType
         public BrandstofType VoegBrandstofTypeToe(BrandstofType brandstofType)
         {
             BrandstofType nieuwType = null;
@@ -36,7 +37,7 @@ namespace DataAccessLayer.Repos
             return nieuwType;
 
 
-        } //moet getest worden, link naar databank? SQL script?
+        } //return type aangepast void => BrandstofType
 
         public bool BestaatBrandstofType(BrandstofType brandstofType)
         {
@@ -56,12 +57,7 @@ namespace DataAccessLayer.Repos
 
             _connection.Close();
             return bestaatType;
-        } // dit moet getest worden
-        public void VerwijderBrandstofType(BrandstofType brandstofType)
-        {
-            throw new System.NotImplementedException();
-        }
-
+        } 
         public void UpdateBrandstofType(BrandstofType brandstofType)
         {
             SqlCommand command = new SqlCommand();
@@ -72,12 +68,41 @@ namespace DataAccessLayer.Repos
             _connection.Open();
             command.ExecuteNonQuery();
             _connection.Close();
-        }
-
+        } 
         public IEnumerable<BrandstofType> GeefAlleBrandstofTypes()
         {
-            throw new System.NotImplementedException();
+            SqlCommand command = new SqlCommand();
+            command.Connection = _connection;
+            command.CommandText = "SELECT * FROM dbo.BRANDSTOFTYPE";
+
+            _connection.Open();
+
+            List<BrandstofType> brandstoftypelijst = new List<BrandstofType>();
+            var reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                var brandstofType = new BrandstofType(reader.GetInt32(0), reader.GetString(1));
+                brandstoftypelijst.Add(brandstofType);
+            }
+
+            _connection.Close();
+            return brandstoftypelijst;
         }
+        public void VerwijderBrandstofType(int id) //parameter aangepast
+        {
+            SqlCommand command = new SqlCommand();
+            command.Connection = _connection;
+            command.CommandText = "DELETE FROM dbo.BRANDSTOFTYPE WHERE Id = @id";
+            command.Parameters.AddWithValue("@id", id);
+
+
+            _connection.Open();
+            command.ExecuteNonQuery();
+            _connection.Close();
+
+        }
+
+
 
     }
 }
