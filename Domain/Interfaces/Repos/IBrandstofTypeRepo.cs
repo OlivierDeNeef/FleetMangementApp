@@ -5,7 +5,7 @@ namespace DomainLayer.Interfaces.Repos
 {
     public interface IBrandstofTypeRepo
     {
-        void VoegBrandstofTypeToe(BrandstofType brandstofType);
+        BrandstofType VoegBrandstofTypeToe(BrandstofType brandstofType);
         void VerwijderBrandstofType(BrandstofType brandstofType);
         void UpdateBrandstofType(BrandstofType brandstofType);
         IEnumerable<BrandstofType> GeefAlleBrandstofTypes();
