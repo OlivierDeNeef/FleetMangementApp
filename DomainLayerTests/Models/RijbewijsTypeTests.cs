@@ -8,12 +8,13 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using DomainLayer.Exceptions.Managers;
+using DomainLayer.Exceptions.Models;
 
 namespace DomainLayerTests.Models
 {
     public class RijbewijsTypeTests
     {
-        private RijbewijsType _rijbewijsType;
+        private readonly RijbewijsType _rijbewijsType;
 
         public RijbewijsTypeTests()
         {
@@ -37,16 +38,18 @@ namespace DomainLayerTests.Models
         [Fact()]
         public void ZetIdInvalid()
         {
-            Assert.ThrowsAny<RijbewijsTypeManagerException>(() => _rijbewijsType.ZetId(-2));
+            Assert.ThrowsAny<RijbewijsTypeException>(() => _rijbewijsType.ZetId(-2));
         }
 
         [Theory]
         [InlineData("  ")]
         [InlineData("")]
         [InlineData(null)]
+        [InlineData("B")]
+
         public void ZetTypeInvalid(string type)
         {
-            Assert.ThrowsAny<RijbewijsTypeManagerException>(() => _rijbewijsType.ZetType(type));
+            Assert.ThrowsAny<RijbewijsTypeException>(() => _rijbewijsType.ZetType(type));
         }
 
 

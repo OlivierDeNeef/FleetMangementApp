@@ -21,7 +21,7 @@ namespace DomainLayer.Models
         public bool IsGearchiveerd { get; private set; }
 
 
-        public Voertuig(int id, string merk, string model, string chassisnummer, string nummerplaat, BrandstofType brandstofType, WagenType wagenType) : this(merk, model, chassisnummer, nummerplaat, brandstofType, wagenType)
+        public Voertuig(int id, string merk, string model, string chassisnummer, string nummerplaat, BrandstofType brandstofType, WagenType wagenType) : this(merk, model, chassisnummer, nummerplaat, brandstofType, wagenType) //Todo: tests schrijven
         {
             ZetId(id);
         }
@@ -45,8 +45,8 @@ namespace DomainLayer.Models
         /// <param name="id">Id van het voertuig</param>
         public void ZetId(int id)
         {
-            if (id < 0) throw new VoertuigException($"ZetId - {nameof(Voertuig)}.{nameof(Id)} kan geen negatieve waarde hebben", new ArgumentException());
-            this.Id = id;
+            if (id < 1) throw new VoertuigException($"ZetId - {nameof(Voertuig)}.{nameof(Id)} kan geen negatieve waarde hebben", new ArgumentException());
+            Id = id;
         }
         /// <summary>
         /// check of het merk bestaat in de lijst
@@ -55,7 +55,7 @@ namespace DomainLayer.Models
         public void ZetMerk(string merk)
         {
             if (string.IsNullOrWhiteSpace(merk)) throw new VoertuigException($"ZetMerk - {nameof(merk)} kan niet null of leeg zijn");
-            this.Merk = merk.Trim();
+            Merk = merk.Trim();
         }
         /// <summary>
         /// checking van het automodel, of het in de lijst staat
@@ -64,7 +64,7 @@ namespace DomainLayer.Models
         public void ZetModel(string model)
         {
             if (string.IsNullOrWhiteSpace(model)) throw new VoertuigException($"ZetModel - {nameof(model)} kan niet null of leeg zijn");
-            this.Model = model.Trim();
+            Model = model.Trim();
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace DomainLayer.Models
         {
             if (string.IsNullOrWhiteSpace(chassiesnummer)) throw new VoertuigException("ZetChassiesnummer - Het nummer kan niet null of leeg zijn");
             if (chassiesnummer.Length != 17) throw new VoertuigException($"ZetChassiesnummer - {nameof(chassiesnummer)} heef een exacte lengte van 17 karakters");
-            this.Chassisnummer = chassiesnummer.Trim();
+            Chassisnummer = chassiesnummer.Trim();
         }
 
         
@@ -158,7 +158,6 @@ namespace DomainLayer.Models
         {
             if (isGearchiveerd && Bestuurder != null)
             {
-                Bestuurder.VerwijderVoertuig();
                 VerwijderBestuurder();
             }
             IsGearchiveerd = isGearchiveerd;
@@ -169,8 +168,40 @@ namespace DomainLayer.Models
         public void VerwijderBestuurder()
         {
             if (Bestuurder == null) throw new VoertuigException("VerwijderBestuurder - Bestuurder bestaat niet");
+            var bestuurder = Bestuurder;
             Bestuurder = null;
+            if(bestuurder.Voertuig != null) bestuurder.VerwijderVoertuig();
+        }
 
+        /// <summary>
+        /// Controlleer of 2 voertuigen dezelde properties hebben
+        /// </summary>
+        /// <param name="obj">object om te vergelijken</param>
+        /// <returns>True wanneer voertuigen gelijk zijn ander false</returns>
+        public override bool Equals(object obj) //Todo: tests schrijven
+        {
+            return obj is Voertuig other && Id == other.Id && Merk == other.Merk && Model == other.Model && Chassisnummer == other.Chassisnummer && Equals(WagenType, other.WagenType) && Equals(BrandstofType, other.BrandstofType) && Nummerplaat == other.Nummerplaat && Kleur == other.Kleur && AantalDeuren == other.AantalDeuren && Equals(Bestuurder, other.Bestuurder) && IsGearchiveerd == other.IsGearchiveerd;
+        }
+
+        /// <summary>
+        /// Geef HashCode van voertuig
+        /// </summary>
+        /// <returns></returns>
+        public override int GetHashCode()
+        {
+            var hashCode = new HashCode();
+            hashCode.Add(Id);
+            hashCode.Add(Merk);
+            hashCode.Add(Model);
+            hashCode.Add(Chassisnummer);
+            hashCode.Add(WagenType);
+            hashCode.Add(BrandstofType);
+            hashCode.Add(Nummerplaat);
+            hashCode.Add(Kleur);
+            hashCode.Add(AantalDeuren);
+            hashCode.Add(Bestuurder);
+            hashCode.Add(IsGearchiveerd);
+            return hashCode.ToHashCode();
         }
     }
 }

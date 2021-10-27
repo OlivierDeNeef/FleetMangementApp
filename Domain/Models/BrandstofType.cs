@@ -1,4 +1,5 @@
-﻿using DomainLayer.Exceptions.Models;
+﻿using System;
+using DomainLayer.Exceptions.Models;
 
 namespace DomainLayer.Models
 {
@@ -7,13 +8,13 @@ namespace DomainLayer.Models
         public int Id { get; private set; }
         public string Type { get; private set; }
 
-        public BrandstofType(int id, string type) : this(type)
+        public BrandstofType(int id, string type) : this(type)//Todo: tests schrijven
         {
             ZetId(id);
         }
 
 
-        public BrandstofType(string type)
+        public BrandstofType(string type)//Todo: tests schrijven
         {
             ZetType(type);
         }
@@ -26,7 +27,7 @@ namespace DomainLayer.Models
         public void ZetId(int id)
         {
             if (id < 1) throw new BrandstofTypeException("ZetId - id < 1");
-            this.Id = id;
+            Id = id;
         }
 
 
@@ -38,7 +39,27 @@ namespace DomainLayer.Models
         public void ZetType(string type)
         {
             if (string.IsNullOrWhiteSpace(type)) throw new BrandstofTypeException("ZetType - Type is null of leeg");
-            this.Type = type.Trim().ToUpper();
+            if (type.Trim().ToUpper() == Type) throw new BrandstofTypeException("ZetType - zelfde type als huidig type");
+            Type = type.Trim().ToUpper();
+        }
+        /// <summary>
+        /// Controlleert of 2 brandstoftypes hetzelfde zijn 
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public override bool Equals(object obj)//Todo: tests schrijven
+        {
+            return obj is BrandstofType other && Id == other.Id && Type == other.Type;
+        }
+
+      
+        /// <summary>
+        /// Geeft de hashcode van een brandstoftype
+        /// </summary>
+        /// <returns></returns>
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id, Type);
         }
     }
 

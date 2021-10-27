@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using DomainLayer.Exceptions;
 using DomainLayer.Exceptions.Models;
 using DomainLayer.Exceptions.Utilities;
@@ -20,12 +21,31 @@ namespace DomainLayer.Models
         public Voertuig Voertuig { get; private set; }
         public bool IsGearchiveerd { get; private set; }
 
-        public Bestuurder(int id, string naam, string voornaam, DateTime geboortedatum, string rijksregisternummer, List<RijbewijsType> rijbewijsTypes) : this( naam,  voornaam, geboortedatum, rijksregisternummer, rijbewijsTypes)
+        /// <summary>
+        /// Maak een bestuurders object aan en zet zijn properties volgens de methodes en roept de hoofd constructor op 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="naam"></param>
+        /// <param name="voornaam"></param>
+        /// <param name="geboortedatum"></param>
+        /// <param name="rijksregisternummer"></param>
+        /// <param name="rijbewijsTypes"></param>
+        public Bestuurder(int id, string naam, string voornaam, DateTime geboortedatum, string rijksregisternummer, List<RijbewijsType> rijbewijsTypes) : this( naam,  voornaam, geboortedatum, rijksregisternummer, rijbewijsTypes) //Todo: test for faulty input
         {
             ZetId(id);
+            
         }
 
-        public Bestuurder(string naam, string voornaam, DateTime geboortedatum, string rijksregisternummer,List<RijbewijsType> rijbewijsTypes)
+
+        /// <summary>
+        /// Maak een bestuurders object aan en zet zijn properties volgens de methodes
+        /// </summary>
+        /// <param name="naam"></param>
+        /// <param name="voornaam"></param>
+        /// <param name="geboortedatum"></param>
+        /// <param name="rijksregisternummer"></param>
+        /// <param name="rijbewijsTypes"></param>
+        public Bestuurder(string naam, string voornaam, DateTime geboortedatum, string rijksregisternummer,List<RijbewijsType> rijbewijsTypes) //Todo: test for faulty input
         {
             ZetNaam(naam);
             ZetVoornaam(voornaam);
@@ -42,7 +62,7 @@ namespace DomainLayer.Models
         public void ZetId(int id)
         {
             if (id < 0) throw new BestuurderException("ZetId - id < 0", new ArgumentOutOfRangeException());
-            this.Id = id;
+            Id = id;
         }
 
         /// <summary>
@@ -53,7 +73,7 @@ namespace DomainLayer.Models
         public void ZetNaam(string naam)
         {
             if (string.IsNullOrWhiteSpace(naam)) throw new BestuurderException("ZetNaam - Naam is leeg");
-            this.Naam = naam.Trim();
+            Naam = naam.Trim();
         }
 
         /// <summary>
@@ -64,7 +84,7 @@ namespace DomainLayer.Models
         public void ZetVoornaam(string voornaam)
         {
             if (string.IsNullOrWhiteSpace(voornaam)) throw new BestuurderException("ZetVoornaam - Voornaam is leeg");
-            this.Voornaam = voornaam.Trim();
+            Voornaam = voornaam.Trim();
         }
 
         /// <summary>
@@ -76,7 +96,7 @@ namespace DomainLayer.Models
         public void ZetGeboortedatum(DateTime geboortedatum)
         {
             if (DateTime.Today.AddYears(-18) < geboortedatum) throw new BestuurderException("ZetGeboorteDatum - Leeftijd < 18 jaar");
-            this.Geboortedatum = geboortedatum;
+            Geboortedatum = geboortedatum;
         }
 
         /// <summary>
@@ -88,7 +108,7 @@ namespace DomainLayer.Models
         {
             try
             {
-                this.Rijksregisternummer = RijksregisternummerChecker.Parse(rijksregisternummer, Geboortedatum);
+                Rijksregisternummer = RijksregisternummerChecker.Parse(rijksregisternummer, Geboortedatum);
             }
             catch (RijksregisternummerCheckerException e)
             {
@@ -105,7 +125,7 @@ namespace DomainLayer.Models
         /// <param name="adres">Het adres van de bestuurder</param>
         public void ZetAdres(Adres adres)
         {
-            this.Adres = adres ?? throw new BestuurderException("ZetAdres - Adres is null");
+            Adres = adres ?? throw new BestuurderException("ZetAdres - Adres is null");
         }
 
 
@@ -124,7 +144,7 @@ namespace DomainLayer.Models
         public bool HeeftRijbewijsType(RijbewijsType rijbewijsType)
         {
             if (rijbewijsType == null) throw new BestuurderException($"HeeftRijbewijs - rijbewijsType = null");
-            return this._rijbewijsTypes.Contains(rijbewijsType);
+            return _rijbewijsTypes.Contains(rijbewijsType);
         }
 
         /// <summary>
@@ -137,7 +157,7 @@ namespace DomainLayer.Models
         {
             if (rijbewijsType == null) throw new BestuurderException("VoegRijbewijsTypeToe - rijbewijsType = null");
             if (HeeftRijbewijsType(rijbewijsType)) throw new BestuurderException("VoegRijbewijsTypeToe - rijbewijsType bestaat al"); 
-            this._rijbewijsTypes.Add(rijbewijsType);
+            _rijbewijsTypes.Add(rijbewijsType);
         }
 
         /// <summary>
@@ -150,7 +170,7 @@ namespace DomainLayer.Models
         {
             if (rijbewijsType == null) throw new BestuurderException("VerwijderRijbewijsType - rijbewijsType = null");
             if (!HeeftRijbewijsType(rijbewijsType)) throw new BestuurderException("VerwijderRijbewijsType - rijbewijsType bestaat niet"); 
-            this._rijbewijsTypes.Remove(rijbewijsType);
+            _rijbewijsTypes.Remove(rijbewijsType);
         }
 
        
@@ -162,10 +182,10 @@ namespace DomainLayer.Models
         public void ZetTankkaart(Tankkaart tankkaart)
         {
             if (tankkaart == null) throw new BestuurderException("ZetTankkaart - tankkaart = null");
-            if (tankkaart == Tankkaart) throw new BestuurderException("ZetTankkaart - Zelfde tankkaart als huidige");//TODO : extra test
+            if (Tankkaart !=null && Tankkaart.Equals(tankkaart)) throw new BestuurderException("ZetTankkaart - Zelfde tankkaart als huidige");//TODO : extra test
             if (Tankkaart?.Bestuurder != null) Tankkaart.VerwijderBestuurder(); 
-            this.Tankkaart = tankkaart;
-            if (tankkaart.Bestuurder != this)
+            Tankkaart = tankkaart;
+            if (tankkaart.Bestuurder == null || !tankkaart.Bestuurder.Equals(this))
             {
                 tankkaart.ZetBestuurder(this);
             }
@@ -181,7 +201,7 @@ namespace DomainLayer.Models
             if (voertuig == null) throw new BestuurderException("ZetVoertuig - tankkaart = null");
             if (voertuig == Voertuig) throw new BestuurderException("ZetVoertuig - Zelfde tankkaart als huidige");
             if (Voertuig?.Bestuurder != null) Voertuig.VerwijderBestuurder(); 
-            this.Voertuig = voertuig;
+            Voertuig = voertuig;
             if (voertuig.Bestuurder != this)
             {
                 voertuig.ZetBestuurder(this);
@@ -199,18 +219,16 @@ namespace DomainLayer.Models
             {
                 if (Voertuig != null)
                 {
-                    Voertuig.VerwijderBestuurder();
                     VerwijderVoertuig();
                 }
 
                 if (Tankkaart != null)
                 {
-                    Tankkaart.VerwijderBestuurder();
                     VerwijderTankkaart();
                 }
             }
             
-            this.IsGearchiveerd = isGearchiveerd;
+            IsGearchiveerd = isGearchiveerd;
         }
 
         /// <summary>
@@ -218,8 +236,10 @@ namespace DomainLayer.Models
         /// </summary>
         public void VerwijderVoertuig()
         {
-            if (Voertuig == null) throw new BestuurderException("VerwijderVoetuig - Voertuig is al null"); 
+            if (Voertuig == null) throw new BestuurderException("VerwijderVoetuig - Voertuig is al null");
+            var voertuig = Voertuig;
             Voertuig = null;
+            if (voertuig.Bestuurder != null) voertuig.VerwijderBestuurder();
         }
 
         /// <summary>
@@ -227,8 +247,61 @@ namespace DomainLayer.Models
         /// </summary>
         public void VerwijderTankkaart()
         {
-            if (Tankkaart == null) throw new BestuurderException("VerwijderTankkaart - Tankkaart is al null"); 
+            if (Tankkaart == null) throw new BestuurderException("VerwijderTankkaart - Tankkaart is al null");
+            var tankkaart = Tankkaart;
             Tankkaart = null;
+            if (tankkaart.Bestuurder != null) tankkaart.VerwijderBestuurder();
+        }
+
+
+        /// <summary>
+        /// Geeft de rijbewijstypes van de bestuurder
+        /// </summary>
+        /// <returns></returns>
+        public IReadOnlyList<RijbewijsType> GeefRijbewijsTypes() //Todo: tests schrijven
+        {
+            return _rijbewijsTypes;
+        }
+
+        /// <summary>
+        /// Controlleert of 2 bestuurder hetzelfde zijn
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public override bool Equals(object obj) //Todo: tests schrijven
+        {
+            return obj is Bestuurder other &&
+                   _rijbewijsTypes.All(other._rijbewijsTypes.Contains) &&
+                   _rijbewijsTypes.Count == other._rijbewijsTypes.Count &&
+                   Id == other.Id &&
+                   Naam == other.Naam &&
+                   Voornaam == other.Voornaam &&
+                   Geboortedatum.Equals(other.Geboortedatum) &&
+                   Rijksregisternummer == other.Rijksregisternummer &&
+                   Equals(Adres, other.Adres) &&
+                   Equals(Tankkaart, other.Tankkaart) &&
+                   Equals(Voertuig, other.Voertuig) &&
+                   IsGearchiveerd == other.IsGearchiveerd;
+        }
+
+        /// <summary>
+        /// Geeft de hash code van een bestuurder
+        /// </summary>
+        /// <returns></returns>
+        public override int GetHashCode() //Ask: Hoe testen we deze methode
+        {
+            var hashCode = new HashCode();
+            hashCode.Add(_rijbewijsTypes);
+            hashCode.Add(Id);
+            hashCode.Add(Naam);
+            hashCode.Add(Voornaam);
+            hashCode.Add(Geboortedatum);
+            hashCode.Add(Rijksregisternummer);
+            hashCode.Add(Adres);
+            hashCode.Add(Tankkaart);
+            hashCode.Add(Voertuig);
+            hashCode.Add(IsGearchiveerd);
+            return hashCode.ToHashCode();
         }
     }
 }

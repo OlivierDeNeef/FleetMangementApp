@@ -6,7 +6,7 @@ namespace DomainLayerTests.Models
 {
     public class BrandstofTypeTests
     {
-        private BrandstofType _brandstofType;
+        private readonly BrandstofType _brandstofType;
 
         public BrandstofTypeTests()
         {
@@ -37,11 +37,11 @@ namespace DomainLayerTests.Models
         [InlineData(" ")]
         [InlineData("")]
         [InlineData(null)]
+        [InlineData("Benzine")]
         public void ZetTypeTest_OnGeldigType_ThrowsBranstofTypeException(string type)
         {
-            _brandstofType.ZetType("Benzine");
-
-            Assert.Equal("BENZINE", _brandstofType.Type);
+            Assert.Equal("BENZINE",_brandstofType.Type);
+            Assert.Throws<BrandstofTypeException>(() => _brandstofType.ZetType(type));
         }
     }
 }
