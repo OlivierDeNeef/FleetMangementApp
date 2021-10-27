@@ -51,17 +51,55 @@ namespace DataAccessLayer.Repos
 
         public void VerwijderRijbewijsType(RijbewijsType rijbewijsType)
         {
-            throw new System.NotImplementedException();
+            SqlCommand command = new SqlCommand();
+            command.Connection = _connection;
+            command.CommandText = "DELETE FROM dbo.rijbewijstype WHERE Id = @id";
+            command.Parameters.AddWithValue("@id", rijbewijsType.Id);
+
+
+            _connection.Open();
+            command.ExecuteNonQuery();
+            _connection.Close();
+
         }
 
         public IEnumerable<RijbewijsType> GeefAlleRijbewijsTypes()
         {
-            throw new System.NotImplementedException();
+            SqlCommand command = new SqlCommand();
+            command.Connection = _connection;
+            command.CommandText = "SELECT * FROM dbo.rijbewijstype";
+
+            _connection.Open();
+
+            List<RijbewijsType> rijbewijsTypeLijst = new List<RijbewijsType>();
+            var reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                var rijbewijsType = new RijbewijsType(reader.GetInt32(0), reader.GetString(1));
+                rijbewijsTypeLijst.Add(rijbewijsType);
+            }
+
+            _connection.Close();
+            return rijbewijsTypeLijst;
         }
 
         public bool BestaatRijbewijsType(RijbewijsType rijbewijsType)
         {
-            throw new System.NotImplementedException();
+            SqlCommand command = new SqlCommand();
+            command.Connection = _connection;
+            command.CommandText = "SELECT * FROM dbo.rijbewijstype WHERE (type = @type)";
+
+            command.Parameters.AddWithValue("@type", rijbewijsType.Type);
+         
+
+            _connection.Open();
+
+            var reader = command.ExecuteReader();
+            bool bestaatType = reader.HasRows;
+
+
+            _connection.Close();
+            return bestaatType;
         }
 
         public void UpdateRijbewijsType(RijbewijsType rijbewijsType)
