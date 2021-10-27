@@ -46,7 +46,7 @@ namespace DomainLayer.Managers
             {
                 if (_brandstofTypeRepo.BestaatBrandstofType(brandstofType))
                 {
-                    _brandstofTypeRepo.VerwijderBrandstofType(brandstofType);
+                    _brandstofTypeRepo.VerwijderBrandstofType(brandstofType.Id);
                 }
             }
             catch (Exception e)
