@@ -31,6 +31,7 @@ namespace DomainLayer.Models
         /// <param name="rijbewijsTypes"></param>
         public Bestuurder(int id, string naam, string voornaam, DateTime geboortedatum, string rijksregisternummer, List<RijbewijsType> rijbewijsTypes) : this( naam,  voornaam, geboortedatum, rijksregisternummer, rijbewijsTypes) //Todo: test for faulty input
         {
+            
             ZetId(id);
             
         }
@@ -46,6 +47,7 @@ namespace DomainLayer.Models
         /// <param name="rijbewijsTypes"></param>
         public Bestuurder(string naam, string voornaam, DateTime geboortedatum, string rijksregisternummer,List<RijbewijsType> rijbewijsTypes) //Todo: test for faulty input
         {
+            if (rijbewijsTypes.Count < 1) throw new BestuurderException("Bestuurder - bestuurder heeft geen rijbewijs");
             ZetNaam(naam);
             ZetVoornaam(voornaam);
             ZetGeboortedatum(geboortedatum);
