@@ -4,63 +4,138 @@ using DomainLayer.Exceptions.Managers;
 using DomainLayer.Interfaces.Repos;
 using DomainLayer.Models;
 using Microsoft.Extensions.Configuration;
+using DataAccessLayer.Exceptions.Repos;
+using System;
 
 namespace DataAccessLayer.Repos
 {
     public class RijbewijsTypeRepo : IRijbewijsTypeRepo
     {
-        private string connectionString;
+        private string _connectionString;
         private readonly IConfiguration _configuration;
+        /*private readonly SqlConnection _connection;
+
+        public RijbewijsTypeRepo(SqlConnection connection)
+        {
+            _connection = connection;
+        }*/
 
         public RijbewijsTypeRepo(IConfiguration config)
         {
             _configuration = config;
-            connectionString = config.GetConnectionString("defaultConnection");
+            _connectionString = config.GetConnectionString("defaultConnection");
         }
+
+        private SqlConnection GetConnection()
+        {
+            SqlConnection connection = new SqlConnection(_connectionString);
+            return connection;
+        }
+
+
         public void VoegRijbewijsToe(RijbewijsType rijbewijsType)
         {
-            RijbewijsType type = null;
-            SqlCommand command = new SqlCommand();
-           // command.Connection = connectionString; //  needs fix
-
-            command.CommandText = "INSERT INTO dbo.RijbewijsType Type VALUES(@Type)";
-            command.Parameters.AddWithValue("@Type", rijbewijsType.Type);
-        
-            //  _connection.Open();
-            int rows = command.ExecuteNonQuery();
-            if (rows == 1)
+           
+            var connection = new SqlConnection(_connectionString);
+            const string query = "INSERT INTO dbo.rijbewijstype (Type) VALUES (@Type);";
+            try
             {
-                command.CommandText = "SELECT Id FROM dbo.RijbewijsType " + "WHERE (Type = @Type)";
-                int key = (int)command.ExecuteScalar();
-                type = new RijbewijsType(key, rijbewijsType.Type);
+                using var command = connection.CreateCommand();
+                command.CommandText = query;
+                command.Parameters.AddWithValue("@Type",rijbewijsType.Type);
+                connection.Open();
+                command.ExecuteNonQuery();
             }
+            catch (Exception exception)
+            {
 
-            //_connection.Close();
-            //return type;  ?? void type correct? of geven we het gemaakte nog eens terug?
-
-            //SQL statement ExecuteNonQuery
-
+                throw new RijbewijsTypeRepoException(
+                    "VoegRijbewijsToe - Er ging iets fout tijdens het opladen van het rijbewijstype",exception);
+            }
+            finally
+            {
+                connection.Close();
+            }
 
         }
 
         public void VerwijderRijbewijsType(RijbewijsType rijbewijsType)
         {
-            throw new System.NotImplementedException();
+            var connection = new SqlConnection(_connectionString);
+            const string query = "DELETE FROM dbo.rijbewijstype WHERE Id = @id";
+            try
+            {
+                using var command = connection.CreateCommand();
+                command.CommandText = query;
+                command.Parameters.AddWithValue("@id",rijbewijsType.Id);
+
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+            catch (Exception exception)
+            {
+                throw new RijbewijsTypeRepoException(
+                    "VerwijderRijbewijs - Er ging iets fout tijdens het verwijderen van het rijbewijstype",exception);
+            }
+            finally
+            {
+                connection.Close();
+            }
+
         }
 
         public IEnumerable<RijbewijsType> GeefAlleRijbewijsTypes()
         {
-            throw new System.NotImplementedException();
+            var connection = new SqlConnection(_connectionString);
+            SqlCommand command = new SqlCommand();
+            command.Connection = connection;
+            command.CommandText = "SELECT * FROM dbo.rijbewijstype";
+
+            connection.Open();
+
+            List<RijbewijsType> rijbewijsTypeLijst = new List<RijbewijsType>();
+            var reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                var rijbewijsType = new RijbewijsType(reader.GetInt32(0), reader.GetString(1));
+                rijbewijsTypeLijst.Add(rijbewijsType);
+            }
+
+            connection.Close();
+            return rijbewijsTypeLijst;
         }
 
         public bool BestaatRijbewijsType(RijbewijsType rijbewijsType)
         {
-            throw new System.NotImplementedException();
+            var connection = new SqlConnection(_connectionString);
+            SqlCommand command = new SqlCommand();
+            command.Connection = connection;
+            command.CommandText = "SELECT * FROM dbo.rijbewijstype WHERE (type = @type)";
+
+            command.Parameters.AddWithValue("@type", rijbewijsType.Type);
+         
+
+            connection.Open();
+
+            var reader = command.ExecuteReader();
+            bool bestaatType = reader.HasRows;
+
+
+            connection.Close();
+            return bestaatType;
         }
 
         public void UpdateRijbewijsType(RijbewijsType rijbewijsType)
         {
-            throw new System.NotImplementedException();
+            var connection = new SqlConnection(_connectionString);
+            SqlCommand command = new SqlCommand();
+            command.Connection = connection;
+            command.CommandText = "UPDATE rijbewijstype SET type = @type where Id = @id";
+            command.Parameters.AddWithValue("@type",rijbewijsType.Type);
+            command.Parameters.AddWithValue("@id",rijbewijsType.Id);
+            connection.Open();
+            command.ExecuteNonQuery();
+            connection.Close();
         }
     }
 }
