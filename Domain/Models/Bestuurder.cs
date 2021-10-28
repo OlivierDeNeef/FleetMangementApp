@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using DomainLayer.Exceptions;
 using DomainLayer.Exceptions.Models;
 using DomainLayer.Exceptions.Utilities;
 using DomainLayer.Utilities;
@@ -288,7 +287,7 @@ namespace DomainLayer.Models
         /// Geeft de hash code van een bestuurder
         /// </summary>
         /// <returns></returns>
-        public override int GetHashCode() //Ask: Hoe testen we deze methode
+        public override int GetHashCode() 
         {
             var hashCode = new HashCode();
             hashCode.Add(_rijbewijsTypes);
