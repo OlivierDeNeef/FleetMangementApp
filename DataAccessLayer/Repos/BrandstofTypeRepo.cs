@@ -23,7 +23,7 @@ namespace DataAccessLayer.Repos
         //return type aangepast void => BrandstofType
         public void VoegBrandstofTypeToe(BrandstofType brandstofType)
         {
-            BrandstofType nieuwType = null;
+           
             var connection = new SqlConnection(_connectionString);
             string query = "INSERT INTO dbo.BRANSTOFTYPE (type) VALUES(@type)";
             using (SqlCommand command = connection.CreateCommand())
