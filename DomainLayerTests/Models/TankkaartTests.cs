@@ -9,7 +9,14 @@ namespace DomainLayerTests.Models
 {
     public class TankkaartTests
     {
+        [Fact]
+        public void Test_ctor_valid_noBestuurder_noBrandstoftypes_noPincode_noID()
+        {
+            var tankkaart = new Tankkaart("123ABC98", new DateTime(2022, 12, 31));
 
+            Assert.Equal("123ABC98", tankkaart.Kaartnummer);
+            Assert.Equal(new DateTime(2022, 12, 31), tankkaart.Geldigheidsdatum);
+        }
 
         [Fact]
         public void Test_ctor_valid_noBestuurder_noBrandstoftypes_noPincode()
@@ -20,6 +27,7 @@ namespace DomainLayerTests.Models
             Assert.Equal("123ABC98", tankkaart.Kaartnummer);
             Assert.Equal(new DateTime(2022, 12, 31), tankkaart.Geldigheidsdatum);
         }
+
 
         [Fact]
         public void Test_ctor_valid()
@@ -34,6 +42,16 @@ namespace DomainLayerTests.Models
             Assert.Equal(new DateTime(2022, 12, 31), tankkaart.Geldigheidsdatum);
             Assert.Equal("1111", tankkaart.Pincode);
             Assert.Equal(bestuurder, tankkaart.Bestuurder);
+        }
+
+        [Fact]
+        public void Test_Equals_valid()
+        {
+            
+            var bestuurder = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515",new List<RijbewijsType>());
+            var bestuurder2 = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515",new List<RijbewijsType>());
+
+            Assert.True(bestuurder.Equals(bestuurder2));
         }
 
         [Fact]
@@ -198,6 +216,24 @@ namespace DomainLayerTests.Models
 
             Assert.Equal(bestuurder, tankkaart.Bestuurder);
             Assert.Equal(tankkaart, bestuurder.Tankkaart);
+        }
+
+        [Fact]
+        public void Test_ZetBestuurder_valid_vorigeBestuurder_tankkaartVerwijderd()
+        {
+            var tankkaart = new Tankkaart(5, "123ABC98", new DateTime(2022, 12, 31));
+            var bestuurder = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515", new List<RijbewijsType>());
+            var bestuurder2 = new Bestuurder("Droesbeke", "Arnout", new DateTime(1995, 01, 21), "95012117533", new List<RijbewijsType>());
+
+            Assert.Null(tankkaart.Bestuurder);
+            Assert.Null(bestuurder.Tankkaart);
+
+            tankkaart.ZetBestuurder(bestuurder);
+            tankkaart.ZetBestuurder(bestuurder2);
+
+            Assert.Null(bestuurder.Tankkaart);
+            Assert.Equal(bestuurder2, tankkaart.Bestuurder);
+            Assert.Equal(tankkaart, bestuurder2.Tankkaart);
         }
 
         [Fact]

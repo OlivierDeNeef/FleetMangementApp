@@ -19,6 +19,7 @@ namespace DomainLayer.Models
         public int AantalDeuren { get; private set; }
         public Bestuurder Bestuurder { get; private set; }
         public bool IsGearchiveerd { get; private set; }
+        public RijbewijsType RijbewijsType { get; set; }
 
 
         public Voertuig(int id, string merk, string model, string chassisnummer, string nummerplaat, BrandstofType brandstofType, WagenType wagenType) : this(merk, model, chassisnummer, nummerplaat, brandstofType, wagenType) //Todo: tests schrijven
@@ -180,7 +181,7 @@ namespace DomainLayer.Models
         /// <returns>True wanneer voertuigen gelijk zijn ander false</returns>
         public override bool Equals(object obj) //Todo: tests schrijven
         {
-            return obj is Voertuig other && Id == other.Id && Merk == other.Merk && Model == other.Model && Chassisnummer == other.Chassisnummer && Equals(WagenType, other.WagenType) && Equals(BrandstofType, other.BrandstofType) && Nummerplaat == other.Nummerplaat && Kleur == other.Kleur && AantalDeuren == other.AantalDeuren && Equals(Bestuurder, other.Bestuurder) && IsGearchiveerd == other.IsGearchiveerd;
+            return obj is Voertuig other && Id == other.Id && Merk == other.Merk && Model == other.Model && Chassisnummer == other.Chassisnummer && Equals(WagenType, other.WagenType) && Equals(BrandstofType, other.BrandstofType) && Nummerplaat == other.Nummerplaat && Kleur == other.Kleur && AantalDeuren == other.AantalDeuren && Equals(Bestuurder, other.Bestuurder) && IsGearchiveerd == other.IsGearchiveerd && RijbewijsType == other.RijbewijsType;
         }
 
         /// <summary>
@@ -201,6 +202,7 @@ namespace DomainLayer.Models
             hashCode.Add(AantalDeuren);
             hashCode.Add(Bestuurder);
             hashCode.Add(IsGearchiveerd);
+            hashCode.Add(RijbewijsType);
             return hashCode.ToHashCode();
         }
     }
