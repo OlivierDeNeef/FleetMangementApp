@@ -62,15 +62,25 @@ namespace DataAccessLayer.Repos
         public void VerwijderRijbewijsType(RijbewijsType rijbewijsType)
         {
             var connection = new SqlConnection(_connectionString);
-            SqlCommand command = new SqlCommand();
-            command.Connection = connection;
-            command.CommandText = "DELETE FROM dbo.rijbewijstype WHERE Id = @id";
-            command.Parameters.AddWithValue("@id", rijbewijsType.Id);
+            const string query = "DELETE FROM dbo.rijbewijstype WHERE Id = @id";
+            try
+            {
+                using var command = connection.CreateCommand();
+                command.CommandText = query;
+                command.Parameters.AddWithValue("@id",rijbewijsType.Id);
 
-
-            connection.Open();
-            command.ExecuteNonQuery();
-            connection.Close();
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+            catch (Exception exception)
+            {
+                throw new RijbewijsTypeRepoException(
+                    "VerwijderRijbewijs - Er ging iets fout tijdens het verwijderen van het rijbewijstype",exception);
+            }
+            finally
+            {
+                connection.Close();
+            }
 
         }
 
