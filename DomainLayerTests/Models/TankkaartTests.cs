@@ -49,13 +49,7 @@ namespace DomainLayerTests.Models
         {
             
             var bestuurder = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515",new List<RijbewijsType>());
-
-            var tankkaart = new Tankkaart(5,"123ABC98",new DateTime(2022,12,31),"1111",bestuurder);
-
-            List<BrandstofType> brandstofTypes2 = new() {new BrandstofType("benzine") };
             var bestuurder2 = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515",new List<RijbewijsType>());
-
-            var tankkaart2 = new Tankkaart(5,"123ABC98",new DateTime(2022,12,31),"1111",bestuurder2);
 
             Assert.True(bestuurder.Equals(bestuurder2));
         }
@@ -229,7 +223,7 @@ namespace DomainLayerTests.Models
         {
             var tankkaart = new Tankkaart(5, "123ABC98", new DateTime(2022, 12, 31));
             var bestuurder = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515", new List<RijbewijsType>());
-            var bestuurder2 = new Bestuurder("Droesbeke", "Arnout", new DateTime(1995, 01, 21), "99100630516", new List<RijbewijsType>());
+            var bestuurder2 = new Bestuurder("Droesbeke", "Arnout", new DateTime(1995, 01, 21), "95012117533", new List<RijbewijsType>());
 
             Assert.Null(tankkaart.Bestuurder);
             Assert.Null(bestuurder.Tankkaart);
@@ -239,7 +233,7 @@ namespace DomainLayerTests.Models
 
             Assert.Null(bestuurder.Tankkaart);
             Assert.Equal(bestuurder2, tankkaart.Bestuurder);
-            Assert.Equal(tankkaart, bestuurder.Tankkaart);
+            Assert.Equal(tankkaart, bestuurder2.Tankkaart);
         }
 
         [Fact]

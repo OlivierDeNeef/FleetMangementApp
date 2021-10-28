@@ -9,43 +9,49 @@ namespace DataAccessLayer.Repos
 {
     public class RijbewijsTypeRepo : IRijbewijsTypeRepo
     {
-        private string connectionString;
-        private readonly IConfiguration _configuration;
+        //private string connectionString;
+        //private readonly IConfiguration _configuration;
+        private readonly SqlConnection _connection;
 
-        public RijbewijsTypeRepo(IConfiguration config)
+        public RijbewijsTypeRepo(SqlConnection connection)
+        {
+            _connection = connection;
+        }
+
+
+        //dit is voor als we met config file werken
+       /* public RijbewijsTypeRepo(IConfiguration config)
         {
             _configuration = config;
             connectionString = config.GetConnectionString("defaultConnection");
-        }
+        }*/
 
-        private SqlConnection GetConnection()
+        /*private SqlConnection GetConnection()
         {
             SqlConnection connection = new SqlConnection(connectionString);
             return connection;
-        }
+        }*/
+
+
         public void VoegRijbewijsToe(RijbewijsType rijbewijsType)
         {
-            RijbewijsType type = null;
+            //RijbewijsType nieuwType = null;
             SqlCommand command = new SqlCommand();
-           // command.Connection = connectionString; //  needs fix
+            command.Connection = _connection;
 
-            command.CommandText = "INSERT INTO dbo.RijbewijsType Type VALUES(@Type)";
-            command.Parameters.AddWithValue("@Type", rijbewijsType.Type);
-        
-            //  _connection.Open();
+            command.CommandText = "INSERT INTO dbo.rijbewijstype (type) VALUES(@type)";
+            command.Parameters.AddWithValue("@type",rijbewijsType.Type);
+            _connection.Open();
             int rows = command.ExecuteNonQuery();
-            if (rows == 1)
+            /*if (rows == 1)
             {
-                command.CommandText = "SELECT Id FROM dbo.RijbewijsType " + "WHERE (Type = @Type)";
+                command.CommandText = "SELECT id from dbo.rijbewijstype WHERE (type = @type)";
                 int key = (int)command.ExecuteScalar();
-                type = new RijbewijsType(key, rijbewijsType.Type);
-            }
+                nieuwType = new RijbewijsType(key,rijbewijsType.Type);
 
-            //_connection.Close();
-            //return type;  ?? void type correct? of geven we het gemaakte nog eens terug?
-
-            //SQL statement ExecuteNonQuery
-
+            }*/
+            _connection.Close();
+            //return nieuwType;
 
         }
 
@@ -104,7 +110,14 @@ namespace DataAccessLayer.Repos
 
         public void UpdateRijbewijsType(RijbewijsType rijbewijsType)
         {
-            throw new System.NotImplementedException();
+            SqlCommand command = new SqlCommand();
+            command.Connection = _connection;
+            command.CommandText = "UPDATE rijbewijstype SET type = @type where Id = @id";
+            command.Parameters.AddWithValue("@type",rijbewijsType.Type);
+            command.Parameters.AddWithValue("@id",rijbewijsType.Id);
+            _connection.Open();
+            command.ExecuteNonQuery();
+            _connection.Close();
         }
     }
 }
