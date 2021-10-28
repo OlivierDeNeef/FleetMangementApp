@@ -1,40 +1,55 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
+using DomainLayer.Exceptions.Managers;
 using DomainLayer.Interfaces.Repos;
 using DomainLayer.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace DataAccessLayer.Repos
 {
     public class BrandstofTypeRepo : IBrandstofTypeRepo
     {
 
-        private readonly SqlConnection _connection;
+        private readonly string _connectionString;
+        private readonly IConfiguration _configuration;
 
-        public BrandstofTypeRepo(SqlConnection connection)
+        public BrandstofTypeRepo(IConfiguration config)
         {
-            _connection = connection;
+            _configuration = config;
+            _connectionString = config.GetConnectionString("defaultConnection");
         }
 
         //return type aangepast void => BrandstofType
-        public BrandstofType VoegBrandstofTypeToe(BrandstofType brandstofType)
+        public void VoegBrandstofTypeToe(BrandstofType brandstofType)
         {
             BrandstofType nieuwType = null;
-            SqlCommand command = new SqlCommand();
-            command.Connection = _connection;
-
-            command.CommandText = "INSERT INTO dbo.BRANSTOFTYPE (type) VALUES(@type)";
-            command.Parameters.AddWithValue("@type", brandstofType.Type);
-            _connection.Open();
-            int rows = command.ExecuteNonQuery();
-            if (rows == 1)
+            var connection = new SqlConnection(_connectionString);
+            string query = "INSERT INTO dbo.BRANSTOFTYPE (type) VALUES(@type)";
+            using (SqlCommand command = connection.CreateCommand())
             {
-                command.CommandText = "SELECT id from dbo.BRANSTOFTYPE WHERE (type = @type)";
-                int key = (int) command.ExecuteScalar();
-                nieuwType = new BrandstofType(key, brandstofType.Type);
+                connection.Open();
+                try
+                {
+                    command.Parameters.AddWithValue("@type", brandstofType.Type);
+                    command.CommandText = query;
+                    command.ExecuteNonQuery();
+                  
 
+                }
+                catch (Exception e)
+                {
+                    
+                    throw new BrandstofTypeManagerException("VoegBrandstofTypeToe - Er ging iets mis ", e);
+                }
+                finally
+                {
+                    connection.Close();
+                }
+                
             }
-            _connection.Close();
-            return nieuwType;
+           
+            
 
 
         } //return type aangepast void => BrandstofType
@@ -43,39 +58,42 @@ namespace DataAccessLayer.Repos
         {
       
             SqlCommand command = new SqlCommand();
-            command.Connection = _connection;
+            var connection = new SqlConnection(_connectionString);
+            command.Connection = connection;
             command.CommandText = "SELECT * FROM dbo.BRANSTOFTYPE WHERE (type = @type)";
 
             command.Parameters.AddWithValue("@type", brandstofType.Type);
          
 
-            _connection.Open();
+            connection.Open();
 
             var reader = command.ExecuteReader();
             bool bestaatType = reader.HasRows;
 
 
-            _connection.Close();
+            connection.Close();
             return bestaatType;
         } 
         public void UpdateBrandstofType(BrandstofType brandstofType)
         {
             SqlCommand command = new SqlCommand();
-            command.Connection = _connection;
+            var connection = new SqlConnection(_connectionString);
+            command.Connection = connection;
             command.CommandText = "UPDATE BRANDSTOFTYPE SET type = @type where Id = @id";
             command.Parameters.AddWithValue("@type", brandstofType.Type);
             command.Parameters.AddWithValue("@id", brandstofType.Id);
-            _connection.Open();
+            connection.Open();
             command.ExecuteNonQuery();
-            _connection.Close();
+            connection.Close();
         } 
         public IEnumerable<BrandstofType> GeefAlleBrandstofTypes()
         {
             SqlCommand command = new SqlCommand();
-            command.Connection = _connection;
+            var connection = new SqlConnection(_connectionString);
+            command.Connection = connection;
             command.CommandText = "SELECT * FROM dbo.BRANDSTOFTYPE";
 
-            _connection.Open();
+            connection.Open();
 
             List<BrandstofType> brandstoftypelijst = new List<BrandstofType>();
             var reader = command.ExecuteReader();
@@ -85,20 +103,21 @@ namespace DataAccessLayer.Repos
                 brandstoftypelijst.Add(brandstofType);
             }
 
-            _connection.Close();
+            connection.Close();
             return brandstoftypelijst;
         }
         public void VerwijderBrandstofType(int id) //parameter aangepast
         {
             SqlCommand command = new SqlCommand();
-            command.Connection = _connection;
+            var connection = new SqlConnection(_connectionString);
+            command.Connection = connection;
             command.CommandText = "DELETE FROM dbo.BRANDSTOFTYPE WHERE Id = @id";
             command.Parameters.AddWithValue("@id", id);
 
 
-            _connection.Open();
+            connection.Open();
             command.ExecuteNonQuery();
-            _connection.Close();
+            connection.Close();
 
         }
 
