@@ -34,5 +34,6 @@ namespace DomainLayer.Interfaces.Repos
         /// <returns></returns>
         public Bestuurder GeefBestuurder(int id);
 
+        public void VerwijderBestuurder(Bestuurder b);
     }
 }
