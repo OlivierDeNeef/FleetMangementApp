@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using DomainLayer.Exceptions.Managers;
+using DomainLayer.Exceptions.Models;
 using DomainLayer.Interfaces.Repos;
 using DomainLayer.Models;
 using Microsoft.Extensions.Configuration;
@@ -20,10 +21,8 @@ namespace DataAccessLayer.Repos
             _connectionString = config.GetConnectionString("defaultConnection");
         }
 
-        //return type aangepast void => BrandstofType
         public void VoegBrandstofTypeToe(BrandstofType brandstofType)
         {
-           
             var connection = new SqlConnection(_connectionString);
             string query = "INSERT INTO dbo.BRANSTOFTYPE (type) VALUES(@type)";
             using (SqlCommand command = connection.CreateCommand())
@@ -34,94 +33,127 @@ namespace DataAccessLayer.Repos
                     command.Parameters.AddWithValue("@type", brandstofType.Type);
                     command.CommandText = query;
                     command.ExecuteNonQuery();
-                  
 
                 }
                 catch (Exception e)
                 {
-                    
                     throw new BrandstofTypeManagerException("VoegBrandstofTypeToe - Er ging iets mis ", e);
                 }
                 finally
                 {
                     connection.Close();
                 }
-                
             }
-           
-            
-
-
-        } //return type aangepast void => BrandstofType
+        }
 
         public bool BestaatBrandstofType(BrandstofType brandstofType)
         {
-      
-            SqlCommand command = new SqlCommand();
             var connection = new SqlConnection(_connectionString);
-            command.Connection = connection;
-            command.CommandText = "SELECT * FROM dbo.BRANSTOFTYPE WHERE (type = @type)";
+            string query = "SELECT * FROM dbo.BRANSTOFTYPE WHERE (type = @type)";
+            bool bestaatType;
+            using (SqlCommand command = connection.CreateCommand())
+            {
+                connection.Open();
+                try
+                {
+                    command.Parameters.AddWithValue("@type", brandstofType.Type);
+                    command.CommandText = query;
+                    var reader = command.ExecuteReader();
+                    bestaatType = reader.HasRows;
+                }
+                catch (Exception e)
+                {
+                    throw new BrandstofTypeException("BestaatBranstoftype - Er ging iets mis", e);
+                }
+                finally
+                {
+                    connection.Close();
+                }
 
-            command.Parameters.AddWithValue("@type", brandstofType.Type);
-         
-
-            connection.Open();
-
-            var reader = command.ExecuteReader();
-            bool bestaatType = reader.HasRows;
-
-
-            connection.Close();
+            }
             return bestaatType;
-        } 
+        }
         public void UpdateBrandstofType(BrandstofType brandstofType)
         {
-            SqlCommand command = new SqlCommand();
             var connection = new SqlConnection(_connectionString);
-            command.Connection = connection;
-            command.CommandText = "UPDATE BRANDSTOFTYPE SET type = @type where Id = @id";
-            command.Parameters.AddWithValue("@type", brandstofType.Type);
-            command.Parameters.AddWithValue("@id", brandstofType.Id);
-            connection.Open();
-            command.ExecuteNonQuery();
-            connection.Close();
-        } 
+            string query = "UPDATE BRANDSTOFTYPE SET type = @type where Id = @id";
+            using (SqlCommand command = connection.CreateCommand())
+            {
+                connection.Open();
+                try
+                {
+                    command.CommandText = query;
+                    command.Parameters.AddWithValue("@type", brandstofType.Type);
+                    command.Parameters.AddWithValue("@id", brandstofType.Id);
+                    command.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    throw new BrandstofTypeManagerException("Update Brandstoftype - Er ging iets mis ", e);
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+        }
         public IEnumerable<BrandstofType> GeefAlleBrandstofTypes()
         {
-            SqlCommand command = new SqlCommand();
             var connection = new SqlConnection(_connectionString);
-            command.Connection = connection;
-            command.CommandText = "SELECT * FROM dbo.BRANDSTOFTYPE";
 
-            connection.Open();
+            string query = "SELECT * FROM dbo.BRANDSTOFTYPE";
 
-            List<BrandstofType> brandstoftypelijst = new List<BrandstofType>();
-            var reader = command.ExecuteReader();
-            while (reader.Read())
+            using (SqlCommand command = connection.CreateCommand())
             {
-                var brandstofType = new BrandstofType(reader.GetInt32(0), reader.GetString(1));
-                brandstoftypelijst.Add(brandstofType);
+                connection.Open();
+                try
+                {
+                    command.Connection = connection;
+                    command.CommandText = query;
+
+                    List<BrandstofType> brandstoftypelijst = new List<BrandstofType>();
+                    var reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        var brandstofType = new BrandstofType(reader.GetInt32(0), reader.GetString(1));
+                        brandstoftypelijst.Add(brandstofType);
+                    }
+                    return brandstoftypelijst;
+                }
+                catch (Exception e)
+                {
+                    throw new BrandstofTypeManagerException("Geef AlleBrandStofTypes - er ging iets mis", e);
+                }
+                finally
+                {
+                    connection.Close();
+                }
             }
-
-            connection.Close();
-            return brandstoftypelijst;
         }
-        public void VerwijderBrandstofType(int id) //parameter aangepast
+        public void VerwijderBrandstofType(int id) 
         {
-            SqlCommand command = new SqlCommand();
             var connection = new SqlConnection(_connectionString);
-            command.Connection = connection;
-            command.CommandText = "DELETE FROM dbo.BRANDSTOFTYPE WHERE Id = @id";
-            command.Parameters.AddWithValue("@id", id);
+            string query = "DELETE FROM dbo.BRANDSTOFTYPE WHERE Id = @id";
+            using (SqlCommand command = connection.CreateCommand())
+            {
+                try
+                {
+                    connection.Open();
+                    command.CommandText = query;
+                    command.Connection = connection;
+                    command.Parameters.AddWithValue("@id", id);
+                    command.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    throw new BrandstofTypeException("GeefAlleBrandstofTypes - Er liep iets mis", e);
+                }
+                finally
+                {
+                    connection.Close();
 
-
-            connection.Open();
-            command.ExecuteNonQuery();
-            connection.Close();
-
+                }
+            }
         }
-
-
-
     }
 }
