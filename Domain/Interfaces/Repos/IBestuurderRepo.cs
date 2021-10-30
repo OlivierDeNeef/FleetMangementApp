@@ -7,6 +7,8 @@ namespace DomainLayer.Interfaces.Repos
 {
     public interface IBestuurderRepo
     {
+
+
         public IReadOnlyList<Bestuurder> GeefGefilderdeBestuurders([Optional] int id, [Optional] string voornaam, [Optional] string naam,
             [Optional] DateTime geboortedatum, [Optional] List<RijbewijsType> lijstRijbewijstypes, [Optional] string rijksregisternummer, [Optional] bool gearchiveerd);
 
@@ -26,14 +28,24 @@ namespace DomainLayer.Interfaces.Repos
         /// </summary>
         /// <param name="b"></param>
         public void UpdateBestuurder(Bestuurder b);
-        public bool BestaatBestuurder(Bestuurder b);
         /// <summary>
         /// Bestaat de bestuurder
+        /// </summary>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public bool BestaatBestuurder(Bestuurder b);
+        
+        /// <summary>
+        /// Geeft een bestuurder op id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         public Bestuurder GeefBestuurder(int id);
 
+        /// <summary>
+        /// verwijderd een bestuurder
+        /// </summary>
+        /// <param name="b"></param>
         public void VerwijderBestuurder(Bestuurder b);
     }
 }
