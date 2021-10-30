@@ -63,7 +63,7 @@ namespace DataAccessLayer.Repos
                 }
                 catch (Exception e)
                 {
-                    throw new BrandstofTypeException("BestaatBranstoftype - Er ging iets mis", e);
+                    throw new BrandstofTypeManagerException("BestaatBranstoftype - Er ging iets mis", e);
                 }
                 finally
                 {
@@ -146,7 +146,7 @@ namespace DataAccessLayer.Repos
                 }
                 catch (Exception e)
                 {
-                    throw new BrandstofTypeException("GeefAlleBrandstofTypes - Er liep iets mis", e);
+                    throw new BrandstofTypeManagerException("GeefAlleBrandstofTypes - Er liep iets mis", e);
                 }
                 finally
                 {
