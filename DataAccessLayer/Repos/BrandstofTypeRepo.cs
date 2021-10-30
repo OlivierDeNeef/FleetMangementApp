@@ -130,7 +130,7 @@ namespace DataAccessLayer.Repos
                 }
             }
         }
-        public void VerwijderBrandstofType(int id) //parameter aangepast
+        public void VerwijderBrandstofType(int id) 
         {
             var connection = new SqlConnection(_connectionString);
             string query = "DELETE FROM dbo.BRANDSTOFTYPE WHERE Id = @id";
