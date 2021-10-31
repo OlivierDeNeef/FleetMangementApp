@@ -92,14 +92,19 @@ namespace DomainLayer.Managers
 
         public bool BestaatBestuurder(Bestuurder b)
         {
-            //if (_bestuurderRepo.BestaatBestuurder(b))
-            //{
-            //    throw new BrandstofTypeManagerException("Bestaat bestuurder - Bestuurder bestaat al");
-            //}
-            
+            if (_bestuurderRepo.BestaatBestuurder(b))
+            {
+                throw new BrandstofTypeManagerException("Bestaat bestuurder - Bestuurder bestaat al");
+            }
+
             return _bestuurderRepo.BestaatBestuurder(b);
         }
 
+        /// <summary>
+        /// geeft een bestuurder  
+        /// </summary>
+        /// <param name="b"></param>
+        /// <returns></returns>
         public Bestuurder GeefBestuurder(Bestuurder b)
         {
             if (!_bestuurderRepo.BestaatBestuurder(b))
