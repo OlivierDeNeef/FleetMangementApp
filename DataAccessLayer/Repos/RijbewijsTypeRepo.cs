@@ -107,34 +107,57 @@ namespace DataAccessLayer.Repos
         public bool BestaatRijbewijsType(RijbewijsType rijbewijsType)
         {
             var connection = new SqlConnection(_connectionString);
-            SqlCommand command = new SqlCommand();
-            command.Connection = connection;
-            command.CommandText = "SELECT * FROM dbo.rijbewijstype WHERE (type = @type)";
+            try
+            {
+                using SqlCommand command = connection.CreateCommand();
+                command.Connection = connection;
+                command.CommandText = "SELECT * FROM dbo.rijbewijstype WHERE (type = @type)";
 
-            command.Parameters.AddWithValue("@type", rijbewijsType.Type);
-         
-
-            connection.Open();
-
-            var reader = command.ExecuteReader();
-            bool bestaatType = reader.HasRows;
+                command.Parameters.AddWithValue("@type", rijbewijsType.Type);
 
 
-            connection.Close();
-            return bestaatType;
+                connection.Open();
+
+                var reader = command.ExecuteReader();
+                bool bestaatType = reader.HasRows;
+                return bestaatType;
+
+            }
+            catch (Exception e)
+            {
+                throw new RijbewijsTypeException("BestaatRijbewijsType - Er ging iets mis", e);
+            }
+            finally
+            {
+                connection.Close();
+                
+            }
+            
         }
 
         public void UpdateRijbewijsType(RijbewijsType rijbewijsType)
         {
             var connection = new SqlConnection(_connectionString);
-            SqlCommand command = new SqlCommand();
-            command.Connection = connection;
-            command.CommandText = "UPDATE rijbewijstype SET type = @type where Id = @id";
-            command.Parameters.AddWithValue("@type",rijbewijsType.Type);
-            command.Parameters.AddWithValue("@id",rijbewijsType.Id);
-            connection.Open();
-            command.ExecuteNonQuery();
-            connection.Close();
+            try
+            {
+                using SqlCommand command = connection.CreateCommand();
+                command.Connection = connection;
+                command.CommandText = "UPDATE rijbewijstype SET type = @type where Id = @id";
+                command.Parameters.AddWithValue("@type", rijbewijsType.Type);
+                command.Parameters.AddWithValue("@id", rijbewijsType.Id);
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                throw new RijbewijsTypeException("UpdateRijbewijsType - Er ging iets mis", e);
+            }
+            finally
+            {
+                connection.Close();
+            }
+            
+            
         }
     }
 }
