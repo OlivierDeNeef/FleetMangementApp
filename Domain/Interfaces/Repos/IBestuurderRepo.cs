@@ -7,7 +7,7 @@ namespace DomainLayer.Interfaces.Repos
 {
     public interface IBestuurderRepo
     {
-        public IReadOnlyList<Bestuurder> GeefGefilderdeBestuurders([Optional] int id, [Optional] string voornaam, [Optional] string naam,
+        public IReadOnlyList<Bestuurder> GeefGefilterdeBestuurders([Optional] int id, [Optional] string voornaam, [Optional] string naam,
             [Optional] DateTime geboortedatum, [Optional] List<RijbewijsType> lijstRijbewijstypes, [Optional] string rijksregisternummer, [Optional] bool gearchiveerd);
 
         /// <summary>
