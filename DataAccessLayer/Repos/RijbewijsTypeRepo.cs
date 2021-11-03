@@ -6,19 +6,15 @@ using DomainLayer.Models;
 using Microsoft.Extensions.Configuration;
 using DataAccessLayer.Exceptions.Repos;
 using System;
+using DomainLayer.Exceptions.Models;
 
 namespace DataAccessLayer.Repos
 {
     public class RijbewijsTypeRepo : IRijbewijsTypeRepo
     {
-        private string _connectionString;
+        private readonly string _connectionString;
         private readonly IConfiguration _configuration;
-        /*private readonly SqlConnection _connection;
 
-        public RijbewijsTypeRepo(SqlConnection connection)
-        {
-            _connection = connection;
-        }*/
 
         public RijbewijsTypeRepo(IConfiguration config)
         {
@@ -26,18 +22,12 @@ namespace DataAccessLayer.Repos
             _connectionString = config.GetConnectionString("defaultConnection");
         }
 
-        private SqlConnection GetConnection()
-        {
-            SqlConnection connection = new SqlConnection(_connectionString);
-            return connection;
-        }
-
-
+        
         public void VoegRijbewijsToe(RijbewijsType rijbewijsType)
         {
            
             var connection = new SqlConnection(_connectionString);
-            const string query = "INSERT INTO dbo.rijbewijstype (Type) VALUES (@Type);";
+            const string query = "INSERT INTO dbo.rijbewijstypes (Type) VALUES (@Type);";
             try
             {
                 using var command = connection.CreateCommand();
@@ -62,7 +52,7 @@ namespace DataAccessLayer.Repos
         public void VerwijderRijbewijsType(RijbewijsType rijbewijsType)
         {
             var connection = new SqlConnection(_connectionString);
-            const string query = "DELETE FROM dbo.rijbewijstype WHERE Id = @id";
+            const string query = "DELETE FROM dbo.rijbewijstypes WHERE Id = @id";
             try
             {
                 using var command = connection.CreateCommand();
@@ -87,22 +77,31 @@ namespace DataAccessLayer.Repos
         public IEnumerable<RijbewijsType> GeefAlleRijbewijsTypes()
         {
             var connection = new SqlConnection(_connectionString);
-            SqlCommand command = new SqlCommand();
-            command.Connection = connection;
-            command.CommandText = "SELECT * FROM dbo.rijbewijstype";
-
-            connection.Open();
-
-            List<RijbewijsType> rijbewijsTypeLijst = new List<RijbewijsType>();
-            var reader = command.ExecuteReader();
-            while (reader.Read())
+            var rijbewijsTypeLijst = new List<RijbewijsType>();
+            try
             {
-                var rijbewijsType = new RijbewijsType(reader.GetInt32(0), reader.GetString(1));
-                rijbewijsTypeLijst.Add(rijbewijsType);
+                using var command = connection.CreateCommand();
+                command.Connection = connection;
+                command.CommandText = "SELECT * FROM dbo.rijbewijstypes";
+                connection.Open();
+                var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    var rijbewijsType = new RijbewijsType(reader.GetInt32(0), reader.GetString(1));
+                    rijbewijsTypeLijst.Add(rijbewijsType);
+                }
+                return rijbewijsTypeLijst;
             }
 
-            connection.Close();
-            return rijbewijsTypeLijst;
+            catch (Exception e)
+            {
+                throw new RijbewijsTypeException("GeefAlleRijbewijsTypes - Er ging iets mis", e);
+            }
+            finally
+            {
+                 connection.Close();
+            
+            }
         }
 
         public bool BestaatRijbewijsType(RijbewijsType rijbewijsType)

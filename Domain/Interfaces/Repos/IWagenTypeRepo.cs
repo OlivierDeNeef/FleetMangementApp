@@ -6,8 +6,8 @@ namespace DomainLayer.Interfaces.Repos
     public interface IWagenTypeRepo
     {
         void VoegWagenTypeToe(WagenType brandstofType);
-        void VerwijderWagenType(WagenType brandstofType);
-        void UpdateWagenType(WagenType brandstofType);
+        void VerwijderWagenType(int id);
+        void UpdateWagenType(WagenType wagenType);
         IEnumerable<WagenType> GeefAlleWagenTypes();
         bool BestaatWagenType(WagenType brandstofType);
     }
