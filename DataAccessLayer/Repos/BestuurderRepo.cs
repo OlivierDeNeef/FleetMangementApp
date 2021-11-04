@@ -1,5 +1,6 @@
 ﻿using DomainLayer.Interfaces.Repos;
 using DomainLayer.Models;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,15 @@ namespace DataAccessLayer.Repos
 {
     public class BestuurderRepo: IBestuurderRepo
     {
+        private readonly string _connectionString;
+        private readonly IConfiguration _configuration;
+
+        public BestuurderRepo(IConfiguration config)
+        {
+            _configuration = config;
+            _connectionString = config.GetConnectionString("defaultConnection");
+        }
+
         public bool BestaatBestuurder(Bestuurder b)
         {
             throw new NotImplementedException();
