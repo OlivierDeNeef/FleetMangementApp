@@ -15,7 +15,8 @@ namespace DomainLayerTests.Models
         /// </summary>
         public BestuurderTests()
         {
-            _bestuurder =  new Bestuurder("De Neef", "Olivier", new DateTime(1999,10,6), "99100630515", new List<RijbewijsType>());
+            List<RijbewijsType> rijbewijzen = new() { new RijbewijsType("B") };
+            _bestuurder =  new Bestuurder("De Neef", "Olivier", new DateTime(1999,10,6), "99100630515", rijbewijzen);
         }
 
 
@@ -23,7 +24,7 @@ namespace DomainLayerTests.Models
         public void BestuurderTest1_GeldigeCtor_PropertiesVeranderen()
         {
             var geboortedatum = new DateTime(1999, 10, 6);
-            var rijbewijzen = new List<RijbewijsType>();
+            List<RijbewijsType> rijbewijzen = new() { new RijbewijsType("B") };
 
             var bestuurder = new Bestuurder("De Neef", "Olivier",geboortedatum , "99100630515",rijbewijzen );
 
@@ -37,7 +38,7 @@ namespace DomainLayerTests.Models
         public void BestuurderTest2_GeldigeCtor_PropertiesVeranderen()
         {
             var geboortedatum = new DateTime(1999, 10, 6);
-            var rijbewijzen = new List<RijbewijsType>();
+            List<RijbewijsType> rijbewijzen = new() { new RijbewijsType("B") };
 
             var bestuurder = new Bestuurder(100,"De Neef", "Olivier", geboortedatum, "99100630515", rijbewijzen);
 
@@ -186,7 +187,7 @@ namespace DomainLayerTests.Models
         [Fact]
         public void HeeftRijbewijsTypeTest_HeeftRijbewijsType_ReturnsTrue()
         {
-            var rijbewijsType = new RijbewijsType("B");
+            var rijbewijsType = new RijbewijsType("C");
             _bestuurder.VoegRijbewijsTypeToe(rijbewijsType);
             var result = _bestuurder.HeeftRijbewijsType(rijbewijsType);
 
@@ -284,7 +285,8 @@ namespace DomainLayerTests.Models
         [Fact()]
         public void ZetTankkaartTest_TankkaartIsDezelfde_ThrowBestuurderException()
         {
-            var sameBestuurder = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515", new List<RijbewijsType>());
+            List<RijbewijsType> rijbewijzen = new() { new RijbewijsType("B") };
+            var sameBestuurder = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515", rijbewijzen);
             var date = DateTime.Now;
             var tankkaart = new Tankkaart(1, "123", date);
 

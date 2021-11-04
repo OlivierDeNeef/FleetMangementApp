@@ -46,7 +46,7 @@ namespace DomainLayer.Managers
             {
                 if (_wagenTypeRepo.BestaatWagenType(wagenType))
                 {
-                    _wagenTypeRepo.VerwijderWagenType(wagenType);
+                    _wagenTypeRepo.VerwijderWagenType(wagenType.Id);
                 }
             }
             catch (Exception e)

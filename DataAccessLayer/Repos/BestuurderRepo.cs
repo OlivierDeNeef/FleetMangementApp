@@ -5,6 +5,12 @@ using DomainLayer.Exceptions.Managers;
 using DomainLayer.Interfaces.Repos;
 using DomainLayer.Models;
 using Microsoft.Extensions.Configuration;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace DataAccessLayer.Repos
 {
@@ -88,7 +94,7 @@ namespace DataAccessLayer.Repos
                 throw new BestuurderManagerException("Bestaat Bestuurder - Er ging iets mis", e);
             }
             finally
-            {
+        {
                 connection.Close();
             }
 
@@ -110,9 +116,9 @@ namespace DataAccessLayer.Repos
                     command.ExecuteNonQuery();
                 }
                 catch (Exception e)
-                {
+        {
                     throw new BrandstofTypeManagerException("VerwijderBestuurder - Er liep iets mis", e);
-                }
+        }
                 finally
                 {
                     connection.Close();
