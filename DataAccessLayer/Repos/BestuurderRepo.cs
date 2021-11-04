@@ -21,14 +21,14 @@ namespace DataAccessLayer.Repos
         {
             var connection = new SqlConnection(_connectionString);
             string query = "INSERT INTO dbo.BESTUURDER (Id, Naam, Voornaam, _rijbewijsTypes, Geboortedatum, " +
-                           "Rijksregisternummer, Adres, Tankkaart, Voertuig, IsGearchiveerd) " +
+                           "Rijksregisternummer, straat, busnummer, huisnummer, Stad, Postcode, Land, TankkaartenId, VoertuigenId, IsGearchiveerd) " +
                            "VALUES (@Id, @Naam, @Voornaam, @_rijbewijsTypes, @Geboortedatum, " +
-                           "@Rijksregisternummer, @Adres, @Tankkaart, @Voertuig, @IsGearchiveerd";
+                           "@Rijksregisternummer, @straat, @busnummer, @huisnummer, @Stad, @Postcode, @Land,  @TankkaartenId, @VoertuigId, @IsGearchiveerd";
 
             using (SqlCommand command = connection.CreateCommand())
             {
                 connection.Open();
-
+                //object types opsplitsen per onderdeel parameter maken ->
                 try
                 {
                     command.Parameters.AddWithValue("@Id", bestuurder.Id);
@@ -37,9 +37,14 @@ namespace DataAccessLayer.Repos
                     command.Parameters.AddWithValue("@_rijbewijstypes", bestuurder.GeefRijbewijsTypes());
                     command.Parameters.AddWithValue("@Geboortedatum", bestuurder.Geboortedatum);
                     command.Parameters.AddWithValue("@Rijksregisternummer", bestuurder.Rijksregisternummer);
-                    command.Parameters.AddWithValue("@Adres", bestuurder.Adres);
-                    command.Parameters.AddWithValue("@Tankkaart", bestuurder.Tankkaart);
-                    command.Parameters.AddWithValue("@Voertuig", bestuurder.Voertuig);
+                    command.Parameters.AddWithValue("@straat", bestuurder.Adres?.Straat);
+                    command.Parameters.AddWithValue("@busnummer", bestuurder.Adres?.Busnummer);
+                    command.Parameters.AddWithValue("@huisnummer", bestuurder.Adres?.Huisnummer);
+                    command.Parameters.AddWithValue("@Stad", bestuurder.Adres?.Stad);
+                    command.Parameters.AddWithValue("@Postcode", bestuurder.Adres?.Postcode);
+                    command.Parameters.AddWithValue("@Land", bestuurder.Adres?.Land);
+                    command.Parameters.AddWithValue("@TankkaartenId", bestuurder.Tankkaart?.Id);
+                    command.Parameters.AddWithValue("@VoertuigId", bestuurder.Voertuig?.Id);
                     command.Parameters.AddWithValue("@IsGearchiveerd", bestuurder.IsGearchiveerd);
                     command.CommandText = query;
                     command.ExecuteNonQuery();

@@ -1,9 +1,10 @@
-﻿using System;
-using DomainLayer.Exceptions.Managers;
+﻿using DomainLayer.Exceptions.Managers;
 using DomainLayer.Exceptions.Models;
-using DomainLayer.Interfaces;
 using DomainLayer.Interfaces.Repos;
 using DomainLayer.Models;
+using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace DomainLayer.Managers
 {
@@ -23,7 +24,7 @@ namespace DomainLayer.Managers
         {
             try
             {
-                if (!_bestuurderRepo.BestaatBestuurder(bestuurder))
+                if (!_bestuurderRepo.BestaatBestuurder(bestuurder.Id))
                 {
                     _bestuurderRepo.VoegBestuurderToe(bestuurder);
                 }
@@ -41,7 +42,7 @@ namespace DomainLayer.Managers
         {
             try
             {
-                if(_bestuurderRepo.BestaatBestuurder(bestuurder))
+                if (_bestuurderRepo.BestaatBestuurder(bestuurder.Id))
                     _bestuurderRepo.VerwijderBestuurder(bestuurder);
             }
             catch (Exception e)
@@ -59,7 +60,7 @@ namespace DomainLayer.Managers
         {
             try
             {
-                if (_bestuurderRepo.BestaatBestuurder(bestuurder))
+                if (_bestuurderRepo.BestaatBestuurder(bestuurder.Id))
                 {
                     _bestuurderRepo.UpdateBestuurder(bestuurder);
                 }
@@ -74,15 +75,20 @@ namespace DomainLayer.Managers
         /// Geeft een list van bestuurders die bij de filter horen.
         /// </summary>
         /// <param name="b"></param>
-        public void GeefGefilterdeBestuurder(Bestuurder b) // stuck
+        public IReadOnlyList<Bestuurder> GeefGefilterdeBestuurder([Optional] int id, [Optional] string voornaam, [Optional] string naam,
+            [Optional] DateTime geboortedatum, [Optional] List<RijbewijsType> lijstRijbewijstypes, [Optional] string rijksregisternummer, [Optional] bool gearchiveerd) // stuck
         {
+            var lijstBestuurders = new List<Bestuurder>();
             try
             {
-                if (_bestuurderRepo.BestaatBestuurder(b))
+                if (id > 0)
                 {
-                    _bestuurderRepo.GeefGefilderdeBestuurders(b.Id, b.Voornaam, b.Naam, b.Geboortedatum, null, // null => lijst rijbewijstypes is private
-                        b.Rijksregisternummer, b.IsGearchiveerd); //hoe weet die welke parameters ingevuld zijn?
+                    lijstBestuurders.Add(_bestuurderRepo.GeefBestuurder(id));
+                    return lijstBestuurders;
                 }
+                return _bestuurderRepo.GeefGefilderdeBestuurders(voornaam, naam, geboortedatum, lijstRijbewijstypes, // null => lijst rijbewijstypes is private
+                     rijksregisternummer, gearchiveerd); //hoe weet die welke parameters ingevuld zijn?
+
             }
             catch (Exception e)
             {
@@ -93,12 +99,12 @@ namespace DomainLayer.Managers
 
         public bool BestaatBestuurder(Bestuurder b)
         {
-            if (_bestuurderRepo.BestaatBestuurder(b))
+            if (_bestuurderRepo.BestaatBestuurder(b.Id))
             {
                 throw new BrandstofTypeManagerException("Bestaat bestuurder - Bestuurder bestaat al");
             }
 
-            return _bestuurderRepo.BestaatBestuurder(b);
+            return _bestuurderRepo.BestaatBestuurder(b.Id);
         }
 
         /// <summary>
@@ -108,13 +114,13 @@ namespace DomainLayer.Managers
         /// <returns></returns>
         public Bestuurder GeefBestuurder(Bestuurder b)
         {
-            if (!_bestuurderRepo.BestaatBestuurder(b))
+            if (!_bestuurderRepo.BestaatBestuurder(b.Id))
             {
                 throw new BrandstofTypeManagerException("BestaatBestuurder - Bestuurder bestaat niet");
             }
-            
+
             return _bestuurderRepo.GeefBestuurder(b.Id);
-            
+
         }
     }
 }
