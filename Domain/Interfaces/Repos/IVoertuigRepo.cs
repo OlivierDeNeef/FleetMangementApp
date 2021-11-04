@@ -31,10 +31,11 @@ namespace DomainLayer.Interfaces.Repos
         /// Check of Tankkaart kan gebruikt worden bij het voertuig
         /// </summary>
         /// <param name="voertuig"></param>
-        public void VoegWagenToe(Voertuig voertuig);
+        public void VoegVoertuigToe(Voertuig voertuig);
         public void UpdateVoertuig(Voertuig voertuig);
-        public void BestaatVoertuig(Voertuig voertuig);
-        public Voertuig GeefTVoertuig(int id);
+        public bool BestaatVoertuig(Voertuig voertuig);
+        public Voertuig GeefVoertuig(int id);
+        public void VerwijderVoertuig(Voertuig voertuig);
 
 
     }
