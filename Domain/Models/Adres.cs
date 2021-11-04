@@ -96,7 +96,7 @@ namespace DomainLayer.Models
         /// <returns></returns>
         public override bool Equals(object obj)//Todo: tests schrijven
         {
-            return obj is Adres other && Id == other.Id && Straat == other.Straat && Huisnummer == other.Huisnummer && Busnummer == other.Busnummer && Stad == other.Stad && Postcode == other.Postcode && Land == other.Land;
+            return obj is Adres other && Straat == other.Straat && Huisnummer == other.Huisnummer && Busnummer == other.Busnummer && Stad == other.Stad && Postcode == other.Postcode && Land == other.Land;
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace DomainLayer.Models
         /// <returns></returns>
         public override int GetHashCode()
         {
-            return HashCode.Combine(Id, Straat, Huisnummer, Busnummer, Stad, Postcode, Land);
+            return HashCode.Combine( Straat, Huisnummer, Busnummer, Stad, Postcode, Land);
         }
     }
 }
