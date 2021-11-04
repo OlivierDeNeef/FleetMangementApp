@@ -35,7 +35,6 @@ namespace DomainLayer.Interfaces.Repos
         public void UpdateVoertuig(Voertuig voertuig);
         public bool BestaatVoertuig(Voertuig voertuig);
         public Voertuig GeefVoertuig(int id);
-        public void VerwijderVoertuig(Voertuig voertuig);
 
 
     }

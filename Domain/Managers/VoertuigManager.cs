@@ -14,7 +14,7 @@ namespace DomainLayer.Managers
             _voertuigRepo = voertuigRepo;
         }
 
-        public void VoegWagenToe(Voertuig voertuig)
+        public void VoegVoertuigToe(Voertuig voertuig)
         {
             try
             {
