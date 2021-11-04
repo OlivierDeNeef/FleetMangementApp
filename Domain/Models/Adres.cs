@@ -6,7 +6,6 @@ namespace DomainLayer.Models
 {
     public class Adres
     {
-        public int Id { get; private set; }
         public string Straat { get; private set; }
         public string Huisnummer { get; private set; }
         public string Busnummer { get; set; }   
@@ -23,24 +22,9 @@ namespace DomainLayer.Models
            ZetLand(land);
         }
 
-        public Adres( int id ,string straat, string huisnummer, string stad, string postcode, string land) : this(straat, huisnummer, stad, postcode, land)//Todo: tests schrijven
-        {
-            ZetId(id);
-        }
+        
 
-
-        /// <summary>
-        /// Veranderd id van het adres.
-        /// Controleert of de id positief is anders geeft deze methode een AdresException.
-        /// </summary>
-        /// <param name="id">Id van het adres.</param>
-        public void ZetId(int id)
-        {
-            if (id < 0) throw new AdresException("ZetId - kan geen negatieve waarde bevatten", new ArgumentOutOfRangeException());
-            Id = id;
-        }
-
-        /// <summary>
+       /// <summary>
         /// Veranderd de straat van het adres.
         /// </summary>
         /// <param name="straat">De straat van het adres.</param>
