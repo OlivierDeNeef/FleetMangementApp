@@ -74,20 +74,21 @@ namespace DomainLayer.Managers
         /// Geeft een list van bestuurders die bij de filter horen.
         /// </summary>
         /// <param name="b"></param>
-        public void GeefGefilterdeBestuurder(Bestuurder b) /// stuck
+        public void GeefGefilterdeBestuurder(Bestuurder b) // stuck
         {
-            //try
-            //{ 
-            //    if(_bestuurderRepo.BestaatBestuurder(b))
-            //    {
-            //        _bestuurderRepo.GeefGefilderdeBestuurders(b)
-            //    }
-            //}
-            //catch (Exception e)
-            //{
-            //    Console.WriteLine(e);
-            //    throw;
-            //}
+            try
+            {
+                if (_bestuurderRepo.BestaatBestuurder(b))
+                {
+                    _bestuurderRepo.GeefGefilderdeBestuurders(b.Id, b.Voornaam, b.Naam, b.Geboortedatum, null, // null => lijst rijbewijstypes is private
+                        b.Rijksregisternummer, b.IsGearchiveerd); //hoe weet die welke parameters ingevuld zijn?
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
 
         public bool BestaatBestuurder(Bestuurder b)

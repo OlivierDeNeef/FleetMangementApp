@@ -20,7 +20,10 @@ namespace DataAccessLayer.Repos
             _configuration = config;
             _connectionString = config.GetConnectionString("defaultConnection");
         }
-
+        /// <summary>
+        /// Voeg branstoftype toe aan de tabel brandstoftype
+        /// </summary>
+        /// <param name="brandstofType"></param>
         public void VoegBrandstofTypeToe(BrandstofType brandstofType)
         {
             var connection = new SqlConnection(_connectionString);
@@ -46,6 +49,11 @@ namespace DataAccessLayer.Repos
             }
         }
 
+        /// <summary>
+        /// checkt of het brandstoftype al bestaat in de lijst
+        /// </summary>
+        /// <param name="brandstofType"></param>
+        /// <returns></returns>
         public bool BestaatBrandstofType(BrandstofType brandstofType)
         {
             var connection = new SqlConnection(_connectionString);
@@ -73,6 +81,11 @@ namespace DataAccessLayer.Repos
             }
             return bestaatType;
         }
+
+        /// <summary>
+        /// update de info van het brandstoftype
+        /// </summary>
+        /// <param name="brandstofType"></param>
         public void UpdateBrandstofType(BrandstofType brandstofType)
         {
             var connection = new SqlConnection(_connectionString);
@@ -97,6 +110,10 @@ namespace DataAccessLayer.Repos
                 }
             }
         }
+        /// <summary>
+        /// geeft een lijst van alle brandstoftypen
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<BrandstofType> GeefAlleBrandstofTypes()
         {
             var connection = new SqlConnection(_connectionString);
@@ -130,6 +147,11 @@ namespace DataAccessLayer.Repos
                 }
             }
         }
+
+        /// <summary>
+        /// verwijderd een brandstoftype
+        /// </summary>
+        /// <param name="id"></param>
         public void VerwijderBrandstofType(int id) 
         {
             var connection = new SqlConnection(_connectionString);
