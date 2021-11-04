@@ -5,7 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Interfaces\Managers\" />
+    <Compile Remove="Interfaces\Managers\**" />
+    <EmbeddedResource Remove="Interfaces\Managers\**" />
+    <None Remove="Interfaces\Managers\**" />
   </ItemGroup>
 
 </Project>

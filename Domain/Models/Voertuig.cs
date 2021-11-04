@@ -19,7 +19,8 @@ namespace DomainLayer.Models
         public int AantalDeuren { get; private set; }
         public Bestuurder Bestuurder { get; private set; }
         public bool IsGearchiveerd { get; private set; }
-        public RijbewijsType RijbewijsType { get; set; }
+        public RijbewijsType RijbewijsType { get; private set; }
+        public bool IsHybride { get; private set; }
 
 
         public Voertuig(int id, string merk, string model, string chassisnummer, string nummerplaat, BrandstofType brandstofType, WagenType wagenType) : this(merk, model, chassisnummer, nummerplaat, brandstofType, wagenType) //Todo: tests schrijven
@@ -204,6 +205,12 @@ namespace DomainLayer.Models
             hashCode.Add(IsGearchiveerd);
             hashCode.Add(RijbewijsType);
             return hashCode.ToHashCode();
+        }
+
+
+        public void ZetHybride(bool isHybride)
+        {
+            IsHybride = isHybride;
         }
     }
 }
