@@ -45,7 +45,7 @@ namespace DomainLayer.Interfaces.Repos
         /// <summary>
         /// verwijderd een bestuurder
         /// </summary>
-        /// <param name="b"></param>
-        public void VerwijderBestuurder(Bestuurder b);
+        /// <param name="id"></param>
+        public void VerwijderBestuurder(int id);
     }
 }

@@ -1,12 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using DomainLayer.Exceptions.Managers;
+using DomainLayer.Interfaces.Repos;
 using DomainLayer.Models;
 using Microsoft.Extensions.Configuration;
 
 namespace DataAccessLayer.Repos
 {
-    public class BestuurderRepo
+    public class BestuurderRepo : IBestuurderRepo
     {
         private readonly string _connectionString;
         private readonly IConfiguration _configuration;
@@ -17,10 +19,17 @@ namespace DataAccessLayer.Repos
             _connectionString = config.GetConnectionString("defaultConnection");
         }
 
+        public IReadOnlyList<Bestuurder> GeefGefilderdeBestuurders(string voornaam = null, string naam = null,
+            DateTime geboortedatum = new DateTime(), List<RijbewijsType> lijstRijbewijstypes = null, string rijksregisternummer = null,
+            bool gearchiveerd = false)
+        {
+            throw new NotImplementedException();
+        }
+
         public void VoegBestuurderToe(Bestuurder bestuurder)
         {
             var connection = new SqlConnection(_connectionString);
-            string query = "INSERT INTO dbo.BESTUURDER (Id, Naam, Voornaam, _rijbewijsTypes, Geboortedatum, " +
+            string query = "INSERT INTO dbo.BESTUURDERS (Id, Naam, Voornaam, _rijbewijsTypes, Geboortedatum, " +
                            "Rijksregisternummer, straat, busnummer, huisnummer, Stad, Postcode, Land, TankkaartenId, VoertuigenId, IsGearchiveerd) " +
                            "VALUES (@Id, @Naam, @Voornaam, @_rijbewijsTypes, @Geboortedatum, " +
                            "@Rijksregisternummer, @straat, @busnummer, @huisnummer, @Stad, @Postcode, @Land,  @TankkaartenId, @VoertuigId, @IsGearchiveerd";
@@ -28,7 +37,6 @@ namespace DataAccessLayer.Repos
             using (SqlCommand command = connection.CreateCommand())
             {
                 connection.Open();
-                //object types opsplitsen per onderdeel parameter maken ->
                 try
                 {
                     command.Parameters.AddWithValue("@Id", bestuurder.Id);
@@ -59,6 +67,67 @@ namespace DataAccessLayer.Repos
                     connection.Close();
                 }
             }
-       }
+        }
+        public bool BestaatBestuurder(int bestuurderId)
+        {
+            bool bestaatBestuurder = false;   
+            var connection = new SqlConnection(_connectionString);
+            string query = "SELECT * FROM dbo.BESTUURDERS WHERE (bestuurderId = @bestuurderId)";
+
+            using SqlCommand command = connection.CreateCommand();
+            connection.Open();
+            try
+            {
+                command.Parameters.AddWithValue("@bestuurderId", bestuurderId);
+                command.CommandText = query;
+                var reader = command.ExecuteReader();
+                bestaatBestuurder = reader.HasRows;
+            }
+            catch (Exception e)
+            {
+                throw new BestuurderManagerException("Bestaat Bestuurder - Er ging iets mis", e);
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return bestaatBestuurder;
+        }
+
+        public void VerwijderBestuurder(int id)
+        {
+            var connection = new SqlConnection(_connectionString);
+            string query = "DELETE FROM dbo.BESTUURDERS WHERE Id = @id";
+            using (SqlCommand command = connection.CreateCommand())
+            {
+                try
+                {
+                    connection.Open();
+                    command.CommandText = query;
+                    command.Connection = connection;
+                    command.Parameters.AddWithValue("@id", id);
+                    command.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    throw new BrandstofTypeManagerException("VerwijderBestuurder - Er liep iets mis", e);
+                }
+                finally
+                {
+                    connection.Close();
+
+                }
+            }
+        }
+        public void UpdateBestuurder(Bestuurder b)
+        {
+            throw new NotImplementedException();
+        }
+        public Bestuurder GeefBestuurder(int id)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }

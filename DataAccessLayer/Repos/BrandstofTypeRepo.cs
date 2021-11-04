@@ -27,7 +27,7 @@ namespace DataAccessLayer.Repos
         public void VoegBrandstofTypeToe(BrandstofType brandstofType)
         {
             var connection = new SqlConnection(_connectionString);
-            string query = "INSERT INTO dbo.BRANSTOFTYPE (type) VALUES(@type)";
+            string query = "INSERT INTO dbo.BRANDSTOFFENTYPES (type) VALUES(@type)";
             using (SqlCommand command = connection.CreateCommand())
             {
                 connection.Open();
@@ -57,7 +57,7 @@ namespace DataAccessLayer.Repos
         public bool BestaatBrandstofType(BrandstofType brandstofType)
         {
             var connection = new SqlConnection(_connectionString);
-            string query = "SELECT * FROM dbo.BRANSTOFTYPE WHERE (type = @type)";
+            string query = "SELECT * FROM dbo.BRANDSTOFFENTYPES WHERE (type = @type)";
             bool bestaatType;
             using (SqlCommand command = connection.CreateCommand())
             {
@@ -89,7 +89,7 @@ namespace DataAccessLayer.Repos
         public void UpdateBrandstofType(BrandstofType brandstofType)
         {
             var connection = new SqlConnection(_connectionString);
-            string query = "UPDATE BRANDSTOFTYPE SET type = @type where Id = @id";
+            string query = "UPDATE BRANDSTOFFENTYPES SET type = @type where Id = @id";
             using (SqlCommand command = connection.CreateCommand())
             {
                 connection.Open();
@@ -118,7 +118,7 @@ namespace DataAccessLayer.Repos
         {
             var connection = new SqlConnection(_connectionString);
 
-            string query = "SELECT * FROM dbo.BRANDSTOFTYPE";
+            string query = "SELECT * FROM dbo.BRANDSTOFFENTYPES";
 
             using (SqlCommand command = connection.CreateCommand())
             {
@@ -155,7 +155,7 @@ namespace DataAccessLayer.Repos
         public void VerwijderBrandstofType(int id) 
         {
             var connection = new SqlConnection(_connectionString);
-            string query = "DELETE FROM dbo.BRANDSTOFTYPE WHERE Id = @id";
+            string query = "DELETE FROM dbo.BRANDSTOFFENTYPES WHERE Id = @id";
             using (SqlCommand command = connection.CreateCommand())
             {
                 try
@@ -168,7 +168,7 @@ namespace DataAccessLayer.Repos
                 }
                 catch (Exception e)
                 {
-                    throw new BrandstofTypeManagerException("GeefAlleBrandstofTypes - Er liep iets mis", e);
+                    throw new BrandstofTypeManagerException("VerwijderBrandstofTypes - Er liep iets mis", e);
                 }
                 finally
                 {

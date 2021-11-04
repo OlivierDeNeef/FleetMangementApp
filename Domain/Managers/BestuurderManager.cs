@@ -35,15 +35,15 @@ namespace DomainLayer.Managers
             }
         }
         /// <summary>
-        /// verwijderd een bestuurder
+        /// dit verwijdert een bestuurder
         /// </summary>
-        /// <param name="bestuurder"></param>
-        public void VerwijderBestuurder(Bestuurder bestuurder)
+        /// <param name="id"></param>
+        public void VerwijderBestuurder(int id)
         {
             try
             {
-                if (_bestuurderRepo.BestaatBestuurder(bestuurder.Id))
-                    _bestuurderRepo.VerwijderBestuurder(bestuurder);
+                if (_bestuurderRepo.BestaatBestuurder(id))
+                    _bestuurderRepo.VerwijderBestuurder(id);
             }
             catch (Exception e)
             {
@@ -86,8 +86,8 @@ namespace DomainLayer.Managers
                     lijstBestuurders.Add(_bestuurderRepo.GeefBestuurder(id));
                     return lijstBestuurders;
                 }
-                return _bestuurderRepo.GeefGefilderdeBestuurders(voornaam, naam, geboortedatum, lijstRijbewijstypes, // null => lijst rijbewijstypes is private
-                     rijksregisternummer, gearchiveerd); //hoe weet die welke parameters ingevuld zijn?
+                return _bestuurderRepo.GeefGefilderdeBestuurders(voornaam, naam, geboortedatum, lijstRijbewijstypes, 
+                     rijksregisternummer, gearchiveerd);
 
             }
             catch (Exception e)
