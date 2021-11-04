@@ -1,10 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using DataAccessLayer.Exceptions.Repos;
+﻿using DataAccessLayer.Exceptions.Repos;
+using DomainLayer.Exceptions.Managers;
+using DomainLayer.Exceptions.Models;
 using DomainLayer.Interfaces.Repos;
 using DomainLayer.Models;
 using Microsoft.Extensions.Configuration;
+using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace DataAccessLayer.Repos
 {
@@ -41,27 +43,107 @@ namespace DataAccessLayer.Repos
             {
                 connection.Close();
             }
-           
+
         }
 
-        public void VerwijderWagenType(WagenType brandstofType)
+        public void VerwijderWagenType(int id)
         {
-            throw new System.NotImplementedException();
+            var connection = new SqlConnection(_connectionString);
+            const string query = "DELETE FROM dbo.Wagentypes WHERE Id = @id";
+            try
+            {
+                using var command = connection.CreateCommand();
+                connection.Open();
+                command.CommandText = query;
+                command.Connection = connection;
+                command.Parameters.AddWithValue("@id", id);
+                command.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                throw new WagenTypeException("VerwijderWagenType - Er liep iets mis", e);
+            }
+            finally
+            {
+                connection.Close();
+
+            }
         }
 
-        public void UpdateWagenType(WagenType brandstofType)
+
+        public void UpdateWagenType(WagenType wagenType)
         {
-            throw new System.NotImplementedException();
+            var connection = new SqlConnection(_connectionString);
+            const string query = "UPDATE dbo.Wagentypes SET Type = @type where Id = @id";
+            try
+            {
+                using var command = connection.CreateCommand();
+                connection.Open();
+                command.CommandText = query;
+                command.Parameters.AddWithValue("@type", wagenType.Type);
+                command.Parameters.AddWithValue("@id", wagenType.Id);
+                command.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                throw new WagenTypeException("UpdateWagenType - Er ging iets mis ", e);
+            }
+            finally
+            {
+                connection.Close();
+            }
         }
 
         public IEnumerable<WagenType> GeefAlleWagenTypes()
         {
-            throw new System.NotImplementedException();
+            var connection = new SqlConnection(_connectionString);
+            const string query = "SELECT * FROM dbo.WagenTypes";
+            try
+            {
+                using var command = connection.CreateCommand();
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = query;
+                var alleWagenTypes = new List<WagenType>();
+                var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    var wagenType = new WagenType(reader.GetInt32(0), reader.GetString(1));
+                    alleWagenTypes.Add(wagenType);
+                }
+                return alleWagenTypes;
+            }
+            catch (Exception e)
+            {
+                throw new BrandstofTypeManagerException("GeefAlleWagenTypes - er ging iets mis", e);
+            }
+            finally
+            {
+                connection.Close();
+            }
         }
 
         public bool BestaatWagenType(WagenType brandstofType)
         {
-            throw new System.NotImplementedException();
+            var connection = new SqlConnection(_connectionString);
+            const string query = "SELECT * FROM dbo.WagenTypes WHERE (type = @type)";
+            try
+            {
+                using var command = connection.CreateCommand();
+                connection.Open();
+                command.Parameters.AddWithValue("@type", brandstofType.Type);
+                command.CommandText = query;
+                var reader = command.ExecuteReader();
+                return reader.HasRows;
+            }
+            catch (Exception e)
+            {
+                throw new BrandstofTypeManagerException("BestaatWagenType - Er ging iets mis", e);
+            }
+            finally
+            {
+                connection.Close();
+            }
         }
     }
 }

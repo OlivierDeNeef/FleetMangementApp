@@ -37,15 +37,14 @@ namespace DataAccessLayer.Repos
                     command.CommandText = query;
                     command.ExecuteNonQuery();
 
-                }
-                catch (Exception e)
-                {
-                    throw new BrandstofTypeManagerException("VoegBrandstofTypeToe - Er ging iets mis ", e);
-                }
-                finally
-                {
-                    connection.Close();
-                }
+            }
+            catch (Exception e)
+            {
+                throw new BrandstofTypeManagerException("VoegBrandstofTypeToe - Er ging iets mis ", e);
+            }
+            finally
+            {
+                connection.Close();
             }
         }
 
@@ -59,26 +58,24 @@ namespace DataAccessLayer.Repos
             var connection = new SqlConnection(_connectionString);
             string query = "SELECT * FROM dbo.BRANDSTOFFENTYPES WHERE (type = @type)";
             bool bestaatType;
-            using (SqlCommand command = connection.CreateCommand())
+            using var command = connection.CreateCommand();
+            connection.Open();
+            try
             {
-                connection.Open();
-                try
-                {
-                    command.Parameters.AddWithValue("@type", brandstofType.Type);
-                    command.CommandText = query;
-                    var reader = command.ExecuteReader();
-                    bestaatType = reader.HasRows;
-                }
-                catch (Exception e)
-                {
-                    throw new BrandstofTypeManagerException("BestaatBranstoftype - Er ging iets mis", e);
-                }
-                finally
-                {
-                    connection.Close();
-                }
-
+                command.Parameters.AddWithValue("@type", brandstofType.Type);
+                command.CommandText = query;
+                var reader = command.ExecuteReader();
+                bestaatType = reader.HasRows;
             }
+            catch (Exception e)
+            {
+                throw new BrandstofTypeManagerException("BestaatBranstoftype - Er ging iets mis", e);
+            }
+            finally
+            {
+                connection.Close();
+            }
+
             return bestaatType;
         }
 
@@ -117,16 +114,13 @@ namespace DataAccessLayer.Repos
         public IEnumerable<BrandstofType> GeefAlleBrandstofTypes()
         {
             var connection = new SqlConnection(_connectionString);
-
-            string query = "SELECT * FROM dbo.BRANDSTOFFENTYPES";
-
-            using (SqlCommand command = connection.CreateCommand())
+            const string query = "SELECT * FROM dbo.BRANDSTOFTYPES";
+            using var command = connection.CreateCommand();
+            connection.Open();
+            try
             {
-                connection.Open();
-                try
-                {
-                    command.Connection = connection;
-                    command.CommandText = query;
+                command.Connection = connection;
+                command.CommandText = query;
 
                     List<BrandstofType> brandstoftypelijst = new List<BrandstofType>();
                     var reader = command.ExecuteReader();
@@ -174,7 +168,6 @@ namespace DataAccessLayer.Repos
                 {
                     connection.Close();
 
-                }
             }
         }
     }

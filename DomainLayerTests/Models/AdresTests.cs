@@ -16,20 +16,9 @@ namespace DomainLayerTests.Models
 
 
 
-        [Fact]
-        public void ZetIdTest_GeldigeId_AdresIdVeranderd()
-        {
-            _adres.ZetId(132);
+        
 
-            Assert.Equal(132, _adres.Id);
-        }
-
-        [Fact]
-        public void ZetIdTest_NegatieveId_ThrowsAdresException()
-        {
-            Assert.ThrowsAny<AdresException>(() => _adres.ZetId(-1));
-        }
-
+      
 
         [Theory]
         [InlineData("     test    ", "test")]

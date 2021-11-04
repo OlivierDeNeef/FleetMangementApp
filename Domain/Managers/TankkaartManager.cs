@@ -11,5 +11,7 @@ namespace DomainLayer.Managers
         {
             _tankkaartRepo = tankkaartRepo;
         }
+
+
     }
 }

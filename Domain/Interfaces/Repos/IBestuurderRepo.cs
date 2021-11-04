@@ -28,6 +28,8 @@ namespace DomainLayer.Interfaces.Repos
         /// </summary>
         /// <param name="b"></param>
         public void UpdateBestuurder(Bestuurder b);
+
+
         /// <summary>
         /// Bestaat de bestuurder
         /// </summary>
