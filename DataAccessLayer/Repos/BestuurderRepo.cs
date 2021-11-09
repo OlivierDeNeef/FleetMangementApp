@@ -76,7 +76,7 @@ namespace DataAccessLayer.Repos
         }
         public bool BestaatBestuurder(int bestuurderId)
         {
-            bool bestaatBestuurder = false;   
+            bool bestaatBestuurder;   
             var connection = new SqlConnection(_connectionString);
             string query = "SELECT * FROM dbo.BESTUURDERS WHERE (bestuurderId = @bestuurderId)";
 
