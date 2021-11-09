@@ -5,12 +5,8 @@ using DomainLayer.Exceptions.Managers;
 using DomainLayer.Interfaces.Repos;
 using DomainLayer.Models;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
+
+
 
 namespace DataAccessLayer.Repos
 {
@@ -23,6 +19,10 @@ namespace DataAccessLayer.Repos
         {
             _configuration = config;
             _connectionString = config.GetConnectionString("defaultConnection");
+        }public BestuurderRepo(string connectionString)
+        {
+            _connectionString = connectionString;
+        
         }
 
         public IReadOnlyList<Bestuurder> GeefGefilderdeBestuurders(string voornaam = null, string naam = null,
@@ -78,13 +78,13 @@ namespace DataAccessLayer.Repos
         {
             bool bestaatBestuurder;   
             var connection = new SqlConnection(_connectionString);
-            string query = "SELECT * FROM dbo.BESTUURDERS WHERE (bestuurderId = @bestuurderId)";
+            string query = "SELECT * FROM dbo.BESTUURDERS WHERE (Id = @Id)";
 
             using SqlCommand command = connection.CreateCommand();
             connection.Open();
             try
             {
-                command.Parameters.AddWithValue("@bestuurderId", bestuurderId);
+                command.Parameters.AddWithValue("@Id", bestuurderId);
                 command.CommandText = query;
                 var reader = command.ExecuteReader();
                 bestaatBestuurder = reader.HasRows;
@@ -132,7 +132,34 @@ namespace DataAccessLayer.Repos
         }
         public Bestuurder GeefBestuurder(int id)
         {
-            throw new NotImplementedException();
+            Bestuurder b = null;
+            var connection = new SqlConnection(_connectionString);
+            string query = "SELECT * FROM dbo.BESTUURDERS WHERE id=@id";
+            using (SqlCommand command = connection.CreateCommand())
+            {
+                try
+                {
+                    command.CommandText = query;
+                    command.Connection = connection;
+                    command.Parameters.AddWithValue("@id", id);
+                    connection.Open();
+                    var reader = command.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        reader.Read();
+                        RijbewijsType rijbewijs = new RijbewijsType(reader.GetInt32(0), reader.GetString(1));
+                        b = new Bestuurder(id, reader.GetString(1), reader.GetString(2), reader.GetDateTime(3), reader.GetString(4), null); // hoe te fixen?
+                    }
+
+                    return b;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
+            }
+
         }
 
     }

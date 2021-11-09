@@ -20,6 +20,7 @@ namespace DataAccessLayer.Repos
             _configuration = config;
             _connectionString = config.GetConnectionString("defaultConnection");
         }
+
         /// <summary>
         /// Voeg branstoftype toe aan de tabel brandstoftype
         /// </summary>
@@ -37,14 +38,15 @@ namespace DataAccessLayer.Repos
                     command.CommandText = query;
                     command.ExecuteNonQuery();
 
-            }
-            catch (Exception e)
-            {
-                throw new BrandstofTypeManagerException("VoegBrandstofTypeToe - Er ging iets mis ", e);
-            }
-            finally
-            {
-                connection.Close();
+                }
+                catch (Exception e)
+                {
+                    throw new BrandstofTypeManagerException("VoegBrandstofTypeToe - Er ging iets mis ", e);
+                }
+                finally
+                {
+                    connection.Close();
+                }
             }
         }
 
@@ -107,6 +109,7 @@ namespace DataAccessLayer.Repos
                 }
             }
         }
+
         /// <summary>
         /// geeft een lijst van alle brandstoftypen
         /// </summary>
@@ -122,31 +125,32 @@ namespace DataAccessLayer.Repos
                 command.Connection = connection;
                 command.CommandText = query;
 
-                    List<BrandstofType> brandstoftypelijst = new List<BrandstofType>();
-                    var reader = command.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        var brandstofType = new BrandstofType(reader.GetInt32(0), reader.GetString(1));
-                        brandstoftypelijst.Add(brandstofType);
-                    }
-                    return brandstoftypelijst;
-                }
-                catch (Exception e)
+                List<BrandstofType> brandstoftypelijst = new List<BrandstofType>();
+                var reader = command.ExecuteReader();
+                while (reader.Read())
                 {
-                    throw new BrandstofTypeManagerException("Geef AlleBrandStofTypes - er ging iets mis", e);
+                    var brandstofType = new BrandstofType(reader.GetInt32(0), reader.GetString(1));
+                    brandstoftypelijst.Add(brandstofType);
                 }
-                finally
-                {
-                    connection.Close();
-                }
+
+                return brandstoftypelijst;
+            }
+            catch (Exception e)
+            {
+                throw new BrandstofTypeManagerException("Geef AlleBrandStofTypes - er ging iets mis", e);
+            }
+            finally
+            {
+                connection.Close();
             }
         }
+
 
         /// <summary>
         /// verwijderd een brandstoftype
         /// </summary>
         /// <param name="id"></param>
-        public void VerwijderBrandstofType(int id) 
+        public void VerwijderBrandstofType(int id)
         {
             var connection = new SqlConnection(_connectionString);
             string query = "DELETE FROM dbo.BRANDSTOFFENTYPES WHERE Id = @id";
@@ -168,7 +172,9 @@ namespace DataAccessLayer.Repos
                 {
                     connection.Close();
 
+                }
             }
         }
     }
 }
+
