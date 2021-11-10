@@ -29,6 +29,7 @@ namespace DomainLayer.Models
         /// <param name="geboortedatum"></param>
         /// <param name="rijksregisternummer"></param>
         /// <param name="rijbewijsTypes"></param>
+        /// <param name="isGearchiveerd"></param>
         public Bestuurder(int id, string naam, string voornaam, DateTime geboortedatum, string rijksregisternummer, List<RijbewijsType> rijbewijsTypes, bool isGearchiveerd) : this( naam,  voornaam, geboortedatum, rijksregisternummer, rijbewijsTypes, isGearchiveerd) //Todo: test for faulty input
         {
             
@@ -45,6 +46,7 @@ namespace DomainLayer.Models
         /// <param name="geboortedatum"></param>
         /// <param name="rijksregisternummer"></param>
         /// <param name="rijbewijsTypes"></param>
+        /// <param name="isGearchiveerd"></param>
         public Bestuurder(string naam, string voornaam, DateTime geboortedatum, string rijksregisternummer,List<RijbewijsType> rijbewijsTypes, bool isGearchiveerd) //Todo: test for faulty input
         {
             if (rijbewijsTypes.Count < 1) throw new BestuurderException("Bestuurder - bestuurder heeft geen rijbewijs");
