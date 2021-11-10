@@ -40,7 +40,7 @@ namespace DomainLayerTests.Models
             var geboortedatum = new DateTime(1999, 10, 6);
             List<RijbewijsType> rijbewijzen = new() { new RijbewijsType("B") };
 
-            var bestuurder = new Bestuurder(100,"De Neef", "Olivier", geboortedatum, "99100630515", rijbewijzen);
+            var bestuurder = new Bestuurder(100,"De Neef", "Olivier", geboortedatum, "99100630515", rijbewijzen, false);
 
             Assert.Equal(100,bestuurder.Id);
             Assert.Equal("De Neef", bestuurder.Naam);

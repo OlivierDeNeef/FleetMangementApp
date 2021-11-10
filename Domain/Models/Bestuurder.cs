@@ -29,7 +29,7 @@ namespace DomainLayer.Models
         /// <param name="geboortedatum"></param>
         /// <param name="rijksregisternummer"></param>
         /// <param name="rijbewijsTypes"></param>
-        public Bestuurder(int id, string naam, string voornaam, DateTime geboortedatum, string rijksregisternummer, List<RijbewijsType> rijbewijsTypes) : this( naam,  voornaam, geboortedatum, rijksregisternummer, rijbewijsTypes) //Todo: test for faulty input
+        public Bestuurder(int id, string naam, string voornaam, DateTime geboortedatum, string rijksregisternummer, List<RijbewijsType> rijbewijsTypes, bool isGearchiveerd) : this( naam,  voornaam, geboortedatum, rijksregisternummer, rijbewijsTypes, isGearchiveerd) //Todo: test for faulty input
         {
             
             ZetId(id);
@@ -45,7 +45,7 @@ namespace DomainLayer.Models
         /// <param name="geboortedatum"></param>
         /// <param name="rijksregisternummer"></param>
         /// <param name="rijbewijsTypes"></param>
-        public Bestuurder(string naam, string voornaam, DateTime geboortedatum, string rijksregisternummer,List<RijbewijsType> rijbewijsTypes) //Todo: test for faulty input
+        public Bestuurder(string naam, string voornaam, DateTime geboortedatum, string rijksregisternummer,List<RijbewijsType> rijbewijsTypes, bool isGearchiveerd) //Todo: test for faulty input
         {
             if (rijbewijsTypes.Count < 1) throw new BestuurderException("Bestuurder - bestuurder heeft geen rijbewijs");
             ZetNaam(naam);
@@ -54,6 +54,8 @@ namespace DomainLayer.Models
             ZetRijksregisternummer(rijksregisternummer);
             _rijbewijsTypes = rijbewijsTypes;
         }
+
+
 
         /// <summary>
         /// Veranderd id van de bestuurder.
