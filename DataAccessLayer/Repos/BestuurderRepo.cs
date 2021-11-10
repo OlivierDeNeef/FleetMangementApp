@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using DomainLayer.Exceptions.Managers;
 using DomainLayer.Interfaces.Repos;
@@ -68,28 +69,27 @@ namespace DataAccessLayer.Repos
         public void VoegBestuurderToe(Bestuurder bestuurder)
         { 
             var connection = new SqlConnection(_connectionString);
-            string query = "INSERT INTO dbo.BESTUURDERS (Id, Naam, Voornaam,  Geboortedatum, " +
-                           "Rijksregisternummer, straat, busnummer, huisnummer, Stad, Postcode, Land, TankkaartenId, VoertuigenId, Gearchiveerd) " +
-                           "VALUES (@Id, @Naam, @Voornaam, @Geboortedatum, @Rijksregisternummer, @straat, @busnummer, @huisnummer, @Stad, @Postcode, @Land,  @TankkaartenId, @VoertuigId, @IsGearchiveerd";
+            string query = "INSERT INTO dbo.BESTUURDERS (Naam, Voornaam,  Geboortedatum, " +
+                           "Rijksregisternummer, Straat, Busnummer, Huisnummer, Postcode, Land, TankkaartId, VoertuigId, Gearchiveerd) " +
+                           "VALUES (@Naam, @Voornaam, @Geboortedatum, @Rijksregisternummer, @straat, @busnummer, @huisnummer, @Postcode, @Land, @TankkaartenId, @VoertuigId, @IsGearchiveerd)";
 
             using (SqlCommand command = connection.CreateCommand())
             {
                 connection.Open();
                 try
                 {
-                    command.Parameters.AddWithValue("@Id", bestuurder.Id);
                     command.Parameters.AddWithValue("@Naam", bestuurder.Naam);
                     command.Parameters.AddWithValue("@Voornaam", bestuurder.Voornaam);
                     command.Parameters.AddWithValue("@Geboortedatum", bestuurder.Geboortedatum);
                     command.Parameters.AddWithValue("@Rijksregisternummer", bestuurder.Rijksregisternummer);
-                    command.Parameters.AddWithValue("@straat", bestuurder.Adres?.Straat);
-                    command.Parameters.AddWithValue("@busnummer", bestuurder.Adres?.Busnummer);
-                    command.Parameters.AddWithValue("@huisnummer", bestuurder.Adres?.Huisnummer);
-                    command.Parameters.AddWithValue("@Stad", bestuurder.Adres?.Stad);
-                    command.Parameters.AddWithValue("@Postcode", bestuurder.Adres?.Postcode);
-                    command.Parameters.AddWithValue("@Land", bestuurder.Adres?.Land);
-                    command.Parameters.AddWithValue("@TankkaartenId", bestuurder.Tankkaart?.Id);
-                    command.Parameters.AddWithValue("@VoertuigId", bestuurder.Voertuig?.Id);
+                    command.Parameters.AddWithValue("@straat", (object) bestuurder.Adres?.Straat ?? DBNull.Value);
+                    command.Parameters.AddWithValue("@busnummer", (object) bestuurder.Adres?.Busnummer ?? DBNull.Value);
+                    command.Parameters.AddWithValue("@huisnummer", (object) bestuurder.Adres?.Huisnummer ?? DBNull.Value);
+                    //command.Parameters.AddWithValue("@Stad", (object) bestuurder.Adres?.Stad ?? DBNull.Value);
+                    command.Parameters.AddWithValue("@Postcode", (object) bestuurder.Adres?.Postcode ?? DBNull.Value);
+                    command.Parameters.AddWithValue("@Land", (object) bestuurder.Adres?.Land ?? DBNull.Value);
+                    command.Parameters.AddWithValue("@TankkaartenId", (object) bestuurder.Tankkaart?.Id ?? DBNull.Value);
+                    command.Parameters.AddWithValue("@VoertuigId", (object) bestuurder.Voertuig?.Id ?? DBNull.Value);
                     command.Parameters.AddWithValue("@IsGearchiveerd", bestuurder.IsGearchiveerd);
                     command.CommandText = query;
                     command.ExecuteNonQuery();
