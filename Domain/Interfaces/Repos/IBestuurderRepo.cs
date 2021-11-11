@@ -9,8 +9,8 @@ namespace DomainLayer.Interfaces.Repos
     {
 
 
-        public IReadOnlyList<Bestuurder> GeefGefilderdeBestuurders([Optional] string voornaam, [Optional] string naam,
-            [Optional] DateTime geboortedatum, [Optional] List<RijbewijsType> lijstRijbewijstypes, [Optional] string rijksregisternummer, [Optional] bool gearchiveerd);
+        public IReadOnlyList<Bestuurder> GeefGefilderdeBestuurders(string voornaam, string naam,
+             DateTime geboortedatum, List<RijbewijsType> lijstRijbewijstypes,  string rijksregisternummer,bool gearchiveerd);
 
         /// <summary>
         /// check of voertuig hoort bij Rijbewijs van bestuurder
