@@ -35,6 +35,7 @@ namespace DomainLayer.Managers
             }
         }
 
+        
 
         /// <summary>
         /// Verwijder een brandstof type van de data source
