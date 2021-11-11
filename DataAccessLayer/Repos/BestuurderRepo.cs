@@ -149,9 +149,43 @@ namespace DataAccessLayer.Repos
             }
         }
 
-        public void UpdateBestuurder(Bestuurder b)
+        public void UpdateBestuurder(Bestuurder bestuurder)
         {
-            throw new NotImplementedException();
+            var connection = new SqlConnection(_connectionString);
+            
+            const string query = "UPDATE BESTUURDERS SET Naam=@Naam, Voornaam=@Voornaam, Geboortedatum=@Geboordedatum, Rijksregisternummer=@Rijksregisternummer, Straat=@Straat, " +
+                                 "Busnummer=@Busnummer, Gearchiveerd=@Gearchiveerd, TankkaartId=@TankkaartId, VoertuigId=@VoertuigId,  " +
+                                 "Huisnummer=@Huisnummer, Stad=@Stad, Postcode=@Postcode, Land=@Land";
+
+            try
+            {
+                using var command = connection.CreateCommand();
+                connection.Open();
+                command.Parameters.AddWithValue("@Naam", bestuurder.Naam); // ok
+                command.Parameters.AddWithValue("@Voornaam", bestuurder.Voornaam); // ok
+                command.Parameters.AddWithValue("@Geboortedatum", bestuurder.Geboortedatum); //ok 
+                command.Parameters.AddWithValue("@Rijksregisternummer", bestuurder.Rijksregisternummer); //ok
+                command.Parameters.AddWithValue("@Straat", (object)bestuurder.Adres?.Straat ?? DBNull.Value); //ok
+                command.Parameters.AddWithValue("@Busnummer", (object)bestuurder.Adres?.Busnummer ?? DBNull.Value); //ok
+                command.Parameters.AddWithValue("@Huisnummer", (object)bestuurder.Adres?.Huisnummer ?? DBNull.Value); //ok
+                command.Parameters.AddWithValue("@Stad", (object)bestuurder.Adres?.Stad ?? DBNull.Value); //ok
+                command.Parameters.AddWithValue("@Postcode", (object)bestuurder.Adres?.Postcode ?? DBNull.Value); //ok
+                command.Parameters.AddWithValue("@Land", (object)bestuurder.Adres?.Land ?? DBNull.Value); //ok
+                command.Parameters.AddWithValue("@TankkaartenId", (object)bestuurder.Tankkaart?.Id ?? DBNull.Value); //k
+                command.Parameters.AddWithValue("@VoertuigId", (object)bestuurder.Voertuig?.Id ?? DBNull.Value); //ok
+                command.Parameters.AddWithValue("@IsGearchiveerd", bestuurder.IsGearchiveerd);
+                command.CommandText = query;
+                command.ExecuteNonQuery();
+            }   
+            catch (Exception e)
+            {
+                throw new BestuurderManagerException("Update Bestuurder - Er ging iets mis", e);
+            }
+            finally
+            {
+                connection.Close();
+            }
+            
         }
 
         public Bestuurder GeefBestuurder(int id)
@@ -173,7 +207,8 @@ namespace DataAccessLayer.Repos
                     reader.Read();
                     var rijbewijs = new RijbewijsType(reader.GetInt32(0), reader.GetString(1));
                     rijbewijzen.Add(rijbewijs);
-                    bestuurder = new Bestuurder(id, reader.GetString(1), reader.GetString(2), reader.GetDateTime(3), reader.GetString(4), rijbewijzen, false); // hoe te fixen?
+                    bestuurder = new Bestuurder(id, reader.GetString(1), reader.GetString(2), reader.GetDateTime(3),
+                        reader.GetString(4), rijbewijzen, false); // hoe te fixen?
                 }
                 else
                 {
@@ -185,6 +220,10 @@ namespace DataAccessLayer.Repos
             catch (Exception e)
             {
                 throw new BestuurderManagerException("GeefBestuurder - Er ging iets mis");
+            }
+            finally
+            {
+                connection.Close();
             }
         }
 

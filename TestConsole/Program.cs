@@ -12,8 +12,9 @@ namespace TestConsole
         {
             Console.WriteLine("Toevoegen klanten");
 
-            //@"Data Source=PC-VAN-LUCA\SQLEXPRESS;Initial Catalog=FleetManagement;Integrated Security=True;"
-            const string connectionString = @"Data Source=MSI\SQLEXPRESS;Initial Catalog=FleetManagement;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+            const string connectionString =
+                @"Data Source=PC-VAN-LUCA\SQLEXPRESS;Initial Catalog=FleetManagement;Integrated Security=True;";
+          //  const string connectionString = @"Data Source=MSI\SQLEXPRESS;Initial Catalog=FleetManagement;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
             
             
             var bestuurderrepo = new BestuurderRepo(connectionString);
