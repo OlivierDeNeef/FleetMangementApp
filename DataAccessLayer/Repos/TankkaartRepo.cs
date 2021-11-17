@@ -61,13 +61,13 @@ namespace DataAccessLayer.Repos
         {
             var brandstofTypes = new List<BrandstofType>();
             var connection = new SqlConnection(_connectionString);
-            const string query = "SELECT dbo.Tankkaarten.Id, Kaartnummer, Geldigheidsdatum, Pincode,Gearchiveerd ,Geblokkeerd ,BrandstoftypeId ,[Type] FROM dbo.Tankkaarten INNER JOIN dbo.Tankkaarten_Brandstoftypes on Id=TankkaartId INNER JOIN dbo.BrandstofTypes on BrandstofTypeId=dbo.brandstoftypes.Id    WHERE dbo.Tankkaarten.Id=@id;";
+            const string query = "SELECT dbo.Tankkaarten.Id, Kaartnummer, Geldigheidsdatum, Pincode,Gearchiveerd ,Geblokkeerd ,BrandstoftypeId ,[Type] FROM dbo.Tankkaarten INNER JOIN dbo.Tankkaarten_Brandstoftypes on Id=TankkaartId INNER JOIN dbo.BrandstofTypes on BrandstofTypeId=dbo.brandstoftypes.Id    WHERE dbo.Tankkaarten.Id=@brandstofTypeId;";
             using var command = connection.CreateCommand();
             try
             {
                 command.CommandText = query;
                 command.Connection = connection;
-                command.Parameters.AddWithValue("@id", id);
+                command.Parameters.AddWithValue("@brandstofTypeId", id);
                 connection.Open();
                 var reader = command.ExecuteReader();
                 var eersteIteratie = true;
@@ -139,8 +139,7 @@ namespace DataAccessLayer.Repos
         private void VoegBrandstofTypesToeAanTankkaart(int id, IEnumerable<BrandstofType> brandstofTypes)
         {
             var connection = new SqlConnection(_connectionString);
-            const string query =
-                "INSERT into dbo.Tankkaarten_Brandstoftypes (TankkaartId, BrandstofTypeId) VALUES (@tankkaartId, @brandstofTypeId)";
+            const string query = "INSERT into dbo.Tankkaarten_Brandstoftypes (TankkaartId, BrandstofTypeId) VALUES (@tankkaartId, @brandstofTypeId)";
             foreach (var brandstofType in brandstofTypes)
             {
                 try
@@ -154,7 +153,7 @@ namespace DataAccessLayer.Repos
                 }
                 catch (Exception e)
                 {
-                    throw new BestuurderManagerException("VoegRijbewijstypeToeAanBestuurder - er ging iets mis", e);
+                    throw new TankkaartRepoException("VoegRijbewijstypeToeAanBestuurder - er ging iets mis", e);
                 }
                 finally
                 {
@@ -163,20 +162,10 @@ namespace DataAccessLayer.Repos
             }
         }
 
-
-        public IReadOnlyList<Tankkaart> GeefGefilterdeTankkaarten([Optional] string kaartnummer, [Optional] DateTime geldigheidsdatum, [Optional] List<BrandstofType> lijstBrandstoftypes, [Optional] bool geachiveerd)
-        {
-            
-            throw new NotImplementedException();
-        }
-
-
         public void UpdateTankkaart(Tankkaart tankkaart)
         {
             var connection = new SqlConnection(_connectionString);
-
-            const string query = "UPDATE Tankkaarten SET ";
-
+            const string query = "UPDATE dbo.Tankkaarten SET ";
             try
             {
                 using var command = connection.CreateCommand();
@@ -192,7 +181,7 @@ namespace DataAccessLayer.Repos
             }
             catch (Exception e)
             {
-                throw new BestuurderManagerException("Update Tankkaart - Er ging iets mis", e);
+                throw new TankkaartRepoException("Update Tankkaart - Er ging iets mis", e);
             }
             finally
             {
@@ -223,7 +212,7 @@ namespace DataAccessLayer.Repos
         public IReadOnlyList<BrandstofType> GeefAlleBrandstofTypesVanTankkaart(int tankkaartId)
         {
             var connection = new SqlConnection(_connectionString);
-            const string querySelect = "SELECT * FROM Tankkaarten_BrandstofTypes where TankkaartId=@tankkaartId";
+            const string querySelect = "SELECT * FROM dbo.Tankkaarten_BrandstofTypes where TankkaartId=@tankkaartId";
             var dbBranstofTypes = new List<BrandstofType>();
             try
             {
@@ -245,14 +234,61 @@ namespace DataAccessLayer.Repos
             finally
             {
                 connection.Close();
-            } 
+            }
             return dbBranstofTypes;
         }
 
-
-        private void VerwijderBrandstofTypeVanTankkaart(int tankkaartId, int id)
+        private void VerwijderBrandstofTypeVanTankkaart(int tankkaartId, int brandstofTypeId)
         {
-            throw new NotImplementedException();
+            var connection = new SqlConnection(_connectionString);
+            const string query = "DELETE FROM dbo.Tankkaarten_BrandstofTypes where TankkaartId=@tankkaartId AND BrandstofTypeId=@brandstofTypeId";
+            try
+            {
+                using var command = connection.CreateCommand();
+                connection.Open();
+                command.Parameters.AddWithValue("@brandstofTypeId", brandstofTypeId);
+                command.Parameters.AddWithValue("@TankkaartId", tankkaartId);
+                command.CommandText = query;
+                command.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                throw new TankkaartRepoException("VerwijderBrandstofTypeVanTankkaat - er ging iets mis", e);
+            }
+            finally
+            {
+                connection.Close();
+            }
         }
+
+
+        public IReadOnlyList<Tankkaart> GeefGefilterdeTankkaarten([Optional] string kaartnummer, [Optional] DateTime geldigheidsdatum, [Optional] List<BrandstofType> lijstBrandstoftypes, [Optional] bool geachiveerd)
+        {
+            var query = "SELECT dbo.Tankkaarten.Id, Kaartnummer, Geldigheidsdatum, Pincode,Gearchiveerd ,Geblokkeerd ,BrandstoftypeId ,[Type] FROM dbo.Tankkaarten INNER JOIN dbo.Tankkaarten_Brandstoftypes on Id=TankkaartId INNER JOIN dbo.BrandstofTypes on BrandstofTypeId=dbo.brandstoftypes.Id WHERE "
+            var first = true;
+            if (!string.IsNullOrWhiteSpace(kaartnummer))
+            {
+                query += "Kaartnummer=@kaartnummer";
+                first = false;
+            }
+
+            if (geldigheidsdatum != DateTime.MinValue)
+            {
+                if (first)query += ", ";
+                query += "Geldigheidsdatum=@geldigheidsdatum";
+                first = false;
+            }
+
+            if (lijstBrandstoftypes != null)
+            {
+                if (first) query += ", ";
+                query += "";
+            }
+            //Ask
+
+        }
+
+
+
     }
 }
