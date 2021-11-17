@@ -135,7 +135,7 @@ namespace DataAccessLayer.Repos
             }
         }
 
-        private void VoegBrandstofTypesToeAanTankkaart(int id, IReadOnlyList<BrandstofType> brandstofTypes)
+        private void VoegBrandstofTypesToeAanTankkaart(int id, IEnumerable<BrandstofType> brandstofTypes)
         {
             var connection = new SqlConnection(_connectionString);
             const string query =
@@ -172,9 +172,36 @@ namespace DataAccessLayer.Repos
 
         public void UpdateTankkaart(Tankkaart tankkaart)
         {
-            throw new NotImplementedException();
+            var connection = new SqlConnection(_connectionString);
+
+            const string query = "UPDATE Tankkaarten SET ";
+
+            try
+            {
+                using var command = connection.CreateCommand();
+                connection.Open();
+                command.Parameters.AddWithValue("@kaartnummer", tankkaart.Kaartnummer);
+                command.Parameters.AddWithValue("@geldigheidsdatum", tankkaart.Geldigheidsdatum);
+                command.Parameters.AddWithValue("@pincode", tankkaart.Pincode);
+                command.Parameters.AddWithValue("@isGeblokkeerd", tankkaart.IsGeblokkeerd);
+                command.Parameters.AddWithValue("@isGearchiveerd", tankkaart.IsGearchiveerd);
+                command.CommandText = query;
+                command.ExecuteNonQuery();
+                UpdateBrandstofTypesVanTankkaart(tankkaart.Id, tankkaart.GeefBrandstofTypes());
+            }
+            catch (Exception e)
+            {
+                throw new BestuurderManagerException("Update Tankkaart - Er ging iets mis", e);
+            }
+            finally
+            {
+                connection.Close();
+            }
         }
 
-
+        private void UpdateBrandstofTypesVanTankkaart(int tankkaartId, IReadOnlyList<BrandstofType> geefBrandstofTypes)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
