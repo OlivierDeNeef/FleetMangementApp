@@ -31,8 +31,26 @@ namespace DomainLayer.Models
         public Tankkaart(int id, string kaartnummer, DateTime geldigheidsDatum, string pincode, Bestuurder bestuurder) : this(id, kaartnummer, geldigheidsDatum)
         {
             ZetPincode(pincode);
-            ZetBestuurder(bestuurder);
+            if (bestuurder != null)
+            {
+                 ZetBestuurder(bestuurder);
+            }
+           
             
+        }
+
+        public Tankkaart(int id, string kaartnummer, DateTime geldigheidsDatum, string pincode, Bestuurder bestuurder, bool isGeblokkeerd,bool isGeachiveerd , List<BrandstofType> brandstofTypes) : this(id, kaartnummer, geldigheidsDatum, pincode, bestuurder)
+        {
+            if (isGeachiveerd)
+            {
+                IsGearchiveerd = true;
+            }
+
+            if (isGeblokkeerd)
+            {
+                BlokkeerKaart();
+            }
+            _brandstofTypes = brandstofTypes;
         }
 
 
