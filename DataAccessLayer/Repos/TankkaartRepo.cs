@@ -113,12 +113,12 @@ namespace DataAccessLayer.Repos
         }
 
 
-        public void UpdateTankkaart(Tankkaart t)
+        public void UpdateTankkaart(Tankkaart tankkaart)
         {
             throw new NotImplementedException();
         }
 
-        public void VoegTankkaartToe(Tankkaart t)
+        public void VoegTankkaartToe(Tankkaart tankkaart)
         {
             throw new NotImplementedException();
         }

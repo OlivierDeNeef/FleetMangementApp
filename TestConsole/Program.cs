@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using DataAccessLayer.Repos;
-using DomainLayer;
-using DomainLayer.Models;
 
 namespace TestConsole
 {
@@ -10,10 +7,10 @@ namespace TestConsole
     {
         static void Main(string[] args)
         {
+            var connectionstring= "Data Source=DESKTOP-A2ORN8D;Initial Catalog=FleetManagement;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
             Console.WriteLine("Toevoegen klanten");
-
-            var repo = new TankkaartRepo(
-                    "Data Source=DESKTOP-A2ORN8D;Initial Catalog=FleetManagement;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+            var bestuurderRepo = new BestuurderRepo(connectionstring);
+            var repo = new TankkaartRepo(connectionstring,bestuurderRepo);
             var tankkaart = repo.GeefTankkaart(2);
 
 
