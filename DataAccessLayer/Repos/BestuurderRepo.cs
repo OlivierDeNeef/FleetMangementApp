@@ -58,6 +58,11 @@ namespace DataAccessLayer.Repos
             }
         }
 
+        public Bestuurder GeefBestuurderMetTankkaart(int tankkaartId)
+        {
+            throw new NotImplementedException();
+        }
+
         public IReadOnlyList<Bestuurder> GeefGefilderdeBestuurders(string voornaam, string naam, DateTime geboortedatum, List<RijbewijsType> lijstRijbewijstypes, string rijksregisternummer, bool gearchiveerd)
         {
             throw new NotImplementedException();

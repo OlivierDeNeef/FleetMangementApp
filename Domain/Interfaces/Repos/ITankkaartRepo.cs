@@ -7,7 +7,7 @@ namespace DomainLayer.Interfaces.Repos
 {
     public interface ITankkaartRepo
     {
-        public IReadOnlyList<Tankkaart> GeefGefilterdeTankkaarten([Optional] int id, [Optional] string kaartnummer,
+        public IReadOnlyList<Tankkaart> GeefGefilterdeTankkaarten( [Optional] string kaartnummer,
             [Optional] DateTime geldigheidsdatum, [Optional] List<BrandstofType> lijstBrandstoftypes,
             [Optional] bool geachiveerd);
         public void VoegTankkaartToe(Tankkaart tankkaart);

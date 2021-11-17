@@ -106,9 +106,66 @@ namespace DataAccessLayer.Repos
             }
         }
 
-
-        public IReadOnlyList<Tankkaart> GeefGefilterdeTankkaarten([Optional] int id, [Optional] string kaartnummer, [Optional] DateTime geldigheidsdatum, [Optional] List<BrandstofType> lijstBrandstoftypes, [Optional] bool geachiveerd)
+        public void VoegTankkaartToe(Tankkaart tankkaart)
         {
+            var connection = new SqlConnection(_connectionString);
+            const string query =
+                "INSERT INTO [dbo].[Tankkaarten]  ([Kaartnummer],[Geldigheidsdatum],[Pincode],[Gearchiveerd] ,[Geblokkeerd]) OUTPUT INSERTED.Id VALUES (@kaartnummer, @geldigheidsdatum, @pincode, @isGeblokkeerd, @isGearchiveerd)";
+
+            try
+            {
+                using var command = connection.CreateCommand();
+                connection.Open();
+                command.Parameters.AddWithValue("@kaartnummer", tankkaart.Kaartnummer);
+                command.Parameters.AddWithValue("@geldigheidsdatum", tankkaart.Geldigheidsdatum);
+                command.Parameters.AddWithValue("@pincode", tankkaart.Pincode);
+                command.Parameters.AddWithValue("@isGeblokkeerd", tankkaart.IsGeblokkeerd);
+                command.Parameters.AddWithValue("@isGearchiveerd", tankkaart.IsGearchiveerd);
+                command.CommandText = query;
+                var id = (int)command.ExecuteScalar();
+                VoegBrandstofTypesToeAanTankkaart(id, tankkaart.GeefBrandstofTypes());
+            }
+            catch (Exception e)
+            {
+                throw new TankkaartRepoException("VoegTankkaartToe - Er ging iets mis ", e);
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        private void VoegBrandstofTypesToeAanTankkaart(int id, IReadOnlyList<BrandstofType> brandstofTypes)
+        {
+            var connection = new SqlConnection(_connectionString);
+            const string query =
+                "INSERT into dbo.Tankkaarten_Brandstoftypes (TankkaartId, BrandstofTypeId) VALUES (@tankkaartId, @brandstofTypeId)";
+            foreach (var brandstofType in brandstofTypes)
+            {
+                try
+                {
+                    using var command = connection.CreateCommand();
+                    connection.Open();
+                    command.Parameters.AddWithValue("@brandstofTypeId", brandstofType.Id);
+                    command.Parameters.AddWithValue("@tankkaartId", id);
+                    command.CommandText = query;
+                    command.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    throw new BestuurderManagerException("VoegRijbewijstypeToeAanBestuurder - er ging iets mis", e);
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+        }
+
+
+        public IReadOnlyList<Tankkaart> GeefGefilterdeTankkaarten([Optional] string kaartnummer, [Optional] DateTime geldigheidsdatum, [Optional] List<BrandstofType> lijstBrandstoftypes, [Optional] bool geachiveerd)
+        {
+            
             throw new NotImplementedException();
         }
 
@@ -118,9 +175,6 @@ namespace DataAccessLayer.Repos
             throw new NotImplementedException();
         }
 
-        public void VoegTankkaartToe(Tankkaart tankkaart)
-        {
-            throw new NotImplementedException();
-        }
+
     }
 }
