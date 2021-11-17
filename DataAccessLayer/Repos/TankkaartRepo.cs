@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -199,7 +200,57 @@ namespace DataAccessLayer.Repos
             }
         }
 
-        private void UpdateBrandstofTypesVanTankkaart(int tankkaartId, IReadOnlyList<BrandstofType> geefBrandstofTypes)
+        private void UpdateBrandstofTypesVanTankkaart(int tankkaartId, IReadOnlyList<BrandstofType> brandstofTypes)
+        {
+            var dbBranstofTypes = GeefAlleBrandstofTypesVanTankkaart(tankkaartId);
+            foreach (var dbBrandstofType in dbBranstofTypes)
+            {
+                if (brandstofTypes.All(x => x.Id != dbBrandstofType.Id))
+                {
+                    VerwijderBrandstofTypeVanTankkaart(tankkaartId, dbBrandstofType.Id);
+                }
+            }
+
+            foreach (var brandstofType in brandstofTypes)
+            {
+                if (dbBranstofTypes.All(x => x.Id != brandstofType.Id))
+                {
+                    VoegBrandstofTypesToeAanTankkaart(tankkaartId, new List<BrandstofType>() { brandstofType });
+                }
+            }
+        }
+
+        public IReadOnlyList<BrandstofType> GeefAlleBrandstofTypesVanTankkaart(int tankkaartId)
+        {
+            var connection = new SqlConnection(_connectionString);
+            const string querySelect = "SELECT * FROM Tankkaarten_BrandstofTypes where TankkaartId=@tankkaartId";
+            var dbBranstofTypes = new List<BrandstofType>();
+            try
+            {
+                using var command = connection.CreateCommand();
+                connection.Open();
+                command.Parameters.AddWithValue("@tankkaartId", tankkaartId);
+                command.CommandText = querySelect;
+                var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    var brandstofTypes = new BrandstofType(reader.GetInt32(0), reader.GetString(1));
+                    dbBranstofTypes.Add(brandstofTypes);
+                }
+            }
+            catch (Exception e)
+            {
+                throw new TankkaartRepoException("", e);
+            }
+            finally
+            {
+                connection.Close();
+            } 
+            return dbBranstofTypes;
+        }
+
+
+        private void VerwijderBrandstofTypeVanTankkaart(int tankkaartId, int id)
         {
             throw new NotImplementedException();
         }
