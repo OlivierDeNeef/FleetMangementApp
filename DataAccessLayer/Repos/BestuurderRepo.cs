@@ -56,7 +56,31 @@ namespace DataAccessLayer.Repos
         }
         public Bestuurder GeefBestuurderMetTankkaart(int tankkaartId)
         {
-            throw new NotImplementedException();
+            Bestuurder b = null;
+            var connection = new SqlConnection(_connectionString);
+            string query =
+                "SELECT t1.*, t2.Id TankkaartId, t2.Kaartnummer, t2.GeldigheidsDatum, t2.Gearciveerd, t2.Geblokkeerd"
+                + " FROM dbo.BESTUURDERS t1 "
+                + " INNER JOIN dbo.Tankkaarten t2 on t1.TankkaartenId = Id"
+                + " WHERE t1.TankkaartId = @TankkaartId";
+
+            try
+            {
+                using (SqlCommand command = connection.CreateCommand())
+                {
+                    command.Parameters.AddWithValue("@TankkaartId", tankkaartId);
+                    var reader = command.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                       
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw new BestuurderManagerException("GeefBestuurderMetTankkaart - Er ging iets mis", e);
+            }
+            return b;
         }
 
         public IReadOnlyList<Bestuurder> GeefGefilderdeBestuurders(string voornaam, string naam, DateTime geboortedatum, List<RijbewijsType> lijstRijbewijstypes, string rijksregisternummer, bool gearchiveerd)
