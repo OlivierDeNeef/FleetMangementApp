@@ -2,6 +2,9 @@
 using DomainLayer.Interfaces;
 using DomainLayer.Interfaces.Repos;
 using DomainLayer.Models;
+using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace DomainLayer.Managers
 {
@@ -18,7 +21,7 @@ namespace DomainLayer.Managers
         {
             try
             {
-                if(!_voertuigRepo.BestaatVoertuig(voertuig))
+                if (!_voertuigRepo.BestaatVoertuig(voertuig))
                 {
                     _voertuigRepo.VoegVoertuigToe(voertuig);
                 }
@@ -32,7 +35,7 @@ namespace DomainLayer.Managers
         {
             try
             {
-                if(_voertuigRepo.BestaatVoertuig(voertuig))
+                if (_voertuigRepo.BestaatVoertuig(voertuig))
                 {
                     _voertuigRepo.UpdateVoertuig(voertuig);
                 }
@@ -47,7 +50,7 @@ namespace DomainLayer.Managers
         {
             try
             {
-               return _voertuigRepo.GeefVoertuig(id);
+                return _voertuigRepo.GeefVoertuig(id);
             }
             catch
             {
@@ -55,5 +58,29 @@ namespace DomainLayer.Managers
 
             }
         }
+
+        public IReadOnlyList<Voertuig> GeefGefilterdeVoertuigen([Optional] int id, [Optional] string merk,
+            [Optional] string model, [Optional] int aantalDeuren, [Optional] string nummerplaat,
+            [Optional] string chassisnummer, [Optional] string kleur, [Optional] WagenType wagenType,
+            [Optional] BrandstofType brandstofType, [Optional] bool gearchiveerd, [Optional] RijbewijsType type)
+        {
+            var lijstVoertuigen = new List<Voertuig>();
+            try
+            {
+                if (id > 0)
+                {
+                    lijstVoertuigen.Add(_voertuigRepo.GeefVoertuig(id));
+                    return lijstVoertuigen;
+                }
+                return _voertuigRepo.GeefGefilterdeVoertuigen(id, merk, model, aantalDeuren, nummerplaat, chassisnummer, kleur, wagenType, brandstofType, gearchiveerd, type);
+
+            }
+            catch (Exception e)
+            {
+                throw new VoertuigManagerException("GeefGefilterdeVoertuigen, er ging iets mis", e);
+            }
+        }
+
+
     }
 }
