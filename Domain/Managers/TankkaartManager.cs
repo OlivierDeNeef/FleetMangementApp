@@ -1,10 +1,5 @@
-﻿using DomainLayer.Exceptions.Managers;
-using DomainLayer.Interfaces;
+﻿using DomainLayer.Interfaces;
 using DomainLayer.Interfaces.Repos;
-using DomainLayer.Models;
-using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
 
 namespace DomainLayer.Managers
 {
@@ -27,47 +22,6 @@ namespace DomainLayer.Managers
                 
                 return _tankkaartRepo.GeefGefilterdeTankkaarten(kaartnummer,geldigheidsdatum,lijstBrandstoftypes,geachiveerd);
 
-            }
-            catch (Exception e)
-            {
-                throw new TankkaartManagerException("GeefGefilterdeTankkaarten, er ging iets mis", e);
-            }
-        }
-        public void VoegTankkaartToe(Tankkaart tankkaart)
-        {
-            try
-            {
-                if (_tankkaartRepo.BestaatTankkaart(tankkaart.Id))
-                    _tankkaartRepo.VoegTankkaartToe(tankkaart);
-            }
-            catch
-            {
-                throw new TankkaartManagerException("VoegTankkaartToe - er ging iets mis");
-            }
-        }
-        public void UpdateTankkaart(Tankkaart tankkaart)
-        {
-            try
-            {
-                if (_tankkaartRepo.BestaatTankkaart(tankkaart.Id))
-                    _tankkaartRepo.UpdateTankkaart(tankkaart);
-            }
-            catch
-            {
-                throw new TankkaartManagerException("UpdateTankkaart - er ging iets mis");
-            }
-        }
-        
-        public Tankkaart GeefTankkaart(int id)
-        {
-            try
-            {
-                    return _tankkaartRepo.GeefTankkaart(id);
-            }
-            catch
-            {
-                throw new TankkaartManagerException("GeefTankkaart - er ging iets mis");
-            }
-        }
+
     }
 }
