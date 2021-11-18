@@ -21,33 +21,44 @@ namespace DataAccessLayer.Repos
             _connectionString = config.GetConnectionString("defaultConnection");
         }
 
+        /// <summary>
+        /// Voeg branstoftype toe aan de tabel brandstoftype
+        /// </summary>
+        /// <param name="brandstofType"></param>
         public void VoegBrandstofTypeToe(BrandstofType brandstofType)
         {
             var connection = new SqlConnection(_connectionString);
-            var query = "INSERT INTO dbo.BRANSTOFTYPES (type) VALUES(@type)";
-            using var command = connection.CreateCommand();
-            connection.Open();
-            try
+            string query = "INSERT INTO dbo.BRANDSTOFFENTYPES (type) VALUES(@type)";
+            using (SqlCommand command = connection.CreateCommand())
             {
-                command.Parameters.AddWithValue("@type", brandstofType.Type);
-                command.CommandText = query;
-                command.ExecuteNonQuery();
+                connection.Open();
+                try
+                {
+                    command.Parameters.AddWithValue("@type", brandstofType.Type);
+                    command.CommandText = query;
+                    command.ExecuteNonQuery();
 
-            }
-            catch (Exception e)
-            {
-                throw new BrandstofTypeManagerException("VoegBrandstofTypeToe - Er ging iets mis ", e);
-            }
-            finally
-            {
-                connection.Close();
+                }
+                catch (Exception e)
+                {
+                    throw new BrandstofTypeManagerException("VoegBrandstofTypeToe - Er ging iets mis ", e);
+                }
+                finally
+                {
+                    connection.Close();
+                }
             }
         }
 
+        /// <summary>
+        /// checkt of het brandstoftype al bestaat in de lijst
+        /// </summary>
+        /// <param name="brandstofType"></param>
+        /// <returns></returns>
         public bool BestaatBrandstofType(BrandstofType brandstofType)
         {
             var connection = new SqlConnection(_connectionString);
-            var query = "SELECT * FROM dbo.BRANSTOFTYPES WHERE (type = @type)";
+            string query = "SELECT * FROM dbo.BRANDSTOFFENTYPES WHERE (type = @type)";
             bool bestaatType;
             using var command = connection.CreateCommand();
             connection.Open();
@@ -69,28 +80,40 @@ namespace DataAccessLayer.Repos
 
             return bestaatType;
         }
+
+        /// <summary>
+        /// update de info van het brandstoftype
+        /// </summary>
+        /// <param name="brandstofType"></param>
         public void UpdateBrandstofType(BrandstofType brandstofType)
         {
             var connection = new SqlConnection(_connectionString);
-            var query = "UPDATE BRANDSTOFTYPES SET type = @type where Id = @id";
-            using var command = connection.CreateCommand();
-            connection.Open();
-            try
+            string query = "UPDATE BRANDSTOFFENTYPES SET type = @type where Id = @id";
+            using (SqlCommand command = connection.CreateCommand())
             {
-                command.CommandText = query;
-                command.Parameters.AddWithValue("@type", brandstofType.Type);
-                command.Parameters.AddWithValue("@id", brandstofType.Id);
-                command.ExecuteNonQuery();
-            }
-            catch (Exception e)
-            {
-                throw new BrandstofTypeManagerException("Update Brandstoftype - Er ging iets mis ", e);
-            }
-            finally
-            {
-                connection.Close();
+                connection.Open();
+                try
+                {
+                    command.CommandText = query;
+                    command.Parameters.AddWithValue("@type", brandstofType.Type);
+                    command.Parameters.AddWithValue("@id", brandstofType.Id);
+                    command.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    throw new BrandstofTypeManagerException("Update Brandstoftype - Er ging iets mis ", e);
+                }
+                finally
+                {
+                    connection.Close();
+                }
             }
         }
+
+        /// <summary>
+        /// geeft een lijst van alle brandstoftypen
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<BrandstofType> GeefAlleBrandstofTypes()
         {
             var connection = new SqlConnection(_connectionString);
@@ -102,13 +125,14 @@ namespace DataAccessLayer.Repos
                 command.Connection = connection;
                 command.CommandText = query;
 
-                var brandstoftypelijst = new List<BrandstofType>();
+                List<BrandstofType> brandstoftypelijst = new List<BrandstofType>();
                 var reader = command.ExecuteReader();
                 while (reader.Read())
                 {
                     var brandstofType = new BrandstofType(reader.GetInt32(0), reader.GetString(1));
                     brandstoftypelijst.Add(brandstofType);
                 }
+
                 return brandstoftypelijst;
             }
             catch (Exception e)
@@ -120,28 +144,37 @@ namespace DataAccessLayer.Repos
                 connection.Close();
             }
         }
-        public void VerwijderBrandstofType(int id) 
+
+
+        /// <summary>
+        /// verwijderd een brandstoftype
+        /// </summary>
+        /// <param name="id"></param>
+        public void VerwijderBrandstofType(int id)
         {
             var connection = new SqlConnection(_connectionString);
-            var query = "DELETE FROM dbo.BRANDSTOFTYPES WHERE Id = @id";
-            using var command = connection.CreateCommand();
-            try
+            string query = "DELETE FROM dbo.BRANDSTOFFENTYPES WHERE Id = @id";
+            using (SqlCommand command = connection.CreateCommand())
             {
-                connection.Open();
-                command.CommandText = query;
-                command.Connection = connection;
-                command.Parameters.AddWithValue("@id", id);
-                command.ExecuteNonQuery();
-            }
-            catch (Exception e)
-            {
-                throw new BrandstofTypeManagerException("GeefAlleBrandstofTypes - Er liep iets mis", e);
-            }
-            finally
-            {
-                connection.Close();
+                try
+                {
+                    connection.Open();
+                    command.CommandText = query;
+                    command.Connection = connection;
+                    command.Parameters.AddWithValue("@id", id);
+                    command.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    throw new BrandstofTypeManagerException("VerwijderBrandstofTypes - Er liep iets mis", e);
+                }
+                finally
+                {
+                    connection.Close();
 
+                }
             }
         }
     }
 }
+

@@ -7,8 +7,11 @@ namespace DomainLayer.Interfaces.Repos
 {
     public interface IBestuurderRepo
     {
-        public IReadOnlyList<Bestuurder> GeefGefilterdeBestuurders([Optional] int id, [Optional] string voornaam, [Optional] string naam,
-            [Optional] DateTime geboortedatum, [Optional] List<RijbewijsType> lijstRijbewijstypes, [Optional] string rijksregisternummer, [Optional] bool gearchiveerd);
+
+        public Bestuurder GeefBestuurderMetTankkaart(int tankkaartId);
+
+        public IReadOnlyList<Bestuurder> GeefGefilderdeBestuurders(string voornaam, string naam,
+             DateTime geboortedatum, List<RijbewijsType> lijstRijbewijstypes,  string rijksregisternummer,bool gearchiveerd);
 
         /// <summary>
         /// check of voertuig hoort bij Rijbewijs van bestuurder
@@ -28,15 +31,24 @@ namespace DomainLayer.Interfaces.Repos
         public void UpdateBestuurder(Bestuurder b);
 
 
-        public bool BestaatBestuurder(Bestuurder b);
-
-
         /// <summary>
         /// Bestaat de bestuurder
+        /// </summary>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public bool BestaatBestuurder(int bestuurderId);
+        
+        /// <summary>
+        /// Geeft een bestuurder op id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         public Bestuurder GeefBestuurder(int id);
 
+        /// <summary>
+        /// verwijderd een bestuurder
+        /// </summary>
+        /// <param name="id"></param>
+        public void VerwijderBestuurder(int id);
     }
 }

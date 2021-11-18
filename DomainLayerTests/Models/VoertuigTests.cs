@@ -184,9 +184,9 @@ namespace DomainLayerTests.Models
         [Fact()]
         public void ZetBestuurderTestGeldig() 
         {
-
-            var bestuurder1 = new Bestuurder("De Nef", "Olivier", new DateTime(1999, 10, 6), "99100630515", new List<RijbewijsType>());
-            var bestuurder2 = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515",new List<RijbewijsType>());
+            List<RijbewijsType> rijbewijzen = new() { new RijbewijsType("B") };
+            var bestuurder1 = new Bestuurder("De Nef", "Olivier", new DateTime(1999, 10, 6), "99100630515", rijbewijzen);
+            var bestuurder2 = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515",rijbewijzen);
             
             bestuurder2.ZetVoertuig(_voertuig);
             _voertuig.ZetBestuurder(bestuurder1);
@@ -205,7 +205,8 @@ namespace DomainLayerTests.Models
         
         public void ZetBestuurderTestOngeldig()
         {
-            var bestuurder = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515", new List<RijbewijsType>());
+            List<RijbewijsType> rijbewijzen = new() { new RijbewijsType("B") };
+            var bestuurder = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515", rijbewijzen);
             _voertuig.ZetBestuurder(bestuurder);
 
             Assert.Equal(bestuurder, _voertuig.Bestuurder);
@@ -217,7 +218,8 @@ namespace DomainLayerTests.Models
         [Fact()]
         public void VerwijderBestuurder()
         {
-            var bestuurder = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515", new List<RijbewijsType>());
+            List<RijbewijsType> rijbewijzen = new() { new RijbewijsType("B") };
+            var bestuurder = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515", rijbewijzen);
             _voertuig.ZetBestuurder(bestuurder);
 
             Assert.Equal(bestuurder,_voertuig.Bestuurder);
@@ -240,8 +242,9 @@ namespace DomainLayerTests.Models
         [Fact()]
         public void ZetIsGearchiveerdTrue()
         {
+            List<RijbewijsType> rijbewijzen = new() { new RijbewijsType("B") };
             var bestuurder = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515",
-                new List<RijbewijsType>());
+                rijbewijzen);
             _voertuig.ZetBestuurder(bestuurder);
 
             Assert.Equal(bestuurder, _voertuig.Bestuurder);

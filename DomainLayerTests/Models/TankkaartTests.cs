@@ -32,8 +32,9 @@ namespace DomainLayerTests.Models
         [Fact]
         public void Test_ctor_valid()
         {
+            List<RijbewijsType> rijbewijzen = new() { new RijbewijsType("B") };
             List<BrandstofType> brandstofTypes = new() {new BrandstofType("benzine") };
-            var bestuurder = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515",new List<RijbewijsType>());
+            var bestuurder = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515",rijbewijzen);
 
             var tankkaart = new Tankkaart(5,"123ABC98",new DateTime(2022,12,31),"1111",bestuurder);
 
@@ -47,9 +48,9 @@ namespace DomainLayerTests.Models
         [Fact]
         public void Test_Equals_valid()
         {
-            
-            var bestuurder = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515",new List<RijbewijsType>());
-            var bestuurder2 = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515",new List<RijbewijsType>());
+            List<RijbewijsType> rijbewijzen = new() { new RijbewijsType("B") };
+            var bestuurder = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515", rijbewijzen);
+            var bestuurder2 = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515", rijbewijzen);
 
             Assert.True(bestuurder.Equals(bestuurder2));
         }
@@ -103,7 +104,8 @@ namespace DomainLayerTests.Models
         [Fact]
         public void Test_ZetPincode_valid()
         {
-            var bestuurder = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515", new List<RijbewijsType>());
+            List<RijbewijsType> rijbewijzen = new() { new RijbewijsType("B") };
+            var bestuurder = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515", rijbewijzen);
             var tankkaart = new Tankkaart(5,"123ABC98",new DateTime(2022,12,31),"1111",bestuurder);
 
             Assert.Equal("1111", tankkaart.Pincode);
@@ -120,7 +122,8 @@ namespace DomainLayerTests.Models
         [InlineData("123")]
         public void Test_ZetPincode_invalid(string pincode)
         {
-            var bestuurder = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515", new List<RijbewijsType>());
+            List<RijbewijsType> rijbewijzen = new() { new RijbewijsType("B") };
+            var bestuurder = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515", rijbewijzen);
             var tankkaart = new Tankkaart(5,"123ABC98",new DateTime(2022,12,31),"1111",bestuurder);
 
             Assert.Throws<TankkaartException>(() => tankkaart.ZetPincode(pincode));
@@ -206,8 +209,9 @@ namespace DomainLayerTests.Models
         [Fact]
         public void Test_ZetBestuurder_valid()
         {
+            List<RijbewijsType> rijbewijzen = new() { new RijbewijsType("B") };
             var tankkaart = new Tankkaart(5, "123ABC98", new DateTime(2022, 12, 31));
-            var bestuurder = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515", new List<RijbewijsType>());
+            var bestuurder = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515", rijbewijzen);
 
             Assert.Null(tankkaart.Bestuurder);
             Assert.Null(bestuurder.Tankkaart);
@@ -221,9 +225,10 @@ namespace DomainLayerTests.Models
         [Fact]
         public void Test_ZetBestuurder_valid_vorigeBestuurder_tankkaartVerwijderd()
         {
+            List<RijbewijsType> rijbewijzen = new() { new RijbewijsType("B") };
             var tankkaart = new Tankkaart(5, "123ABC98", new DateTime(2022, 12, 31));
-            var bestuurder = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515", new List<RijbewijsType>());
-            var bestuurder2 = new Bestuurder("Droesbeke", "Arnout", new DateTime(1995, 01, 21), "95012117533", new List<RijbewijsType>());
+            var bestuurder = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515", rijbewijzen);
+            var bestuurder2 = new Bestuurder("Droesbeke", "Arnout", new DateTime(1995, 01, 21), "95012117533", rijbewijzen);
 
             Assert.Null(tankkaart.Bestuurder);
             Assert.Null(bestuurder.Tankkaart);
@@ -248,8 +253,9 @@ namespace DomainLayerTests.Models
         [Fact]
         public void Test_VerwijderBestuurder_valid()
         {
+            List<RijbewijsType> rijbewijzen = new() { new RijbewijsType("B") };
             var tankkaart = new Tankkaart(5,"123ABC98",new DateTime(2022,12,31));
-            var bestuurder = new Bestuurder("De Neef","Olivier",new DateTime(1999,10,6),"99100630515",new List<RijbewijsType>());
+            var bestuurder = new Bestuurder("De Neef","Olivier",new DateTime(1999,10,6),"99100630515", rijbewijzen);
 
             tankkaart.ZetBestuurder(bestuurder);
 
@@ -340,8 +346,9 @@ namespace DomainLayerTests.Models
         [Fact]
         public void IsGearchiveerdTrue()
         {
+            List<RijbewijsType> rijbewijzen = new() { new RijbewijsType("B") };
             var bestuurder = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515",
-                new List<RijbewijsType>());
+                rijbewijzen);
             var tankkaart = new Tankkaart(5, "123ABC98", new DateTime(2022, 12, 31));
             
             tankkaart.ZetBestuurder(bestuurder);
@@ -359,8 +366,9 @@ namespace DomainLayerTests.Models
         [Fact()]
         public void ZetIsGearchiveerdFalse()
         {
+            List<RijbewijsType> rijbewijzen = new() { new RijbewijsType("B") };
             var bestuurder = new Bestuurder("De Neef", "Olivier", new DateTime(1999, 10, 6), "99100630515",
-                new List<RijbewijsType>());
+                rijbewijzen);
             var tankkaart = new Tankkaart(5, "123ABC98", new DateTime(2022, 12, 31));
 
             tankkaart.ZetBestuurder(bestuurder);
