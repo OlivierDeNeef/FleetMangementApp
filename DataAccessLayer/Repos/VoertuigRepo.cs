@@ -54,7 +54,7 @@ namespace DataAccessLayer.Repos
         public Voertuig GeefVoertuig(int id)
         {
             var connection = new SqlConnection(_connectionString);
-            const string query = "SELECT * FROM dbo.voertuigen WHERE id=@id INNER JOIN dbo.brandstoftypes ON dbo.voertuigen.";
+            const string query = "SELECT * FROM ((dbo.voertuigen INNER JOIN dbo.WagenTypes ON dbo.voertuigen.WagenTypeId = dbo.wagentypes.Id) INNER JOIN dbo.BrandstofTypes ON dbo.voertuigen.BrandstofId = dbo.BrandstofTypes.Id) WHERE id=@id";
             using var command = connection.CreateCommand();
             try
             {
@@ -64,10 +64,20 @@ namespace DataAccessLayer.Repos
                 connection.Open();
                 var reader = command.ExecuteReader();
                 Voertuig voertuig;
+                BrandstofType brandstof;
+                WagenType wagenType;
                 if (reader.HasRows)
                 {
                     reader.Read();
-                    //voertuig = new Voertuig((string)reader[0], )
+
+                    brandstof = new BrandstofType((int)reader[11], (string)reader[12]);
+                    wagenType = new WagenType((int)reader[13], (string)reader[14]);
+                    voertuig = new Voertuig((int)reader[0], (string)reader[1], (string)reader[2], (string)reader[3], (string)reader[4], brandstof, wagenType );
+                    voertuig.ZetGearchiveerd((bool)reader[5]);
+                    voertuig.ZetKleur((string)reader[6]);
+                    voertuig.ZetAantalDeuren((int)reader[7]);
+                    voertuig.ZetHybride((bool)reader[8]);
+
                 }
                 else
                 {
