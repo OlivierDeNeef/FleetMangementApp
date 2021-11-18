@@ -21,15 +21,11 @@ namespace DomainLayer.Managers
             [Optional] DateTime geldigheidsdatum, [Optional] List<BrandstofType> lijstBrandstoftypes,
             [Optional] bool geachiveerd)
         {
-            var lijstTankkaarten = new List<Tankkaart>();
+            
             try
             {
-                if (id > 0)
-                {
-                    lijstTankkaarten.Add(_voertuigRepo.GeefVoertuig(id));
-                    return lijstTankkaarten;
-                }
-                return _voertuigRepo.GeefGefilterdeVoertuigen(id, merk, model, aantalDeuren, nummerplaat, chassisnummer, kleur, wagenType, brandstofType, gearchiveerd, type);
+                
+                return _tankkaartRepo.GeefGefilterdeTankkaarten(kaartnummer,geldigheidsdatum,lijstBrandstoftypes,geachiveerd);
 
             }
             catch (Exception e)
