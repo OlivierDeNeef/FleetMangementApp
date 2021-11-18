@@ -15,28 +15,22 @@ namespace DataAccessLayer.Repos
 {
     public class BestuurderRepo : IBestuurderRepo
     {
-
         private readonly string _connectionString;
         private readonly IConfiguration _configuration;
-
         public BestuurderRepo( IConfiguration config)
         {
             _configuration = config;
             _connectionString = config.GetConnectionString("defaultConnection");
         }
-
         public BestuurderRepo(string connectionString)
         {
             _connectionString = connectionString;
 
         }
-
-
         public IReadOnlyList<Bestuurder> GeefGefilderdeBestuurders(string voornaam, string naam, DateTime geboortedatum, List<RijbewijsType> lijstRijbewijstypes, string rijksregisternummer, bool gearchiveerd)
         {
             throw new NotImplementedException();
         }
-
         public void VoegBestuurderToe(Bestuurder bestuurder)
         { 
             var connection = new SqlConnection(_connectionString);
@@ -74,7 +68,6 @@ namespace DataAccessLayer.Repos
                 connection.Close();
             }
         }
-
         public bool BestaatBestuurder(int bestuurderId)
         {
             var connection = new SqlConnection(_connectionString);
@@ -98,7 +91,6 @@ namespace DataAccessLayer.Repos
                 connection.Close();
             }
         }
-
         public void VerwijderBestuurder(int id)
         {
             var connection = new SqlConnection(_connectionString);
@@ -111,6 +103,8 @@ namespace DataAccessLayer.Repos
                 command.Connection = connection;
                 command.Parameters.AddWithValue("@id", id);
                 command.ExecuteNonQuery();
+
+                // wat als er nog rijbewijzen zijn waneer bestuurder verwijderd wordt?
             }
             catch (Exception e)
             {
@@ -148,9 +142,6 @@ namespace DataAccessLayer.Repos
                 }
             }
         }
-
-
-
         private void VerwijderRijbewijsVanBestuurder(int bestuurderId, int rijbewijstypeId)
         {
             var connection = new SqlConnection(_connectionString);
@@ -250,7 +241,6 @@ namespace DataAccessLayer.Repos
             }
             
         }
-
         public Bestuurder GeefBestuurder(int id)
         {
             var rijbewijzen = new List<RijbewijsType>();
