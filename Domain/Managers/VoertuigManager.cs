@@ -62,7 +62,7 @@ namespace DomainLayer.Managers
         public IReadOnlyList<Voertuig> GeefGefilterdeVoertuigen([Optional] int id, [Optional] string merk,
             [Optional] string model, [Optional] int aantalDeuren, [Optional] string nummerplaat,
             [Optional] string chassisnummer, [Optional] string kleur, [Optional] WagenType wagenType,
-            [Optional] BrandstofType brandstofType, [Optional] bool gearchiveerd, [Optional] RijbewijsType type)
+            [Optional] BrandstofType brandstofType, [Optional] bool gearchiveerd, [Optional] RijbewijsType type, [Optional] bool isHybride)
         {
             var lijstVoertuigen = new List<Voertuig>();
             try
@@ -72,7 +72,7 @@ namespace DomainLayer.Managers
                     lijstVoertuigen.Add(_voertuigRepo.GeefVoertuig(id));
                     return lijstVoertuigen;
                 }
-                return _voertuigRepo.GeefGefilterdeVoertuigen(id, merk, model, aantalDeuren, nummerplaat, chassisnummer, kleur, wagenType, brandstofType, gearchiveerd, type);
+                return _voertuigRepo.GeefGefilterdeVoertuigen(id, merk, model, aantalDeuren, nummerplaat, chassisnummer, kleur, wagenType, brandstofType, gearchiveerd, type, isHybride);
 
             }
             catch (Exception e)

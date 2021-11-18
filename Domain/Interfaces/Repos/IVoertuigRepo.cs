@@ -24,7 +24,7 @@ namespace DomainLayer.Interfaces.Repos
         public IReadOnlyList<Voertuig> GeefGefilterdeVoertuigen([Optional] int id, [Optional] string merk,
             [Optional] string model, [Optional] int aantalDeuren, [Optional] string nummerplaat,
             [Optional] string chassisnummer, [Optional] string kleur, [Optional] WagenType wagenType,
-            [Optional] BrandstofType brandstofType, [Optional] bool gearchiveerd, [Optional] RijbewijsType type);
+            [Optional] BrandstofType brandstofType, [Optional] bool gearchiveerd, [Optional] RijbewijsType type, [Optional] bool isHybride);
 
         /// <summary> 
         /// Check of bestuurder het nodige rijbewijs heeft
