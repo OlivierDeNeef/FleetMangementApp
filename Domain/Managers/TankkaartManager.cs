@@ -1,5 +1,9 @@
-﻿using DomainLayer.Interfaces;
+﻿using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using DomainLayer.Interfaces;
 using DomainLayer.Interfaces.Repos;
+using DomainLayer.Models;
 
 namespace DomainLayer.Managers
 {
@@ -12,16 +16,6 @@ namespace DomainLayer.Managers
             _tankkaartRepo = tankkaartRepo;
         }
 
-        public IReadOnlyList<Tankkaart> GeefGefilterdeTankkaarten([Optional] string kaartnummer,
-            [Optional] DateTime geldigheidsdatum, [Optional] List<BrandstofType> lijstBrandstoftypes,
-            [Optional] bool geachiveerd)
-        {
-            
-            try
-            {
-                
-                return _tankkaartRepo.GeefGefilterdeTankkaarten(kaartnummer,geldigheidsdatum,lijstBrandstoftypes,geachiveerd);
-
-
+        
     }
 }
