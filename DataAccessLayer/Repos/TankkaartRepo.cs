@@ -26,7 +26,17 @@ namespace DataAccessLayer.Repos
             throw new NotImplementedException();
         }
 
+        public bool BestaatTankkaart(int tankkaartId)
+        {
+            throw new NotImplementedException();
+        }
+
         public IReadOnlyList<Tankkaart> GeefGefilterdeTankkaarten([Optional] int id,[Optional] string kaartnummer,[Optional] DateTime geldigheidsdatum,[Optional] List<BrandstofType> lijstBrandstoftypes,[Optional] bool geachiveerd)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IReadOnlyList<Tankkaart> GeefGefilterdeTankkaarten([Optional] string kaartnummer, [Optional] DateTime geldigheidsdatum, [Optional] List<BrandstofType> lijstBrandstoftypes, [Optional] bool geachiveerd)
         {
             throw new NotImplementedException();
         }

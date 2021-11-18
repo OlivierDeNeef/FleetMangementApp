@@ -27,6 +27,40 @@ namespace DataAccessLayer.Repos
             _connectionString = connectionString;
 
         }
+
+        private void VoegRijbewijstypeToeAanBestuurder(int bestuurderId, IEnumerable<RijbewijsType> rijbewijzenList)
+        {
+            var connection = new SqlConnection(_connectionString);
+            const string query = 
+                "INSERT into dbo.RijbewijsTypes_Bestuurders (RijbewijsTypeId, BestuurderId) "+
+                "VALUES (@RijsbewijzentypesId, @bestuurderId)";
+            foreach (var rijbewijs in rijbewijzenList)
+            {
+                try
+                {
+                    using var command = connection.CreateCommand();
+                    connection.Open();
+                    command.Parameters.AddWithValue("@RijsbewijzentypesId", rijbewijs.Id);
+                    command.Parameters.AddWithValue("@bestuurderId", bestuurderId);
+                    command.CommandText = query;
+                    command.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    throw new BestuurderManagerException("VoegRijbewijstypeToeAanBestuurder - er ging iets mis", e);
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+        }
+
+        public Bestuurder GeefBestuurderMetTankkaart(int tankkaartId)
+        {
+            throw new NotImplementedException();
+        }
+
         public IReadOnlyList<Bestuurder> GeefGefilderdeBestuurders(string voornaam, string naam, DateTime geboortedatum, List<RijbewijsType> lijstRijbewijstypes, string rijksregisternummer, bool gearchiveerd)
         {
             throw new NotImplementedException();
