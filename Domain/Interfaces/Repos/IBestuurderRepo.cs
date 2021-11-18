@@ -8,6 +8,7 @@ namespace DomainLayer.Interfaces.Repos
     public interface IBestuurderRepo
     {
 
+        public Bestuurder GeefBestuurderMetTankkaart(int tankkaartId);
 
         public IReadOnlyList<Bestuurder> GeefGefilderdeBestuurders(string voornaam, string naam,
              DateTime geboortedatum, List<RijbewijsType> lijstRijbewijstypes,  string rijksregisternummer,bool gearchiveerd);
