@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
 using DomainLayer.Exceptions.Managers;
@@ -54,26 +55,72 @@ namespace DataAccessLayer.Repos
                 }
             }
         }
-        public Bestuurder GeefBestuurderMetTankkaart(int tankkaartId)
+        public Bestuurder GeefBestuurderMetTankkaart(int id)
         {
             Bestuurder b = null;
             var connection = new SqlConnection(_connectionString);
             string query =
-                "SELECT t1.*, t2.Id TankkaartId, t2.Kaartnummer, t2.GeldigheidsDatum, t2.Gearciveerd, t2.Geblokkeerd"
-                + " FROM dbo.BESTUURDERS t1 "
-                + " INNER JOIN dbo.Tankkaarten t2 on t1.TankkaartenId = Id"
-                + " WHERE t1.TankkaartId = @TankkaartId";
+                "SELECT dbo.Bestuurder.Id, Naam, Voornaam, Geboortedatum, Rijksregisternummer, Gearchiveerd, TankkaartId, VoertuigId, Straat, Huisnummer, Busnummer, Postcode, Land, Stad FROM Bestuurder " 
+                +" INNER JOIN dbo.RijbewijsTypes_Bestuurders on Id = BestuurderId"
+                +" INNER JOIN dbo.RijbewijsTypes on RijbewijsTypesId = RijbewijsTypes.Id"
+                +" WHERE TankkaartId = @TankkaartId ";
 
             try
             {
+                var rijbewijsTypes = new List<RijbewijsType>();
                 using (SqlCommand command = connection.CreateCommand())
                 {
-                    command.Parameters.AddWithValue("@TankkaartId", tankkaartId);
+                    command.Parameters.AddWithValue("@TankkaartId", id);
+                    command.CommandText = query;
+                    command.Connection = connection;
+                    connection.Open();
                     var reader = command.ExecuteReader();
-                    if (reader.HasRows)
+                    if (!reader.HasRows) throw new BestuurderManagerException(" TankkaartID bestaat niet");
+                    var eersteIteratie = true;
+                    var bestuurderId = 0;
+                    string naam = null;
+                    string voornaam = null;
+                    DateTime geboorteDatum = default;
+                    var gearchiveerd = false;
+                    string rijksregisternummer = null;
+                    int tankkaartId = 0;
+                    int voertruigId = 0;
+                    string straat = null;
+                    string huisnummer = null;
+                    string busnummer = null;
+                    string postCode = null;
+                    string land = null;
+                    string stad = null;
+                    
+                    while (reader.Read())
                     {
-                       
+                        if (eersteIteratie)
+                        {
+                            bestuurderId = (int) reader["Id"];
+                            naam = (string) reader["Naam"];
+                            voornaam = (string) reader["Vooraam"];
+                            geboorteDatum = (DateTime) reader["Geboortedatum"];
+                            gearchiveerd = (bool) reader["Gearchiveerd"];
+                            rijksregisternummer = (string) reader["Rijksregisternummer"];
+                            tankkaartId = (int) reader["TankkaartId"];
+                            voertruigId = (int) reader["VoertuigId"];
+                            straat = (string) reader["Straat"];
+                            huisnummer = (string) reader["Huisnummer"];
+                            busnummer = (string) reader["Busnummer"];
+                            postCode = (string) reader["Postcode"];
+                            land = (string) reader["Land"];
+                            stad = (string) reader["Stad"];
+
+
+
+                            eersteIteratie = false;
+                        }
+                        rijbewijsTypes.Add(new RijbewijsType((int)reader["RijbewijsTypeId"], (string)reader["Type"]));
                     }
+
+                    b = new Bestuurder(bestuurderId, naam, voornaam, geboorteDatum, rijksregisternummer, rijbewijsTypes,
+                        gearchiveerd);
+
                 }
             }
             catch (Exception e)
@@ -271,7 +318,7 @@ namespace DataAccessLayer.Repos
             }
             
         }
-        public Bestuurder GeefBestuurder(int id)
+        public Bestuurder GeefBestuurder(int id) //aanpassen zoals GeefBestuurderMetTankkaart
         {
             var rijbewijzen = new List<RijbewijsType>();
             var connection = new SqlConnection(_connectionString);

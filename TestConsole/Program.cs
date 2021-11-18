@@ -25,7 +25,7 @@ namespace TestConsole
 
             Console.WriteLine("Toevoegen klanten");
             var bestuurderRepo = new BestuurderRepo(connectionString);
-            var repo = new TankkaartRepo(connectionString); // issues
+            var repo = new TankkaartRepo(connectionString, bestuurderRepo); // issues
             var tankkaart = repo.GeefTankkaart(2);
             var list = new List<BrandstofType>();
             list.Add(new BrandstofType(1, "Benzine"));
