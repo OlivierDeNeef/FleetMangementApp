@@ -21,6 +21,12 @@ namespace DataAccessLayer.Repos
             _connectionString = config.GetConnectionString("defaultConnection");
         }
 
+        public TankkaartRepo(string connectionString)
+        {
+            _connectionString = connectionString;
+
+        }
+
         public bool BestaatTankkaart(Tankkaart t)
         {
             throw new NotImplementedException();

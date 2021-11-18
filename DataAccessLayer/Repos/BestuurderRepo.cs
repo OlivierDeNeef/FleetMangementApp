@@ -27,12 +27,11 @@ namespace DataAccessLayer.Repos
             _connectionString = connectionString;
 
         }
-
         private void VoegRijbewijstypeToeAanBestuurder(int bestuurderId, IEnumerable<RijbewijsType> rijbewijzenList)
         {
             var connection = new SqlConnection(_connectionString);
-            const string query = 
-                "INSERT into dbo.RijbewijsTypes_Bestuurders (RijbewijsTypeId, BestuurderId) "+
+            const string query =
+                "INSERT into dbo.RijbewijsTypes_Bestuurders (RijbewijsTypeId, BestuurderId) " +
                 "VALUES (@RijsbewijzentypesId, @bestuurderId)";
             foreach (var rijbewijs in rijbewijzenList)
             {
@@ -55,7 +54,6 @@ namespace DataAccessLayer.Repos
                 }
             }
         }
-
         public Bestuurder GeefBestuurderMetTankkaart(int tankkaartId)
         {
             throw new NotImplementedException();
@@ -149,33 +147,7 @@ namespace DataAccessLayer.Repos
                 connection.Close();
             }
         }
-        private void VoegRijbewijstypeToeAanBestuurder(int bestuurderId, IEnumerable<RijbewijsType> rijbewijzenList)
-        {
-            var connection = new SqlConnection(_connectionString);
-            const string query = 
-                "INSERT into dbo.RijbewijsTypes_Bestuurders (RijbewijsTypeId, BestuurderId) "+
-                "VALUES (@RijsbewijzentypesId, @bestuurderId)";
-            foreach (var rijbewijs in rijbewijzenList)
-            {
-                try
-                {
-                    using var command = connection.CreateCommand();
-                    connection.Open();
-                    command.Parameters.AddWithValue("@RijsbewijzentypesId", rijbewijs.Id);
-                    command.Parameters.AddWithValue("@bestuurderId", bestuurderId);
-                    command.CommandText = query;
-                    command.ExecuteNonQuery();
-                }
-                catch (Exception e)
-                {
-                    throw new BestuurderManagerException("VoegRijbewijstypeToeAanBestuurder - er ging iets mis", e);
-                }
-                finally
-                {
-                    connection.Close();
-                }
-            }
-        }
+        
         private void VerwijderRijbewijsVanBestuurder(int bestuurderId, int rijbewijstypeId)
         {
             var connection = new SqlConnection(_connectionString);
