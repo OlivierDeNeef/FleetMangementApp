@@ -7,6 +7,12 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
+using DataAccessLayer.Exceptions.Repos;
+using DomainLayer.Exceptions.Managers;
+using System.Threading.Tasks;
+using DataAccessLayer.Exceptions.Repos;
+using DomainLayer.Exceptions.Managers;
 
 namespace DataAccessLayer.Repos
 {
@@ -121,12 +127,7 @@ namespace DataAccessLayer.Repos
                         }
                     }
 
-                    return tankkaart;
-                }
-                else
-                {
-                    throw new Exception();
-                }
+                return new Tankkaart(tankkaartid,kaartnummer,geldigheidsDatum,pincode,bestuurder,geblokkeerd,gearchiveerd, brandstofTypes);
             }
             catch (Exception e)
             {
@@ -296,7 +297,7 @@ namespace DataAccessLayer.Repos
 
         public IReadOnlyList<Tankkaart> GeefGefilterdeTankkaarten([Optional] string kaartnummer, [Optional] DateTime geldigheidsdatum, [Optional] List<BrandstofType> lijstBrandstoftypes, [Optional] bool geachiveerd)
         {
-            var query = "SELECT dbo.Tankkaarten.Id, Kaartnummer, Geldigheidsdatum, Pincode,Gearchiveerd ,Geblokkeerd ,BrandstoftypeId ,[Type] FROM dbo.Tankkaarten INNER JOIN dbo.Tankkaarten_Brandstoftypes on Id=TankkaartId INNER JOIN dbo.BrandstofTypes on BrandstofTypeId=dbo.brandstoftypes.Id WHERE "
+            var query = "SELECT dbo.Tankkaarten.Id, Kaartnummer, Geldigheidsdatum, Pincode,Gearchiveerd ,Geblokkeerd ,BrandstoftypeId ,[Type] FROM dbo.Tankkaarten INNER JOIN dbo.Tankkaarten_Brandstoftypes on Id=TankkaartId INNER JOIN dbo.BrandstofTypes on BrandstofTypeId=dbo.brandstoftypes.Id WHERE ";
             var first = true;
             if (!string.IsNullOrWhiteSpace(kaartnummer))
             {

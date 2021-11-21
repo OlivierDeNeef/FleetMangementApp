@@ -24,17 +24,17 @@ namespace DomainLayer.Interfaces.Repos
         public IReadOnlyList<Voertuig> GeefGefilterdeVoertuigen([Optional] int id, [Optional] string merk,
             [Optional] string model, [Optional] int aantalDeuren, [Optional] string nummerplaat,
             [Optional] string chassisnummer, [Optional] string kleur, [Optional] WagenType wagenType,
-            [Optional] BrandstofType brandstofType, [Optional] bool geachriveerd, [Optional] RijbewijsType type);
+            [Optional] BrandstofType brandstofType, [Optional] bool gearchiveerd, [Optional] RijbewijsType type, [Optional] bool isHybride);
 
         /// <summary> 
         /// Check of bestuurder het nodige rijbewijs heeft
         /// Check of Tankkaart kan gebruikt worden bij het voertuig
         /// </summary>
         /// <param name="voertuig"></param>
-        public void VoegWagenToe(Voertuig voertuig);
+        public void VoegVoertuigToe(Voertuig voertuig);
         public void UpdateVoertuig(Voertuig voertuig);
-        public void BestaatVoertuig(Voertuig voertuig);
-        public Voertuig GeefTVoertuig(int id);
+        public bool BestaatVoertuig(Voertuig voertuig);
+        public Voertuig GeefVoertuig(int id);
 
 
     }
