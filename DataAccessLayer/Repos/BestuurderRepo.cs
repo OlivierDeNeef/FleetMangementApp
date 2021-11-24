@@ -57,7 +57,7 @@ namespace DataAccessLayer.Repos
         }
         public Bestuurder GeefBestuurderMetTankkaart(int id)
         {
-            Bestuurder b = null;
+            Bestuurder b;
             var connection = new SqlConnection(_connectionString);
             string query =
                 "SELECT dbo.Bestuurder.Id, Naam, Voornaam, Geboortedatum, Rijksregisternummer, Gearchiveerd, TankkaartId, VoertuigId, Straat, Huisnummer, Busnummer, Postcode, Land, Stad FROM Bestuurder " 
@@ -91,7 +91,7 @@ namespace DataAccessLayer.Repos
                     string postCode = null;
                     string land = null;
                     string stad = null;
-                    
+
                     while (reader.Read())
                     {
                         if (eersteIteratie)
@@ -115,7 +115,8 @@ namespace DataAccessLayer.Repos
 
                             eersteIteratie = false;
                         }
-                        rijbewijsTypes.Add(new RijbewijsType((int)reader["RijbewijsTypeId"], (string)reader["Type"]));
+
+                        rijbewijsTypes.Add(new RijbewijsType((int) reader["RijbewijsTypeId"], (string) reader["Type"]));
                     }
 
                     b = new Bestuurder(bestuurderId, naam, voornaam, geboorteDatum, rijksregisternummer, rijbewijsTypes,
@@ -126,6 +127,10 @@ namespace DataAccessLayer.Repos
             catch (Exception e)
             {
                 throw new BestuurderManagerException("GeefBestuurderMetTankkaart - Er ging iets mis", e);
+            }
+            finally
+            {
+                connection.Close();
             }
             return b;
         }
@@ -320,42 +325,82 @@ namespace DataAccessLayer.Repos
         }
         public Bestuurder GeefBestuurder(int id) //aanpassen zoals GeefBestuurderMetTankkaart
         {
-            var rijbewijzen = new List<RijbewijsType>();
+            Bestuurder b;
             var connection = new SqlConnection(_connectionString);
-            const string query = "SELECT * FROM dbo.BESTUURDERS WHERE id=@id";
-            using var command = connection.CreateCommand();
+            string query =
+                "SELECT dbo.Bestuurder.Id, Naam, Voornaam, Geboortedatum, Rijksregisternummer, Gearchiveerd, TankkaartId, VoertuigId, Straat, Huisnummer, Busnummer, Postcode, Land, Stad FROM Bestuurder "
+                + " INNER JOIN dbo.RijbewijsTypes_Bestuurders on Id = BestuurderId"
+                + " INNER JOIN dbo.RijbewijsTypes on RijbewijsTypesId = RijbewijsTypes.Id"
+                + " WHERE Id = @Id ";
+
             try
             {
-                command.CommandText = query;
-                command.Connection = connection;
-                command.Parameters.AddWithValue("@id", id);
-                connection.Open();
-                var reader = command.ExecuteReader();
-                Bestuurder bestuurder;
-                if (reader.HasRows)
+                var rijbewijsTypes = new List<RijbewijsType>();
+                using (SqlCommand command = connection.CreateCommand())
                 {
+                    command.Parameters.AddWithValue("@id", id);
+                    command.CommandText = query;
+                    command.Connection = connection;
+                    connection.Open();
+                    var reader = command.ExecuteReader();
+                    if (!reader.HasRows) throw new BestuurderManagerException(" Bestuurder  bestaat niet");
+                    var eersteIteratie = true;
+                    var bestuurderId = 0;
+                    string naam = null;
+                    string voornaam = null;
+                    DateTime geboorteDatum = default;
+                    var gearchiveerd = false;
+                    string rijksregisternummer = null;
+                    int tankkaartId = 0;
+                    int voertruigId = 0;
+                    string straat = null;
+                    string huisnummer = null;
+                    string busnummer = null;
+                    string postCode = null;
+                    string land = null;
+                    string stad = null;
 
-                    reader.Read();
-                    var rijbewijs = new RijbewijsType(reader.GetInt32(0), reader.GetString(1));
-                    rijbewijzen.Add(rijbewijs);
-                    bestuurder = new Bestuurder(id, reader.GetString(1), reader.GetString(2), reader.GetDateTime(3),
-                        reader.GetString(4), rijbewijzen, false); // hoe te fixen?
-                }
-                else
-                {
-                    throw new BestuurderManagerException("BestuurderId bestaat niet");
-                }
+                    while (reader.Read())
+                    {
+                        if (eersteIteratie)
+                        {
+                            bestuurderId = (int) reader["Id"];
+                            naam = (string) reader["Naam"];
+                            voornaam = (string) reader["Vooraam"];
+                            geboorteDatum = (DateTime) reader["Geboortedatum"];
+                            gearchiveerd = (bool) reader["Gearchiveerd"];
+                            rijksregisternummer = (string) reader["Rijksregisternummer"];
+                            tankkaartId = (int) reader["TankkaartId"];
+                            voertruigId = (int) reader["VoertuigId"];
+                            straat = (string) reader["Straat"];
+                            huisnummer = (string) reader["Huisnummer"];
+                            busnummer = (string) reader["Busnummer"];
+                            postCode = (string) reader["Postcode"];
+                            land = (string) reader["Land"];
+                            stad = (string) reader["Stad"];
 
-                return bestuurder;
+
+
+                            eersteIteratie = false;
+                        }
+
+                        rijbewijsTypes.Add(new RijbewijsType((int) reader["RijbewijsTypeId"], (string) reader["Type"]));
+                    }
+
+                    b = new Bestuurder(bestuurderId, naam, voornaam, geboorteDatum, rijksregisternummer, rijbewijsTypes,
+                        gearchiveerd);
+
+                }
             }
             catch (Exception e)
             {
-                throw new BestuurderManagerException("GeefBestuurder - Er ging iets mis", e);
+                throw new BestuurderManagerException("GeefBestuurderMetTankkaart - Er ging iets mis", e);
             }
             finally
             {
                 connection.Close();
             }
+            return b;
         }
 
        
