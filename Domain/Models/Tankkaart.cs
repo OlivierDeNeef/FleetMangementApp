@@ -28,6 +28,9 @@ namespace DomainLayer.Models
         {
             ZetId(id);
         }
+
+
+
         public Tankkaart(int id, string kaartnummer, DateTime geldigheidsDatum, string pincode, Bestuurder bestuurder) : this(id, kaartnummer, geldigheidsDatum)
         {
             ZetPincode(pincode);
