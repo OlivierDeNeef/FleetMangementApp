@@ -47,7 +47,7 @@ namespace DomainLayer.Models
         /// <param name="rijksregisternummer"></param>
         /// <param name="rijbewijsTypes"></param>
         /// <param name="isGearchiveerd"></param>
-        public Bestuurder(string naam, string voornaam, DateTime geboortedatum, string rijksregisternummer,List<RijbewijsType> rijbewijsTypes, bool isGearchiveerd) //Todo: test for faulty input
+        public Bestuurder(string naam, string voornaam, DateTime geboortedatum, string rijksregisternummer,List<RijbewijsType> rijbewijsTypes, bool isGearchiveerd = false) //Todo: test for faulty input
         {
             if (rijbewijsTypes.Count < 1) throw new BestuurderException("Bestuurder - bestuurder heeft geen rijbewijs");
             ZetNaam(naam);
