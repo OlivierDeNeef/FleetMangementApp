@@ -346,10 +346,6 @@ namespace DataAccessLayer.Repos
             }
         }
 
-
-
-
-
         public Bestuurder GeefBestuurder(int id)
         {
             using var connection = new SqlConnection(_connectionString);
