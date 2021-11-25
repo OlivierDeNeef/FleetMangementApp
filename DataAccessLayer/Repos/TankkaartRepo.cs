@@ -6,12 +6,47 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Runtime.InteropServices;
 
 namespace DataAccessLayer.Repos
 {
     public class TankkaartRepo
     {
+        //0	tankkaart id
+        //1	Kaartnummer
+        //2	Geldigheidsdatum
+        //3	Pincode
+        //4	Tankkaart gearchiveerd
+        //5	geblokkeerd
+        //8	Brandstof id voor tankkaart
+        //9	Brandstof type voor tankkaart
+        //10 bestuurderId
+        //11 Naam
+        //12 Voornaam
+        //13 Geboortedatum
+        //14 rijksregisternummer
+        //15 Bestuurder gearchiveerd
+        //17 VoertuigId
+        //18 Straat
+        //19 huisnummer
+        //20 postcode
+        //21 land
+        //22 stad
+        //23 rijbewijsTypeId
+        //25 Type van rijbewijs
+        //28 Merk
+        //29 model
+        //30 chassisnummer
+        //31 nummerplaat
+        //32 Voertuig gearchiveerd
+        //33 kleur
+        //34 aantaldeuren
+        //35 Hybride
+        //36 WagenTypeId
+        //37 brandstof id voor voertuig
+        //39 type wagen voor voertuig
+        //41 type brandstof voor voertuig
+
+
         private readonly string _connectionString;
         private readonly IConfiguration _configuration;
         private readonly IBestuurderRepo _bestuurderRepo;
@@ -113,7 +148,7 @@ namespace DataAccessLayer.Repos
                     }
                     else
                     {
-                        
+
                         if (reader[8] != DBNull.Value && tankkaart.GeefBrandstofTypes().All(b => b.Id != (int)reader[8]))
                         {
                             tankkaart.VoegBrandstofTypeToe(new BrandstofType((int)reader[8], (string)reader[9]));
@@ -142,7 +177,7 @@ namespace DataAccessLayer.Repos
 
         public void VoegTankkaartToe(Tankkaart tankkaart)
         {
-            SqlTransaction transaction = null; 
+            SqlTransaction transaction = null;
             using var connection = new SqlConnection(_connectionString);
             try
             {
@@ -151,7 +186,7 @@ namespace DataAccessLayer.Repos
                 var command = new SqlCommand(
                     "INSERT INTO [dbo].[Tankkaarten]  ([Kaartnummer],[Geldigheidsdatum],[Pincode],[Gearchiveerd] ,[Geblokkeerd]) OUTPUT INSERTED.Id VALUES (@kaartnummer, @geldigheidsdatum, @pincode, @isGeblokkeerd, @isGearchiveerd)",
                     connection, transaction);
-                
+
                 command.Parameters.AddWithValue("@kaartnummer", tankkaart.Kaartnummer);
                 command.Parameters.AddWithValue("@geldigheidsdatum", tankkaart.Geldigheidsdatum);
                 command.Parameters.AddWithValue("@pincode", tankkaart.Pincode);
@@ -192,7 +227,7 @@ namespace DataAccessLayer.Repos
             SqlTransaction transaction = null;
             using var connection = new SqlConnection(_connectionString);
             try
-            { 
+            {
                 connection.Open();
                 transaction = connection.BeginTransaction();
                 var command = new SqlCommand("UPDATE dbo.Tankkaarten SET Kaartnummer=@Kaartnummer, Geldigheidsdatum = @Geldigheidsdatum, Pincode=@Pincode, Gearchiveerd =@Gearchiveerd, Geblokkeerd = @Geblokkeerd where Id=@Id",
@@ -205,7 +240,7 @@ namespace DataAccessLayer.Repos
                 command.Parameters.AddWithValue("@Id", tankkaart.Id);
                 command.ExecuteNonQuery();
 
-                var command2 = new SqlCommand("DELETE FROM dbo.Tankkaarten_BrandstofTypes where TankkaartId=@Id",connection,transaction);
+                var command2 = new SqlCommand("DELETE FROM dbo.Tankkaarten_BrandstofTypes where TankkaartId=@Id", connection, transaction);
                 command2.Parameters.AddWithValue("@Id", tankkaart.Id);
                 command2.ExecuteNonQuery();
 
@@ -238,7 +273,7 @@ namespace DataAccessLayer.Repos
         }
 
         //Ask : filteren op lijst
-        public IReadOnlyList<Tankkaart> GeefGefilterdeTankkaarten( string kaartnummer,  DateTime geldigheidsdatum,  List<BrandstofType> lijstBrandstoftypes,  bool geachiveerd)
+        public IReadOnlyList<Tankkaart> GeefGefilterdeTankkaarten(string kaartnummer, DateTime geldigheidsdatum, List<BrandstofType> lijstBrandstoftypes, bool geachiveerd)
         {
             using SqlConnection con = new(_connectionString);
             try
@@ -253,7 +288,7 @@ namespace DataAccessLayer.Repos
                             "left join dbo.Voertuigen v on b.VoertuigId = v.Id " +
                             "left join dbo.WagenTypes w on v.WagenTypeId = w.Id " +
                             "left join dbo.BrandstofTypes bta on v.BrandstofId = bta.Id where t.Gearchiveerd =@Gearchiveerd  ";
-                
+
                 cmd.Parameters.AddWithValue("@Gearchiveerd", geachiveerd);
                 bool next = false;
                 if (string.IsNullOrWhiteSpace(kaartnummer))
@@ -279,7 +314,7 @@ namespace DataAccessLayer.Repos
                 while (reader.Read())
                 {
                     //tankkaart
-                    if (tankkaarten.All(t=> t.Id != (int)reader[0]))
+                    if (tankkaarten.All(t => t.Id != (int)reader[0]))
                     {
                         tankkaart = new Tankkaart((int)reader[0], (string)reader[1], (DateTime)reader[2],
                             (string)reader[3], (bool)reader[5], (bool)reader[4], new List<BrandstofType>());
