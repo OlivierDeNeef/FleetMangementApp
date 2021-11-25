@@ -5,8 +5,97 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FleetMangementApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Fleet Project" Height="450" Width="1000" MinWidth="1000" ResizeMode="NoResize">
     <Grid>
+        <TabControl>
+            <TabItem Header="Bestuurders">
+                <Grid Background="LightBlue">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="20"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="20"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="20"/>
+                    </Grid.ColumnDefinitions>
+                    <Rectangle Grid.Row="1" Grid.Column="0" Grid.RowSpan="6" Grid.ColumnSpan="7" Fill="#FF507ECD"></Rectangle>
+                    <Label Grid.Column="1" Grid.Row="1" Content="Id" HorizontalAlignment="Left" Margin="0,0,30,0"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" Name="TextBoxBestuurderId" Width="200" Margin="0,0,30,0"></TextBox>
+                    
+                    <Label Grid.Column="2" Grid.Row="1" Content="Naam" HorizontalAlignment="Left" Margin="0,0,30,0"/>
+                    <TextBox Grid.Row="2" Grid.Column="2" Name="TextBoxNaamBestuurder" Width="200" Margin="0,0,30,0"></TextBox>
+                    
+                    <Label Grid.Column="3" Grid.Row="1" Content="Voornaam" HorizontalAlignment="Left" Margin="0,0,30,0"/>
+                    <TextBox Grid.Row="2" Grid.Column="3" Name="TextBoxVoornaamBestuurder" Width="200" Margin="0,0,30,0"></TextBox>
+                    
+                    <Label Grid.Column="4" Grid.Row="1" Content="Geboortedatum" HorizontalAlignment="Left" Margin="0,0,30,0"/>
+                    <DatePicker Grid.Row="2" Grid.Column="4" Width="200" Margin="0,0,30,0" ></DatePicker>
+                    
+                    <Label Grid.Column="1" Grid.Row="3" Content="Rijbewijzen" HorizontalAlignment="Left" Margin="0,0,30,0"/>
+                    <ListBox Name="TextBoxRijbewijzen" Grid.RowSpan="2" Grid.Row="4" Grid.Column="1" Width="200" Margin="0,0,30,0" IsEnabled="False"></ListBox>
 
+                    <Label Grid.Column="2" Grid.Row="3" Content="Rijbewijs" HorizontalAlignment="Left" Margin="0,0,30,0"/>
+                    <ComboBox Grid.Row="4" Grid.Column="2" Name="ComboBoxRijbewijzen" Width="200" Margin="0,0,30,0"></ComboBox>
+
+                    <DockPanel Grid.Row="5" Grid.Column="2" Margin="0,10,0,0">
+                        <Button Width="85" Name="ToevoegenRijbewijsButton" DockPanel.Dock="Left" VerticalAlignment="Top">Toevoegen</Button>
+                        <Button Width="85" Name="VerwijderRijbewijsButton" DockPanel.Dock="Right" VerticalAlignment="Top">Verwijderen</Button>
+                    </DockPanel>
+                    <Label Grid.Column="3" Grid.Row="3" Content="Rijksregisternummer" HorizontalAlignment="Left" Margin="0,0,30,0"/>
+                    <TextBox Grid.Row="4" Grid.Column="3" Name="TextBoxRijksregisternummerBestuurder" Width="200" Margin="0,0,30,0"></TextBox>
+
+
+                    <CheckBox Grid.Column="4" Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Left">Geachiveerd</CheckBox>
+                        
+                    <Button Grid.Column="4" Grid.Row="5" Name="ZoekBestuurderButton" Margin="0,20,0,0">Zoeken</Button>
+
+
+                    <DataGrid Name="ResultatenBestuurders" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="8" Grid.RowSpan="5" AutoGenerateColumns="False"  Margin="0,0,30,0" IsReadOnly="True">
+                           <DataGrid.Columns>
+                               <DataGridTextColumn Width="100" Header="Id" CanUserResize="False"></DataGridTextColumn>
+                            <DataGridTextColumn Width="100" Header="Naam"></DataGridTextColumn>
+                            <DataGridTextColumn Width="100" Header="Voornaam"></DataGridTextColumn>
+                               <DataGridTextColumn Width="Auto" Header="Geboordedatum"></DataGridTextColumn>
+                            <DataGridCheckBoxColumn Width="100" Header="Heeft Voertuig"></DataGridCheckBoxColumn>
+                            <DataGridCheckBoxColumn Width="100" Header="Heeft Tankkaart"></DataGridCheckBoxColumn>
+                           </DataGrid.Columns>
+                    </DataGrid>
+                    <Button Grid.Column="4" Grid.Row="8" Margin="0,20,0,10">Nieuw</Button>
+                    <Button Grid.Column="4" Grid.Row="9" Margin="0,0,0,10">Details</Button>
+                    <Button Grid.Column="4" Grid.Row="10" Margin="0,0,0,10">Aanpassen</Button>
+                    <Button Grid.Column="4" Grid.Row="11">(De)Archiveren</Button>
+                    
+</Grid>
+            </TabItem>
+            <TabItem Header="Voertuigen">
+
+            </TabItem>
+            <TabItem Header="Tankkaarten">
+
+            </TabItem>
+            <TabItem Header="Types">
+
+            </TabItem>
+    
+
+
+        </TabControl>
     </Grid>
 </Window>

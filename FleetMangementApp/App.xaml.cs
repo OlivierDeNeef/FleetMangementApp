@@ -16,14 +16,14 @@ namespace FleetMangementApp
         private ServiceProvider _serviceProvider;
         private readonly IConfiguration configuration;
 
-        public App()
-        {
-            var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json", optional : false, reloadOnChange : true);
-            configuration = builder.Build();
-            ServiceCollection services = new ServiceCollection();
-            ConfigureServices(services);
-            _serviceProvider = services.BuildServiceProvider();
-        }
+        //public App()
+        //{
+        //    var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json", optional : false, reloadOnChange : true);
+        //  //  configuration = builder.Build();
+        //    ServiceCollection services = new ServiceCollection();
+        //    ConfigureServices(services);
+        //    _serviceProvider = services.BuildServiceProvider();
+        //}
 
 
         private void ConfigureServices(ServiceCollection services)
