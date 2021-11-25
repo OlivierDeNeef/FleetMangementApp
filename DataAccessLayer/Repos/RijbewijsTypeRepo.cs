@@ -10,7 +10,7 @@ using DomainLayer.Exceptions.Models;
 
 namespace DataAccessLayer.Repos
 {
-    public class RijbewijsTypeRepo : IRijbewijsTypeRepo
+    public class RijbewijsTypeRepo 
     {
         private readonly string _connectionString;
         private readonly IConfiguration _configuration;

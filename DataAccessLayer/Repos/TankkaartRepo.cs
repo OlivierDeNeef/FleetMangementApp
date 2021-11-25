@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 
 namespace DataAccessLayer.Repos
 {
-    public class TankkaartRepo : ITankkaartRepo
+    public class TankkaartRepo 
     {
         private readonly string _connectionString;
         private readonly IConfiguration _configuration;
