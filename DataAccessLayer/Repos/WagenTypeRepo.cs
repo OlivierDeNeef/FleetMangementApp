@@ -10,7 +10,7 @@ using System.Data.SqlClient;
 
 namespace DataAccessLayer.Repos
 {
-    public class WagenTypeRepo : IWagenTypeRepo
+    public class WagenTypeRepo
     {
         private readonly string _connectionString;
         private readonly IConfiguration _configuration;

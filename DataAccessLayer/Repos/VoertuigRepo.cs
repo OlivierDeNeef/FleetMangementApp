@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Repos
 {
-    public class VoertuigRepo: IVoertuigRepo
+    public class VoertuigRepo
     {
         private readonly string _connectionString;
         private readonly IConfiguration _configuration;

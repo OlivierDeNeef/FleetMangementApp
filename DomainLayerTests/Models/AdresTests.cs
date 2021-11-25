@@ -37,12 +37,7 @@ namespace DomainLayerTests.Models
         {
             Assert.Throws<AdresException>(() => _adres.ZetStraat(straat));
         }
-        [Fact]
-        public void ZetBusnummerTest_Valid()
-        {
-            _adres.ZetBusnummer("a2");
-            Assert.Equal("a2", _adres.Busnummer);
-        }
+       
 
         [Theory]
         [InlineData("2     ", "2")]

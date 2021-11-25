@@ -1,4 +1,5 @@
-﻿using DomainLayer.Interfaces.Repos;
+﻿using DataAccessLayer.Exceptions.Repos;
+using DomainLayer.Interfaces.Repos;
 using DomainLayer.Models;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -6,17 +7,16 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Runtime.InteropServices;
-using DataAccessLayer.Exceptions.Repos;
 
 namespace DataAccessLayer.Repos
 {
-    public class TankkaartRepo: ITankkaartRepo
+    public class TankkaartRepo 
     {
         private readonly string _connectionString;
         private readonly IConfiguration _configuration;
         private readonly IBestuurderRepo _bestuurderRepo;
 
-        public TankkaartRepo(IConfiguration config ,IBestuurderRepo bestuurderRepo)
+        public TankkaartRepo(IConfiguration config, IBestuurderRepo bestuurderRepo)
         {
             _configuration = config;
             _bestuurderRepo = bestuurderRepo;
@@ -54,53 +54,84 @@ namespace DataAccessLayer.Repos
 
         public Tankkaart GeefTankkaart(int id)
         {
-            var brandstofTypes = new List<BrandstofType>();
-            var connection = new SqlConnection(_connectionString);
-            const string query = "SELECT dbo.Tankkaarten.Id, Kaartnummer, Geldigheidsdatum, Pincode,Gearchiveerd ,Geblokkeerd ,BrandstoftypeId ,[Type] FROM dbo.Tankkaarten INNER JOIN dbo.Tankkaarten_Brandstoftypes on Id=TankkaartId INNER JOIN dbo.BrandstofTypes on BrandstofTypeId=dbo.brandstoftypes.Id    WHERE dbo.Tankkaarten.Id=@brandstofTypeId;";
-            using var command = connection.CreateCommand();
+            using SqlConnection con = new(_connectionString);
             try
             {
-                command.CommandText = query;
-                command.Connection = connection;
-                command.Parameters.AddWithValue("@brandstofTypeId", id);
-                connection.Open();
-                var reader = command.ExecuteReader();
-                var eersteIteratie = true;
-                if(!reader.HasRows) throw new TankkaartRepoException("TankkaartId bestaat niet");
-                var tankkaartid = 0;
-                string kaartnummer = null;
-                var geblokkeerd = false;
-                DateTime geldigheidsDatum = default;
-                string pincode = null;
-                var gearchiveerd = false;
-                while (reader.Read())
+
+                SqlCommand commandTankkaart = new("SELECT * dbo.Tankkaarten WHERE dbo.Tankkaarten.Id=@Id", con);
+                commandTankkaart.Parameters.AddWithValue("@Id", id);
+                var readerTankkaart = commandTankkaart.ExecuteReader();
+
+                if (readerTankkaart.HasRows)
                 {
-                    if (eersteIteratie)
+                    Tankkaart tankkaart = new((int)readerTankkaart["Id"], (string)readerTankkaart["Kaartnummer"], (DateTime)readerTankkaart["GeldigheidsDatum"]);
+                    if (readerTankkaart["Pincode"] != DBNull.Value) tankkaart.ZetPincode((string)readerTankkaart["Pincode"]);
+                    if (readerTankkaart["Gearchiveerd"] != DBNull.Value) tankkaart.ZetGearchiveerd((bool)readerTankkaart["Gearchiveerd"]);
+                    if (readerTankkaart["Geblokkeerd"] != DBNull.Value && (bool)readerTankkaart["Geblokkeerd"]) tankkaart.BlokkeerKaart();
+
+                    SqlCommand commandBrandstofTypes = new("SELECT * dbo.Tankkaarten_Brandstoftypes left join dbo.BrandstofTypes on BrandstofTypeId=dbo.brandstoftypes.Id WHERE TankkaartId=@Id", con);
+                    commandBrandstofTypes.Parameters.AddWithValue("@Id", tankkaart.Id);
+                    var readerBrandStoffen = commandBrandstofTypes.ExecuteReader();
+                    if (readerBrandStoffen.HasRows)
                     {
-                        tankkaartid = (int) reader["Id"];
-                        kaartnummer = (string) reader["Kaartnummer"];
-                        geldigheidsDatum = (DateTime) reader["GeldigheidsDatum"];
-                        pincode = (string) reader["Pincode"];
-                        gearchiveerd = (bool) reader["Gearchiveerd"];
-                        geblokkeerd = (bool) reader["Geblokkeerd"];
-                        eersteIteratie = false;
+                        while (readerBrandStoffen.Read())
+                        {
+                            tankkaart.VoegBrandstofTypeToe(new BrandstofType((int)readerBrandStoffen["BrandstoftypeId"], (string)readerBrandStoffen["Type"]));
+                        }
                     }
-                    brandstofTypes.Add(new BrandstofType((int)reader["BrandstoftypeId"],(string)reader["Type"]));
+
+                    SqlCommand commandBestuurder = new("SELECT * dbo.Bestuurders WHERE TankkaartenId=@Id", con);
+                    commandBestuurder.Parameters.AddWithValue("@Id", tankkaart.Id);
+                    var readerBestuurder = commandBestuurder.ExecuteReader();
+                    if (!readerBestuurder.HasRows) return tankkaart;
+                    var rijbewijzen = new List<RijbewijsType>();
+                    SqlCommand commandBestuurderRijbewijzen = new("SELECT * dbo.Bestuurders WHERE TankkaartenId=@Id", con);
+                    commandBestuurderRijbewijzen.Parameters.AddWithValue("@Id", (int)readerBestuurder["Id"]);
+                    var readerRijbewijzen = commandBestuurderRijbewijzen.ExecuteReader();
+
+                    if (readerRijbewijzen.HasRows)
+                    {
+
+                        while (readerRijbewijzen.Read())
+                        {
+                            rijbewijzen.Add(new RijbewijsType((int)readerRijbewijzen[0], (string)readerRijbewijzen[1]));
+                        }
+                    }
+
+                    Bestuurder bestuurder = new((int)readerBestuurder[0], (string)readerBestuurder["Naam"], (string)readerBestuurder["Voornaam"], (DateTime)readerBestuurder["Geboortedatum"], (string)readerBestuurder["Rijksregisternummer"], rijbewijzen, (bool)readerBestuurder["Gearchiveerd"]);
+
+                    if (readerBestuurder["Straat"] != DBNull.Value)
+                    {
+                        var adres = new Adres((string)readerBestuurder["Straat"], (string)readerBestuurder["Huisnummer"], (string)readerBestuurder["Stad"], (string)readerBestuurder["Postcode"], (string)readerBestuurder["Land"]);
+                        bestuurder.ZetAdres(adres);
+                    }
+
+                    if (readerBestuurder["VoertuigId"] == DBNull.Value) return tankkaart;
+                    SqlCommand commandVoertuig = new("SELECT * dbo.Voertuig WHERE BestuurderId=@Id", con);
+                    commandVoertuig.Parameters.AddWithValue("@Id", (int)readerBestuurder["VoertuigId"]);
+                    var readerVoeruig = commandBestuurder.ExecuteReader();
+                    if (readerVoeruig.HasRows)
+                    {
+                        //TODO
+                    }
+
+                    return tankkaart;
                 }
-
-                var bestuurder = _bestuurderRepo.GeefBestuurderMetTankkaart(tankkaartid); //TODO
-
-                return new Tankkaart(tankkaartid,kaartnummer,geldigheidsDatum,pincode,bestuurder,geblokkeerd,gearchiveerd,brandstofTypes);
+                else
+                {
+                    throw new Exception();
+                }
             }
             catch (Exception e)
             {
-                throw new TankkaartRepoException("GeefBestuurder - Er ging iets mis", e);
+                throw;
             }
             finally
             {
-                connection.Close();
+                con.Close();
             }
         }
+
 
         public void VoegTankkaartToe(Tankkaart tankkaart)
         {
@@ -269,7 +300,7 @@ namespace DataAccessLayer.Repos
 
             if (geldigheidsdatum != DateTime.MinValue)
             {
-                if (first)query += ", ";
+                if (first) query += ", ";
                 query += "Geldigheidsdatum=@geldigheidsdatum";
                 first = false;
             }

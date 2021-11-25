@@ -9,7 +9,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace DataAccessLayer.Repos
 {
-    public class BrandstofTypeRepo : IBrandstofTypeRepo
+    public class BrandstofTypeRepo 
     {
 
         private readonly string _connectionString;
