@@ -13,31 +13,38 @@ namespace FleetMangementApp
     /// </summary>
     public partial class App : Application
     {
-        private ServiceProvider _serviceProvider;
-        private readonly IConfiguration configuration;
+        private readonly ServiceProvider _serviceProvider;
+        private readonly IConfiguration _configuration;
 
-        //public App()
-        //{
-        //    var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json", optional : false, reloadOnChange : true);
-        //  //  configuration = builder.Build();
-        //    ServiceCollection services = new ServiceCollection();
-        //    ConfigureServices(services);
-        //    _serviceProvider = services.BuildServiceProvider();
-        //}
+        public App()
+        {
+            
+            var services = new ServiceCollection();
+            ConfigureServices(services);
+            _serviceProvider = services.BuildServiceProvider();
+
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+            _configuration = builder.Build();
+        }
 
 
         private void ConfigureServices(ServiceCollection services)
         {
-            
-            //services.AddSingleton<IBestuurderRepo>();
-            //services.AddSingleton<IVoertuigRepo>();
-            //services.AddSingleton<ITankkaartRepo>();
-            //services.AddSingleton<IBrandstofTypeRepo>();
-            //services.AddSingleton<IRijbewijsTypeRepo, RijbewijsTypeRepo>();
-            //services.AddSingleton<IWagenTypeRepo>();
+            services.AddSingleton<IBestuurderRepo,BestuurderRepo>();
+            services.AddSingleton<IVoertuigRepo,VoertuigRepo>();
+            services.AddSingleton<ITankkaartRepo,TankkaartRepo>();
+            services.AddSingleton<IBrandstofTypeRepo,BrandstofTypeRepo>();
+            services.AddSingleton<IRijbewijsTypeRepo, RijbewijsTypeRepo>();
+            services.AddSingleton<IWagenTypeRepo,WagenTypeRepo>();
+            services.AddTransient<MainWindow>();
+        }
 
-
-
+        private void OnStartup(object sender, StartupEventArgs e)
+        {
+            var mainWindow = _serviceProvider.GetService<MainWindow>();
+            mainWindow.Show();
         }
     }
 }
