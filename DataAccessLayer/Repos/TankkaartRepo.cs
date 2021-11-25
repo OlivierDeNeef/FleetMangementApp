@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 
 namespace DataAccessLayer.Repos
 {
-    public class TankkaartRepo 
+    public class TankkaartRepo
     {
         private readonly string _connectionString;
         private readonly IConfiguration _configuration;
@@ -58,69 +58,79 @@ namespace DataAccessLayer.Repos
             try
             {
 
-                SqlCommand commandTankkaart = new("SELECT * dbo.Tankkaarten WHERE dbo.Tankkaarten.Id=@Id", con);
+                SqlCommand commandTankkaart = new("Select * from dbo.Tankkaarten t " +
+                                                  "left join dbo.Tankkaarten_BrandstofTypes tb on tb.TankkaartId = t.Id " +
+                                                  "left join dbo.BrandstofTypes btb on tb.BrandstofTypeId = btb.Id " +
+                                                  "left join dbo.Bestuurders b on t.Id = b.TankkaartId " +
+                                                  "left JOIN dbo.RijbewijsTypes_Bestuurders rb on b.Id = rb.BestuurderId " +
+                                                  "left JOIN dbo.RijbewijsTypes r on rb.RijbewijsTypeId = r.Id " +
+                                                  "left join dbo.Voertuigen v on b.VoertuigId = v.Id " +
+                                                  "left join dbo.WagenTypes w on v.WagenTypeId = w.Id " +
+                                                  "left join dbo.BrandstofTypes bta on v.BrandstofId = bta.Id where t.Id =@Id ", con);
+
                 commandTankkaart.Parameters.AddWithValue("@Id", id);
-                var readerTankkaart = commandTankkaart.ExecuteReader();
-
-                if (readerTankkaart.HasRows)
+                var reader = commandTankkaart.ExecuteReader();
+                if (!reader.HasRows) throw new BestuurderRepoException(nameof(GeefTankkaart) + " - Geen tankkaart gevonden");
+                Tankkaart tankkaart = null;
+                while (reader.Read())
                 {
-                    Tankkaart tankkaart = new((int)readerTankkaart["Id"], (string)readerTankkaart["Kaartnummer"], (DateTime)readerTankkaart["GeldigheidsDatum"]);
-                    if (readerTankkaart["Pincode"] != DBNull.Value) tankkaart.ZetPincode((string)readerTankkaart["Pincode"]);
-                    if (readerTankkaart["Gearchiveerd"] != DBNull.Value) tankkaart.ZetGearchiveerd((bool)readerTankkaart["Gearchiveerd"]);
-                    if (readerTankkaart["Geblokkeerd"] != DBNull.Value && (bool)readerTankkaart["Geblokkeerd"]) tankkaart.BlokkeerKaart();
-
-                    SqlCommand commandBrandstofTypes = new("SELECT * dbo.Tankkaarten_Brandstoftypes left join dbo.BrandstofTypes on BrandstofTypeId=dbo.brandstoftypes.Id WHERE TankkaartId=@Id", con);
-                    commandBrandstofTypes.Parameters.AddWithValue("@Id", tankkaart.Id);
-                    var readerBrandStoffen = commandBrandstofTypes.ExecuteReader();
-                    if (readerBrandStoffen.HasRows)
+                    //tankkaart
+                    if (tankkaart == null)
                     {
-                        while (readerBrandStoffen.Read())
+                        tankkaart = new Tankkaart((int)reader[0], (string)reader[1], (DateTime)reader[2],
+                            (string)reader[3], (bool)reader[5], (bool)reader[4], new List<BrandstofType>());
+
+                        if (reader[8] != DBNull.Value)
                         {
-                            tankkaart.VoegBrandstofTypeToe(new BrandstofType((int)readerBrandStoffen["BrandstoftypeId"], (string)readerBrandStoffen["Type"]));
+                            tankkaart.VoegBrandstofTypeToe(new BrandstofType((int)reader[8], (string)reader[9]));
+                        }
+                        //bestuurder
+                        if (reader[10] != DBNull.Value)
+                        {
+                            var bestuurder = new Bestuurder((int)reader[10], (string)reader[11], (string)reader[12],
+                                (DateTime)reader[13], (string)reader[14], new List<RijbewijsType>(), (bool)reader[15]);
+
+                            if (reader[18] != DBNull.Value)
+                            {
+                                bestuurder.ZetAdres(new Adres((string)reader[18], (string)reader[19], (string)reader[22], (string)reader[20], (string)reader[21]));
+                            }
+
+                            if (reader[23] != DBNull.Value)
+                            {
+                                bestuurder.VoegRijbewijsTypeToe(new RijbewijsType((int)reader[23], (string)reader[25]));
+                            }
+
+                            if (reader[17] != DBNull.Value)
+                            {
+                                var voertuig = new Voertuig((int)reader[17], (string)reader[28], (string)reader[29],
+                                    (string)reader[30],
+                                    (string)reader[31], new BrandstofType((int)reader[37], (string)reader[41]),
+                                    new WagenType((int)reader[36], (string)reader[39]));
+                                bestuurder.ZetVoertuig(voertuig);
+                            }
+                            tankkaart.ZetBestuurder(bestuurder);
                         }
                     }
-
-                    SqlCommand commandBestuurder = new("SELECT * dbo.Bestuurders WHERE TankkaartenId=@Id", con);
-                    commandBestuurder.Parameters.AddWithValue("@Id", tankkaart.Id);
-                    var readerBestuurder = commandBestuurder.ExecuteReader();
-                    if (!readerBestuurder.HasRows) return tankkaart;
-                    var rijbewijzen = new List<RijbewijsType>();
-                    SqlCommand commandBestuurderRijbewijzen = new("SELECT * dbo.Bestuurders WHERE TankkaartenId=@Id", con);
-                    commandBestuurderRijbewijzen.Parameters.AddWithValue("@Id", (int)readerBestuurder["Id"]);
-                    var readerRijbewijzen = commandBestuurderRijbewijzen.ExecuteReader();
-
-                    if (readerRijbewijzen.HasRows)
+                    else
                     {
-
-                        while (readerRijbewijzen.Read())
+                        
+                        if (reader[8] != DBNull.Value && tankkaart.GeefBrandstofTypes().All(b => b.Id != (int)reader[8]))
                         {
-                            rijbewijzen.Add(new RijbewijsType((int)readerRijbewijzen[0], (string)readerRijbewijzen[1]));
+                            tankkaart.VoegBrandstofTypeToe(new BrandstofType((int)reader[8], (string)reader[9]));
                         }
+
+                        if (reader[10] == DBNull.Value) continue;
+                        if (reader[23] != DBNull.Value && tankkaart.Bestuurder.GeefRijbewijsTypes().All(r => r.Id != (int)reader[23]))
+                        {
+                            tankkaart.Bestuurder.VoegRijbewijsTypeToe(new RijbewijsType((int)reader[23], (string)reader[25]));
+                        }
+
+
                     }
-
-                    Bestuurder bestuurder = new((int)readerBestuurder[0], (string)readerBestuurder["Naam"], (string)readerBestuurder["Voornaam"], (DateTime)readerBestuurder["Geboortedatum"], (string)readerBestuurder["Rijksregisternummer"], rijbewijzen, (bool)readerBestuurder["Gearchiveerd"]);
-
-                    if (readerBestuurder["Straat"] != DBNull.Value)
-                    {
-                        var adres = new Adres((string)readerBestuurder["Straat"], (string)readerBestuurder["Huisnummer"], (string)readerBestuurder["Stad"], (string)readerBestuurder["Postcode"], (string)readerBestuurder["Land"]);
-                        bestuurder.ZetAdres(adres);
-                    }
-
-                    if (readerBestuurder["VoertuigId"] == DBNull.Value) return tankkaart;
-                    SqlCommand commandVoertuig = new("SELECT * dbo.Voertuig WHERE BestuurderId=@Id", con);
-                    commandVoertuig.Parameters.AddWithValue("@Id", (int)readerBestuurder["VoertuigId"]);
-                    var readerVoeruig = commandBestuurder.ExecuteReader();
-                    if (readerVoeruig.HasRows)
-                    {
-                        //TODO
-                    }
-
-                    return tankkaart;
                 }
-                else
-                {
-                    throw new Exception();
-                }
+
+                return tankkaart;
+
             }
             catch (Exception e)
             {
