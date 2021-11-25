@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using DomainLayer.Managers;
 
 namespace FleetMangementApp
 {
@@ -20,14 +21,16 @@ namespace FleetMangementApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        private readonly BestuurderManager _bestuurderManager;
+        public MainWindow(BestuurderManager bestuurderManager)
         {
+            _bestuurderManager = bestuurderManager;
             InitializeComponent();
         }
 
         private void ZoekBestuurderButton_Click(object sender, RoutedEventArgs e)
         {
-            
+            var x = _bestuurderManager.GeefGefilterdeBestuurder(1, null, null, DateTime.MinValue, null, null, false);
         }
     }
 }

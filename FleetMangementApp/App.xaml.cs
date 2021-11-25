@@ -2,6 +2,7 @@
 using System.Windows;
 using DataAccessLayer.Repos;
 using DomainLayer.Interfaces.Repos;
+using DomainLayer.Managers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -18,15 +19,13 @@ namespace FleetMangementApp
 
         public App()
         {
-            
-            var services = new ServiceCollection();
-            ConfigureServices(services);
-            _serviceProvider = services.BuildServiceProvider();
-
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
             _configuration = builder.Build();
+            var services = new ServiceCollection();
+            ConfigureServices(services);
+            _serviceProvider = services.BuildServiceProvider();
         }
 
 
@@ -38,6 +37,8 @@ namespace FleetMangementApp
             services.AddSingleton<IBrandstofTypeRepo,BrandstofTypeRepo>();
             services.AddSingleton<IRijbewijsTypeRepo, RijbewijsTypeRepo>();
             services.AddSingleton<IWagenTypeRepo,WagenTypeRepo>();
+            services.AddSingleton<BestuurderManager>();
+            services.AddSingleton<IConfiguration>(_configuration);
             services.AddTransient<MainWindow>();
         }
 

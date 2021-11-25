@@ -54,10 +54,7 @@ namespace DataAccessLayer.Repos
         {
             _connectionString = config.GetConnectionString("defaultConnection");
         }
-        public BestuurderRepo(string connectionString)
-        {
-            _connectionString = connectionString;
-        }
+        
         //ask: filter op een list
         public IReadOnlyList<Bestuurder> GeefGefilderdeBestuurders(string voornaam, string naam, DateTime geboortedatum, List<RijbewijsType> lijstRijbewijstypes, string rijksregisternummer, bool gearchiveerd)
         {
