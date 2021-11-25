@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace DataAccessLayer.Repos
 {
-    public class TankkaartRepo
+    public class TankkaartRepo : ITankkaartRepo
     {
         //0	tankkaart id
         //1	Kaartnummer
@@ -49,19 +49,16 @@ namespace DataAccessLayer.Repos
 
         private readonly string _connectionString;
         private readonly IConfiguration _configuration;
-        private readonly IBestuurderRepo _bestuurderRepo;
 
-        public TankkaartRepo(IConfiguration config, IBestuurderRepo bestuurderRepo)
+        public TankkaartRepo(IConfiguration config)
         {
             _configuration = config;
-            _bestuurderRepo = bestuurderRepo;
             _connectionString = config.GetConnectionString("defaultConnection");
         }
 
-        public TankkaartRepo(string connectionString, IBestuurderRepo bestuurderRepo)
+        public TankkaartRepo(string connectionString)
         {
             _connectionString = connectionString;
-            _bestuurderRepo = bestuurderRepo;
         }
 
         public bool BestaatTankkaart(int tankkaartId)

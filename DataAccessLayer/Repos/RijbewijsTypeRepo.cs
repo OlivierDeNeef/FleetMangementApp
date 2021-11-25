@@ -10,11 +10,10 @@ using DomainLayer.Exceptions.Models;
 
 namespace DataAccessLayer.Repos
 {
-    public class RijbewijsTypeRepo 
+    public class RijbewijsTypeRepo :IRijbewijsTypeRepo
     {
         private readonly string _connectionString;
         private readonly IConfiguration _configuration;
-
 
         public RijbewijsTypeRepo(IConfiguration config)
         {
@@ -22,10 +21,8 @@ namespace DataAccessLayer.Repos
             _connectionString = config.GetConnectionString("defaultConnection");
         }
 
-        
         public void VoegRijbewijsToe(RijbewijsType rijbewijsType)
         {
-           
             var connection = new SqlConnection(_connectionString);
             const string query = "INSERT INTO dbo.rijbewijstypes (Type) VALUES (@Type);";
             try
@@ -109,7 +106,7 @@ namespace DataAccessLayer.Repos
             var connection = new SqlConnection(_connectionString);
             try
             {
-                using SqlCommand command = connection.CreateCommand();
+                using var command = connection.CreateCommand();
                 command.Connection = connection;
                 command.CommandText = "SELECT * FROM dbo.rijbewijstype WHERE (type = @type)";
 
@@ -140,7 +137,7 @@ namespace DataAccessLayer.Repos
             var connection = new SqlConnection(_connectionString);
             try
             {
-                using SqlCommand command = connection.CreateCommand();
+                using var command = connection.CreateCommand();
                 command.Connection = connection;
                 command.CommandText = "UPDATE rijbewijstype SET type = @type where Id = @id";
                 command.Parameters.AddWithValue("@type", rijbewijsType.Type);

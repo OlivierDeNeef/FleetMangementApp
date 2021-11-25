@@ -19,7 +19,6 @@ namespace DomainLayer.Models
         public int AantalDeuren { get; private set; }
         public Bestuurder Bestuurder { get; private set; }
         public bool IsGearchiveerd { get; private set; }
-        public RijbewijsType RijbewijsType { get; private set; }
         public bool IsHybride { get; private set; }
 
 
@@ -182,7 +181,7 @@ namespace DomainLayer.Models
         /// <returns>True wanneer voertuigen gelijk zijn ander false</returns>
         public override bool Equals(object obj) //Todo: tests schrijven
         {
-            return obj is Voertuig other && Id == other.Id && Merk == other.Merk && Model == other.Model && Chassisnummer == other.Chassisnummer && Equals(WagenType, other.WagenType) && Equals(BrandstofType, other.BrandstofType) && Nummerplaat == other.Nummerplaat && Kleur == other.Kleur && AantalDeuren == other.AantalDeuren && Equals(Bestuurder, other.Bestuurder) && IsGearchiveerd == other.IsGearchiveerd && RijbewijsType == other.RijbewijsType;
+            return obj is Voertuig other && Id == other.Id && Merk == other.Merk && Model == other.Model && Chassisnummer == other.Chassisnummer && Equals(WagenType, other.WagenType) && Equals(BrandstofType, other.BrandstofType) && Nummerplaat == other.Nummerplaat && Kleur == other.Kleur && AantalDeuren == other.AantalDeuren && Equals(Bestuurder, other.Bestuurder) && IsGearchiveerd == other.IsGearchiveerd ;
         }
 
         /// <summary>
@@ -203,7 +202,6 @@ namespace DomainLayer.Models
             hashCode.Add(AantalDeuren);
             hashCode.Add(Bestuurder);
             hashCode.Add(IsGearchiveerd);
-            hashCode.Add(RijbewijsType);
             return hashCode.ToHashCode();
         }
 

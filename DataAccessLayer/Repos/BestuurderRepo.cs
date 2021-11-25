@@ -6,12 +6,12 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
-
+using DomainLayer.Interfaces.Repos;
 
 
 namespace DataAccessLayer.Repos
 {
-    public class BestuurderRepo
+    public class BestuurderRepo : IBestuurderRepo
     {
         //0	bestuurderId
         //1	Naam
@@ -48,19 +48,16 @@ namespace DataAccessLayer.Repos
         //39 Brandstof id voor tankkaart
         //40 type brandstof voor tankkaart
 
-
         private readonly string _connectionString;
-        private readonly IConfiguration _configuration;
+
         public BestuurderRepo(IConfiguration config)
         {
-            _configuration = config;
             _connectionString = config.GetConnectionString("defaultConnection");
         }
         public BestuurderRepo(string connectionString)
         {
             _connectionString = connectionString;
         }
-
         //ask: filter op een list
         public IReadOnlyList<Bestuurder> GeefGefilderdeBestuurders(string voornaam, string naam, DateTime geboortedatum, List<RijbewijsType> lijstRijbewijstypes, string rijksregisternummer, bool gearchiveerd)
         {
@@ -288,7 +285,6 @@ namespace DataAccessLayer.Repos
                 connection.Close();
             }
         }
-
         public void UpdateBestuurder(Bestuurder bestuurder)
         {
             SqlTransaction transaction = null;
@@ -345,7 +341,6 @@ namespace DataAccessLayer.Repos
                 connection.Close();
             }
         }
-
         public Bestuurder GeefBestuurder(int id)
         {
             using var connection = new SqlConnection(_connectionString);

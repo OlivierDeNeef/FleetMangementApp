@@ -9,7 +9,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace DataAccessLayer.Repos
 {
-    public class BrandstofTypeRepo 
+    public class BrandstofTypeRepo :IBrandstofTypeRepo
     {
 
         private readonly string _connectionString;
@@ -28,25 +28,23 @@ namespace DataAccessLayer.Repos
         public void VoegBrandstofTypeToe(BrandstofType brandstofType)
         {
             var connection = new SqlConnection(_connectionString);
-            string query = "INSERT INTO dbo.BRANDSTOFFENTYPES (type) VALUES(@type)";
-            using (SqlCommand command = connection.CreateCommand())
+            const string query = "INSERT INTO dbo.BRANDSTOFFENTYPES (type) VALUES(@type)";
+            using var command = connection.CreateCommand();
+            connection.Open();
+            try
             {
-                connection.Open();
-                try
-                {
-                    command.Parameters.AddWithValue("@type", brandstofType.Type);
-                    command.CommandText = query;
-                    command.ExecuteNonQuery();
+                command.Parameters.AddWithValue("@type", brandstofType.Type);
+                command.CommandText = query;
+                command.ExecuteNonQuery();
 
-                }
-                catch (Exception e)
-                {
-                    throw new BrandstofTypeManagerException("VoegBrandstofTypeToe - Er ging iets mis ", e);
-                }
-                finally
-                {
-                    connection.Close();
-                }
+            }
+            catch (Exception e)
+            {
+                throw new BrandstofTypeManagerException("VoegBrandstofTypeToe - Er ging iets mis ", e);
+            }
+            finally
+            {
+                connection.Close();
             }
         }
 
@@ -58,7 +56,7 @@ namespace DataAccessLayer.Repos
         public bool BestaatBrandstofType(BrandstofType brandstofType)
         {
             var connection = new SqlConnection(_connectionString);
-            string query = "SELECT * FROM dbo.BRANDSTOFFENTYPES WHERE (type = @type)";
+            const string query = "SELECT * FROM dbo.BRANDSTOFFENTYPES WHERE (type = @type)";
             bool bestaatType;
             using var command = connection.CreateCommand();
             connection.Open();
@@ -88,25 +86,23 @@ namespace DataAccessLayer.Repos
         public void UpdateBrandstofType(BrandstofType brandstofType)
         {
             var connection = new SqlConnection(_connectionString);
-            string query = "UPDATE BRANDSTOFFENTYPES SET type = @type where Id = @id";
-            using (SqlCommand command = connection.CreateCommand())
+            const string query = "UPDATE BRANDSTOFFENTYPES SET type = @type where Id = @id";
+            using var command = connection.CreateCommand();
+            connection.Open();
+            try
             {
-                connection.Open();
-                try
-                {
-                    command.CommandText = query;
-                    command.Parameters.AddWithValue("@type", brandstofType.Type);
-                    command.Parameters.AddWithValue("@id", brandstofType.Id);
-                    command.ExecuteNonQuery();
-                }
-                catch (Exception e)
-                {
-                    throw new BrandstofTypeManagerException("Update Brandstoftype - Er ging iets mis ", e);
-                }
-                finally
-                {
-                    connection.Close();
-                }
+                command.CommandText = query;
+                command.Parameters.AddWithValue("@type", brandstofType.Type);
+                command.Parameters.AddWithValue("@id", brandstofType.Id);
+                command.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                throw new BrandstofTypeManagerException("Update Brandstoftype - Er ging iets mis ", e);
+            }
+            finally
+            {
+                connection.Close();
             }
         }
 
@@ -125,7 +121,7 @@ namespace DataAccessLayer.Repos
                 command.Connection = connection;
                 command.CommandText = query;
 
-                List<BrandstofType> brandstoftypelijst = new List<BrandstofType>();
+                var brandstoftypelijst = new List<BrandstofType>();
                 var reader = command.ExecuteReader();
                 while (reader.Read())
                 {
@@ -145,7 +141,6 @@ namespace DataAccessLayer.Repos
             }
         }
 
-
         /// <summary>
         /// verwijderd een brandstoftype
         /// </summary>
@@ -153,26 +148,24 @@ namespace DataAccessLayer.Repos
         public void VerwijderBrandstofType(int id)
         {
             var connection = new SqlConnection(_connectionString);
-            string query = "DELETE FROM dbo.BRANDSTOFFENTYPES WHERE Id = @id";
-            using (SqlCommand command = connection.CreateCommand())
+            const string query = "DELETE FROM dbo.BRANDSTOFFENTYPES WHERE Id = @id";
+            using var command = connection.CreateCommand();
+            try
             {
-                try
-                {
-                    connection.Open();
-                    command.CommandText = query;
-                    command.Connection = connection;
-                    command.Parameters.AddWithValue("@id", id);
-                    command.ExecuteNonQuery();
-                }
-                catch (Exception e)
-                {
-                    throw new BrandstofTypeManagerException("VerwijderBrandstofTypes - Er liep iets mis", e);
-                }
-                finally
-                {
-                    connection.Close();
+                connection.Open();
+                command.CommandText = query;
+                command.Connection = connection;
+                command.Parameters.AddWithValue("@id", id);
+                command.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                throw new BrandstofTypeManagerException("VerwijderBrandstofTypes - Er liep iets mis", e);
+            }
+            finally
+            {
+                connection.Close();
 
-                }
             }
         }
     }

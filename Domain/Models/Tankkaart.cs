@@ -59,8 +59,9 @@ namespace DomainLayer.Models
             _brandstofTypes = brandstofTypes;
         }
 
-        public Tankkaart(int id, string kaartnummer, DateTime geldigheidsDatum, string pincode, bool isGeblokkeerd,bool isGeachiveerd , List<BrandstofType> brandstofTypes) : this(id, kaartnummer, geldigheidsDatum, pincode, bestuurder)
+        public Tankkaart(int id, string kaartnummer, DateTime geldigheidsDatum, string pincode, bool isGeblokkeerd,bool isGeachiveerd , List<BrandstofType> brandstofTypes) : this(id, kaartnummer, geldigheidsDatum)
         {
+            ZetPincode(pincode);
             if (isGeachiveerd)
             {
                 IsGearchiveerd = true;

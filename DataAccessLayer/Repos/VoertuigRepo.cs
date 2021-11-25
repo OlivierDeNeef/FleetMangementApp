@@ -5,18 +5,51 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Runtime.InteropServices;
+using DomainLayer.Interfaces.Repos;
 
 namespace DataAccessLayer.Repos
 {
-    public class VoertuigRepo
+    public class VoertuigRepo : IVoertuigRepo
     {
+        //0	VoertuigId
+        //1	Merk
+        //2	model
+        //3	chassisnummer
+        //4	nummerplaat
+        //5	Voertuig gearchiveerd
+        //6	kleur
+        //7	aantaldeuren
+        //8	Hybride
+        //9	WagenTypeId
+        //10 brandstof id voor voertuig
+        //12 type wagen voor voertuig
+        //14 type brandstof voor voertuig
+        //15 bestuurderId
+        //16 Naam
+        //17 Voornaam
+        //18 Geboortedatum
+        //19 rijksregisternummer
+        //20 Bestuurder gearchiveerd
+        //21 TankkaartId
+        //23 Straat
+        //24 huisnummer
+        //25 postcode
+        //26 land
+        //27 stad
+        //28 rijbewijsTypeId
+        //30 Type van rijbewijs
+        //33 Kaartnummer
+        //34 Geldigheidsdatum
+        //35 Pincode
+        //36 Tankkaart gearchiveerd
+        //37 geblokkeerd
+        //40 Brandstof id voor tankkaart
+        //41 Brandstof type voor tankkaart
+
         private readonly string _connectionString;
-        private readonly IConfiguration _configuration;
 
         public VoertuigRepo(IConfiguration config)
         {
-            _configuration = config;
             _connectionString = config.GetConnectionString("defaultConnection");
         }
 
@@ -43,28 +76,96 @@ namespace DataAccessLayer.Repos
             }
         }
 
-        public IReadOnlyList<Voertuig> GeefGefilterdeVoertuigen([Optional] int id, [Optional] string merk, [Optional] string model, [Optional] int aantalDeuren, [Optional] string nummerplaat, [Optional] string chassisnummer, [Optional] string kleur, [Optional] WagenType wagenType, [Optional] BrandstofType brandstofType, [Optional] bool gearchiveerd, [Optional] RijbewijsType type, [Optional] bool isHybride)
+        public IReadOnlyList<Voertuig> GeefGefilterdeVoertuigen(string merk, string model, int aantalDeuren, string nummerplaat, string chassisnummer, string kleur, WagenType wagenType, BrandstofType brandstofType, bool gearchiveerd, bool isHybride)
         {
             using var connection = new SqlConnection(_connectionString);
             try
             {
-                var command = new SqlCommand("select * from dbo.Voertuigen v " +
-                                             "left join dbo.WagenTypes w on v.WagenTypeId= w.Id " +
-                                             "left join  dbo.BrandstofTypes bt ON v.BrandstofId = bt.Id " +
-                                             "left join dbo.Bestuurders b on v.Id = b.VoertuigId " +
-                                             "left JOIN dbo.RijbewijsTypes_Bestuurders rb on b.Id = rb.BestuurderId " +
-                                             "left JOIN dbo.RijbewijsTypes r on rb.RijbewijsTypeId = r.Id " +
-                                             "left join dbo.Tankkaarten t on b.TankkaartId = t.Id " +
-                                             "left join dbo.Tankkaarten_BrandstofTypes tb on tb.TankkaartId = t.Id " +
-                                             "left join dbo.BrandstofTypes btb on tb.BrandstofTypeId = btb.Id where v.Id = @Id", connection);
-                command.Parameters.AddWithValue("@Id", id);
+                var command = new SqlCommand();
+                var query = "select * from dbo.Voertuigen v " +
+                            "left join dbo.WagenTypes w on v.WagenTypeId= w.Id " +
+                            "left join  dbo.BrandstofTypes bt ON v.BrandstofId = bt.Id " +
+                            "left join dbo.Bestuurders b on v.Id = b.VoertuigId " +
+                            "left JOIN dbo.RijbewijsTypes_Bestuurders rb on b.Id = rb.BestuurderId " +
+                            "left JOIN dbo.RijbewijsTypes r on rb.RijbewijsTypeId = r.Id " +
+                            "left join dbo.Tankkaarten t on b.TankkaartId = t.Id " +
+                            "left join dbo.Tankkaarten_BrandstofTypes tb on tb.TankkaartId = t.Id " +
+                            "left join dbo.BrandstofTypes btb on tb.BrandstofTypeId = btb.Id where v.Gearchiveerd = @Gearchiveerd";
+
+                command.Parameters.AddWithValue("@Gearchiveerd", gearchiveerd);
+
+                bool next = false;
+                if (string.IsNullOrWhiteSpace(merk))
+                {
+                    query += ", v.Merk=@Merk";
+                    command.Parameters.AddWithValue("@Merk", merk);
+                    next = true;
+                }
+
+                if (string.IsNullOrWhiteSpace(model))
+                {
+                    if (next) query += ", ";
+                    query += "v.Model=@Model";
+                    command.Parameters.AddWithValue("@Model", model);
+                    next = true;
+                }
+
+                if (aantalDeuren > 0)
+                {
+                    if (next) query += ", ";
+                    query += "v.AantDeuren=@AantalDeuren";
+                    command.Parameters.AddWithValue("@AantalDeuren", aantalDeuren);
+                    next = true;
+                }
+
+                if (string.IsNullOrWhiteSpace(nummerplaat))
+                {
+                    if (next) query += ", ";
+                    query += "v.Nummerplaat=@Nummerplaat";
+                    command.Parameters.AddWithValue("@Nummerplaat", nummerplaat);
+                    next = true;
+                }
+
+                if (string.IsNullOrWhiteSpace(chassisnummer))
+                {
+                    if (next) query += ", ";
+                    query += "v.Chassisnummer=@Chassisnummer";
+                    command.Parameters.AddWithValue("@Chassisnummer", chassisnummer);
+                    next = true;
+                }
+
+                if (string.IsNullOrWhiteSpace(kleur))
+                {
+                    if (next) query += ", ";
+                    query += "v.kleur=@Kleur";
+                    command.Parameters.AddWithValue("@Kleur", kleur);
+                    next = true;
+                }
+
+                if (wagenType != null)
+                {
+                    if (next) query += ", ";
+                    query += "v.WagenTypeId=@WagenTypeId";
+                    command.Parameters.AddWithValue("@WagenTypeId", wagenType.Id);
+                    next = true;
+                }
+
+                if (brandstofType != null)
+                {
+                    if (next) query += ", ";
+                    query += "v.BrandstofId=@BrandstofId";
+                    command.Parameters.AddWithValue("@BrandstofId", brandstofType.Id);
+                }
+
+                command.Connection = connection;
+                command.CommandText = query;
                 var reader = command.ExecuteReader();
                 if (!reader.HasRows) throw new VoertuigRepoException(nameof(GeefVoertuig) + " - Geen voertuig gevonden");
                 Voertuig voertuig = null;
                 var voertuigen = new List<Voertuig>();
                 while (reader.Read())
                 {
-                    if (voertuigen.All(v=> v.Id != (int)reader[0]))
+                    if (voertuigen.All(v => v.Id != (int)reader[0]))
                     {
                         voertuig = new Voertuig((int)reader[0], (string)reader[1], (string)reader[2],
                            (string)reader[3],
@@ -183,7 +284,7 @@ namespace DataAccessLayer.Repos
                     else
                     {
                         if (reader[15] == DBNull.Value) continue;
-                        if (reader[40] != DBNull.Value &&  voertuig.Bestuurder.Tankkaart.GeefBrandstofTypes().All(b => b.Id != (int)reader[40]))
+                        if (reader[40] != DBNull.Value && voertuig.Bestuurder.Tankkaart.GeefBrandstofTypes().All(b => b.Id != (int)reader[40]))
                         {
                             voertuig.Bestuurder.Tankkaart.VoegBrandstofTypeToe(new BrandstofType((int)reader[40], (string)reader[41]));
                         }

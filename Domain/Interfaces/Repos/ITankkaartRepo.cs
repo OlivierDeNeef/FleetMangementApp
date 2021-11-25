@@ -1,21 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using DomainLayer.Models;
 
 namespace DomainLayer.Interfaces.Repos
 {
     public interface ITankkaartRepo
     {
-        public IReadOnlyList<Tankkaart> GeefGefilterdeTankkaarten( [Optional] string kaartnummer,
-            [Optional] DateTime geldigheidsdatum, [Optional] List<BrandstofType> lijstBrandstoftypes,
-            [Optional] bool geachiveerd);
-        public void VoegTankkaartToe(Tankkaart tankkaart);
-        public void UpdateTankkaart(Tankkaart tankkaart);
-        public bool BestaatTankkaart(int tankkaartId);
-
-        public Tankkaart GeefTankkaart(int id);
-
-
+        bool BestaatTankkaart(int tankkaartId);
+        Tankkaart GeefTankkaart(int id);
+        void VoegTankkaartToe(Tankkaart tankkaart);
+        void UpdateTankkaart(Tankkaart tankkaart);
+        IReadOnlyList<Tankkaart> GeefGefilterdeTankkaarten(string kaartnummer, DateTime geldigheidsdatum, List<BrandstofType> lijstBrandstoftypes, bool geachiveerd);
     }
 }

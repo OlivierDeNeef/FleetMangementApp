@@ -10,14 +10,12 @@ using System.Data.SqlClient;
 
 namespace DataAccessLayer.Repos
 {
-    public class WagenTypeRepo
+    public class WagenTypeRepo : IWagenTypeRepo
     {
         private readonly string _connectionString;
-        private readonly IConfiguration _configuration;
 
         public WagenTypeRepo(IConfiguration config)
         {
-            _configuration = config;
             _connectionString = config.GetConnectionString("defaultConnection");
         }
 
@@ -69,7 +67,6 @@ namespace DataAccessLayer.Repos
 
             }
         }
-
 
         public void UpdateWagenType(WagenType wagenType)
         {
