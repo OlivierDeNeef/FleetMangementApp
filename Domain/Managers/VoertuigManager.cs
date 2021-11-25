@@ -1,5 +1,4 @@
 ﻿using DomainLayer.Exceptions.Managers;
-using DomainLayer.Interfaces;
 using DomainLayer.Interfaces.Repos;
 using DomainLayer.Models;
 using System;
@@ -19,66 +18,25 @@ namespace DomainLayer.Managers
 
         public void VoegVoertuigToe(Voertuig voertuig)
         {
-            try
-            {
-                if (!_voertuigRepo.BestaatVoertuig(voertuig))
-                {
-                    _voertuigRepo.VoegVoertuigToe(voertuig);
-                }
-            }
-            catch
-            {
-                throw new VoertuigManagerException("VoegWagenToe - Er ging iets mis bij het toevoegen");
-            }
+             _voertuigRepo.VoegVoertuigToe(voertuig);
         }
+
         public void UpdateVoertuig(Voertuig voertuig)
         {
-            try
-            {
-                if (_voertuigRepo.BestaatVoertuig(voertuig))
-                {
-                    _voertuigRepo.UpdateVoertuig(voertuig);
-                }
-            }
-            catch
-            {
-                throw new VoertuigManagerException("UpdateVoertuig - Er ging iets mis bij het updaten");
-
-            }
+            if (_voertuigRepo.BestaatVoertuig(voertuig)) _voertuigRepo.UpdateVoertuig(voertuig);
         }
+
         public Voertuig GeefVoertuig(int id)
         {
-            try
-            {
-                return _voertuigRepo.GeefVoertuig(id);
-            }
-            catch
-            {
-                throw new VoertuigManagerException("GeefVoertuig - Er ging iets mis");
-
-            }
+            return _voertuigRepo.GeefVoertuig(id);
         }
 
-        public IReadOnlyList<Voertuig> GeefGefilterdeVoertuigen([Optional] int id, [Optional] string merk,
-            [Optional] string model, [Optional] int aantalDeuren, [Optional] string nummerplaat,
-            [Optional] string chassisnummer, [Optional] string kleur, [Optional] WagenType wagenType,
-            [Optional] BrandstofType brandstofType, [Optional] bool gearchiveerd, [Optional] RijbewijsType type, [Optional] bool isHybride)
+        public IReadOnlyList<Voertuig> GeefGefilterdeVoertuigen( int id,  string merk, string model,  int aantalDeuren, string nummerplaat, string chassisnummer,  string kleur,  WagenType wagenType, BrandstofType brandstofType, bool gearchiveerd,  bool isHybride)
         {
             var lijstVoertuigen = new List<Voertuig>();
-            try
-            {
-                if (id > 0)
-                {
-                    lijstVoertuigen.Add(_voertuigRepo.GeefVoertuig(id));
-                    return lijstVoertuigen;
-                }
-                return _voertuigRepo.GeefGefilterdeVoertuigen(id, merk, model, aantalDeuren, nummerplaat, chassisnummer, kleur, wagenType, brandstofType, gearchiveerd, type, isHybride);
-
-            }
-            catch (Exception e)
-            {
-                throw new VoertuigManagerException("GeefGefilterdeVoertuigen, er ging iets mis", e);
-            }
+            if (id <= 0) return _voertuigRepo.GeefGefilterdeVoertuigen(merk, model, aantalDeuren, nummerplaat, chassisnummer, kleur, wagenType, brandstofType, gearchiveerd, isHybride);
+            lijstVoertuigen.Add(_voertuigRepo.GeefVoertuig(id));
+            return lijstVoertuigen;
         }
 
 

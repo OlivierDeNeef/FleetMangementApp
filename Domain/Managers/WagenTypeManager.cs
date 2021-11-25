@@ -22,18 +22,7 @@ namespace DomainLayer.Managers
         /// <param name="wagenType">wagentype dat moet toegevoegd worden</param>
         public void VoegWagenTypeToe(WagenType wagenType)
         {
-            try
-            {
-                if (!_wagenTypeRepo.BestaatWagenType(wagenType))
-                {
-                    _wagenTypeRepo.VoegWagenTypeToe(wagenType);
-                }
-            }
-            catch (Exception e)
-            {
-
-                throw new WagenTypeManagerException("VoegWagenTypeToe - Er ging iets mis bij het toevoegen",e);
-            }
+            _wagenTypeRepo.VoegWagenTypeToe(wagenType);
         }
 
         /// <summary>
@@ -42,17 +31,7 @@ namespace DomainLayer.Managers
         /// <param name="wagenType">wagentype dat moet verwijderd worden</param>
         public void VerwijderWagenType(WagenType wagenType)
         {
-            try
-            {
-                if (_wagenTypeRepo.BestaatWagenType(wagenType))
-                {
-                    _wagenTypeRepo.VerwijderWagenType(wagenType.Id);
-                }
-            }
-            catch (Exception e)
-            {
-                throw new WagenTypeManagerException("VerwijderWagenType - Er ging iets mis bij het verwijderen",e);
-            }
+            if (_wagenTypeRepo.BestaatWagenType(wagenType))_wagenTypeRepo.VerwijderWagenType(wagenType.Id);
         }
 
         /// <summary>
@@ -61,17 +40,7 @@ namespace DomainLayer.Managers
         /// <param name="wagenType">het up te daten wagentype</param>
         public void UpdateWagenType(WagenType wagenType)
         {
-            try
-            {
-                if (_wagenTypeRepo.BestaatWagenType(wagenType))
-                {
-                    _wagenTypeRepo.UpdateWagenType(wagenType);
-                }
-            }
-            catch (Exception e)
-            {
-                throw new WagenTypeManagerException("UpdateWagenType - Er ging iets mis bij het updaten",e);
-            }
+            if (_wagenTypeRepo.BestaatWagenType(wagenType)) _wagenTypeRepo.UpdateWagenType(wagenType);
         }
 
         /// <summary>
@@ -80,14 +49,7 @@ namespace DomainLayer.Managers
         /// <returns>een IEnumerable van Wagentypes</returns>
         public IEnumerable<WagenType> GeefAlleWagenTypes()
         {
-            try
-            {
-                return _wagenTypeRepo.GeefAlleWagenTypes();
-            }
-            catch (Exception e)
-            {
-                throw new WagenTypeManagerException("GeefAlleWagenTypes - Er ging iets mis bij het opvragen van de wagentypes",e);
-            }
+            return _wagenTypeRepo.GeefAlleWagenTypes();
         }
     }
 }

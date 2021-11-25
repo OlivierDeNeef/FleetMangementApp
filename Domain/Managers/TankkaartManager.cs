@@ -16,6 +16,9 @@ namespace DomainLayer.Managers
             _tankkaartRepo = tankkaartRepo;
         }
 
-        
+        public void VoegTankkaartToe(Tankkaart tankkaart)
+        {
+            _tankkaartRepo.VoegTankkaartToe(tankkaart);
+        }
     }
 }
