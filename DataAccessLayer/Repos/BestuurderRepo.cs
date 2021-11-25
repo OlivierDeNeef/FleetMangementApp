@@ -79,30 +79,35 @@ namespace DataAccessLayer.Repos
                             "left join dbo.BrandstofTypes btb on tb.BrandstofTypeId = btb.Id where b.Gearchiveerd =@Gearchiveerd ";
 
                 cmd.Parameters.AddWithValue("@Gearchiveerd", gearchiveerd);
+
+                bool next = false;
                 if (string.IsNullOrWhiteSpace(voornaam))
                 {
-                    query += "b.voornaam = @Voornaam";
+                    query += ", b.voornaam = @Voornaam";
                     cmd.Parameters.AddWithValue("@Voornaam", voornaam);
+                    next = true;
                 }
 
                 if (string.IsNullOrWhiteSpace(naam))
                 {
+                    if (next) query += ", ";
                     query += "b.Naam = @Voornaam";
                     cmd.Parameters.AddWithValue("@Voornaam", voornaam);
-                    query += ", ";
+                    next = true;
                 }
 
                 if (geboortedatum == DateTime.MinValue)
                 {
+                    if (next) query += ", ";
                     query += "b.Geboortedatum = @Geboortedatum";
                     cmd.Parameters.AddWithValue("@Geboortedatum", geboortedatum);
-                    query += ", ";
+                    next = true;
                 }
                 if (string.IsNullOrWhiteSpace(rijksregisternummer))
                 {
+                    if (next) query += ", ";
                     query += "b.Naam = @Voornaam";
                     cmd.Parameters.AddWithValue("@Voornaam", voornaam);
-                    query += ", ";
                 }
 
                 cmd.Connection = connection;
