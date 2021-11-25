@@ -29,12 +29,12 @@ namespace FleetMangementApp
         private void ConfigureServices(ServiceCollection services)
         {
             
-            services.AddSingleton<IBestuurderRepo>();
-            services.AddSingleton<IVoertuigRepo>();
-            services.AddSingleton<ITankkaartRepo>();
-            services.AddSingleton<IBrandstofTypeRepo>();
-            services.AddSingleton<IRijbewijsTypeRepo, RijbewijsTypeRepo>();
-            services.AddSingleton<IWagenTypeRepo>();
+            //services.AddSingleton<IBestuurderRepo>();
+            //services.AddSingleton<IVoertuigRepo>();
+            //services.AddSingleton<ITankkaartRepo>();
+            //services.AddSingleton<IBrandstofTypeRepo>();
+            //services.AddSingleton<IRijbewijsTypeRepo, RijbewijsTypeRepo>();
+            //services.AddSingleton<IWagenTypeRepo>();
 
 
 

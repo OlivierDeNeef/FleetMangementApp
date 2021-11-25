@@ -78,7 +78,7 @@ namespace DataAccessLayer.Repos
                 command.Parameters.AddWithValue("@Geboortedatum", bestuurder.Geboortedatum);
                 command.Parameters.AddWithValue("@Rijksregisternummer", bestuurder.Rijksregisternummer);
                 command.Parameters.AddWithValue("@straat", (object) bestuurder.Adres?.Straat ?? DBNull.Value);
-                command.Parameters.AddWithValue("@busnummer", (object) bestuurder.Adres?.Busnummer ?? DBNull.Value);
+              
                 command.Parameters.AddWithValue("@huisnummer", (object) bestuurder.Adres?.Huisnummer ?? DBNull.Value);
                 command.Parameters.AddWithValue("@Stad", (object) bestuurder.Adres?.Stad ?? DBNull.Value);
                 command.Parameters.AddWithValue("@Postcode", (object) bestuurder.Adres?.Postcode ?? DBNull.Value);
@@ -223,7 +223,7 @@ namespace DataAccessLayer.Repos
                 command.Parameters.AddWithValue("@Geboortedatum", bestuurder.Geboortedatum); //ok 
                 command.Parameters.AddWithValue("@Rijksregisternummer", bestuurder.Rijksregisternummer); //ok
                 command.Parameters.AddWithValue("@Straat", (object)bestuurder.Adres?.Straat ?? DBNull.Value); //ok
-                command.Parameters.AddWithValue("@Busnummer", (object)bestuurder.Adres?.Busnummer ?? DBNull.Value); //ok
+                
                 command.Parameters.AddWithValue("@Huisnummer", (object)bestuurder.Adres?.Huisnummer ?? DBNull.Value); //ok
                 command.Parameters.AddWithValue("@Stad", (object)bestuurder.Adres?.Stad ?? DBNull.Value); //ok
                 command.Parameters.AddWithValue("@Postcode", (object)bestuurder.Adres?.Postcode ?? DBNull.Value); //ok
@@ -278,14 +278,14 @@ namespace DataAccessLayer.Repos
                 }
 
 
-
+                return bestuurder;
 
             }
             catch (Exception e)
             {
                 throw new BestuurderManagerException("GeefBestuurderMetTankkaart - Er ging iets mis", e);
             }
-            return;
+           
         }
 
        
