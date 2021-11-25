@@ -343,6 +343,7 @@ namespace DataAccessLayer.Repos
             using var connection = new SqlConnection(_connectionString);
             try
             {
+                connection.Open();
                 var cmd = new SqlCommand("SELECT * FROM dbo.Bestuurders b " +
                                          "left JOIN dbo.RijbewijsTypes_Bestuurders rb on b.Id = rb.BestuurderId " +
                                          "left JOIN dbo.RijbewijsTypes r on rb.RijbewijsTypeId = r.Id " +
