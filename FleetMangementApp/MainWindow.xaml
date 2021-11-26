@@ -52,7 +52,7 @@
                     <DatePicker Name="DatePickerGeboortedatumBestuurder" Grid.Row="2" Grid.Column="4" Width="200" Margin="0,0,30,0" ></DatePicker>
                     
                     <Label Grid.Column="1" Grid.Row="3" Content="Rijbewijzen" HorizontalAlignment="Left" Margin="0,0,30,0"/>
-                    <ListBox Name="ListBoxRijbewijzen" Grid.RowSpan="2" Grid.Row="4" Grid.Column="1" Width="200" Margin="0,0,30,0" IsEnabled="False" Height="61.4" MaxHeight="614"></ListBox>
+                    <ListBox Name="ListBoxRijbewijzen" Grid.RowSpan="2" Grid.Row="4" Grid.Column="1"  Width="200" Margin="0,0,30,0"  Height="61.4" MaxHeight="614"></ListBox>
 
                     <Label Grid.Column="2" Grid.Row="3" Content="Rijbewijs" HorizontalAlignment="Left" Margin="0,0,30,0"/>
                     <ComboBox Grid.Row="4" Grid.Column="2" Name="ComboBoxRijbewijzen" Width="200" Margin="0,0,30,0"></ComboBox>
