@@ -32,9 +32,6 @@ namespace FleetMangementApp
             _allRijbewijsTypes = _rijbewijsTypeManager.GeefAlleRijsbewijsTypes().ToList();
             ComboBoxRijbewijzen.ItemsSource = _allRijbewijsTypes.Select(r => r.Type);
         }
-
-
-
         private void ZoekBestuurderButton_Click(object sender, RoutedEventArgs e)
         {
             if (!ValidateBestuurdeeFields()) return;
@@ -61,7 +58,6 @@ namespace FleetMangementApp
             }
 
         }
-
         private bool ValidateBestuurdeeFields()
         {
             var result = true;
@@ -84,14 +80,12 @@ namespace FleetMangementApp
             }
             return result;
         }
-
         private void RowGotFocus(object sender, RoutedEventArgs e)
         {
             ButtonDetailBestuurder.IsEnabled = true;
             ButtonEditBestuuder.IsEnabled = true;
             ButtonArchiveerBestuurder.IsEnabled = true;
         }
-
         private void RowLostFocus(object sender, RoutedEventArgs e)
         {
             ButtonDetailBestuurder.IsEnabled = false;
@@ -100,5 +94,14 @@ namespace FleetMangementApp
         }
 
 
+        private void ToevoegenRijbewijsButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void VerwijderRijbewijsButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
