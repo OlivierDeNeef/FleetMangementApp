@@ -102,7 +102,7 @@ namespace DataAccessLayer.Repos
                 {
                     
                     query += " AND b.Rijksregisternummer = @Rijksregisternummer";
-                    cmd.Parameters.AddWithValue("@Rijksregisternummer", voornaam);
+                    cmd.Parameters.AddWithValue("@Rijksregisternummer", rijksregisternummer);
                 }
 
                 cmd.Connection = connection;
@@ -164,6 +164,10 @@ namespace DataAccessLayer.Repos
             }
             catch (Exception e)
             {
+                if (e.Message == nameof(GeefBestuurder) + " - Geen bestuurder gevonden")
+                {
+                    throw;
+                }
                 throw new BestuurderManagerException("GeefBestuurder - Er ging iets mis", e);
             }
             finally

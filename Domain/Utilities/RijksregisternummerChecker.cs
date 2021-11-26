@@ -30,5 +30,14 @@ namespace DomainLayer.Utilities
             if (controlGetal.ToString() != rijksregisternummer.Substring(9, 2)) throw new RijksregisternummerCheckerException($"Het {nameof(rijksregisternummer)} is ongeldig het controle getal klopt niet");
             return  rijksregisternummer;
         }
+
+        public static string ParseWithoutDate(string rijksregisternummer)
+        {
+            if (string.IsNullOrWhiteSpace(rijksregisternummer)) throw new RijksregisternummerCheckerException($"{nameof(rijksregisternummer)} kan niet leeg of null zijn.");
+            rijksregisternummer = rijksregisternummer.Trim().Replace(".", "").Replace("-", "").Replace(" ", "");
+            if (rijksregisternummer.Length != 11) throw new RijksregisternummerCheckerException($"Het {nameof(rijksregisternummer)} moet 11 karakters hebben");
+            if (!rijksregisternummer.All(char.IsDigit)) throw new RijksregisternummerCheckerException($"Het {nameof(rijksregisternummer)} kan alleen maar cijfer bevatten");
+            return rijksregisternummer;
+        }
     }
 }
