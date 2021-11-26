@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using DomainLayer.Managers;
+using FleetMangementApp.Models.Output;
 
 namespace FleetMangementApp
 {
@@ -30,7 +31,47 @@ namespace FleetMangementApp
 
         private void ZoekBestuurderButton_Click(object sender, RoutedEventArgs e)
         {
-            var x = _bestuurderManager.GeefGefilterdeBestuurder(1, null, null, DateTime.MinValue, null, null, false);
+            if (ValidateBestuurdeeFields())
+            {
+                var x= _bestuurderManager.GeefGefilterdeBestuurder(
+                    int.Parse(TextBoxBestuurderId.Text), 
+                    null,
+                    null, 
+                    DateTime.MinValue, 
+                    null, 
+                    null, 
+                    false);
+
+                List<ResultBestuurder> bestuurders = new List<ResultBestuurder>();
+                foreach (var bestuurder in x)
+                {
+                    bestuurders.Add(new ResultBestuurder(){Id = bestuurder.Id,Naam = bestuurder.Naam, Voornaam = bestuurder.Voornaam,Geboortedatum = bestuurder.Geboortedatum.ToShortDateString(),HeeftTankkaart = (bestuurder.Tankkaart!=null),HeeftVoertuig = (bestuurder.Voertuig!=null)});
+                }
+
+                ResultatenBestuurders.ItemsSource = bestuurders;
+            }
+           
         }
+
+        private bool ValidateBestuurdeeFields()
+        {
+            return true;
+        }
+
+        private void RowGotFocus(object sender, RoutedEventArgs e)
+        {
+            ButtonDetailBestuurder.IsEnabled = true;
+            ButtonEditBestuuder.IsEnabled = true;
+            ButtonArchiveerBestuurder.IsEnabled = true;
+        }
+
+        private void RowLostFocus(object sender, RoutedEventArgs e)
+        {
+            ButtonDetailBestuurder.IsEnabled = false;
+            ButtonEditBestuuder.IsEnabled = false;
+            ButtonArchiveerBestuurder.IsEnabled = false;
+        }
+
+      
     }
 }

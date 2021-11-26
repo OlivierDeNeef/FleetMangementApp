@@ -71,19 +71,25 @@
 
                     <Label Grid.Column="1" Grid.Row="8" FontSize="18">Resultaten</Label>
                     <DataGrid Name="ResultatenBestuurders" Width="650" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="9" Grid.RowSpan="5" AutoGenerateColumns="False"  Margin="0,0,30,0" IsReadOnly="True">
-                           <DataGrid.Columns>
-                               <DataGridTextColumn Width="50" Header="Id" CanUserResize="False"></DataGridTextColumn>
-                            <DataGridTextColumn Width="130" Header="Naam"></DataGridTextColumn>
-                            <DataGridTextColumn Width="130" Header="Voornaam"></DataGridTextColumn>
-                               <DataGridTextColumn Width="*" Header="Geboordedatum"></DataGridTextColumn>
-                            <DataGridCheckBoxColumn Width="90" Header="Heeft Voertuig"></DataGridCheckBoxColumn>
-                            <DataGridCheckBoxColumn Width="100" Header="Heeft Tankkaart"></DataGridCheckBoxColumn>
+                        <DataGrid.RowStyle>
+                            <Style TargetType="DataGridRow">
+                                <EventSetter Event="GotFocus" Handler="RowGotFocus"/>
+                                <EventSetter Event="LostFocus" Handler="RowLostFocus"/>
+                            </Style>
+                        </DataGrid.RowStyle>
+                        <DataGrid.Columns>
+                               <DataGridTextColumn Width="50" Header="Id" Binding="{Binding Id}" CanUserResize="False"></DataGridTextColumn>
+                            <DataGridTextColumn Width="130" Header="Naam" Binding="{Binding Naam}"></DataGridTextColumn>
+                            <DataGridTextColumn Width="130" Header="Voornaam" Binding="{Binding Voornaam}"></DataGridTextColumn>
+                               <DataGridTextColumn Width="*" Header="Geboordedatum" Binding="{Binding Geboortedatum}"></DataGridTextColumn>
+                            <DataGridCheckBoxColumn Width="90" Header="Heeft Voertuig" Binding="{Binding HeeftVoertuig}"></DataGridCheckBoxColumn>
+                            <DataGridCheckBoxColumn Width="100" Header="Heeft Tankkaart" Binding="{Binding HeeftTankkaart}"></DataGridCheckBoxColumn>
                            </DataGrid.Columns>
                     </DataGrid>
-                    <Button Grid.Column="4" Width="200" Grid.Row="9" Margin="0,20,0,10" HorizontalAlignment="Left">Nieuw</Button>
-                    <Button Grid.Column="4" Width="200" Grid.Row="10" Margin="0,0,0,10" HorizontalAlignment="Left" IsEnabled="False">Details</Button>
-                    <Button Grid.Column="4" Width="200" Grid.Row="11" Margin="0,0,0,10" HorizontalAlignment="Left" IsEnabled="False">Aanpassen</Button>
-                    <Button Grid.Column="4" Width="200" Grid.Row="12" HorizontalAlignment="Left" IsEnabled="False">(De)Archiveren</Button>
+                    <Button Name="ButtonNieuweBestuurder" Grid.Column="4" Width="200" Grid.Row="9" Margin="0,20,0,10" HorizontalAlignment="Left" >Nieuw</Button>
+                    <Button Name="ButtonDetailBestuurder" Grid.Column="4" Width="200" Grid.Row="10" Margin="0,0,0,10" HorizontalAlignment="Left" IsEnabled="False">Details</Button>
+                    <Button Name="ButtonEditBestuuder" Grid.Column="4" Width="200" Grid.Row="11" Margin="0,0,0,10" HorizontalAlignment="Left" IsEnabled="False">Aanpassen</Button>
+                    <Button Name="ButtonArchiveerBestuurder" Grid.Column="4" Width="200" Grid.Row="12" HorizontalAlignment="Left" IsEnabled="False">(De)Archiveren</Button>
                     
 </Grid>
             </TabItem>

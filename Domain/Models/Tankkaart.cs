@@ -131,7 +131,7 @@ namespace DomainLayer.Models
             if(_brandstofTypes.Contains(brandstof))
                 throw new TankkaartException("brandstofType zit al in de tankkaart");
 
-            if (_brandstofTypes.Select(b => b.Type == brandstof.Type).Any()) throw new TankkaartException("VoegBrandstofTypeToe - er is al een brandstof van dit type");
+            
             
             _brandstofTypes.Add(brandstof);
         }

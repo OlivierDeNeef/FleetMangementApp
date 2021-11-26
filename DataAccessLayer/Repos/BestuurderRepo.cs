@@ -46,7 +46,7 @@ namespace DataAccessLayer.Repos
         //36 Tankkaart gearchiveerd
         //37 Geblokkeerd
         //39 Brandstof id voor tankkaart
-        //40 type brandstof voor tankkaart
+        //41 type brandstof voor tankkaart
 
         private readonly string _connectionString;
 
@@ -97,6 +97,7 @@ namespace DataAccessLayer.Repos
                     cmd.Parameters.AddWithValue("@Geboortedatum", geboortedatum);
                     next = true;
                 }
+
                 if (string.IsNullOrWhiteSpace(rijksregisternummer))
                 {
                     if (next) query += ", ";
@@ -106,66 +107,72 @@ namespace DataAccessLayer.Repos
 
                 cmd.Connection = connection;
                 cmd.CommandText = query;
+                connection.Open();
                 var reader = cmd.ExecuteReader();
                 if (!reader.HasRows) throw new BestuurderRepoException(nameof(GeefBestuurder) + " - Geen bestuurder gevonden");
                 var bestuurders = new List<Bestuurder>();
                 Bestuurder bestuurder = null;
                 while (reader.Read())
                 {
-                    if (bestuurders.All(b => b.Id != (int)reader[0]))
+                    if (bestuurders.All(b => b.Id != (int) reader[0]))
                     {
-                        bestuurder = new Bestuurder((int)reader[0], (string)reader[1], (string)reader[2],
-                            (DateTime)reader[3], (string)reader[4], new List<RijbewijsType>(), (bool)reader[5]);
+                        bestuurder = new Bestuurder((int) reader[0], (string) reader[1], (string) reader[2],
+                            (DateTime) reader[3], (string) reader[4], new List<RijbewijsType>(), (bool) reader[5]);
 
                         bestuurders.Add(bestuurder);
                         if (reader[8] != DBNull.Value)
                         {
-                            bestuurder.ZetAdres(new Adres((string)reader[8], (string)reader[9], (string)reader[12], (string)reader[10], (string)reader[11]));
+                            bestuurder.ZetAdres(new Adres((string) reader[8], (string) reader[9], (string) reader[12], (string) reader[10], (string) reader[11]));
                         }
 
                         if (reader[13] != DBNull.Value)
                         {
-                            bestuurder.VoegRijbewijsTypeToe(new RijbewijsType((int)reader[13], (string)reader[15]));
+                            bestuurder.VoegRijbewijsTypeToe(new RijbewijsType((int) reader[13], (string) reader[15]));
                         }
 
                         if (reader[7] != DBNull.Value)
                         {
-                            var voertuig = new Voertuig((int)reader[7], (string)reader[18], (string)reader[19],
-                                (string)reader[20],
-                                (string)reader[21], new BrandstofType((int)reader[27], (string)reader[31]),
-                                new WagenType((int)reader[26], (string)reader[29]));
+                            var voertuig = new Voertuig((int) reader[7], (string) reader[18], (string) reader[19],
+                                (string) reader[20],
+                                (string) reader[21], new BrandstofType((int) reader[27], (string) reader[31]),
+                                new WagenType((int) reader[26], (string) reader[29]));
                             bestuurder.ZetVoertuig(voertuig);
                         }
 
                         if (reader[6] != DBNull.Value)
                         {
-                            bestuurder.ZetTankkaart(new Tankkaart((int)reader[6], (string)reader[33], (DateTime)reader[34], (string)reader[35], (bool)reader[37], (bool)reader[36], new List<BrandstofType>()));
+                            bestuurder.ZetTankkaart(new Tankkaart((int) reader[6], (string) reader[33], (DateTime) reader[34], (string) reader[35], (bool) reader[37], (bool) reader[36], new List<BrandstofType>()));
 
                             if (reader[39] != DBNull.Value)
                             {
-                                bestuurder.Tankkaart.VoegBrandstofTypeToe(new BrandstofType((int)reader[39], (string)reader[40]));
+                                bestuurder.Tankkaart.VoegBrandstofTypeToe(new BrandstofType((int) reader[39], (string) reader[40]));
                             }
                         }
                     }
                     else
                     {
-                        if (reader[13] != DBNull.Value && bestuurder.GeefRijbewijsTypes().All(r => r.Id != (int)reader[13]))
+                        if (reader[13] != DBNull.Value && bestuurder.GeefRijbewijsTypes().All(r => r.Id != (int) reader[13]))
                         {
-                            bestuurder.VoegRijbewijsTypeToe(new RijbewijsType((int)reader[13], (string)reader[15]));
+                            bestuurder.VoegRijbewijsTypeToe(new RijbewijsType((int) reader[13], (string) reader[15]));
                         }
 
                         if (reader[6] == DBNull.Value) continue;
-                        if (reader[39] != DBNull.Value && bestuurder.Tankkaart.GeefBrandstofTypes().All(b => b.Id != (int)reader[20]))
+                        if (reader[39] != DBNull.Value && bestuurder.Tankkaart.GeefBrandstofTypes().All(b => b.Id != (int) reader[39]))
                         {
-                            bestuurder.Tankkaart.VoegBrandstofTypeToe(new BrandstofType((int)reader[39], (string)reader[40]));
+                            bestuurder.Tankkaart.VoegBrandstofTypeToe(new BrandstofType((int) reader[39], (string) reader[40]));
                         }
                     }
                 }
+
                 return bestuurders;
             }
             catch (Exception e)
             {
                 throw new BestuurderManagerException("GeefBestuurder - Er ging iets mis", e);
+            }
+            finally
+            {
+                connection.Close();
             }
         }
         public void VoegBestuurderToe(Bestuurder bestuurder)
@@ -363,57 +370,59 @@ namespace DataAccessLayer.Repos
                 {
                     if (bestuurder == null)
                     {
-                        bestuurder = new Bestuurder((int)reader[0], (string)reader[1], (string)reader[2],
-                            (DateTime)reader[3], (string)reader[4], new List<RijbewijsType>(), (bool)reader[5]);
+                        bestuurder = new Bestuurder((int) reader[0], (string) reader[1], (string) reader[2],
+                            (DateTime) reader[3], (string) reader[4], new List<RijbewijsType>() {new((int) reader[13], (string) reader[15])}, (bool) reader[5]);
 
                         if (reader[8] != DBNull.Value)
                         {
-                            bestuurder.ZetAdres(new Adres((string)reader[8], (string)reader[9], (string)reader[12], (string)reader[10], (string)reader[11]));
+                            bestuurder.ZetAdres(new Adres((string) reader[8], (string) reader[9], (string) reader[12], (string) reader[10], (string) reader[11]));
                         }
 
-                        if (reader[13] != DBNull.Value)
-                        {
-                            bestuurder.VoegRijbewijsTypeToe(new RijbewijsType((int)reader[13], (string)reader[15]));
-                        }
+
 
                         if (reader[7] != DBNull.Value)
                         {
-                            var voertuig = new Voertuig((int)reader[7], (string)reader[18], (string)reader[19],
-                                (string)reader[20],
-                                (string)reader[21], new BrandstofType((int)reader[27], (string)reader[31]),
-                                new WagenType((int)reader[26], (string)reader[29]));
+                            var voertuig = new Voertuig((int) reader[7], (string) reader[18], (string) reader[19],
+                                (string) reader[20],
+                                (string) reader[21], new BrandstofType((int) reader[27], (string) reader[31]),
+                                new WagenType((int) reader[26], (string) reader[29]));
                             bestuurder.ZetVoertuig(voertuig);
                         }
 
                         if (reader[6] != DBNull.Value)
                         {
-                            bestuurder.ZetTankkaart(new Tankkaart((int)reader[6], (string)reader[33], (DateTime)reader[34], (string)reader[35],  (bool)reader[37], (bool)reader[36], new List<BrandstofType>()));
+                            bestuurder.ZetTankkaart(new Tankkaart((int) reader[6], (string) reader[33], (DateTime) reader[34], (string) reader[35], (bool) reader[37], (bool) reader[36], new List<BrandstofType>()));
 
                             if (reader[39] != DBNull.Value)
                             {
-                                bestuurder.Tankkaart.VoegBrandstofTypeToe(new BrandstofType((int)reader[39], (string)reader[40]));
+                                bestuurder.Tankkaart.VoegBrandstofTypeToe(new BrandstofType((int) reader[39], (string) reader[41]));
                             }
                         }
                     }
                     else
                     {
-                        if (reader[13] != DBNull.Value && bestuurder.GeefRijbewijsTypes().All(r => r.Id != (int)reader[13]))
+                        if (reader[13] != DBNull.Value && bestuurder.GeefRijbewijsTypes().All(r => r.Id != (int) reader[13]))
                         {
-                            bestuurder.VoegRijbewijsTypeToe(new RijbewijsType((int)reader[13], (string)reader[15]));
+                            bestuurder.VoegRijbewijsTypeToe(new RijbewijsType((int) reader[13], (string) reader[15]));
                         }
 
                         if (reader[6] == DBNull.Value) continue;
-                        if (reader[39] != DBNull.Value && bestuurder.Tankkaart.GeefBrandstofTypes().All(b => b.Id != (int)reader[20]))
+                        if (reader[39] != DBNull.Value && bestuurder.Tankkaart.GeefBrandstofTypes().All(b => b.Id != (int) reader[39]))
                         {
-                            bestuurder.Tankkaart.VoegBrandstofTypeToe(new BrandstofType((int)reader[39], (string)reader[40]));
+                            bestuurder.Tankkaart.VoegBrandstofTypeToe(new BrandstofType((int) reader[39], (string) reader[41]));
                         }
                     }
                 }
+
                 return bestuurder;
             }
             catch (Exception e)
             {
                 throw new BestuurderManagerException("GeefBestuurder - Er ging iets mis", e);
+            }
+            finally
+            {
+                connection.Close();
             }
         }
 
