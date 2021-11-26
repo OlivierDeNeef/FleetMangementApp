@@ -74,35 +74,35 @@ namespace DataAccessLayer.Repos
 
                 cmd.Parameters.AddWithValue("@Gearchiveerd", gearchiveerd);
 
-                bool next = false;
-                if (string.IsNullOrWhiteSpace(voornaam))
+                
+                if (!string.IsNullOrWhiteSpace(voornaam))
                 {
-                    query += ", b.voornaam = @Voornaam";
+                    query += "AND b.voornaam = @Voornaam";
                     cmd.Parameters.AddWithValue("@Voornaam", voornaam);
-                    next = true;
+                    
                 }
 
-                if (string.IsNullOrWhiteSpace(naam))
+                if (!string.IsNullOrWhiteSpace(naam))
                 {
-                    if (next) query += ", ";
-                    query += "b.Naam = @Voornaam";
-                    cmd.Parameters.AddWithValue("@Voornaam", voornaam);
-                    next = true;
+                    
+                    query += " AND b.Naam = @Naam";
+                    cmd.Parameters.AddWithValue("@Naam", naam);
+                   
                 }
 
-                if (geboortedatum == DateTime.MinValue)
+                if (geboortedatum != DateTime.MinValue)
                 {
-                    if (next) query += ", ";
-                    query += "b.Geboortedatum = @Geboortedatum";
+                     
+                    query += " AND b.Geboortedatum = @Geboortedatum";
                     cmd.Parameters.AddWithValue("@Geboortedatum", geboortedatum);
-                    next = true;
+                    
                 }
 
-                if (string.IsNullOrWhiteSpace(rijksregisternummer))
+                if (!string.IsNullOrWhiteSpace(rijksregisternummer))
                 {
-                    if (next) query += ", ";
-                    query += "b.Naam = @Voornaam";
-                    cmd.Parameters.AddWithValue("@Voornaam", voornaam);
+                    
+                    query += " AND b.Rijksregisternummer = @Rijksregisternummer";
+                    cmd.Parameters.AddWithValue("@Rijksregisternummer", voornaam);
                 }
 
                 cmd.Connection = connection;
@@ -117,7 +117,7 @@ namespace DataAccessLayer.Repos
                     if (bestuurders.All(b => b.Id != (int) reader[0]))
                     {
                         bestuurder = new Bestuurder((int) reader[0], (string) reader[1], (string) reader[2],
-                            (DateTime) reader[3], (string) reader[4], new List<RijbewijsType>(), (bool) reader[5]);
+                            (DateTime) reader[3], (string) reader[4], new List<RijbewijsType>() { new((int)reader[13], (string)reader[15]) }, (bool) reader[5]);
 
                         bestuurders.Add(bestuurder);
                         if (reader[8] != DBNull.Value)
@@ -125,10 +125,6 @@ namespace DataAccessLayer.Repos
                             bestuurder.ZetAdres(new Adres((string) reader[8], (string) reader[9], (string) reader[12], (string) reader[10], (string) reader[11]));
                         }
 
-                        if (reader[13] != DBNull.Value)
-                        {
-                            bestuurder.VoegRijbewijsTypeToe(new RijbewijsType((int) reader[13], (string) reader[15]));
-                        }
 
                         if (reader[7] != DBNull.Value)
                         {
@@ -145,7 +141,7 @@ namespace DataAccessLayer.Repos
 
                             if (reader[39] != DBNull.Value)
                             {
-                                bestuurder.Tankkaart.VoegBrandstofTypeToe(new BrandstofType((int) reader[39], (string) reader[40]));
+                                bestuurder.Tankkaart.VoegBrandstofTypeToe(new BrandstofType((int) reader[39], (string) reader[41]));
                             }
                         }
                     }
@@ -159,7 +155,7 @@ namespace DataAccessLayer.Repos
                         if (reader[6] == DBNull.Value) continue;
                         if (reader[39] != DBNull.Value && bestuurder.Tankkaart.GeefBrandstofTypes().All(b => b.Id != (int) reader[39]))
                         {
-                            bestuurder.Tankkaart.VoegBrandstofTypeToe(new BrandstofType((int) reader[39], (string) reader[40]));
+                            bestuurder.Tankkaart.VoegBrandstofTypeToe(new BrandstofType((int) reader[39], (string) reader[41]));
                         }
                     }
                 }

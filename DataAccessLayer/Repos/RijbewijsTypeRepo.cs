@@ -84,7 +84,7 @@ namespace DataAccessLayer.Repos
                 var reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    var rijbewijsType = new RijbewijsType(reader.GetInt32(0), reader.GetString(1));
+                    var rijbewijsType = new RijbewijsType(reader.GetInt32(1), reader.GetString(0));
                     rijbewijsTypeLijst.Add(rijbewijsType);
                 }
                 return rijbewijsTypeLijst;

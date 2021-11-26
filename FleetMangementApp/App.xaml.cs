@@ -38,6 +38,7 @@ namespace FleetMangementApp
             services.AddSingleton<IRijbewijsTypeRepo, RijbewijsTypeRepo>();
             services.AddSingleton<IWagenTypeRepo,WagenTypeRepo>();
             services.AddSingleton<BestuurderManager>();
+            services.AddSingleton<RijbewijsTypeManager>();
             services.AddSingleton<IConfiguration>(_configuration);
             services.AddTransient<MainWindow>();
         }

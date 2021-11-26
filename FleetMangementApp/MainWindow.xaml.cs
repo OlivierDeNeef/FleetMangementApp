@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using DomainLayer.Managers;
+using DomainLayer.Models;
+using FleetMangementApp.Mappers;
 using FleetMangementApp.Models.Output;
 
 namespace FleetMangementApp
@@ -23,34 +25,45 @@ namespace FleetMangementApp
     public partial class MainWindow : Window
     {
         private readonly BestuurderManager _bestuurderManager;
-        public MainWindow(BestuurderManager bestuurderManager)
+        private readonly RijbewijsTypeManager _rijbewijsTypeManager;
+
+        private List<RijbewijsType> _allRijbewijsTypes = new List<RijbewijsType>();
+
+        public MainWindow(BestuurderManager bestuurderManager, RijbewijsTypeManager rijbewijsTypeManager)
         {
+            _rijbewijsTypeManager = rijbewijsTypeManager;
             _bestuurderManager = bestuurderManager;
+            _allRijbewijsTypes = _rijbewijsTypeManager.GeefAlleRijsbewijsTypes().ToList();
             InitializeComponent();
+            ComboBoxRijbewijzen.ItemsSource = _allRijbewijsTypes.Select(r=>r.Type) ;
+           
         }
 
         private void ZoekBestuurderButton_Click(object sender, RoutedEventArgs e)
         {
-            if (ValidateBestuurdeeFields())
+            if (!ValidateBestuurdeeFields()) return;
+            try
             {
-                var x= _bestuurderManager.GeefGefilterdeBestuurder(
-                    int.Parse(TextBoxBestuurderId.Text), 
-                    null,
-                    null, 
-                    DateTime.MinValue, 
-                    null, 
-                    null, 
-                    false);
-
-                List<ResultBestuurder> bestuurders = new List<ResultBestuurder>();
-                foreach (var bestuurder in x)
-                {
-                    bestuurders.Add(new ResultBestuurder(){Id = bestuurder.Id,Naam = bestuurder.Naam, Voornaam = bestuurder.Voornaam,Geboortedatum = bestuurder.Geboortedatum.ToShortDateString(),HeeftTankkaart = (bestuurder.Tankkaart!=null),HeeftVoertuig = (bestuurder.Voertuig!=null)});
-                }
-
+                var geboortedatum = DatePickerGeboortedatumBestuurder.SelectedDate ?? DateTime.MinValue;
+                var rijbewijzen = ListBoxRijbewijzen.ItemsSource?.Cast<string>();
+                var id = string.IsNullOrWhiteSpace(TextBoxBestuurderId.Text) ? 0 : int.Parse(TextBoxBestuurderId.Text);
+                var result= _bestuurderManager.GeefGefilterdeBestuurder(
+                    id, 
+                    TextBoxVoornaamBestuurder.Text,
+                    TextBoxNaamBestuurder.Text, 
+                    geboortedatum, 
+                    _allRijbewijsTypes.Where( r=>rijbewijzen.Contains(r.Type)).ToList(), 
+                    TextBoxRijksregisternummerBestuurder.Text, 
+                    CheckBoxGearchiveerBestuurder.IsChecked.Value
+                ).ToList();
+                var bestuurders = result.Select(BestuurderUIMapper.ToUI);
                 ResultatenBestuurders.ItemsSource = bestuurders;
             }
-           
+            catch (Exception exception)
+            {
+                MessageBox.Show( exception.Message,"Fout", MessageBoxButton.OK);
+            }
+
         }
 
         private bool ValidateBestuurdeeFields()

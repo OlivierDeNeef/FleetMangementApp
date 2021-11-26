@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <Folder Include="Models\Output\" />
+    <Folder Include="Mappers\" />
   </ItemGroup>
 
 </Project>
