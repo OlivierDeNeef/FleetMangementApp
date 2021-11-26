@@ -96,12 +96,17 @@ namespace FleetMangementApp
 
         private void ToevoegenRijbewijsButton_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            string r =  (string)ComboBoxRijbewijzen.SelectedValue;
+            if(!ListBoxRijbewijzen.Items.Contains(r))
+                ListBoxRijbewijzen.Items.Add(r); 
+
         }
 
         private void VerwijderRijbewijsButton_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            string r = (string)ComboBoxRijbewijzen.SelectedValue;
+            if (ListBoxRijbewijzen.Items.Contains(r))
+                ListBoxRijbewijzen.Items.Remove(r);
         }
     }
 }
