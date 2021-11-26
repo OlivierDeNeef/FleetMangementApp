@@ -36,7 +36,7 @@ namespace FleetMangementApp
         private void SetupBestuurderView()
         {
             _allRijbewijsTypes = _rijbewijsTypeManager.GeefAlleRijsbewijsTypes().ToList();
-            ComboBoxRijbewijzen.ItemsSource = _allRijbewijsTypes.Select(r => r.Type);
+            ComboBoxRijbewijzen.ItemsSource = _allRijbewijsTypes.Select(r => r.Type).OrderBy(r=> r);
         }
         private void ZoekBestuurderButton_Click(object sender, RoutedEventArgs e)
         {
