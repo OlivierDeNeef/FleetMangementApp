@@ -1,11 +1,13 @@
 ﻿using DomainLayer.Managers;
 using DomainLayer.Models;
+using DomainLayer.Utilities;
 using FleetMangementApp.Mappers;
+using FleetMangementApp.Models.Output;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
-using DomainLayer.Utilities;
+using System.Windows.Controls;
 
 namespace FleetMangementApp
 {
@@ -17,7 +19,9 @@ namespace FleetMangementApp
         private readonly BestuurderManager _bestuurderManager;
         private readonly RijbewijsTypeManager _rijbewijsTypeManager;
 
-        private List<RijbewijsType> _allRijbewijsTypes = new List<RijbewijsType>();
+        private List<RijbewijsType> _allRijbewijsTypes = new();
+
+        private int _selectedBestuurderId;
 
         public MainWindow(BestuurderManager bestuurderManager, RijbewijsTypeManager rijbewijsTypeManager)
         {
@@ -27,6 +31,8 @@ namespace FleetMangementApp
             SetupBestuurderView();
         }
 
+        #region BestuurderTab
+
         private void SetupBestuurderView()
         {
             _allRijbewijsTypes = _rijbewijsTypeManager.GeefAlleRijsbewijsTypes().ToList();
@@ -34,23 +40,25 @@ namespace FleetMangementApp
         }
         private void ZoekBestuurderButton_Click(object sender, RoutedEventArgs e)
         {
-            if (!ValidateBestuurdeeFields()) return;
             try
             {
-                var geboortedatum = DatePickerGeboortedatumBestuurder.SelectedDate ?? DateTime.MinValue;
-                var rijbewijzen = ListBoxRijbewijzen.ItemsSource?.Cast<string>() ?? new List<string>();
+                //Valideerd de velden van de zoek parameters 
+                if (!ValidateBestuurdeeFields()) return;
+                //Input omzetten naar correcte types
                 var id = string.IsNullOrWhiteSpace(TextBoxBestuurderId.Text) ? 0 : int.Parse(TextBoxBestuurderId.Text);
-                var result = _bestuurderManager.GeefGefilterdeBestuurder(
-                    id,
-                    TextBoxVoornaamBestuurder.Text,
-                    TextBoxNaamBestuurder.Text,
-                    geboortedatum,
-                    _allRijbewijsTypes.Where(r => rijbewijzen.Contains(r.Type)).ToList(),
-                    string.IsNullOrWhiteSpace(TextBoxRijksregisternummerBestuurder.Text) ? "" :RijksregisternummerChecker.ParseWithoutDate(TextBoxRijksregisternummerBestuurder.Text) ,
-                    CheckBoxGearchiveerBestuurder.IsChecked.Value
-                ).ToList();
-                var bestuurders = result.Select(BestuurderUIMapper.ToUI);
-                ResultatenBestuurders.ItemsSource = bestuurders;
+                var geboortedatum = DatePickerGeboortedatumBestuurder.SelectedDate ?? DateTime.MinValue;
+                var rijbewijzenInString = ListBoxRijbewijzen.ItemsSource?.Cast<string>() ?? new List<string>();
+                var selectedRijbewijzen = _allRijbewijsTypes.Where(r => rijbewijzenInString.Contains(r.Type)).ToList();
+                var rijksregisternummer = string.IsNullOrWhiteSpace(TextBoxRijksregisternummerBestuurder.Text) ? "" : RijksregisternummerChecker.ParseWithoutDate(TextBoxRijksregisternummerBestuurder.Text);
+                var voornaam = TextBoxNaamBestuurder.Text;
+                var naam = TextBoxVoornaamBestuurder.Text;
+                var gearchiveerd = CheckBoxGearchiveerBestuurder.IsChecked.Value;
+
+                //Bestuurders op vragen voor de ingevulde parameters
+                var result = _bestuurderManager.GeefGefilterdeBestuurder(id, naam, voornaam, geboortedatum, selectedRijbewijzen, rijksregisternummer, gearchiveerd).ToList();
+
+                //Gevonden bestuurder mappen aan datagrid
+                ResultatenBestuurders.ItemsSource = result.Select(BestuurderUIMapper.ToUI);
             }
             catch (Exception exception)
             {
@@ -67,7 +75,7 @@ namespace FleetMangementApp
                 result = false;
             }
 
-            if (!string.IsNullOrWhiteSpace(TextBoxRijksregisternummerBestuurder.Text)&& TextBoxRijksregisternummerBestuurder.Text.Length is > 15 or < 11)
+            if (!string.IsNullOrWhiteSpace(TextBoxRijksregisternummerBestuurder.Text) && TextBoxRijksregisternummerBestuurder.Text.Length is > 15 or < 11)
             {
                 MessageBox.Show("Rijksregisternummer kan enkel 11-15 karakters bevatten", "Invalid field");
                 result = false;
@@ -85,6 +93,11 @@ namespace FleetMangementApp
             ButtonDetailBestuurder.IsEnabled = true;
             ButtonEditBestuuder.IsEnabled = true;
             ButtonArchiveerBestuurder.IsEnabled = true;
+
+            // Neemt de geselecteerde bestuurderId uit het datagrid 
+            var datagridrow = sender as DataGridRow;
+            if (datagridrow?.Item is ResultBestuurder selectedResult) _selectedBestuurderId = selectedResult.Id;
+            
         }
         private void RowLostFocus(object sender, RoutedEventArgs e)
         {
@@ -96,9 +109,9 @@ namespace FleetMangementApp
 
         private void ToevoegenRijbewijsButton_OnClick(object sender, RoutedEventArgs e)
         {
-            string r =  (string)ComboBoxRijbewijzen.SelectedValue;
-            if(!ListBoxRijbewijzen.Items.Contains(r))
-                ListBoxRijbewijzen.Items.Add(r); 
+            string r = (string)ComboBoxRijbewijzen.SelectedValue;
+            if (!ListBoxRijbewijzen.Items.Contains(r))
+                ListBoxRijbewijzen.Items.Add(r);
 
         }
 
@@ -108,5 +121,7 @@ namespace FleetMangementApp
             if (ListBoxRijbewijzen.Items.Contains(r))
                 ListBoxRijbewijzen.Items.Remove(r);
         }
+
+        #endregion
     }
 }
