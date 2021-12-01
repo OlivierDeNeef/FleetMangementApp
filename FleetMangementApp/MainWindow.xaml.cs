@@ -81,9 +81,9 @@ namespace FleetMangementApp
                 result = false;
             }
 
-            if (DatePickerGeboortedatumBestuurder.SelectedDate.HasValue && DatePickerGeboortedatumBestuurder.SelectedDate.Value > DateTime.Today)
+            if (DatePickerGeboortedatumBestuurder.SelectedDate.HasValue && DatePickerGeboortedatumBestuurder.SelectedDate.Value > DateTime.Today.AddYears(-18))
             {
-                MessageBox.Show("Een geboortedatum kan niet in de toekomst liggen", "Invalid field");
+                MessageBox.Show("Een bestuurder moet minstens 18 jaar oud zijn", "Invalid field");
                 result = false;
             }
             return result;
@@ -123,5 +123,19 @@ namespace FleetMangementApp
         }
 
         #endregion
+
+        private void ButtonNieuweBestuurder_OnClick(object sender, RoutedEventArgs e)
+        {
+            new VoertuigToevoegen()
+            {
+                Owner = this
+            }.ShowDialog();
+
+
+
+
+
+
+        }
     }
 }
