@@ -31,12 +31,15 @@ namespace FleetMangementApp
             SetupBestuurderView();
         }
 
+    
+
+
         #region BestuurderTab
 
         private void SetupBestuurderView()
         {
             _allRijbewijsTypes = _rijbewijsTypeManager.GeefAlleRijsbewijsTypes().ToList();
-            ComboBoxRijbewijzen.ItemsSource = _allRijbewijsTypes.Select(r => r.Type).OrderBy(r=> r);
+            ComboBoxRijbewijzen.ItemsSource = _allRijbewijsTypes.Select(r => r.Type).OrderBy(r => r);
         }
         private void ZoekBestuurderButton_Click(object sender, RoutedEventArgs e)
         {
@@ -97,7 +100,7 @@ namespace FleetMangementApp
             // Neemt de geselecteerde bestuurderId uit het datagrid 
             var datagridrow = sender as DataGridRow;
             if (datagridrow?.Item is ResultBestuurder selectedResult) _selectedBestuurderId = selectedResult.Id;
-            
+
         }
         private void RowLostFocus(object sender, RoutedEventArgs e)
         {
@@ -122,20 +125,19 @@ namespace FleetMangementApp
                 ListBoxRijbewijzen.Items.Remove(r);
         }
 
-        #endregion
-
         private void ButtonNieuweBestuurder_OnClick(object sender, RoutedEventArgs e)
         {
+            //BUG : Moet bestuurder toevoegen zijn.
             new VoertuigToevoegen()
             {
                 Owner = this
             }.ShowDialog();
 
-
-
-
-
-
         }
+
+
+        #endregion
+
+
     }
 }
