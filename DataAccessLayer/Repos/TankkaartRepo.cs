@@ -269,7 +269,7 @@ namespace DataAccessLayer.Repos
             }
         }
 
-        //Ask : filteren op lijst
+        //ASK :TankkaartRepo --> GeefGefilterdeTankkaarten: Hoe filteren op een lijst met brandstoffen?
         public IReadOnlyList<Tankkaart> GeefGefilterdeTankkaarten(string kaartnummer, DateTime geldigheidsdatum, List<BrandstofType> lijstBrandstoftypes, bool geachiveerd)
         {
             using SqlConnection con = new(_connectionString);
