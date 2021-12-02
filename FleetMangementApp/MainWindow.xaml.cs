@@ -127,7 +127,7 @@ namespace FleetMangementApp
 
         private void ButtonNieuweBestuurder_OnClick(object sender, RoutedEventArgs e)
         {
-            //BUG : Moet bestuurder toevoegen zijn.
+            
             new BestuurderToevoegen()
             {
                 Owner = this
