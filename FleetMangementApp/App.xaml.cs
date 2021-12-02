@@ -46,7 +46,7 @@ namespace FleetMangementApp
         private void OnStartup(object sender, StartupEventArgs e)
         {
             var mainWindow = _serviceProvider.GetService<MainWindow>();
-            mainWindow.Show();
+            mainWindow?.Show();
         }
     }
 }
