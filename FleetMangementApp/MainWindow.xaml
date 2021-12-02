@@ -65,7 +65,7 @@
                     <TextBox Grid.Row="4" Grid.Column="3" Name="TextBoxRijksregisternummerBestuurder" Width="200" Margin="0,0,30,0"></TextBox>
 
 
-                    <CheckBox Name="CheckBoxGearchiveerBestuurder" Grid.Column="4" Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Left">Geachiveerd</CheckBox>
+                    <CheckBox Name="CheckBoxGearchiveerBestuurder" Grid.Column="4" Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Left">Gearchiveerd</CheckBox>
 
                     <Button Grid.Column="4" Grid.Row="5" Width="200" Name="ZoekBestuurderButton" Margin="0,20,0,0" HorizontalAlignment="Left" Click="ZoekBestuurderButton_Click">Zoeken</Button>
 
