@@ -37,29 +37,55 @@ namespace FleetMangementApp
 
         private void ZoekBestuurderButton_Click(object sender, RoutedEventArgs e)
         {
-            int id = int.Parse(TextBoxBestuurderId.Text);
-            DateTime date = PickerGeboorteDatum.SelectedDate.Value;
+            int id;
+            DateTime? date = PickerGeboorteDatum.SelectedDate;
+            try {
+                id = int.Parse(TextBoxBestuurderId.Text);
+            }
+            catch
+            {
+                id = 0; 
+            }
+            
             List<RijbewijsType> rijbewijzen = (List<RijbewijsType>)TextBoxRijbewijzen.ItemsSource;
-            IReadOnlyList<Bestuurder> data = _bestuurders.GeefGefilterdeBestuurder(id, TextBoxVoornaamBestuurder.Text, TextBoxNaamBestuurder.Text, date, rijbewijzen, TextBoxRijksregisternummerBestuurder.Text, CheckBoxGearchiveerd.IsChecked.Value);
+            IReadOnlyList<Bestuurder> data = _bestuurders.GeefGefilterdeBestuurder(id, TextBoxVoornaamBestuurder.Text, TextBoxNaamBestuurder.Text, date.Value, rijbewijzen, TextBoxRijksregisternummerBestuurder.Text, CheckBoxGearchiveerd.IsChecked.Value);
             ResultatenBestuurders.ItemsSource = data;
         }
 
         private void TextBoxBestuurderId_TextChanged(object sender, TextChangedEventArgs e)
         {
-            
-            if(!int.TryParse(TextBoxBestuurderId.Text,out int result))
+            if (!string.IsNullOrWhiteSpace(TextBoxBestuurderId.Text))
             {
-                if(!string.IsNullOrWhiteSpace(TextBoxBestuurderId.Text))
+                if (!int.TryParse(TextBoxBestuurderId.Text, out int result))
                 {
+
                     ZoekBestuurderButton.IsEnabled = false;
+                    TextBoxBestuurderId.Background = new SolidColorBrush(Colors.Red);
                     MessageBox.Show("Id van de bestuurder moet een getal zijn");
                 }
-                
+                else
+                {
+                    ZoekBestuurderButton.IsEnabled = true;
+                    TextBoxBestuurderId.Background = new SolidColorBrush(Colors.White);
+                }
             }
             else
             {
-                ZoekBestuurderButton.IsEnabled = true;
+                TextBoxBestuurderId.Background = new SolidColorBrush(Colors.White);
             }
+
+        }
+
+        private void BestuurderToevoegenButton_Click(object sender, RoutedEventArgs e)
+        {
+            BestuurderToevoegen _bestuurderToevoegWindow = new();
+            _bestuurderToevoegWindow?.Show();
+        }
+
+        private void BestuurderAanpassenButton_Click(object sender, RoutedEventArgs e)
+        {
+            BestuurderAanpassen _bestuurderAanpasWindow = new();
+            _bestuurderAanpasWindow?.Show();
         }
     }
 }

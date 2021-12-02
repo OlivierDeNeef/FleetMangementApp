@@ -72,14 +72,14 @@
                                <DataGridTextColumn Width="100" Header="Id" CanUserResize="False"></DataGridTextColumn>
                             <DataGridTextColumn Width="100" Header="Naam"></DataGridTextColumn>
                             <DataGridTextColumn Width="100" Header="Voornaam"></DataGridTextColumn>
-                               <DataGridTextColumn Width="Auto" Header="Geboordedatum"></DataGridTextColumn>
+                               <DataGridTextColumn Width="Auto" Header="Geboortedatum"></DataGridTextColumn>
                             <DataGridCheckBoxColumn Width="100" Header="Heeft Voertuig"></DataGridCheckBoxColumn>
                             <DataGridCheckBoxColumn Width="100" Header="Heeft Tankkaart"></DataGridCheckBoxColumn>
                            </DataGrid.Columns>
                     </DataGrid>
-                    <Button Grid.Column="4" Grid.Row="8" Margin="0,20,0,10">Nieuw</Button>
+                    <Button Grid.Column="4" Grid.Row="8" Margin="0,20,0,10" Name="BestuurderToevoegenBtn" Click="BestuurderToevoegenButton_Click">Nieuw</Button>
                     <Button Grid.Column="4" Grid.Row="9" Margin="0,0,0,10">Details</Button>
-                    <Button Grid.Column="4" Grid.Row="10" Margin="0,0,0,10">Aanpassen</Button>
+                    <Button Grid.Column="4" Grid.Row="10" Margin="0,0,0,10" Name="BestuurderAanpassenBtn" Click="BestuurderAanpassenButton_Click">Aanpassen</Button>
                     <Button Grid.Column="4" Grid.Row="11">(De)Archiveren</Button>
                     
 </Grid>
