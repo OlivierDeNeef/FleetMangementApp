@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FleetMangementApp"
         mc:Ignorable="d"
-        Title="BestuurderToevoegen" Height="450" Width="500" ResizeMode="NoResize">
+        Title="BestuurderToevoegen" Height="450" Width="520" ResizeMode="NoResize">
     <Grid Background="LightBlue">
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
