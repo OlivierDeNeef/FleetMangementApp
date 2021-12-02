@@ -31,12 +31,15 @@ namespace FleetMangementApp
             SetupBestuurderView();
         }
 
+    
+
+
         #region BestuurderTab
 
         private void SetupBestuurderView()
         {
             _allRijbewijsTypes = _rijbewijsTypeManager.GeefAlleRijsbewijsTypes().ToList();
-            ComboBoxRijbewijzen.ItemsSource = _allRijbewijsTypes.Select(r => r.Type).OrderBy(r=> r);
+            ComboBoxRijbewijzen.ItemsSource = _allRijbewijsTypes.Select(r => r.Type).OrderBy(r => r);
         }
         private void ZoekBestuurderButton_Click(object sender, RoutedEventArgs e)
         {
@@ -81,9 +84,9 @@ namespace FleetMangementApp
                 result = false;
             }
 
-            if (DatePickerGeboortedatumBestuurder.SelectedDate.HasValue && DatePickerGeboortedatumBestuurder.SelectedDate.Value > DateTime.Today)
+            if (DatePickerGeboortedatumBestuurder.SelectedDate.HasValue && DatePickerGeboortedatumBestuurder.SelectedDate.Value > DateTime.Today.AddYears(-18))
             {
-                MessageBox.Show("Een geboortedatum kan niet in de toekomst liggen", "Invalid field");
+                MessageBox.Show("Een bestuurder moet minstens 18 jaar oud zijn", "Invalid field");
                 result = false;
             }
             return result;
@@ -97,7 +100,7 @@ namespace FleetMangementApp
             // Neemt de geselecteerde bestuurderId uit het datagrid 
             var datagridrow = sender as DataGridRow;
             if (datagridrow?.Item is ResultBestuurder selectedResult) _selectedBestuurderId = selectedResult.Id;
-            
+
         }
         private void RowLostFocus(object sender, RoutedEventArgs e)
         {
@@ -122,6 +125,19 @@ namespace FleetMangementApp
                 ListBoxRijbewijzen.Items.Remove(r);
         }
 
+        private void ButtonNieuweBestuurder_OnClick(object sender, RoutedEventArgs e)
+        {
+            //BUG : Moet bestuurder toevoegen zijn.
+            new VoertuigToevoegen()
+            {
+                Owner = this
+            }.ShowDialog();
+
+        }
+
+
         #endregion
+
+
     }
 }

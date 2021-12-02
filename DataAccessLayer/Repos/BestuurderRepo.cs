@@ -54,8 +54,8 @@ namespace DataAccessLayer.Repos
         {
             _connectionString = config.GetConnectionString("defaultConnection");
         }
-        
-        //ask: filter op een list
+
+        //ASK: BestuurderRepo --> GeefGefilderdeBestuurders :  Hoe filteren op een list van rijbewijzen?
         public IReadOnlyList<Bestuurder> GeefGefilderdeBestuurders(string voornaam, string naam, DateTime geboortedatum, List<RijbewijsType> lijstRijbewijstypes, string rijksregisternummer, bool gearchiveerd)
         {
             using var connection = new SqlConnection(_connectionString);

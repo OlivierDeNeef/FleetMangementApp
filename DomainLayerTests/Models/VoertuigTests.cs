@@ -130,7 +130,7 @@ namespace DomainLayerTests.Models
         }
 
         [Theory]
-        [InlineData("1-123-DEF")]// Ask : ongeldige formaat toch
+        [InlineData("1-123-DEF")]
         [InlineData("123-ABC")]
         public void ZetNummerplaatTest(string plaat)
         {

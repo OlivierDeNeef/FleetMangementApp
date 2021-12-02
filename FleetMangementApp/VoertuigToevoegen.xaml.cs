@@ -19,9 +19,32 @@ namespace FleetMangementApp
     /// </summary>
     public partial class VoertuigToevoegen : Window
     {
+
+        private int _aantalDeuren;
         public VoertuigToevoegen()
         {
             InitializeComponent();
+        }
+
+        private void VoertuigToevoegenButtenAnnuleren_OnClick(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void VerhoogAantalDeurenButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            _aantalDeuren += 1;
+            ToevoegenVoertuigAantalDeurenTextbox.Text = _aantalDeuren.ToString();
+        }
+
+        private void VerlaagAantalDeurenButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (_aantalDeuren != 0)
+            {
+                _aantalDeuren -= 1;
+                ToevoegenVoertuigAantalDeurenTextbox.Text = _aantalDeuren.ToString();
+
+            }
         }
     }
 }
