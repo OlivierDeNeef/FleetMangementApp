@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:FleetMangementApp"
         mc:Ignorable="d"
         Title="BestuurderAanpassen" Height="450" Width="520" ResizeMode="NoResize">
-    <Grid Background="LightBlue">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
             <RowDefinition Height="Auto"/>
@@ -29,21 +29,21 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="20"/>
         </Grid.ColumnDefinitions>
-        <Rectangle Grid.Row="1" Grid.Column="1" Grid.RowSpan="11" Grid.ColumnSpan="2" Fill="#FF507ECD"></Rectangle>
+        <!--Rectangle Grid.Row="1" Grid.Column="1" Grid.RowSpan="11" Grid.ColumnSpan="2" Fill="#FF507ECD"></Rectangle-->
 
-        <Label Grid.Row="1" Grid.Column="1"  Content="Naam" HorizontalAlignment="Left" Margin="0,0,30,0"/>
+        <Label Grid.Row="1" Grid.Column="1"  Content="*Naam" HorizontalAlignment="Left" Margin="0,0,30,0"/>
         <TextBox Grid.Row="2" Grid.Column="1" Name="TextBoxBestuurderNaam" Width="200" Margin="0,0,30,0"/>
 
-        <Label Grid.Row="1" Grid.Column="2"  Content="Voornaam" HorizontalAlignment="Left" Margin="0,0,30,0"/>
+        <Label Grid.Row="1" Grid.Column="2"  Content="*Voornaam" HorizontalAlignment="Left" Margin="0,0,30,0"/>
         <TextBox Grid.Row="2" Grid.Column="2" Name="TextBoxVoornaamBestuurder" Width="200" Margin="0,0,30,0"/>
 
-        <Label Grid.Row="3" Grid.Column="1"  Content="Geboortedatum" HorizontalAlignment="Left" Margin="0,0,30,0"/>
+        <Label Grid.Row="3" Grid.Column="1"  Content="*Geboortedatum" HorizontalAlignment="Left" Margin="0,0,30,0"/>
         <DatePicker Grid.Row="4" Grid.Column="1" Width="200" Margin="0,0,30,0" Name="PickerGeboorteDatum"/>
 
-        <Label Grid.Row="3" Grid.Column="2"  Content="Rijksregisternummer" HorizontalAlignment="Left" Margin="0,0,30,0"/>
+        <Label Grid.Row="3" Grid.Column="2"  Content="*Rijksregisternummer" HorizontalAlignment="Left" Margin="0,0,30,0"/>
         <TextBox Grid.Row="4" Grid.Column="2" Name="Rijksregisternummer" Width="200" Margin="0,0,30,0"/>
 
-        <Label Grid.Row="5" Grid.Column="1" Content="Rijbewijzen Bestuurder" HorizontalAlignment="Left" Margin="0,0,30,0"/>
+        <Label Grid.Row="5" Grid.Column="1" Content="*Rijbewijzen Bestuurder" HorizontalAlignment="Left" Margin="0,0,30,0"/>
         <ListBox Grid.Row="6" Grid.Column="1" Grid.RowSpan="2" Width="200" Margin="0,0,30,0" Name="RijbewijzenListBox"/>
 
         <Label Grid.Row="5" Grid.Column="2"  Content="Lijst Rijbewijzen" HorizontalAlignment="Left" Margin="0,0,30,0"/>
@@ -64,8 +64,15 @@
 
         <Button Grid.Row="11" Grid.Column="2" Margin="0,0,30,0">Selecteer Tankkaart</Button>
 
-        <Button Grid.Row="12" Grid.Column="1" Margin="0,50,50,0">Annuleren</Button>
-        <Button Grid.Row="12" Grid.Column="2" Margin="50,50,0,0">Aanpassen</Button>
-
+        <Button Grid.Row="12" Grid.Column="1" Margin="0,60,90,20">
+            <Button.RenderTransform>
+                <ScaleTransform ScaleX="1.5" ScaleY="1.5"></ScaleTransform>
+            </Button.RenderTransform> Annuleren
+        </Button>
+        <Button Grid.Row="12" Grid.Column="2" Margin="0,60,80,20">
+            <Button.RenderTransform>
+                <ScaleTransform ScaleX="1.5" ScaleY="1.5"></ScaleTransform>
+            </Button.RenderTransform> Aanpassen
+        </Button>
     </Grid>
 </Window>
