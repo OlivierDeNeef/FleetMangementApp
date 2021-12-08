@@ -17,15 +17,19 @@ namespace FleetMangementApp
     public partial class MainWindow : Window
     {
         private readonly BestuurderManager _bestuurderManager;
+        private readonly BrandstofTypeManager _brandstofTypeManager;
+        private readonly WagenTypeManager _wagenTypeManager;
         private readonly RijbewijsTypeManager _rijbewijsTypeManager;
 
         private List<RijbewijsType> _allRijbewijsTypes = new();
 
         private int _selectedBestuurderId;
 
-        public MainWindow(BestuurderManager bestuurderManager, RijbewijsTypeManager rijbewijsTypeManager)
+        public MainWindow(BestuurderManager bestuurderManager, RijbewijsTypeManager rijbewijsTypeManager, WagenTypeManager wagenTypeManager, BrandstofTypeManager brandstofTypeManager)
         {
             _rijbewijsTypeManager = rijbewijsTypeManager;
+            _wagenTypeManager = wagenTypeManager;
+            _brandstofTypeManager = brandstofTypeManager;
             _bestuurderManager = bestuurderManager;
             InitializeComponent();
             SetupBestuurderView();
@@ -127,7 +131,11 @@ namespace FleetMangementApp
 
         private void ButtonNieuweBestuurder_OnClick(object sender, RoutedEventArgs e)
         {
-            
+            //new VoertuigToevoegen(_brandstofTypeManager, _wagenTypeManager)
+            //{
+            //    Owner = this
+
+            //}.ShowDialog();
             new BestuurderToevoegen()
             {
                 Owner = this
