@@ -33,6 +33,7 @@ namespace FleetMangementApp
             _bestuurderManager = bestuurderManager;
             InitializeComponent();
             SetupBestuurderView();
+           
         }
 
     
@@ -113,6 +114,10 @@ namespace FleetMangementApp
             ButtonArchiveerBestuurder.IsEnabled = false;
         }
 
+        private void ListBoxRijbewijzen_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBoxRijbewijzen.SelectedItem = ListBoxRijbewijzen.SelectedItem;
+        }
 
         private void ToevoegenRijbewijsButton_OnClick(object sender, RoutedEventArgs e)
         {
@@ -125,17 +130,16 @@ namespace FleetMangementApp
         private void VerwijderRijbewijsButton_OnClick(object sender, RoutedEventArgs e)
         {
             string r = (string)ComboBoxRijbewijzen.SelectedValue;
-            if (ListBoxRijbewijzen.Items.Contains(r))
                 ListBoxRijbewijzen.Items.Remove(r);
         }
 
         private void ButtonNieuweBestuurder_OnClick(object sender, RoutedEventArgs e)
         {
-            //new VoertuigToevoegen(_brandstofTypeManager, _wagenTypeManager)
-            //{
-            //    Owner = this
+            new VoertuigToevoegen(_brandstofTypeManager, _wagenTypeManager)
+            {
+                Owner = this
 
-            //}.ShowDialog();
+            }.ShowDialog();
             new BestuurderToevoegen()
             {
                 Owner = this
@@ -151,8 +155,8 @@ namespace FleetMangementApp
             }.ShowDialog();
         }
 
+
+
         #endregion
-
-
     }
 }

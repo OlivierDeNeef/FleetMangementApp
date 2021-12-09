@@ -35,7 +35,7 @@ namespace FleetMangementApp
             _wagenTypeManager = wagenTypeManager;
             InitializeComponent();
             SetupVoertuigWindowView();
-            
+
         }
 
 
