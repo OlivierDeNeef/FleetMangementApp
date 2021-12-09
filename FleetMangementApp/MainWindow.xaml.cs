@@ -143,6 +143,13 @@ namespace FleetMangementApp
 
         }
 
+        private void ButtonDetailsBestuurder_OnClick(object sender, RoutedEventArgs e)
+        {
+            new Details()
+            {
+                Owner = this
+            }.ShowDialog();
+        }
 
         #endregion
 
