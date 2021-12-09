@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FleetMangementApp"
         mc:Ignorable="d"
-        Title="Details" Height="550" Width="800">
+        Title="Details" Height="600" Width="900">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
@@ -17,18 +17,55 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="20"/>
         </Grid.ColumnDefinitions>
 
         <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Margin="0,0,30,0" FontSize="30">Details</TextBlock>
         <Separator Height="2" Grid.Row="3"  Grid.Column="1"  Grid.ColumnSpan="3" HorizontalAlignment="Stretch"/>
+
+        <TextBlock Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" Margin="0,0,30,0" FontSize="24">Bestuurder</TextBlock>
+        <TextBlock Grid.Column="1" Grid.Row="5" HorizontalAlignment="Left" Margin="0,8,0,8" FontSize="16">Id:</TextBlock>
+        <TextBlock Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left" Margin="0,8,0,8" FontSize="16">Naam:</TextBlock>
+        <TextBlock Grid.Column="1" Grid.Row="7" HorizontalAlignment="Left" Margin="0,8,0,8" FontSize="16">Voornaam:</TextBlock>
+        <TextBlock Grid.Column="1" Grid.Row="8" HorizontalAlignment="Left" Margin="0,8,0,8" FontSize="16">Geboortedatum:</TextBlock>
+        <TextBlock Grid.Column="1" Grid.Row="9" HorizontalAlignment="Left" Margin="0,8,0,8" FontSize="16">Rijksregisternummer:</TextBlock>
+        <TextBlock Grid.Column="1" Grid.Row="10" HorizontalAlignment="Left" Margin="0,8,0,8" FontSize="16">Rijbewijzen:</TextBlock>
+        <CheckBox Grid.Column="1" Grid.Row="11"  HorizontalAlignment="Left" Margin="0,8,0,8" FontSize="16" IsEnabled="False">Gearchiveerd</CheckBox>
+
+        <TextBlock Grid.Column="2" Grid.Row="4" HorizontalAlignment="Left" Margin="0,0,30,0" FontSize="24">Voertuig</TextBlock>
+        <TextBlock Grid.Column="2" Grid.Row="5" HorizontalAlignment="Left" Margin="0,8,0,8" FontSize="16">Id:</TextBlock>
+        <TextBlock Grid.Column="2" Grid.Row="6" HorizontalAlignment="Left" Margin="0,8,0,8" FontSize="16">Merk:</TextBlock>
+        <TextBlock Grid.Column="2" Grid.Row="7" HorizontalAlignment="Left" Margin="0,8,0,8" FontSize="16">Model:</TextBlock>
+        <TextBlock Grid.Column="2" Grid.Row="8" HorizontalAlignment="Left" Margin="0,8,0,8" FontSize="16">Aantal Deuren:</TextBlock>
+        <TextBlock Grid.Column="2" Grid.Row="9" HorizontalAlignment="Left" Margin="0,8,0,8" FontSize="16">Nummerplaat:</TextBlock>
+        <TextBlock Grid.Column="2" Grid.Row="10" HorizontalAlignment="Left" Margin="0,8,0,8" FontSize="16">Chassisnummer:</TextBlock>
+        <TextBlock Grid.Column="2" Grid.Row="11" HorizontalAlignment="Left" Margin="0,8,0,8" FontSize="16">Kleur:</TextBlock>
+        <TextBlock Grid.Column="2" Grid.Row="12" HorizontalAlignment="Left" Margin="0,8,0,8" FontSize="16">Type Brandstof:</TextBlock>
+        <TextBlock Grid.Column="2" Grid.Row="13" HorizontalAlignment="Left" Margin="0,8,0,8" FontSize="16">Type Wagen:</TextBlock>
+        <CheckBox Grid.Column="2" Grid.Row="14"  HorizontalAlignment="Left" Margin="0,8,0,8" FontSize="16" IsEnabled="False">Gearchiveerd</CheckBox>
+
+        <TextBlock Grid.Column="3" Grid.Row="4" HorizontalAlignment="Left" Margin="0,0,30,0" FontSize="24">Tankkaart</TextBlock>
+        <TextBlock Grid.Column="3" Grid.Row="5" HorizontalAlignment="Left" Margin="0,8,0,8" FontSize="16">Id:</TextBlock>
+        <TextBlock Grid.Column="3" Grid.Row="6" HorizontalAlignment="Left" Margin="0,8,0,8" FontSize="16">Kaartnummer:</TextBlock>
+        <TextBlock Grid.Column="3" Grid.Row="7" HorizontalAlignment="Left" Margin="0,8,0,8" FontSize="16">Pincode:</TextBlock>
+        <TextBlock Grid.Column="3" Grid.Row="8" HorizontalAlignment="Left" Margin="0,8,0,8" FontSize="16">Vervaldatum:</TextBlock>
+        <TextBlock Grid.Column="3" Grid.Row="9" HorizontalAlignment="Left" Margin="0,8,0,8" FontSize="16">Brandstoftypes:</TextBlock>
+        <CheckBox Grid.Column="3" Grid.Row="10"  HorizontalAlignment="Left" Margin="0,8,0,8" FontSize="16" IsEnabled="False">Gearchiveerd</CheckBox>
+
+        <Button Grid.Column="3" Grid.Row="15"  HorizontalAlignment="Right" Padding="40,0,40,0" Margin="0,20,0,0" FontSize="16" Name="SluitDetailsButton" Click="SluitDetailsButton_OnClick">Sluiten</Button>
     </Grid>
 </Window>

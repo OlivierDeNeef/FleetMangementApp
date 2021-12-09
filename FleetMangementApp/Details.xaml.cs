@@ -23,5 +23,10 @@ namespace FleetMangementApp
         {
             InitializeComponent();
         }
+
+        private void SluitDetailsButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }
