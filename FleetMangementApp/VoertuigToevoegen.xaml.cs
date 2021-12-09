@@ -66,5 +66,14 @@ namespace FleetMangementApp
 
             }
         }
+
+        private void ToevoegenVoerthuigSelecteerBestuurderbutton_Click(object sender, RoutedEventArgs e)
+        {
+            new BestuurderSelecteren()
+            {
+                Owner = this
+            }.ShowDialog();
+
+        }
     }
 }
