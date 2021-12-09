@@ -50,7 +50,7 @@ namespace FleetMangementApp
             try
             {
                 //Valideerd de velden van de zoek parameters 
-                if (!ValidateBestuurdeeFields()) return;
+                if (!ValidateBestuurderFields()) return;
                 //Input omzetten naar correcte types
                 var id = string.IsNullOrWhiteSpace(TextBoxBestuurderId.Text) ? 0 : int.Parse(TextBoxBestuurderId.Text);
                 var geboortedatum = DatePickerGeboortedatumBestuurder.SelectedDate ?? DateTime.MinValue;
@@ -73,7 +73,7 @@ namespace FleetMangementApp
             }
 
         }
-        private bool ValidateBestuurdeeFields()
+        private bool ValidateBestuurderFields()
         {
             var result = true;
             if (!string.IsNullOrWhiteSpace(TextBoxBestuurderId.Text) && !int.TryParse(TextBoxBestuurderId.Text, out var _result))
