@@ -140,10 +140,10 @@ namespace FleetMangementApp
                 Owner = this
 
             }.ShowDialog();
-            //new BestuurderToevoegen()
-            //{
-            //    Owner = this
-            //}.ShowDialog();
+            new BestuurderToevoegen()
+            {
+                Owner = this
+            }.ShowDialog();
 
         }
 
