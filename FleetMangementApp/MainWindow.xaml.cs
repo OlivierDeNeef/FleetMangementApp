@@ -149,10 +149,15 @@ namespace FleetMangementApp
 
         private void ButtonDetailsBestuurder_OnClick(object sender, RoutedEventArgs e)
         {
-            new Details()
+            if(ResultatenBestuurders.SelectedItem != null)
             {
-                Owner = this
-            }.ShowDialog();
+                var selectedBestuurder = (ResultBestuurder)ResultatenBestuurders.SelectedItem;
+                new Details(_bestuurderManager.GeefBestuurder(selectedBestuurder.Id))
+                {
+                    Owner = this
+                }.ShowDialog();
+            }
+            
         }
 
 

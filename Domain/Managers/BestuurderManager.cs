@@ -71,10 +71,10 @@ namespace DomainLayer.Managers
         /// </summary>
         /// <param name="bestuurder"></param>
         /// <returns></returns>
-        public Bestuurder GeefBestuurder(Bestuurder bestuurder)
+        public Bestuurder GeefBestuurder(int id)
         {
-            if (!_bestuurderRepo.BestaatBestuurder(bestuurder.Id)) throw new BrandstofTypeManagerException("BestaatBestuurder - Bestuurder bestaat niet");
-            return _bestuurderRepo.GeefBestuurder(bestuurder.Id);
+            if (!_bestuurderRepo.BestaatBestuurder(id)) throw new BrandstofTypeManagerException("BestaatBestuurder - Bestuurder bestaat niet");
+            return _bestuurderRepo.GeefBestuurder(id);
         }
     }
 }
