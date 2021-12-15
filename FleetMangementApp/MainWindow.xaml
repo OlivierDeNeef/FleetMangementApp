@@ -167,8 +167,7 @@
 
 
 
-
-                    <DataGrid Name="ResultatenVoertuigen" Width="800" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="10" Grid.RowSpan="5" AutoGenerateColumns="False"  Margin="0,0,30,0" IsReadOnly="True">
+                    <DataGrid Name="ResultatenVoertuigen" Width="650" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="10" Grid.RowSpan="5" AutoGenerateColumns="False"  Margin="0,0,30,0" IsReadOnly="True">
                         <DataGrid.RowStyle>
                             <Style TargetType="DataGridRow">
                                 <EventSetter Event="GotFocus" Handler="RowGotFocus"/>
@@ -177,11 +176,11 @@
                         </DataGrid.RowStyle>
                         <DataGrid.Columns>
                             <DataGridTextColumn Width="50" Header="Id" Binding="{Binding Id}" CanUserResize="False"></DataGridTextColumn>
-                            <DataGridTextColumn Width="130" Header="Merk" Binding="{Binding Merk}" CanUserResize="False"></DataGridTextColumn>
-                            <DataGridTextColumn Width="130" Header="Model" Binding="{Binding Model}"></DataGridTextColumn>
-                            <DataGridTextColumn Width="130" Header="Nummerplaat" Binding="{Binding Nummerplaat}"></DataGridTextColumn>
+                            <DataGridTextColumn Width="100" Header="Merk" Binding="{Binding Merk}" CanUserResize="False"></DataGridTextColumn>
+                            <DataGridTextColumn Width="100" Header="Model" Binding="{Binding Model}"></DataGridTextColumn>
+                            <DataGridTextColumn Width="110" Header="Nummerplaat" Binding="{Binding Nummerplaat}"></DataGridTextColumn>
                             <DataGridTextColumn Width="*" Header="Geboortedatum" Binding="{Binding Geboortedatum}"></DataGridTextColumn>
-                            <DataGridTextColumn Width="90" Header="Wagen Type" Binding="{Binding WagenType}"></DataGridTextColumn>
+                            <DataGridTextColumn Width="90" Header="Wagentype" Binding="{Binding WagenType}"></DataGridTextColumn>
                             <DataGridCheckBoxColumn Width="100" Header="Bestuurder" Binding="{Binding Bestuurder}"></DataGridCheckBoxColumn>
                         </DataGrid.Columns>
                     </DataGrid>

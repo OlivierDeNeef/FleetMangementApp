@@ -114,6 +114,8 @@ namespace FleetMangementApp
                 Brandstoftypes.Text += "-" + type.Type + "\n";
             }
 
+            
+
             TankkaartGearchiveerdCheckBox.IsChecked = _tankkaart.IsGearchiveerd;
         }
 
