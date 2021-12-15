@@ -20,6 +20,8 @@ namespace FleetMangementApp
         private readonly BrandstofTypeManager _brandstofTypeManager;
         private readonly WagenTypeManager _wagenTypeManager;
         private readonly RijbewijsTypeManager _rijbewijsTypeManager;
+        private List<BrandstofType> _brandstoffen = new();
+        private List<WagenType> _wagentypes = new();
 
         private List<RijbewijsType> _allRijbewijsTypes = new();
 
@@ -33,7 +35,7 @@ namespace FleetMangementApp
             _bestuurderManager = bestuurderManager;
             InitializeComponent();
             SetupBestuurderView();
-           
+            SetupVoertuigWindowView();
         }
 
     
@@ -135,11 +137,7 @@ namespace FleetMangementApp
 
         private void ButtonNieuweBestuurder_OnClick(object sender, RoutedEventArgs e)
         {
-            new VoertuigToevoegen(_brandstofTypeManager, _wagenTypeManager)
-            {
-                Owner = this
-
-            }.ShowDialog();
+           
             new BestuurderToevoegen()
             {
                 Owner = this
@@ -163,5 +161,27 @@ namespace FleetMangementApp
 
 
         #endregion
+
+        #region VoertuigenTab
+        
+
+
+        private void SetupVoertuigWindowView()
+        {
+            _brandstoffen = _brandstofTypeManager.GeefAlleBrandstofTypes().ToList(); // ADO methode returned list van Brandstoftype != 
+            VoertuigConcoboxBrandstof.ItemsSource = _brandstoffen.Select(b => b.Type);
+            _wagentypes = _wagenTypeManager.GeefAlleWagenTypes().ToList();
+            VoertuigComboBoxTypeWagen.ItemsSource = _wagentypes.Select(w => w.Type);
+        }
+        #endregion
+
+        private void ButtonNieuwVoertuig_OnClick(object sender, RoutedEventArgs e)
+        {
+            new VoertuigToevoegen(_brandstofTypeManager, _wagenTypeManager)
+            {
+                Owner = this
+
+            }.ShowDialog();
+        }
     }
 }
