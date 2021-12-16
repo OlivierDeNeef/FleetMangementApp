@@ -47,7 +47,8 @@ namespace FleetMangementApp
 
             _voertuig = selectedVoertuig;
             _bestuurder = selectedVoertuig.Bestuurder;
-            _tankkaart = selectedVoertuig.Bestuurder.Tankkaart;
+            if(selectedVoertuig.Bestuurder != null)
+                _tankkaart = selectedVoertuig.Bestuurder.Tankkaart;
             VulGegevensVoertuigAan();
             if(_bestuurder != null)
                 VulGegevensBestuurderAan();
@@ -113,8 +114,6 @@ namespace FleetMangementApp
             {
                 Brandstoftypes.Text +="\n"+ "-" + type.Type  ;
             }
-
-            
 
             TankkaartGearchiveerdCheckBox.IsChecked = _tankkaart.IsGearchiveerd;
         }
