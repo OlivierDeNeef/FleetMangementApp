@@ -163,8 +163,6 @@ namespace FleetMangementApp
         #endregion
 
         #region VoertuigenTab
-        
-
 
         private void SetupVoertuigWindowView()
         {
@@ -173,7 +171,6 @@ namespace FleetMangementApp
             _wagentypes = _wagenTypeManager.GeefAlleWagenTypes().ToList();
             VoertuigComboBoxTypeWagen.ItemsSource = _wagentypes.Select(w => w.Type);
         }
-        #endregion
 
         private void ButtonNieuwVoertuig_OnClick(object sender, RoutedEventArgs e)
         {
@@ -183,5 +180,6 @@ namespace FleetMangementApp
 
             }.ShowDialog();
         }
+        #endregion
     }
 }
