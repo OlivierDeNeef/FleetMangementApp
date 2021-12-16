@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FleetMangementApp"
         mc:Ignorable="d"
-        Title="Details" Height="700" Width="900">
+        Title="Details" Height="550" Width="800" WindowStartupLocation="CenterOwner">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
@@ -13,7 +13,7 @@
             <RowDefinition Height="20"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="25"/>
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -24,7 +24,7 @@
             <ColumnDefinition Width="20"/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Margin="0,0,30,0" FontSize="30">Details</TextBlock>
+        <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Margin="0,0,30,0" FontSize="24">Details</TextBlock>
         <Separator Height="2" Grid.Row="3"  Grid.Column="1"  Grid.ColumnSpan="3" HorizontalAlignment="Stretch"/>
 
         <Grid Grid.Column="1" Grid.Row="4">
@@ -42,14 +42,14 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Row="0" HorizontalAlignment="Left" Margin="0,0,30,0" FontSize="24">Bestuurder</TextBlock>
-        <TextBlock  Grid.Row="1" HorizontalAlignment="Left" Margin="0,8,0,8" FontSize="16" Name="BestuurderId">Id: </TextBlock>
-        <TextBlock  Grid.Row="2" HorizontalAlignment="Left" Margin="0,8,0,8" FontSize="16" Name="BestuurderNaam">Naam: </TextBlock>
-        <TextBlock  Grid.Row="3" HorizontalAlignment="Left" Margin="0,8,0,8" FontSize="16" Name="BestuurderVoornaam">Voornaam: </TextBlock>
-        <TextBlock  Grid.Row="4" HorizontalAlignment="Left" Margin="0,8,0,8" FontSize="16" Name="BestuurderGeboortedatum">Geboortedatum: </TextBlock>
-        <TextBlock  Grid.Row="5" HorizontalAlignment="Left" Margin="0,8,0,8" FontSize="16" Name="Rijksregisternummer">Rijksregisternummer: </TextBlock>
-        <TextBlock Grid.Row="6" HorizontalAlignment="Left" Margin="0,8,0,8" FontSize="16" Name="Rijbewijzen">Rijbewijzen: </TextBlock>
-        <CheckBox  Grid.Row="7"  HorizontalAlignment="Left" Margin="0,8,0,8" FontSize="16" IsEnabled="False" Name="BestuurderGearchiveerdCheckBox">Gearchiveerd</CheckBox>
+            <TextBlock Grid.Row="0" HorizontalAlignment="Left" Margin="0,0,30,0" FontSize="16">Bestuurder</TextBlock>
+        <TextBlock  Grid.Row="1" HorizontalAlignment="Left" Margin="0,8,0,8"  Name="BestuurderId">Id: </TextBlock>
+        <TextBlock  Grid.Row="2" HorizontalAlignment="Left" Margin="0,8,0,8"  Name="BestuurderNaam">Naam: </TextBlock>
+        <TextBlock  Grid.Row="3" HorizontalAlignment="Left" Margin="0,8,0,8"  Name="BestuurderVoornaam">Voornaam: </TextBlock>
+        <TextBlock  Grid.Row="4" HorizontalAlignment="Left" Margin="0,8,0,8"  Name="BestuurderGeboortedatum">Geboortedatum: </TextBlock>
+        <TextBlock  Grid.Row="5" HorizontalAlignment="Left" Margin="0,8,0,8"  Name="Rijksregisternummer">Rijksregisternummer: </TextBlock>
+        <TextBlock Grid.Row="6" HorizontalAlignment="Left" Margin="0,8,0,8"  Name="Rijbewijzen">Rijbewijzen: </TextBlock>
+        <CheckBox  Grid.Row="7"  HorizontalAlignment="Left" Margin="0,8,0,8"  IsEnabled="False" Name="BestuurderGearchiveerdCheckBox">Gearchiveerd</CheckBox>
         </Grid>
 
         <Grid Grid.Column="2" Grid.Row="4">
@@ -70,17 +70,17 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock  Grid.Row="0" HorizontalAlignment="Left" Margin="0,0,30,0" FontSize="24">Voertuig</TextBlock>
-        <TextBlock  Grid.Row="1" HorizontalAlignment="Left" Margin="0,8,0,8" FontSize="16" Name="VoertuigId">Id: </TextBlock>
-        <TextBlock  Grid.Row="2" HorizontalAlignment="Left" Margin="0,8,0,8" FontSize="16" Name="Merk">Merk:</TextBlock>
-        <TextBlock  Grid.Row="3" HorizontalAlignment="Left" Margin="0,8,0,8" FontSize="16" Name="Model">Model:</TextBlock>
-        <TextBlock  Grid.Row="4" HorizontalAlignment="Left" Margin="0,8,0,8" FontSize="16" Name="AantalDeuren">Aantal Deuren:</TextBlock>
-        <TextBlock  Grid.Row="5" HorizontalAlignment="Left" Margin="0,8,0,8" FontSize="16" Name="Nummerplaat">Nummerplaat:</TextBlock>
-        <TextBlock  Grid.Row="6" HorizontalAlignment="Left" Margin="0,8,0,8" FontSize="16" Name="Chassisnummer">Chassisnummer:</TextBlock>
-        <TextBlock  Grid.Row="7" HorizontalAlignment="Left" Margin="0,8,0,8" FontSize="16" Name="Kleur">Kleur:</TextBlock>
-        <TextBlock  Grid.Row="8" HorizontalAlignment="Left" Margin="0,8,0,8" FontSize="16" Name="BrandstofVoertuig">Type Brandstof:</TextBlock>
-        <TextBlock  Grid.Row="9" HorizontalAlignment="Left" Margin="0,8,0,8" FontSize="16" Name="VoertuigWagenType">Type Wagen:</TextBlock>
-        <CheckBox  Grid.Row="10"  HorizontalAlignment="Left" Margin="0,8,0,8" FontSize="16" IsEnabled="False" Name="VoertuigGearchiveerdCheckbox">Gearchiveerd</CheckBox>
+            <TextBlock  Grid.Row="0" HorizontalAlignment="Left" Margin="0,0,30,0" FontSize="16">Voertuig</TextBlock>
+        <TextBlock  Grid.Row="1" HorizontalAlignment="Left" Margin="0,8,0,8"  Name="VoertuigId">Id: </TextBlock>
+        <TextBlock  Grid.Row="2" HorizontalAlignment="Left" Margin="0,8,0,8"  Name="Merk">Merk:</TextBlock>
+        <TextBlock  Grid.Row="3" HorizontalAlignment="Left" Margin="0,8,0,8"  Name="Model">Model:</TextBlock>
+        <TextBlock  Grid.Row="4" HorizontalAlignment="Left" Margin="0,8,0,8"  Name="AantalDeuren">Aantal Deuren:</TextBlock>
+        <TextBlock  Grid.Row="5" HorizontalAlignment="Left" Margin="0,8,0,8"  Name="Nummerplaat">Nummerplaat:</TextBlock>
+        <TextBlock  Grid.Row="6" HorizontalAlignment="Left" Margin="0,8,0,8"  Name="Chassisnummer">Chassisnummer:</TextBlock>
+        <TextBlock  Grid.Row="7" HorizontalAlignment="Left" Margin="0,8,0,8"  Name="Kleur">Kleur:</TextBlock>
+        <TextBlock  Grid.Row="8" HorizontalAlignment="Left" Margin="0,8,0,8"  Name="BrandstofVoertuig">Type Brandstof:</TextBlock>
+        <TextBlock  Grid.Row="9" HorizontalAlignment="Left" Margin="0,8,0,8"  Name="VoertuigWagenType">Type Wagen:</TextBlock>
+        <CheckBox  Grid.Row="10"  HorizontalAlignment="Left" Margin="0,8,0,8"  IsEnabled="False" Name="VoertuigGearchiveerdCheckbox">Gearchiveerd</CheckBox>
         </Grid>
 
         <Grid Grid.Column="3" Grid.Row="4">
@@ -95,15 +95,15 @@
                 
             </Grid.RowDefinitions>
         
-        <TextBlock  Grid.Row="0" HorizontalAlignment="Left" Margin="0,0,30,0" FontSize="24">Tankkaart</TextBlock>
-        <TextBlock  Grid.Row="1" HorizontalAlignment="Left" Margin="0,8,0,8" FontSize="16" Name="TankkaartId">Id: </TextBlock>
-        <TextBlock  Grid.Row="2" HorizontalAlignment="Left" Margin="0,8,0,8" FontSize="16" Name="Kaartnummer">Kaartnummer: </TextBlock>
-        <TextBlock  Grid.Row="3" HorizontalAlignment="Left" Margin="0,8,0,8" FontSize="16" Name="Pincode">Pincode: </TextBlock>
-        <TextBlock  Grid.Row="4" HorizontalAlignment="Left" Margin="0,8,0,8" FontSize="16" Name="Vervaldatum">Vervaldatum: </TextBlock>
-        <TextBlock  Grid.Row="5" HorizontalAlignment="Left" Margin="0,8,0,8" FontSize="16" Name="Brandstoftypes">Brandstoftypes: </TextBlock>
-        <CheckBox  Grid.Row="6"  HorizontalAlignment="Left" Margin="0,8,0,8" FontSize="16" IsEnabled="False" Name="TankkaartGearchiveerdCheckBox">Gearchiveerd</CheckBox>
+        <TextBlock  Grid.Row="0" HorizontalAlignment="Left" Margin="0,0,30,0" FontSize="16">Tankkaart</TextBlock>
+        <TextBlock  Grid.Row="1" HorizontalAlignment="Left" Margin="0,8,0,8" Name="TankkaartId">Id: </TextBlock>
+        <TextBlock  Grid.Row="2" HorizontalAlignment="Left" Margin="0,8,0,8" Name="Kaartnummer">Kaartnummer: </TextBlock>
+        <TextBlock  Grid.Row="3" HorizontalAlignment="Left" Margin="0,8,0,8" Name="Pincode">Pincode: </TextBlock>
+        <TextBlock  Grid.Row="4" HorizontalAlignment="Left" Margin="0,8,0,8"  Name="Vervaldatum">Vervaldatum: </TextBlock>
+        <TextBlock  Grid.Row="5" HorizontalAlignment="Left" Margin="0,8,0,8"  Name="Brandstoftypes">Brandstoftypes: </TextBlock>
+        <CheckBox  Grid.Row="6"  HorizontalAlignment="Left" Margin="0,8,0,8"  IsEnabled="False" Name="TankkaartGearchiveerdCheckBox">Gearchiveerd</CheckBox>
         </Grid>
 
-        <Button Grid.Column="3" Grid.Row="5"  HorizontalAlignment="Right" Padding="40,0,40,0" FontSize="16" Name="SluitDetailsButton" Click="SluitDetailsButton_OnClick">Sluiten</Button>
+        <Button Grid.Column="3" Grid.Row="5"  HorizontalAlignment="Right" Padding="40,0,40,0"  Name="SluitDetailsButton" Click="SluitDetailsButton_OnClick">Sluiten</Button>
     </Grid>
 </Window>
