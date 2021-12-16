@@ -95,14 +95,14 @@ namespace DataAccessLayer.Repos
                 command.Parameters.AddWithValue("@Gearchiveerd", gearchiveerd);
 
                 bool next = false;
-                if (string.IsNullOrWhiteSpace(merk))
+                if (!string.IsNullOrWhiteSpace(merk))
                 {
                     query += ", v.Merk=@Merk";
                     command.Parameters.AddWithValue("@Merk", merk);
                     next = true;
                 }
 
-                if (string.IsNullOrWhiteSpace(model))
+                if (!string.IsNullOrWhiteSpace(model))
                 {
                     if (next) query += ", ";
                     query += "v.Model=@Model";
@@ -113,12 +113,12 @@ namespace DataAccessLayer.Repos
                 if (aantalDeuren > 0)
                 {
                     if (next) query += ", ";
-                    query += "v.AantDeuren=@AantalDeuren";
+                    query += "v.AantalDeuren=@AantalDeuren";
                     command.Parameters.AddWithValue("@AantalDeuren", aantalDeuren);
                     next = true;
                 }
 
-                if (string.IsNullOrWhiteSpace(nummerplaat))
+                if (!string.IsNullOrWhiteSpace(nummerplaat))
                 {
                     if (next) query += ", ";
                     query += "v.Nummerplaat=@Nummerplaat";
@@ -126,7 +126,7 @@ namespace DataAccessLayer.Repos
                     next = true;
                 }
 
-                if (string.IsNullOrWhiteSpace(chassisnummer))
+                if (!string.IsNullOrWhiteSpace(chassisnummer))
                 {
                     if (next) query += ", ";
                     query += "v.Chassisnummer=@Chassisnummer";
@@ -134,10 +134,10 @@ namespace DataAccessLayer.Repos
                     next = true;
                 }
 
-                if (string.IsNullOrWhiteSpace(kleur))
+                if (!string.IsNullOrWhiteSpace(kleur))
                 {
                     if (next) query += ", ";
-                    query += "v.kleur=@Kleur";
+                    query += "v.Kleur=@Kleur";
                     command.Parameters.AddWithValue("@Kleur", kleur);
                     next = true;
                 }
@@ -159,6 +159,7 @@ namespace DataAccessLayer.Repos
 
                 command.Connection = connection;
                 command.CommandText = query;
+                connection.Open();
                 var reader = command.ExecuteReader();
                 if (!reader.HasRows) throw new VoertuigRepoException(nameof(GeefVoertuig) + " - Geen voertuig gevonden");
                 Voertuig voertuig = null;
@@ -253,6 +254,14 @@ namespace DataAccessLayer.Repos
                            (string)reader[3],
                            (string)reader[4], new BrandstofType((int)reader[10], (string)reader[14]),
                            new WagenType((int)reader[9], (string)reader[12]));
+
+                        /*if(reader[6] != DBNull.Value)
+                        {
+                            voertuig.ZetKleur((string)reader[6]);
+                        }*/
+                        voertuig.ZetKleur((string)reader[6]);
+                        voertuig.ZetAantalDeuren((int)reader[7]);
+
                         if (reader[15] != DBNull.Value)
                         {
                             var bestuurder = new Bestuurder((int)reader[15], (string)reader[16], (string)reader[18],

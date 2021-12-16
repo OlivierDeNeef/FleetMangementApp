@@ -132,6 +132,8 @@ namespace DataAccessLayer.Repos
                                 (string) reader[20],
                                 (string) reader[21], new BrandstofType((int) reader[27], (string) reader[31]),
                                 new WagenType((int) reader[26], (string) reader[29]));
+                            voertuig.ZetKleur((string)reader[23]);
+                            voertuig.ZetAantalDeuren((int)reader[24]);
                             bestuurder.ZetVoertuig(voertuig);
                         }
 
@@ -387,6 +389,8 @@ namespace DataAccessLayer.Repos
                                 (string) reader[20],
                                 (string) reader[21], new BrandstofType((int) reader[27], (string) reader[31]),
                                 new WagenType((int) reader[26], (string) reader[29]));
+                            voertuig.ZetKleur((string)reader[23]);
+                            voertuig.ZetAantalDeuren((int)reader[24]);
                             bestuurder.ZetVoertuig(voertuig);
                         }
 

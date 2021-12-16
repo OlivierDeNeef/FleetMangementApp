@@ -17,6 +17,7 @@ namespace FleetMangementApp
     public partial class MainWindow : Window
     {
         private readonly BestuurderManager _bestuurderManager;
+        private readonly VoertuigManager _voertuigManager;
         private readonly BrandstofTypeManager _brandstofTypeManager;
         private readonly WagenTypeManager _wagenTypeManager;
         private readonly RijbewijsTypeManager _rijbewijsTypeManager;
@@ -27,12 +28,13 @@ namespace FleetMangementApp
 
         private int _selectedBestuurderId;
 
-        public MainWindow(BestuurderManager bestuurderManager, RijbewijsTypeManager rijbewijsTypeManager, WagenTypeManager wagenTypeManager, BrandstofTypeManager brandstofTypeManager)
+        public MainWindow(BestuurderManager bestuurderManager, VoertuigManager voertuigManager, RijbewijsTypeManager rijbewijsTypeManager, WagenTypeManager wagenTypeManager, BrandstofTypeManager brandstofTypeManager)
         {
             _rijbewijsTypeManager = rijbewijsTypeManager;
             _wagenTypeManager = wagenTypeManager;
             _brandstofTypeManager = brandstofTypeManager;
             _bestuurderManager = bestuurderManager;
+            _voertuigManager = voertuigManager;
             InitializeComponent();
             SetupBestuurderView();
             SetupVoertuigWindowView();
@@ -150,7 +152,7 @@ namespace FleetMangementApp
             if (ResultatenBestuurders.SelectedItem != null)
             {
                 var selectedBestuurder = (ResultBestuurder)ResultatenBestuurders.SelectedItem;
-                new BestuurderAanpassen(_bestuurderManager.GeefBestuurder(selectedBestuurder.Id))
+                new BestuurderAanpassen(_bestuurderManager.GeefBestuurder(selectedBestuurder.Id), _bestuurderManager)
                 {
                     Owner = this
                 }.ShowDialog();
@@ -192,7 +194,7 @@ namespace FleetMangementApp
         private void SetupVoertuigWindowView()
         {
             _brandstoffen = _brandstofTypeManager.GeefAlleBrandstofTypes().ToList(); // ADO methode returned list van Brandstoftype != 
-            VoertuigConcoboxBrandstof.ItemsSource = _brandstoffen.Select(b => b.Type);
+            VoertuigComboBoxBrandstof.ItemsSource = _brandstoffen.Select(b => b.Type);
             _wagentypes = _wagenTypeManager.GeefAlleWagenTypes().ToList();
             VoertuigComboBoxTypeWagen.ItemsSource = _wagentypes.Select(w => w.Type);
         }
@@ -205,6 +207,61 @@ namespace FleetMangementApp
                 Owner = this
 
             }.ShowDialog();
+        }
+
+        private void ZoekVoertuigButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                //Valideerd de velden van de zoek parameters 
+                if (!ValidateVoertuigFields()) return;
+                //Input omzetten naar correcte types
+                var id = string.IsNullOrWhiteSpace(TextBoxVoertuigId.Text) ? 0 : int.Parse(TextBoxVoertuigId.Text);
+                
+                var merk = TextBoxMerkVoertuig.Text;
+                var model = TextBoxModelVoertuig.Text;
+                var aantalDeuren = string.IsNullOrWhiteSpace(TextBoxAantalDeuren.Text) ? 0 : int.Parse(TextBoxAantalDeuren.Text);
+                var nummerplaat = TextBoxVoertuigenNummerplaat.Text;
+                var chassisnummer = TextBoxChassisnummerVoertuigen.Text;
+                var kleur = TextBoxKleurVoertuigen.Text;
+                var gearchiveerd = CheckBoxGearchiveerdVoertuig.IsChecked.Value;
+                var isHybride = false;
+
+                var wagenType = VoertuigComboBoxTypeWagen.SelectedItem == null ? null :  _wagenTypeManager.GeefAlleWagenTypes().Where(w => w.Type == VoertuigComboBoxTypeWagen.SelectedItem.ToString()).FirstOrDefault();
+                var brandstofType = VoertuigComboBoxBrandstof.SelectedItem == null ? null : _brandstofTypeManager.GeefAlleBrandstofTypes().Where(b => b.Type == VoertuigComboBoxBrandstof.SelectedItem.ToString()).FirstOrDefault();
+
+                var result = _voertuigManager.GeefGefilterdeVoertuigen(id, merk, model, aantalDeuren, nummerplaat, chassisnummer, kleur, wagenType, brandstofType, gearchiveerd, isHybride).ToList();
+                //Gevonden bestuurder mappen aan datagrid
+                ResultatenVoertuigen.ItemsSource = result.Select(VoertuigUIMapper.ToUI);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "Fout", MessageBoxButton.OK);
+            }
+
+        }
+        private bool ValidateVoertuigFields()
+        {
+            var result = true;
+            if (!string.IsNullOrWhiteSpace(TextBoxVoertuigId.Text) && !int.TryParse(TextBoxBestuurderId.Text, out var _resultIdParse))
+            {
+                MessageBox.Show("Id kan alleen nummers bevatten", "Invalid field");
+                result = false;
+            }
+
+            if (!string.IsNullOrWhiteSpace(TextBoxAantalDeuren.Text) && !int.TryParse(TextBoxAantalDeuren.Text, out var _resultDeurenParse))
+            {
+                MessageBox.Show("Aantal Deuren mag enkel nummers bevatten", "Invalid field");
+                result = false;
+            }
+
+            if (!string.IsNullOrWhiteSpace(TextBoxChassisnummerVoertuigen.Text) && TextBoxChassisnummerVoertuigen.Text.Length != 17)
+            {
+                MessageBox.Show("Het chassisnummer moet 17 tekens bevatten", "Invalid field");
+                result = false;
+            }
+
+            return result;
         }
 
     }
