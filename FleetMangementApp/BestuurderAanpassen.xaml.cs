@@ -23,6 +23,7 @@ namespace FleetMangementApp
     {
         Bestuurder _bestuurder;
         private readonly BestuurderManager _bestuurderManager;
+        public Voertuig SelectedVoertuig; 
         protected internal bool voertuigChanged = false;
         protected internal bool tankkaartChanged = false;
 
