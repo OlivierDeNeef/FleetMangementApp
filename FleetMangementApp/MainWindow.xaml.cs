@@ -22,6 +22,7 @@ namespace FleetMangementApp
         private readonly BrandstofTypeManager _brandstofTypeManager;
         private readonly WagenTypeManager _wagenTypeManager;
         private readonly RijbewijsTypeManager _rijbewijsTypeManager;
+        private readonly TankkaartManager _tankkaartManager;
         private List<BrandstofType> _brandstoffen = new();
         private List<WagenType> _wagentypes = new();
         private static readonly Regex _regex = new Regex("[^0-9.-]+");
@@ -30,16 +31,19 @@ namespace FleetMangementApp
 
         private int _selectedBestuurderId;
 
-        public MainWindow(BestuurderManager bestuurderManager, VoertuigManager voertuigManager, RijbewijsTypeManager rijbewijsTypeManager, WagenTypeManager wagenTypeManager, BrandstofTypeManager brandstofTypeManager)
+        public MainWindow(BestuurderManager bestuurderManager, VoertuigManager voertuigManager, RijbewijsTypeManager rijbewijsTypeManager,
+            WagenTypeManager wagenTypeManager, BrandstofTypeManager brandstofTypeManager, TankkaartManager tankkaartManager)
         {
             _rijbewijsTypeManager = rijbewijsTypeManager;
             _wagenTypeManager = wagenTypeManager;
             _brandstofTypeManager = brandstofTypeManager;
             _bestuurderManager = bestuurderManager;
             _voertuigManager = voertuigManager;
+            _tankkaartManager = tankkaartManager;
             InitializeComponent();
             SetupBestuurderView();
             SetupVoertuigWindowView();
+            SetupTankkaartWindowView();
         }
 
     
@@ -287,10 +291,33 @@ namespace FleetMangementApp
             return !_regex.IsMatch(text);
         }
 
+        private void SetupTankkaartWindowView()
+        {
+            _brandstoffen = _brandstofTypeManager.GeefAlleBrandstofTypes().ToList(); // ADO methode returned list van Brandstoftype != 
+            BrandstoftypeTankkaartCombobox.ItemsSource = _brandstoffen.Select(b => b.Type);
+        }
+
+
+
 
         #endregion
 
+        private void ListBoxBrandstofTypesTankkaart_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            BrandstoftypeTankkaartCombobox.SelectedItem = ListBoxBrandstofTypesTankkaart.SelectedItem;
+        }
 
-       
+        private void ToevoegenTankkaartButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            string r = (string)BrandstoftypeTankkaartCombobox.SelectedValue;
+            if (!ListBoxBrandstofTypesTankkaart.Items.Contains(r))
+                ListBoxBrandstofTypesTankkaart.Items.Add(r);
+        }
+
+        private void VerwijderTankkaartButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            string r = (string)BrandstoftypeTankkaartCombobox.SelectedValue;
+            ListBoxBrandstofTypesTankkaart.Items.Remove(r);
+        }
     }
 }

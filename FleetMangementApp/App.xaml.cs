@@ -41,6 +41,7 @@ namespace FleetMangementApp
             services.AddSingleton<VoertuigManager>();
             services.AddSingleton<RijbewijsTypeManager>();
             services.AddSingleton<BrandstofTypeManager>();
+            services.AddSingleton<TankkaartManager>();
             services.AddSingleton<WagenTypeManager>();
             services.AddSingleton<IConfiguration>(_configuration);
             services.AddTransient<MainWindow>();
