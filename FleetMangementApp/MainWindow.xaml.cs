@@ -43,8 +43,6 @@ namespace FleetMangementApp
         }
 
     
-
-
         #region BestuurderTab
 
         private void SetupBestuurderView()
@@ -249,7 +247,7 @@ namespace FleetMangementApp
         private bool ValidateVoertuigFields()
         {
             var result = true;
-            if (!string.IsNullOrWhiteSpace(TextBoxVoertuigId.Text) && !int.TryParse(TextBoxBestuurderId.Text, out var _resultIdParse))
+            if (!string.IsNullOrWhiteSpace(TextBoxVoertuigId.Text) && !int.TryParse(TextBoxVoertuigId.Text, out var _resultIdParse))
             {
                 MessageBox.Show("Id kan alleen nummers bevatten", "Invalid field");
                 result = false;
