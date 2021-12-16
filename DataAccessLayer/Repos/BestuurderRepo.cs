@@ -132,6 +132,8 @@ namespace DataAccessLayer.Repos
                                 (string) reader[20],
                                 (string) reader[21], new BrandstofType((int) reader[27], (string) reader[31]),
                                 new WagenType((int) reader[26], (string) reader[29]));
+                            voertuig.ZetKleur((string)reader[23]);
+                            voertuig.ZetAantalDeuren((int)reader[24]);
                             bestuurder.ZetVoertuig(voertuig);
                         }
 
@@ -298,9 +300,9 @@ namespace DataAccessLayer.Repos
                 connection.Open();
                 transaction = connection.BeginTransaction();
                 var command1 = new SqlCommand(
-                    "UPDATE BESTUURDERS SET Naam=@Naam, Voornaam=@Voornaam, Geboortedatum=@Geboordedatum, Rijksregisternummer=@Rijksregisternummer, Straat=@Straat, " +
-                    "Busnummer=@Busnummer, Gearchiveerd=@Gearchiveerd, TankkaartId=@TankkaartId, VoertuigId=@VoertuigId,  " +
-                    "Huisnummer=@Huisnummer, Stad=@Stad, Postcode=@Postcode, Land=@Land", connection, transaction);
+                    "UPDATE BESTUURDERS SET Naam=@Naam, Voornaam=@Voornaam, Geboortedatum=@Geboortedatum, Rijksregisternummer=@Rijksregisternummer, Straat=@Straat, " +
+                    "Gearchiveerd=@Gearchiveerd, TankkaartId=@TankkaartId, VoertuigId=@VoertuigId,  " +
+                    "Huisnummer=@Huisnummer, Stad=@Stad, Postcode=@Postcode, Land=@Land where Id=@Id", connection, transaction);
                 command1.Parameters.AddWithValue("@Naam", bestuurder.Naam); // ok
                 command1.Parameters.AddWithValue("@Voornaam", bestuurder.Voornaam); // ok
                 command1.Parameters.AddWithValue("@Geboortedatum", bestuurder.Geboortedatum); //ok 
@@ -310,9 +312,10 @@ namespace DataAccessLayer.Repos
                 command1.Parameters.AddWithValue("@Stad", (object)bestuurder.Adres?.Stad ?? DBNull.Value); //ok
                 command1.Parameters.AddWithValue("@Postcode", (object)bestuurder.Adres?.Postcode ?? DBNull.Value); //ok
                 command1.Parameters.AddWithValue("@Land", (object)bestuurder.Adres?.Land ?? DBNull.Value); //ok
-                command1.Parameters.AddWithValue("@TankkaartenId", (object)bestuurder.Tankkaart?.Id ?? DBNull.Value); //k
+                command1.Parameters.AddWithValue("@TankkaartId", (object)bestuurder.Tankkaart?.Id ?? DBNull.Value); //k
                 command1.Parameters.AddWithValue("@VoertuigId", (object)bestuurder.Voertuig?.Id ?? DBNull.Value); //ok
-                command1.Parameters.AddWithValue("@IsGearchiveerd", bestuurder.IsGearchiveerd);
+                command1.Parameters.AddWithValue("@Gearchiveerd", bestuurder.IsGearchiveerd);
+                command1.Parameters.AddWithValue("@Id", bestuurder.Id);
                 command1.ExecuteNonQuery();
 
                 var command2 = new SqlCommand("delete dbo.RijbewijsTypes_Bestuurders where BestuurderId=@Id", connection, transaction);
@@ -321,7 +324,7 @@ namespace DataAccessLayer.Repos
 
                 foreach (var rijbewijsType in bestuurder.GeefRijbewijsTypes())
                 {
-                    var command3 = new SqlCommand("insert into dbo.RijbewijsTypes_Bestuurders (BestuurderId,RijbewijsTypeId) values (@Id,@RijbeswijsTypeId)", connection, transaction);
+                    var command3 = new SqlCommand("insert into dbo.RijbewijsTypes_Bestuurders (BestuurderId,RijbewijsTypeId) values (@Id,@RijbewijsTypeId)", connection, transaction);
                     command3.Parameters.AddWithValue("@Id", bestuurder.Id);
                     command3.Parameters.AddWithValue("@RijbewijsTypeId", rijbewijsType.Id);
                     command3.ExecuteNonQuery();
@@ -386,6 +389,8 @@ namespace DataAccessLayer.Repos
                                 (string) reader[20],
                                 (string) reader[21], new BrandstofType((int) reader[27], (string) reader[31]),
                                 new WagenType((int) reader[26], (string) reader[29]));
+                            voertuig.ZetKleur((string)reader[23]);
+                            voertuig.ZetAantalDeuren((int)reader[24]);
                             bestuurder.ZetVoertuig(voertuig);
                         }
 

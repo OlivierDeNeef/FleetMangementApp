@@ -81,7 +81,7 @@ namespace FleetMangementApp
             
             foreach(RijbewijsType type in _bestuurder.GeefRijbewijsTypes())
             {
-                Rijbewijzen.Text += "-" + type.Type + "\n";
+                Rijbewijzen.Text +="\n" +"-" + type.Type  ;
             }
 
             BestuurderGearchiveerdCheckBox.IsChecked = _bestuurder.IsGearchiveerd;
@@ -111,8 +111,10 @@ namespace FleetMangementApp
 
             foreach(BrandstofType type in _tankkaart.GeefBrandstofTypes())
             {
-                Brandstoftypes.Text += "-" + type.Type + "\n";
+                Brandstoftypes.Text +="\n"+ "-" + type.Type  ;
             }
+
+            
 
             TankkaartGearchiveerdCheckBox.IsChecked = _tankkaart.IsGearchiveerd;
         }
