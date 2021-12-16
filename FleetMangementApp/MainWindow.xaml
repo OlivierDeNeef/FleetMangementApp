@@ -91,7 +91,7 @@
                     <Button Name="ButtonEditBestuurder" Focusable="False" Grid.Column="4" Width="200" Grid.Row="11" Margin="0,0,0,10" HorizontalAlignment="Left" IsEnabled="False" Click="ButtonBestuurderAanpassen_Click">Aanpassen</Button>
                     <Button Name="ButtonArchiveerBestuurder" Focusable="False" Grid.Column="4" Width="200" Grid.Row="12" HorizontalAlignment="Left" IsEnabled="False"  Click="ButtonArchiveerVoertuig_Click">(De)Archiveren</Button>
                     
-</Grid>
+                </Grid>
             </TabItem>
             <TabItem Header="Voertuigen">
                 <Grid Background="LightBlue">
@@ -105,6 +105,7 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="20"/>
                         <RowDefinition Height="5"/>
+                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
@@ -234,8 +235,30 @@
                         <Button Width="85" Name="ToevoegenTankkaartButton" DockPanel.Dock="Left" VerticalAlignment="Top" Click="ToevoegenRijbewijsButton_OnClick">Toevoegen</Button>
                         <Button Width="85" Name="VerwijderTankkaartButton" DockPanel.Dock="Right" VerticalAlignment="Top" Click="VerwijderRijbewijsButton_OnClick">Verwijderen</Button>
                     </DockPanel>
+                    <Button Grid.Row="5" Grid.Column="4" Content="Zoeken" Width="200"/>
 
+                    <Label Grid.Column="1" Grid.Row="8" FontSize="18">Resultaten</Label>
 
+                    <DataGrid Name="ResultatenTankkaarten" Width="650" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="9" Grid.RowSpan="5" AutoGenerateColumns="False"  Margin="0,0,30,0" IsReadOnly="True">
+                        <DataGrid.RowStyle>
+                            <Style TargetType="DataGridRow">
+                                <EventSetter Event="GotFocus" Handler="RowGotFocus"/>
+                                <EventSetter Event="LostFocus" Handler="RowLostFocus"/>
+                            </Style>
+                        </DataGrid.RowStyle>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Width="30" Header="Id" Binding="{Binding Id}" CanUserResize="False"></DataGridTextColumn>
+                            <DataGridTextColumn Width="*" Header="Kaartnummer" Binding="{Binding Kaartnummer}" CanUserResize="False"></DataGridTextColumn>
+                            <DataGridTextColumn Width="90" Header="Pincode" Binding="{Binding Pincode}"></DataGridTextColumn>
+                            <DataGridTextColumn Width="100" Header="Geldigheidsdatum" Binding="{Binding Geldigheidsdatum}"></DataGridTextColumn>
+                            <DataGridTextColumn Width="100" Header="Geblokkeerd" Binding="{Binding Geblokkeerd}"></DataGridTextColumn>
+                           <DataGridCheckBoxColumn Width="80" Header="Bestuurder" Binding="{Binding HeeftBestuurder}"></DataGridCheckBoxColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button Name="ButtonNieuwVoertuigaanTankkaart"  Grid.Column="4" Width="200" Grid.Row="9" Margin="0,20,0,10" HorizontalAlignment="Left">Nieuw</Button>
+                    <Button Name="ButtonDetailsTankkaart" Focusable="False" Grid.Column="4" Width="200" Grid.Row="10" Margin="0,0,0,10" HorizontalAlignment="Left" IsEnabled="False">Details</Button>
+                    <Button Name="ButtonEditTankkaart" Focusable="False" Grid.Column="4" Width="200" Grid.Row="11" Margin="0,0,0,10" HorizontalAlignment="Left" IsEnabled="False">Aanpassen</Button>
+                    <Button Name="ButtonArchiveerTankkaart" Focusable="False" Grid.Column="4" Width="200" Grid.Row="12" HorizontalAlignment="Left" IsEnabled="False">(De)Archiveren</Button>
 
                 </Grid>
             </TabItem>
