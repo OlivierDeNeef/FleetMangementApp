@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DomainLayer.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,8 +18,13 @@ namespace FleetMangementApp
     /// <summary>
     /// Interaction logic for BestuurderToevoegen.xaml
     /// </summary>
-    public partial class BestuurderToevoegen : Window
+    /// 
+    
+
+    public partial class BestuurderToevoegen : Window 
     {
+        public Voertuig SelectedVoertuig { get; set; }
+
         public BestuurderToevoegen()
         {
             InitializeComponent();
@@ -33,6 +39,11 @@ namespace FleetMangementApp
         private void ToevoegenButton_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            new VoertuigSelecteren() { Owner = this }.ShowDialog();
         }
     }
 }

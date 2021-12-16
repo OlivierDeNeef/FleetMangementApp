@@ -32,6 +32,12 @@ namespace FleetMangementApp
         private void RowLostFocus(object sender, RoutedEventArgs e)
         {
             SelectieToevoegenButton.IsEnabled = false;
+            //if (Owner.GetType() == typeof(BestuurderToevoegen))
+            //{
+            //    var main = Owner as BestuurderToevoegen;
+            //    main.SelectedVoertuig = null;
+            //}
+            
         }
     }
 }

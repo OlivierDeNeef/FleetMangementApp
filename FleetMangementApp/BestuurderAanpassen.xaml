@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FleetMangementApp"
         mc:Ignorable="d"
-        Title="BestuurderAanpassen" Height="450" Width="520" ResizeMode="NoResize">
+        Title="BestuurderAanpassen" Height="420" Width="520" ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
@@ -21,6 +21,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="25"/>
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -63,15 +64,11 @@
 
         <Button Grid.Row="11" Grid.Column="2" Margin="0,0,30,0">Selecteer Tankkaart</Button>
 
-        <Button Grid.Row="12" Grid.Column="1" Margin="0,60,90,20" Name="AnnulerenButton" Click="AnnulerenButton_Click">
-            <Button.RenderTransform>
-                <ScaleTransform ScaleX="1.5" ScaleY="1.5"></ScaleTransform>
-            </Button.RenderTransform> Annuleren
+        <Button Grid.Row="13" Grid.Column="0" Grid.ColumnSpan="2" Margin="10,0,20,0" Name="AnnulerenButton" Click="AnnulerenButton_Click">
+             Annuleren
         </Button>
-        <Button Grid.Row="12" Grid.Column="2" Margin="0,60,80,20" Name="AanpassenButton" Click="AanpassenButton_Click">
-            <Button.RenderTransform>
-                <ScaleTransform ScaleX="1.5" ScaleY="1.5"></ScaleTransform>
-            </Button.RenderTransform> Aanpassen
+        <Button Grid.Row="13" Grid.Column="2" Grid.ColumnSpan="2" Margin="20,0,10,0" Name="AanpassenButton" Click="AanpassenButton_Click">
+           Aanpassen
         </Button>
     </Grid>
 </Window>
