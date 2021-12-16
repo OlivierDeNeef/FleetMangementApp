@@ -243,6 +243,7 @@ namespace DataAccessLayer.Repos
                                              "left join dbo.Tankkaarten_BrandstofTypes tb on tb.TankkaartId = t.Id " +
                                              "left join dbo.BrandstofTypes btb on tb.BrandstofTypeId = btb.Id where v.Id = @Id", connection);
                 command.Parameters.AddWithValue("@Id", id);
+                connection.Open();
                 var reader = command.ExecuteReader();
                 if (!reader.HasRows) throw new VoertuigRepoException(nameof(GeefVoertuig) + " - Geen voertuig gevonden");
                 Voertuig voertuig = null;

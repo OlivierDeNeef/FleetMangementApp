@@ -106,6 +106,10 @@ namespace FleetMangementApp
             ButtonEditBestuurder.IsEnabled = true;
             ButtonArchiveerBestuurder.IsEnabled = true;
 
+            ButtonDetailsVoertuig.IsEnabled = true;
+            ButtonEditVoertuig.IsEnabled = true;
+            ButtonArchiveerVoertuig.IsEnabled = true;
+
             // Neemt de geselecteerde bestuurderId uit het datagrid 
             var datagridrow = sender as DataGridRow;
             if (datagridrow?.Item is ResultBestuurder selectedResult) _selectedBestuurderId = selectedResult.Id;
@@ -116,6 +120,9 @@ namespace FleetMangementApp
             ButtonDetailBestuurder.IsEnabled = false;
             ButtonEditBestuurder.IsEnabled = false;
             ButtonArchiveerBestuurder.IsEnabled = false;
+            ButtonDetailsVoertuig.IsEnabled = false;
+            ButtonEditVoertuig.IsEnabled = false;
+            ButtonArchiveerVoertuig.IsEnabled = false;
         }
 
         private void ListBoxRijbewijzen_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -262,6 +269,19 @@ namespace FleetMangementApp
             }
 
             return result;
+        }
+
+        private void ButtonDetailsVoertuig_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (ResultatenVoertuigen.SelectedItem != null)
+            {
+                var selectedVoertuig = (ResultVoertuig)ResultatenVoertuigen.SelectedItem;
+                new Details(_voertuigManager.GeefVoertuig(selectedVoertuig.Id))
+                {
+                    Owner = this
+                }.ShowDialog();
+            }
+
         }
 
     }
