@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace FleetMangementApp
 {
     /// <summary>
-    /// Interaction logic for Tankkaart.xaml
+    /// Interaction logic for TankkaartAanpassen.xaml
     /// </summary>
-    public partial class Tankkaart : Window
+    public partial class TankkaartAanpassen : Window
     {
-        public Tankkaart()
+        public TankkaartAanpassen()
         {
             InitializeComponent();
         }
