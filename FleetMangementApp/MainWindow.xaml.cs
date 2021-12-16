@@ -6,6 +6,7 @@ using FleetMangementApp.Models.Output;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -23,6 +24,7 @@ namespace FleetMangementApp
         private readonly RijbewijsTypeManager _rijbewijsTypeManager;
         private List<BrandstofType> _brandstoffen = new();
         private List<WagenType> _wagentypes = new();
+        private static readonly Regex _regex = new Regex("[^0-9.-]+");
 
         protected internal List<RijbewijsType> _allRijbewijsTypes = new();
 
@@ -205,8 +207,6 @@ namespace FleetMangementApp
             _wagentypes = _wagenTypeManager.GeefAlleWagenTypes().ToList();
             VoertuigComboBoxTypeWagen.ItemsSource = _wagentypes.Select(w => w.Type);
         }
-        #endregion
-
         private void ButtonNieuwVoertuig_OnClick(object sender, RoutedEventArgs e)
         {
             new VoertuigToevoegen(_brandstofTypeManager, _wagenTypeManager)
@@ -215,7 +215,6 @@ namespace FleetMangementApp
 
             }.ShowDialog();
         }
-
         private void ZoekVoertuigButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -270,7 +269,6 @@ namespace FleetMangementApp
 
             return result;
         }
-
         private void ButtonDetailsVoertuig_OnClick(object sender, RoutedEventArgs e)
         {
             if (ResultatenVoertuigen.SelectedItem != null)
@@ -283,6 +281,18 @@ namespace FleetMangementApp
             }
 
         }
+        #endregion
+
+        #region Tankkaart
+        private static bool IsTextAllowed(string text)
+        {
+            return !_regex.IsMatch(text);
+        }
+
+
+        #endregion
+
+
 
     }
 }

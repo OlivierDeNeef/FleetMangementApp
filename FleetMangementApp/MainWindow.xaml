@@ -122,8 +122,7 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="20"/>
                     </Grid.ColumnDefinitions>
-                    <Rectangle Grid.Row="0" Grid.Column="0" Grid.RowSpan="8" Grid.ColumnSpan="7" Fill="#FF507ECD">
-                    </Rectangle>
+                    <Rectangle Grid.Row="0" Grid.Column="0" Grid.RowSpan="8" Grid.ColumnSpan="7" Fill="#FF507ECD"/>
                     <Label Grid.Column="1" Grid.Row="1" Content="Id" HorizontalAlignment="Left" Margin="0,0,30,0"/>
                     <TextBox Grid.Row="2" Grid.Column="1" Name="TextBoxVoertuigId" Width="200" Margin="0,0,30,0"/>
 
@@ -183,17 +182,50 @@
                             <DataGridCheckBoxColumn Width="80" Header="Bestuurder" Binding="{Binding HeeftBestuurder}"></DataGridCheckBoxColumn>
                         </DataGrid.Columns>
                     </DataGrid>
-
                     <Button Name="ButtonNieuwVoertuig"  Grid.Column="4" Width="200" Grid.Row="10" Margin="0,20,0,10" HorizontalAlignment="Left" Click="ButtonNieuwVoertuig_OnClick">Nieuw</Button>
                     <Button Name="ButtonDetailsVoertuig" Focusable="False" Grid.Column="4" Width="200" Grid.Row="11" Margin="0,0,0,10" HorizontalAlignment="Left" IsEnabled="False" Click="ButtonDetailsVoertuig_OnClick">Details</Button>
                     <Button Name="ButtonEditVoertuig" Focusable="False" Grid.Column="4" Width="200" Grid.Row="12" Margin="0,0,0,10" HorizontalAlignment="Left" IsEnabled="False">Aanpassen</Button>
                     <Button Name="ButtonArchiveerVoertuig" Focusable="False" Grid.Column="4" Width="200" Grid.Row="13" HorizontalAlignment="Left" IsEnabled="False">(De)Archiveren</Button>
-
-
-</Grid>
+                </Grid>
             </TabItem>
             <TabItem Header="Tankkaarten">
-
+                <Grid Background="LightBlue">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="5"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="20"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="20"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="20"/>
+                    </Grid.ColumnDefinitions>
+                    <Rectangle Grid.Row="0" Grid.Column="0" Grid.RowSpan="8" Grid.ColumnSpan="7" Fill="#FF507ECD"/>
+                    <Label Grid.Row="1" Grid.Column="1" Content="Id:" HorizontalAlignment="Left" Margin="0,0,30,0"/>
+                    <Label Grid.Row="1" Grid.Column="2" Content="Kaartnummer:" HorizontalAlignment="Left" Margin="0,0,30,0"/>
+                    <Label Grid.Row="1" Grid.Column="3" Content="Brandstoftypes:" HorizontalAlignment="Left" Margin="0,0,30,0"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" Width="200" Margin="0,0,30,0" Name="TankkaartId"/>
+                    <TextBox Grid.Row="2" Grid.Column="2" Width="200" Margin="0,0,30,0" Name="TankkaartKaartnummer"/>
+                    <Label Grid.Row="3" Grid.Column="1" Content="Pincode:" HorizontalAlignment="Left" Margin="0,0,30,0"/>
+                    <TextBox Grid.Row="4" Grid.Column="1" Width="200" PreviewTextInput="PreviewTextInput" Margin="0,0,30,0" Name="TankkaartPincodeTextbox"/>
+                    
+                </Grid>
             </TabItem>
             <TabItem Header="Types">
 
