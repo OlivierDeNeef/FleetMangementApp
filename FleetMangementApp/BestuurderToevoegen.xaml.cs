@@ -23,5 +23,16 @@ namespace FleetMangementApp
         {
             InitializeComponent();
         }
+
+
+        private void AnnulerenButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void ToevoegenButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

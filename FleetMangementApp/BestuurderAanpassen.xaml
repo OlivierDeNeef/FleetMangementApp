@@ -29,8 +29,7 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="20"/>
         </Grid.ColumnDefinitions>
-        <!--Rectangle Grid.Row="1" Grid.Column="1" Grid.RowSpan="11" Grid.ColumnSpan="2" Fill="#FF507ECD"></Rectangle-->
-
+        
         <Label Grid.Row="1" Grid.Column="1"  Content="*Naam" HorizontalAlignment="Left" Margin="0,0,30,0"/>
         <TextBox Grid.Row="2" Grid.Column="1" Name="TextBoxBestuurderNaam" Width="200" Margin="0,0,30,0"/>
 
@@ -64,7 +63,7 @@
 
         <Button Grid.Row="11" Grid.Column="2" Margin="0,0,30,0">Selecteer Tankkaart</Button>
 
-        <Button Grid.Row="12" Grid.Column="1" Margin="0,60,90,20">
+        <Button Grid.Row="12" Grid.Column="1" Margin="0,60,90,20" Name="AnnulerenButton" Click="AnnulerenButton_Click">
             <Button.RenderTransform>
                 <ScaleTransform ScaleX="1.5" ScaleY="1.5"></ScaleTransform>
             </Button.RenderTransform> Annuleren

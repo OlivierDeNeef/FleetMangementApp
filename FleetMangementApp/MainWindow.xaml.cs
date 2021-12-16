@@ -23,7 +23,7 @@ namespace FleetMangementApp
         private List<BrandstofType> _brandstoffen = new();
         private List<WagenType> _wagentypes = new();
 
-        private List<RijbewijsType> _allRijbewijsTypes = new();
+        protected internal List<RijbewijsType> _allRijbewijsTypes = new();
 
         private int _selectedBestuurderId;
 
@@ -101,7 +101,7 @@ namespace FleetMangementApp
         private void RowGotFocus(object sender, RoutedEventArgs e)
         {
             ButtonDetailBestuurder.IsEnabled = true;
-            ButtonEditBestuuder.IsEnabled = true;
+            ButtonEditBestuurder.IsEnabled = true;
             ButtonArchiveerBestuurder.IsEnabled = true;
 
             // Neemt de geselecteerde bestuurderId uit het datagrid 
@@ -112,7 +112,7 @@ namespace FleetMangementApp
         private void RowLostFocus(object sender, RoutedEventArgs e)
         {
             ButtonDetailBestuurder.IsEnabled = false;
-            ButtonEditBestuuder.IsEnabled = false;
+            ButtonEditBestuurder.IsEnabled = false;
             ButtonArchiveerBestuurder.IsEnabled = false;
         }
 
@@ -145,6 +145,18 @@ namespace FleetMangementApp
 
         }
 
+        private void ButtonBestuurderAanpassen_Click(object sender, RoutedEventArgs e)
+        {
+            if (ResultatenBestuurders.SelectedItem != null)
+            {
+                var selectedBestuurder = (ResultBestuurder)ResultatenBestuurders.SelectedItem;
+                new BestuurderAanpassen(_bestuurderManager.GeefBestuurder(selectedBestuurder.Id))
+                {
+                    Owner = this
+                }.ShowDialog();
+            }
+        }
+
         private void ButtonDetailsBestuurder_OnClick(object sender, RoutedEventArgs e)
         {
             if(ResultatenBestuurders.SelectedItem != null)
@@ -158,12 +170,23 @@ namespace FleetMangementApp
             
         }
 
+        private void ButtonArchiveerVoertuig_Click(object sender, RoutedEventArgs e)
+        {
+            if (ResultatenBestuurders.SelectedItem != null)
+            {
+                var selectedItem = (ResultBestuurder)ResultatenBestuurders.SelectedItem;
+                Bestuurder selectedBestuurder = _bestuurderManager.GeefBestuurder(selectedItem.Id);
+                selectedBestuurder.ZetGearchiveerd(!selectedBestuurder.IsGearchiveerd);
+                _bestuurderManager.UpdateBestuurder(selectedBestuurder);
+            }
+        }
+
 
 
         #endregion
 
         #region VoertuigenTab
-        
+
 
 
         private void SetupVoertuigWindowView()
@@ -183,5 +206,6 @@ namespace FleetMangementApp
 
             }.ShowDialog();
         }
+
     }
 }

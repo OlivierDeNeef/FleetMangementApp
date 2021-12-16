@@ -88,8 +88,8 @@
                     </DataGrid>
                     <Button Name="ButtonNieuweBestuurder"  Grid.Column="4" Width="200" Grid.Row="9" Margin="0,20,0,10" HorizontalAlignment="Left" Click="ButtonNieuweBestuurder_OnClick">Nieuw</Button>
                     <Button Name="ButtonDetailBestuurder" Focusable="False" Grid.Column="4" Width="200" Grid.Row="10" Margin="0,0,0,10" HorizontalAlignment="Left" IsEnabled="False" Click="ButtonDetailsBestuurder_OnClick">Details</Button>
-                    <Button Name="ButtonEditBestuuder" Focusable="False" Grid.Column="4" Width="200" Grid.Row="11" Margin="0,0,0,10" HorizontalAlignment="Left" IsEnabled="False">Aanpassen</Button>
-                    <Button Name="ButtonArchiveerBestuurder" Focusable="False" Grid.Column="4" Width="200" Grid.Row="12" HorizontalAlignment="Left" IsEnabled="False">(De)Archiveren</Button>
+                    <Button Name="ButtonEditBestuurder" Focusable="False" Grid.Column="4" Width="200" Grid.Row="11" Margin="0,0,0,10" HorizontalAlignment="Left" IsEnabled="False" Click="ButtonBestuurderAanpassen_Click">Aanpassen</Button>
+                    <Button Name="ButtonArchiveerBestuurder" Focusable="False" Grid.Column="4" Width="200" Grid.Row="12" HorizontalAlignment="Left" IsEnabled="False"  Click="ButtonArchiveerVoertuig_Click">(De)Archiveren</Button>
                     
 </Grid>
             </TabItem>

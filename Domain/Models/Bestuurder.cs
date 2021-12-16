@@ -54,6 +54,7 @@ namespace DomainLayer.Models
             ZetVoornaam(voornaam);
             ZetGeboortedatum(geboortedatum);
             ZetRijksregisternummer(rijksregisternummer);
+            ZetGearchiveerd(isGearchiveerd);
             _rijbewijsTypes = rijbewijsTypes;
         }
 
