@@ -223,7 +223,7 @@
                     <TextBox Grid.Row="2" Grid.Column="1" Width="200" Margin="0,0,30,0" Name="TankkaartId"/>
                     <TextBox Grid.Row="2" Grid.Column="2" Width="200" Margin="0,0,30,0" Name="TankkaartKaartnummer"/>
                     <Label Grid.Row="3" Grid.Column="1" Content="Pincode:" HorizontalAlignment="Left" Margin="0,0,30,0"/>
-                    <TextBox Grid.Row="4" Grid.Column="1" Width="200" PreviewTextInput="PreviewTextInput" Margin="0,0,30,0" Name="TankkaartPincodeTextbox"/>
+                    <TextBox Grid.Row="4" Grid.Column="1" Width="200"  Margin="0,0,30,0" Name="TankkaartPincodeTextbox"/>
                     
                 </Grid>
             </TabItem>

@@ -33,7 +33,7 @@ namespace FleetMangementApp
             InitializeComponent();
             _bestuurder = selectedBestuurder;
             _voertuig = selectedBestuurder.Voertuig;
-            _tankkaart = selectedBestuurder.Tankkaart;
+      //      _tankkaart = selectedBestuurder.Tankkaart;
             VulGegevensBestuurderAan();
             if(_voertuig != null)
                 VulGegevensVoertuigAan();
@@ -48,7 +48,7 @@ namespace FleetMangementApp
             _voertuig = selectedVoertuig;
             _bestuurder = selectedVoertuig.Bestuurder;
             if(selectedVoertuig.Bestuurder != null)
-                _tankkaart = selectedVoertuig.Bestuurder.Tankkaart;
+         //       _tankkaart = selectedVoertuig.Bestuurder.Tankkaart;
             VulGegevensVoertuigAan();
             if(_bestuurder != null)
                 VulGegevensBestuurderAan();
@@ -61,8 +61,8 @@ namespace FleetMangementApp
             InitializeComponent();
 
             _tankkaart = selectedTankkaart;
-            _bestuurder = selectedTankkaart.Bestuurder;
-            _voertuig = selectedTankkaart.Bestuurder.Voertuig;
+//            _bestuurder = selectedTankkaart.Bestuurder;
+  //          _voertuig = selectedTankkaart.Bestuurder.Voertuig;
 
             VulGegevensTankkaartAan();
             if(_bestuurder != null)
@@ -105,17 +105,17 @@ namespace FleetMangementApp
 
         private void VulGegevensTankkaartAan()
         {
-            TankkaartId.Text += _tankkaart.Id;
-            Kaartnummer.Text += _tankkaart.Kaartnummer;
-            Pincode.Text += _tankkaart.Pincode;
-            Vervaldatum.Text += _tankkaart.Geldigheidsdatum.ToString("d");
+        //    TankkaartId.Text += _tankkaart.Id;
+        //    Kaartnummer.Text += _tankkaart.Kaartnummer;
+        //    Pincode.Text += _tankkaart.Pincode;
+        //    Vervaldatum.Text += _tankkaart.Geldigheidsdatum.ToString("d");
 
-            foreach(BrandstofType type in _tankkaart.GeefBrandstofTypes())
-            {
-                Brandstoftypes.Text +="\n"+ "-" + type.Type  ;
-            }
+        //    foreach(BrandstofType type in _tankkaart.GeefBrandstofTypes())
+        //    {
+        //        Brandstoftypes.Text +="\n"+ "-" + type.Type  ;
+        //    }
 
-            TankkaartGearchiveerdCheckBox.IsChecked = _tankkaart.IsGearchiveerd;
+        //    TankkaartGearchiveerdCheckBox.IsChecked = _tankkaart.IsGearchiveerd;
         }
 
         private void SluitDetailsButton_OnClick(object sender, RoutedEventArgs e)
