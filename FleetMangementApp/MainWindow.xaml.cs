@@ -23,8 +23,8 @@ namespace FleetMangementApp
         private readonly WagenTypeManager _wagenTypeManager;
         private readonly RijbewijsTypeManager _rijbewijsTypeManager;
         private readonly TankkaartManager _tankkaartManager;
-        private List<BrandstofType> _brandstoffen = new();
-        private List<WagenType> _wagentypes = new();
+        protected internal List<BrandstofType> _brandstoffen = new();
+        protected internal List<WagenType> _wagentypes = new();
         private static readonly Regex _regex = new Regex("[^0-9.-]+");
 
         protected internal List<RijbewijsType> _allRijbewijsTypes = new();
@@ -163,7 +163,7 @@ namespace FleetMangementApp
             if (ResultatenBestuurders.SelectedItem != null)
             {
                 var selectedBestuurder = (ResultBestuurder)ResultatenBestuurders.SelectedItem;
-                new BestuurderAanpassen(_bestuurderManager.GeefBestuurder(selectedBestuurder.Id), _bestuurderManager)
+                new BestuurderAanpassen(_bestuurderManager.GeefBestuurder(selectedBestuurder.Id), _bestuurderManager, _voertuigManager, _tankkaartManager)
                 {
                     Owner = this
                 }.ShowDialog();

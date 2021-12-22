@@ -79,7 +79,7 @@ namespace FleetMangementApp
 
         private void BrandstoffenListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            BrandstofTankkaartComboBox.SelectionBoxItem = BrandstoffenListBox.SelectedValue;
+            //BrandstofTankkaartComboBox.SelectionBoxItem = BrandstoffenListBox.SelectedValue;
         }
     }
 }

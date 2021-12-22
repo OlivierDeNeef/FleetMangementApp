@@ -23,21 +23,24 @@ namespace FleetMangementApp
     {
         Bestuurder _bestuurder;
         private readonly BestuurderManager _bestuurderManager;
-        public Voertuig SelectedVoertuig; 
-        protected internal bool voertuigChanged = false;
-        protected internal bool tankkaartChanged = false;
+        private readonly VoertuigManager _voertuigManager;
+        private readonly TankkaartManager _tankkaartManager;
+        public Voertuig GeselecteerdVoertuig; 
+        internal bool tankkaartChanged = false;
 
         public BestuurderAanpassen()
         {
             InitializeComponent();
         }
 
-        public BestuurderAanpassen(Bestuurder bestuurder, BestuurderManager manager)
+        public BestuurderAanpassen(Bestuurder bestuurder, BestuurderManager bestuurderManager, VoertuigManager voertuigManager, TankkaartManager tankkaartManager)
         {
             InitializeComponent();
             
             _bestuurder = bestuurder;
-            _bestuurderManager = manager;
+            _bestuurderManager = bestuurderManager;
+            _voertuigManager = voertuigManager;
+            _tankkaartManager = tankkaartManager;
             VulBestuurderDataAan(bestuurder);
             RijbewijsComboBox.ItemsSource = ((MainWindow)Application.Current.MainWindow)._allRijbewijsTypes.Select(r => r.Type).OrderBy(r => r);
         }
@@ -53,7 +56,7 @@ namespace FleetMangementApp
                 VoertuigTextBox.Text = $"Id: {bestuurder.Voertuig.Id}, Wagen: {bestuurder.Voertuig.Merk} met nummerplaat {bestuurder.Voertuig.Nummerplaat}";
             else
                 VoertuigTextBox.Text = "Geen Voertuig";
-
+            GeselecteerdVoertuig = bestuurder.Voertuig;
             if (bestuurder.Tankkaart != null)
                 TankkaartTextBox.Text = $"Tankkaart met kaartnummer: {bestuurder.Tankkaart.Kaartnummer}";
             else
@@ -73,10 +76,18 @@ namespace FleetMangementApp
             rijbewijzen = ((MainWindow)Application.Current.MainWindow)._allRijbewijsTypes.Where(r => rijbewijzenInString.Contains(r.Type)).ToList();
 
             Bestuurder aangepasteBestuurder = new Bestuurder(_bestuurder.Id, TextBoxBestuurderNaam.Text, TextBoxVoornaamBestuurder.Text, PickerGeboorteDatum.SelectedDate.Value, Rijksregisternummer.Text, rijbewijzen, _bestuurder.IsGearchiveerd);
-            if (!voertuigChanged)
-                aangepasteBestuurder.ZetVoertuig(_bestuurder.Voertuig);
-            if (!tankkaartChanged)
-                aangepasteBestuurder.ZetTankkaart(_bestuurder.Tankkaart);
+            
+            if(GeselecteerdVoertuig != null)
+            {
+                aangepasteBestuurder.ZetVoertuig(GeselecteerdVoertuig);
+            }
+
+
+
+            //if (!tankkaartChanged)
+                //aangepasteBestuurder.ZetTankkaart(_bestuurder.Tankkaart);
+
+
 
             _bestuurderManager.UpdateBestuurder(aangepasteBestuurder);
             VulBestuurderDataAan(aangepasteBestuurder);
@@ -86,7 +97,7 @@ namespace FleetMangementApp
 
         private void ButtonSelecteerVoertuig_Click(object sender, RoutedEventArgs e)
         {
-            new VoertuigSelecteren()
+            new VoertuigSelecteren(_voertuigManager)
             {
                 Owner = this
             }.ShowDialog();

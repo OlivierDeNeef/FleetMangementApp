@@ -23,7 +23,7 @@ namespace FleetMangementApp
 
     public partial class BestuurderToevoegen : Window 
     {
-        public Voertuig SelectedVoertuig { get; set; }
+        public Voertuig GeselecteerdVoertuig { get; set; }
 
         public BestuurderToevoegen()
         {
@@ -43,7 +43,7 @@ namespace FleetMangementApp
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            new VoertuigSelecteren() { Owner = this }.ShowDialog();
+            //new VoertuigSelecteren() { Owner = this }.ShowDialog();
         }
     }
 }

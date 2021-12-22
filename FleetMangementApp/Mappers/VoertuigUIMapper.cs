@@ -1,4 +1,6 @@
-﻿using DomainLayer.Models;
+﻿
+using DomainLayer.Managers;
+using DomainLayer.Models;
 using FleetMangementApp.Models.Output;
 using System;
 using System.Collections.Generic;
@@ -23,6 +25,11 @@ namespace FleetMangementApp.Mappers
                 Brandstof = voertuig.BrandstofType.Type,
                 HeeftBestuurder = voertuig.Bestuurder != null
             };
+        }
+
+        public static Voertuig FromUI(ResultVoertuig resultVoertuig, VoertuigManager repo)
+        {
+            return repo.GeefVoertuig(resultVoertuig.Id);
         }
     }
 }
