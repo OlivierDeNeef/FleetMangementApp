@@ -41,16 +41,16 @@
                     <Rectangle Grid.Row="0" Grid.Column="0" Grid.RowSpan="7" Grid.ColumnSpan="7" Fill="#FF507ECD"></Rectangle>
                     <Label Grid.Column="1" Grid.Row="1" Content="Id" HorizontalAlignment="Left" Margin="0,0,30,0"/>
                     <TextBox Grid.Row="2" Grid.Column="1" Name="TextBoxBestuurderId" Width="200" Margin="0,0,30,0"/>
-                    
+
                     <Label Grid.Column="2" Grid.Row="1" Content="Naam" HorizontalAlignment="Left" Margin="0,0,30,0"/>
                     <TextBox Grid.Row="2" Grid.Column="2" Name="TextBoxNaamBestuurder" Width="200" Margin="0,0,30,0"></TextBox>
-                    
+
                     <Label Grid.Column="3" Grid.Row="1" Content="Voornaam" HorizontalAlignment="Left" Margin="0,0,30,0"/>
                     <TextBox Grid.Row="2" Grid.Column="3" Name="TextBoxVoornaamBestuurder" Width="200" Margin="0,0,30,0"></TextBox>
-                    
+
                     <Label Grid.Column="4" Grid.Row="1" Content="Geboortedatum" HorizontalAlignment="Left" Margin="0,0,30,0"/>
                     <DatePicker Name="DatePickerGeboortedatumBestuurder" Grid.Row="2" Grid.Column="4" Width="200" Margin="0,0,30,0" ></DatePicker>
-                    
+
                     <Label Grid.Column="1" Grid.Row="3" Content="Rijbewijzen" HorizontalAlignment="Left" Margin="0,0,30,0"/>
                     <ListBox Name="ListBoxRijbewijzen" Grid.RowSpan="2" Grid.Row="4" Grid.Column="1"  Width="200" Margin="0,0,30,0"  Height="61.4" MaxHeight="614" SelectionChanged="ListBoxRijbewijzen_SelectionChanged"></ListBox>
 
@@ -78,19 +78,19 @@
                             </Style>
                         </DataGrid.RowStyle>
                         <DataGrid.Columns>
-                               <DataGridTextColumn Width="50" Header="Id" Binding="{Binding Id}" CanUserResize="False"></DataGridTextColumn>
+                            <DataGridTextColumn Width="50" Header="Id" Binding="{Binding Id}" CanUserResize="False"></DataGridTextColumn>
                             <DataGridTextColumn Width="130" Header="Naam" Binding="{Binding Naam}"></DataGridTextColumn>
                             <DataGridTextColumn Width="130" Header="Voornaam" Binding="{Binding Voornaam}"></DataGridTextColumn>
-                               <DataGridTextColumn Width="*" Header="Geboordedatum" Binding="{Binding Geboortedatum}"></DataGridTextColumn>
+                            <DataGridTextColumn Width="*" Header="Geboordedatum" Binding="{Binding Geboortedatum}"></DataGridTextColumn>
                             <DataGridCheckBoxColumn Width="90" Header="Heeft Voertuig" Binding="{Binding HeeftVoertuig}"></DataGridCheckBoxColumn>
                             <DataGridCheckBoxColumn Width="100" Header="Heeft Tankkaart" Binding="{Binding HeeftTankkaart}"></DataGridCheckBoxColumn>
-                           </DataGrid.Columns>
+                        </DataGrid.Columns>
                     </DataGrid>
                     <Button Name="ButtonNieuweBestuurder"  Grid.Column="4" Width="200" Grid.Row="9" Margin="0,20,0,10" HorizontalAlignment="Left" Click="ButtonNieuweBestuurder_OnClick">Nieuw</Button>
                     <Button Name="ButtonDetailBestuurder" Focusable="False" Grid.Column="4" Width="200" Grid.Row="10" Margin="0,0,0,10" HorizontalAlignment="Left" IsEnabled="False" Click="ButtonDetailsBestuurder_OnClick">Details</Button>
                     <Button Name="ButtonEditBestuurder" Focusable="False" Grid.Column="4" Width="200" Grid.Row="11" Margin="0,0,0,10" HorizontalAlignment="Left" IsEnabled="False" Click="ButtonBestuurderAanpassen_Click">Aanpassen</Button>
                     <Button Name="ButtonArchiveerBestuurder" Focusable="False" Grid.Column="4" Width="200" Grid.Row="12" HorizontalAlignment="Left" IsEnabled="False"  Click="ButtonArchiveerVoertuig_Click">(De)Archiveren</Button>
-                    
+
                 </Grid>
             </TabItem>
             <TabItem Header="Voertuigen">
@@ -111,30 +111,32 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="20"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="20"/>
-                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="153.4"/>
+                        <ColumnDefinition Width="76.6"/>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="20"/>
                     </Grid.ColumnDefinitions>
-                    <Rectangle Grid.Row="0" Grid.Column="0" Grid.RowSpan="8" Grid.ColumnSpan="7" Fill="#FF507ECD"/>
-                    <Label Grid.Column="1" Grid.Row="1" Content="Id" HorizontalAlignment="Left" Margin="0,0,30,0"/>
-                    <TextBox Grid.Row="2" Grid.Column="1" Name="TextBoxVoertuigId" Width="200" Margin="0,0,30,0"/>
+                    <Rectangle Grid.Row="0" Grid.Column="0" Grid.RowSpan="9" Grid.ColumnSpan="8" Fill="#FF507ECD" Margin="0,0,0,5"/>
+                    <Label Grid.Column="1" Grid.Row="1" Content="Id" HorizontalAlignment="Left" Margin="0,0,0,20" Grid.RowSpan="2"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" Name="TextBoxVoertuigId" Width="200" Margin="0,0,30,26" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
 
-                    <Label Grid.Column="2" Grid.Row="1" Content="Merk" HorizontalAlignment="Left" Margin="0,0,30,0"/>
-                    <TextBox Grid.Row="2" Grid.Column="2" Name="TextBoxMerkVoertuig" Width="200" Margin="0,0,30,0"></TextBox>
+                    <Label Grid.Column="3" Grid.Row="1" Content="Merk" HorizontalAlignment="Left" Margin="0,0,0,20" Grid.RowSpan="2"/>
+                    <TextBox Grid.Row="2" Grid.Column="3" Name="TextBoxMerkVoertuig" Width="200" Margin="0,0,30,26" Grid.RowSpan="2"></TextBox>
 
-                    <Label Grid.Column="3" Grid.Row="1" Content="Model" HorizontalAlignment="Left" Margin="0,0,30,0"/>
-                    <TextBox Grid.Row="2" Grid.Column="3" Name="TextBoxModelVoertuig" Width="200" Margin="0,0,30,0"></TextBox>
+                    <Label Grid.Column="4" Grid.Row="1" Content="Model" HorizontalAlignment="Left" Margin="0,0,0,20" Grid.RowSpan="2"/>
+                    <TextBox Grid.Row="2" Grid.Column="4" Name="TextBoxModelVoertuig" Width="200" Margin="0,0,30,26" Grid.RowSpan="2"></TextBox>
 
-                    <Label Grid.Column="4" Grid.Row="1" Content="AantalDeuren" HorizontalAlignment="Left" Margin="0,0,30,0"/>
-                    <StackPanel Grid.Row="2" Grid.Column="4" Orientation="Horizontal">
+                    <Label Grid.Column="5" Grid.Row="1" Content="AantalDeuren" HorizontalAlignment="Left" Margin="0,0,0,20" Grid.RowSpan="2"/>
+                    <StackPanel Grid.Row="2" Grid.Column="5" Orientation="Horizontal" Margin="0,0,0,26" Grid.RowSpan="2">
 
                         <TextBox  Text="0" IsReadOnly="True" Name="TextBoxAantalDeuren" Margin="0,0,0,0" Width="150"/>
                         <Button Name="VerhoogAantalDeurenButton" Width="15">+</Button>
@@ -142,30 +144,30 @@
                     </StackPanel>
 
 
-                    <Label Grid.Column="1" Grid.Row="3" Content="Nummerplaat" HorizontalAlignment="Left" Margin="0,0,30,0"/>
-                    <TextBox Grid.Row="4" Grid.Column="1" Name="TextBoxVoertuigenNummerplaat" Width="200" Margin="0,0,30,0"/>
+                    <Label Grid.Column="1" Grid.Row="3" Content="Nummerplaat" HorizontalAlignment="Left" Margin="0,0,0,18" Grid.RowSpan="2"/>
+                    <TextBox Grid.Row="4" Grid.Column="1" Name="TextBoxVoertuigenNummerplaat" Width="200" Margin="0,0,30,26" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
 
-                    <Label Grid.Column="2" Grid.Row="3" Content="Chassisnummer" HorizontalAlignment="Left" Margin="0,0,30,0"/>
-                    <TextBox Grid.Row="4" Grid.Column="2" Name="TextBoxChassisnummerVoertuigen" Width="200" Margin="0,0,30,0"></TextBox>
+                    <Label Grid.Column="3" Grid.Row="3" Content="Chassisnummer" HorizontalAlignment="Left" Margin="0,0,0,18" Grid.RowSpan="2"/>
+                    <TextBox Grid.Row="4" Grid.Column="3" Name="TextBoxChassisnummerVoertuigen" Width="200" Margin="0,0,30,26" Grid.RowSpan="2"></TextBox>
 
-                    <Label Grid.Column="3" Grid.Row="3" Content="Kleur" HorizontalAlignment="Left" Margin="0,0,30,0"/>
-                    <TextBox Grid.Row="4" Grid.Column="3" Name="TextBoxKleurVoertuigen" Width="200" Margin="0,0,30,0"></TextBox>
-
-
-                    <Label Grid.Row="5" Grid.Column="1" Content="Type Wagen:" Margin="0,0,30,0"></Label>
-                    <ComboBox Grid.Column="1" Grid.Row="6" Width="200" Margin="0,0,30,0" Name="VoertuigComboBoxTypeWagen"></ComboBox>
-                    
-                    <Label Grid.Row="5" Grid.Column="2" Content="Brandstof:" Margin="0,0,30,0"></Label>
-                    <ComboBox Grid.Column="2" Grid.Row="6" Width="200" Margin="0,0,30,0" Name="VoertuigComboBoxBrandstof"></ComboBox>
-
-                    <CheckBox Name="CheckBoxGearchiveerdVoertuig" Grid.Column="3" Grid.Row="6" VerticalAlignment="Center" HorizontalAlignment="Left">Gearchiveerd</CheckBox>
+                    <Label Grid.Column="4" Grid.Row="3" Content="Kleur" HorizontalAlignment="Left" Margin="0,0,0,18" Grid.RowSpan="2"/>
+                    <TextBox Grid.Row="4" Grid.Column="4" Name="TextBoxKleurVoertuigen" Width="200" Margin="0,0,30,26" Grid.RowSpan="2"></TextBox>
 
 
-                    <Button Grid.Column="4" Grid.Row="5" Width="200" Name="ButtonZoekVoertuig" Margin="0,0,30,0" HorizontalAlignment="Left" Click="ZoekVoertuigButton_Click">Zoeken</Button>
+                    <Label Grid.Row="5" Grid.Column="1" Content="Type Wagen:" Margin="0,0,30,22" Grid.ColumnSpan="2" Grid.RowSpan="2"></Label>
+                    <ComboBox Grid.Column="1" Grid.Row="6" Width="200" Margin="0,0,30,20" Name="VoertuigComboBoxTypeWagen" Grid.ColumnSpan="2" Grid.RowSpan="2"></ComboBox>
 
-                    <Label Grid.Column="1" Grid.Row="9" FontSize="18">Resultaten</Label>
+                    <Label Grid.Row="5" Grid.Column="3" Content="Brandstof:" Margin="0,0,30,22" Grid.RowSpan="2"></Label>
+                    <ComboBox Grid.Column="3" Grid.Row="6" Width="200" Margin="0,0,30,20" Name="VoertuigComboBoxBrandstof" Grid.RowSpan="2"></ComboBox>
 
-                    <DataGrid Name="ResultatenVoertuigen" Width="650" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="10" Grid.RowSpan="5" AutoGenerateColumns="False"  Margin="0,0,30,0" IsReadOnly="True">
+                    <CheckBox Name="CheckBoxGearchiveerdVoertuig" Grid.Column="4" Grid.Row="6" VerticalAlignment="Center" HorizontalAlignment="Left">Gearchiveerd</CheckBox>
+
+
+                    <Button Grid.Column="5" Grid.Row="5" Width="200" Name="ButtonZoekVoertuig" Margin="0,0,0,22" HorizontalAlignment="Left" Click="ZoekVoertuigButton_Click" Grid.RowSpan="2">Zoeken</Button>
+
+                    <Label Grid.Column="1" Grid.Row="9" FontSize="18" Grid.ColumnSpan="2" Margin="0,0,0,50" Grid.RowSpan="2">Resultaten</Label>
+
+                    <DataGrid Name="ResultatenVoertuigen" Width="650" Grid.Column="1" Grid.ColumnSpan="4" Grid.Row="10" Grid.RowSpan="6" AutoGenerateColumns="False"  Margin="5,0,35,49" IsReadOnly="True">
                         <DataGrid.RowStyle>
                             <Style TargetType="DataGridRow">
                                 <EventSetter Event="GotFocus" Handler="RowGotFocus"/>
@@ -183,10 +185,10 @@
                             <DataGridCheckBoxColumn Width="80" Header="Bestuurder" Binding="{Binding HeeftBestuurder}"></DataGridCheckBoxColumn>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Button Name="ButtonNieuwVoertuig"  Grid.Column="4" Width="200" Grid.Row="10" Margin="0,20,0,10" HorizontalAlignment="Left" Click="ButtonNieuwVoertuig_OnClick">Nieuw</Button>
-                    <Button Name="ButtonDetailsVoertuig" Focusable="False" Grid.Column="4" Width="200" Grid.Row="11" Margin="0,0,0,10" HorizontalAlignment="Left" IsEnabled="False" Click="ButtonDetailsVoertuig_OnClick">Details</Button>
-                    <Button Name="ButtonEditVoertuig" Focusable="False" Grid.Column="4" Width="200" Grid.Row="12" Margin="0,0,0,10" HorizontalAlignment="Left" IsEnabled="False">Aanpassen</Button>
-                    <Button Name="ButtonArchiveerVoertuig" Focusable="False" Grid.Column="4" Width="200" Grid.Row="13" HorizontalAlignment="Left" IsEnabled="False">(De)Archiveren</Button>
+                    <Button Name="ButtonNieuwVoertuig"  Grid.Column="5" Width="200" Grid.Row="10" Margin="0,20,0,10" HorizontalAlignment="Left" Click="ButtonNieuwVoertuig_OnClick">Nieuw</Button>
+                    <Button Name="ButtonDetailsVoertuig" Focusable="False" Grid.Column="5" Width="200" Grid.Row="11" Margin="0,0,0,10" HorizontalAlignment="Left" IsEnabled="False" Click="ButtonDetailsVoertuig_OnClick">Details</Button>
+                    <Button Name="ButtonEditVoertuig" Focusable="False" Grid.Column="5" Width="200" Grid.Row="12" Margin="0,0,0,10" HorizontalAlignment="Left" IsEnabled="False">Aanpassen</Button>
+                    <Button Name="ButtonArchiveerVoertuig" Focusable="False" Grid.Column="5" Width="200" Grid.Row="13" HorizontalAlignment="Left" IsEnabled="False" Margin="0,0,0,49" Grid.RowSpan="3">(De)Archiveren</Button>
                 </Grid>
             </TabItem>
             <TabItem Header="Tankkaarten">
@@ -251,7 +253,7 @@
                             <DataGridTextColumn Width="90" Header="Pincode" Binding="{Binding Pincode}"></DataGridTextColumn>
                             <DataGridTextColumn Width="100" Header="Geldigheidsdatum" Binding="{Binding Geldigheidsdatum}"/>
                             <DataGridTextColumn Width="100" Header="Geblokkeerd" Binding="{Binding Geblokkeerd}"/>
-                           <DataGridCheckBoxColumn Width="80" Header="Bestuurder" Binding="{Binding HeeftBestuurder}"/>
+                            <DataGridCheckBoxColumn Width="80" Header="Bestuurder" Binding="{Binding HeeftBestuurder}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                     <Button Name="ButtonNieuwTankkaart"  Grid.Column="4" Width="200" Grid.Row="9" Margin="0,20,0,10" HorizontalAlignment="Left" Click="ButtonNieuwTankkaart_OnClick">Nieuw</Button>
@@ -264,7 +266,7 @@
             <TabItem Header="Types">
 
             </TabItem>
-    
+
 
 
         </TabControl>
