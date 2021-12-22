@@ -300,7 +300,6 @@ namespace FleetMangementApp
 
 
 
-        #endregion
 
         private void ListBoxBrandstofTypesTankkaart_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -318,6 +317,16 @@ namespace FleetMangementApp
         {
             string r = (string)BrandstoftypeTankkaartCombobox.SelectedValue;
             ListBoxBrandstofTypesTankkaart.Items.Remove(r);
+        }
+        #endregion
+
+      
+        private void ButtonNieuwTankkaart_OnClick(object sender, RoutedEventArgs e)
+        {
+            new TankkaartToevoegen(_brandstofTypeManager, _bestuurderManager)
+            {
+                Owner = this
+            }.ShowDialog();
         }
     }
 }

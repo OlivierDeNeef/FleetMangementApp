@@ -254,7 +254,7 @@
                            <DataGridCheckBoxColumn Width="80" Header="Bestuurder" Binding="{Binding HeeftBestuurder}"/>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Button Name="ButtonNieuwVoertuigaanTankkaart"  Grid.Column="4" Width="200" Grid.Row="9" Margin="0,20,0,10" HorizontalAlignment="Left">Nieuw</Button>
+                    <Button Name="ButtonNieuwTankkaart"  Grid.Column="4" Width="200" Grid.Row="9" Margin="0,20,0,10" HorizontalAlignment="Left" Click="ButtonNieuwTankkaart_OnClick">Nieuw</Button>
                     <Button Name="ButtonDetailsTankkaart" Focusable="False" Grid.Column="4" Width="200" Grid.Row="10" Margin="0,0,0,10" HorizontalAlignment="Left" IsEnabled="False">Details</Button>
                     <Button Name="ButtonEditTankkaart" Focusable="False" Grid.Column="4" Width="200" Grid.Row="11" Margin="0,0,0,10" HorizontalAlignment="Left" IsEnabled="False">Aanpassen</Button>
                     <Button Name="ButtonArchiveerTankkaart" Focusable="False" Grid.Column="4" Width="200" Grid.Row="12" HorizontalAlignment="Left" IsEnabled="False">(De)Archiveren</Button>
