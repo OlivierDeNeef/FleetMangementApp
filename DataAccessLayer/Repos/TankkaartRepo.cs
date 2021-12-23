@@ -101,6 +101,8 @@ namespace DataAccessLayer.Repos
                                                   "left join dbo.BrandstofTypes bta on v.BrandstofId = bta.Id where t.Id =@Id ", con);
 
                 commandTankkaart.Parameters.AddWithValue("@Id", id);
+                commandTankkaart.Connection = con;
+                con.Open();
                 var reader = commandTankkaart.ExecuteReader();
                 if (!reader.HasRows) throw new BestuurderRepoException(nameof(GeefTankkaart) + " - Geen tankkaart gevonden");
                 Tankkaart tankkaart = null;
@@ -120,14 +122,14 @@ namespace DataAccessLayer.Repos
                         if (reader[10] != DBNull.Value)
                         {
                             var bestuurder = new Bestuurder((int)reader[10], (string)reader[11], (string)reader[12],
-                                (DateTime)reader[13], (string)reader[14], new List<RijbewijsType>(), (bool)reader[15]);
+                                (DateTime)reader[13], (string)reader[14], new List<RijbewijsType>() { new((int)reader[23], (string)reader[25]) }, (bool)reader[15]);
 
                             if (reader[18] != DBNull.Value)
                             {
                                 bestuurder.ZetAdres(new Adres((string)reader[18], (string)reader[19], (string)reader[22], (string)reader[20], (string)reader[21]));
                             }
 
-                            if (reader[23] != DBNull.Value)
+                            if (reader[23] != DBNull.Value && bestuurder.GeefRijbewijsTypes().All(r => r.Id != (int)reader[23]))
                             {
                                 bestuurder.VoegRijbewijsTypeToe(new RijbewijsType((int)reader[23], (string)reader[25]));
                             }

@@ -61,8 +61,12 @@ namespace FleetMangementApp
             InitializeComponent();
 
             _tankkaart = selectedTankkaart;
-            _bestuurder = selectedTankkaart.Bestuurder;
-            _voertuig = selectedTankkaart.Bestuurder.Voertuig;
+            if(selectedTankkaart.Bestuurder != null) {
+                _bestuurder = selectedTankkaart.Bestuurder;
+                if (selectedTankkaart.Bestuurder.Voertuig != null)
+                    _voertuig = selectedTankkaart.Bestuurder.Voertuig;
+            }
+            
 
             VulGegevensTankkaartAan();
             if(_bestuurder != null)

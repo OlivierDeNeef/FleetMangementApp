@@ -114,6 +114,10 @@ namespace FleetMangementApp
             ButtonEditVoertuig.IsEnabled = true;
             ButtonArchiveerVoertuig.IsEnabled = true;
 
+            ButtonDetailsTankkaart.IsEnabled = true;
+            ButtonEditTankkaart.IsEnabled = true;
+            ButtonArchiveerTankkaart.IsEnabled = true;
+
             // Neemt de geselecteerde bestuurderId uit het datagrid 
             var datagridrow = sender as DataGridRow;
             if (datagridrow?.Item is ResultBestuurder selectedResult) _selectedBestuurderId = selectedResult.Id;
@@ -127,6 +131,9 @@ namespace FleetMangementApp
             ButtonDetailsVoertuig.IsEnabled = false;
             ButtonEditVoertuig.IsEnabled = false;
             ButtonArchiveerVoertuig.IsEnabled = false;
+            ButtonDetailsTankkaart.IsEnabled = false;
+            ButtonEditTankkaart.IsEnabled = false;
+            ButtonArchiveerTankkaart.IsEnabled = false;
         }
 
         private void ListBoxRijbewijzen_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -330,7 +337,7 @@ namespace FleetMangementApp
         {
             if (ResultatenTankkaarten.SelectedItem != null)
             {
-                var selectedTankkaart = (ResultTankkaart)ResultatenTankkaarten.SelectedItem;
+                var selectedTankkaart = (Tankkaart)ResultatenTankkaarten.SelectedItem;
                 new Details(_tankkaartManager.GeefTankkaart(selectedTankkaart.Id))
                 {
                     Owner = this
