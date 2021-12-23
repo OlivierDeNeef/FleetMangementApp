@@ -328,5 +328,18 @@ namespace FleetMangementApp
                 Owner = this
             }.ShowDialog();
         }
+
+        private void ButtonDetailsTankkaart_Click(object sender, RoutedEventArgs e)
+        {
+            if (ResultatenTankkaarten.SelectedItem != null)
+            {
+                
+                var selectedTankkaart = (ResultTankkaart)ResultatenTankkaart.SelectedItem;
+                new Details(_tankkaartManager.GeefTankkaart(selectedTankkaart.Id))
+                {
+                    Owner = this
+                }.ShowDialog();
+            }
+        }
     }
 }

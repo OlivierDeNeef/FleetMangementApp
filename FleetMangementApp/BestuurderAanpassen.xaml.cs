@@ -25,7 +25,8 @@ namespace FleetMangementApp
         private readonly BestuurderManager _bestuurderManager;
         private readonly VoertuigManager _voertuigManager;
         private readonly TankkaartManager _tankkaartManager;
-        public Voertuig GeselecteerdVoertuig; 
+        public Voertuig GeselecteerdVoertuig;
+        public Tankkaart GeselecteerdeTankkaart;
         internal bool tankkaartChanged = false;
 
         public BestuurderAanpassen()
@@ -57,6 +58,7 @@ namespace FleetMangementApp
             else
                 VoertuigTextBox.Text = "Geen Voertuig";
             GeselecteerdVoertuig = bestuurder.Voertuig;
+            GeselecteerdeTankkaart = bestuurder.Tankkaart;
             if (bestuurder.Tankkaart != null)
                 TankkaartTextBox.Text = $"Tankkaart met kaartnummer: {bestuurder.Tankkaart.Kaartnummer}";
             else
@@ -82,16 +84,13 @@ namespace FleetMangementApp
                 aangepasteBestuurder.ZetVoertuig(GeselecteerdVoertuig);
             }
 
-
-
-            //if (!tankkaartChanged)
-                //aangepasteBestuurder.ZetTankkaart(_bestuurder.Tankkaart);
-
-
+            if(GeselecteerdeTankkaart != null)
+            {
+                aangepasteBestuurder.ZetTankkaart(GeselecteerdeTankkaart);
+            }
 
             _bestuurderManager.UpdateBestuurder(aangepasteBestuurder);
             VulBestuurderDataAan(aangepasteBestuurder);
-            //MessageBox.Show("Bestuurder is aangepast");
             Close();
         }
 
