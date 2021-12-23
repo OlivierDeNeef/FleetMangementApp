@@ -333,8 +333,7 @@ namespace FleetMangementApp
         {
             if (ResultatenTankkaarten.SelectedItem != null)
             {
-                
-                var selectedTankkaart = (ResultTankkaart)ResultatenTankkaart.SelectedItem;
+                var selectedTankkaart = (ResultTankkaart)ResultatenTankkaarten.SelectedItem;
                 new Details(_tankkaartManager.GeefTankkaart(selectedTankkaart.Id))
                 {
                     Owner = this

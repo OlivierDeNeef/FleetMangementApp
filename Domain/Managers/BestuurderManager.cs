@@ -62,7 +62,7 @@ namespace DomainLayer.Managers
 
         public bool BestaatBestuurder(Bestuurder bestuurder)
         {
-            if (_bestuurderRepo.BestaatBestuurder(bestuurder.Id)) throw new BrandstofTypeManagerException("Bestaat bestuurder - Bestuurder bestaat al");
+            if (_bestuurderRepo.BestaatBestuurder(bestuurder.Id)) throw new BestuurderManagerException("Bestaat bestuurder - Bestuurder bestaat al");
             return _bestuurderRepo.BestaatBestuurder(bestuurder.Id);
         }
 
@@ -73,7 +73,7 @@ namespace DomainLayer.Managers
         /// <returns></returns>
         public Bestuurder GeefBestuurder(int id)
         {
-            if (!_bestuurderRepo.BestaatBestuurder(id)) throw new BrandstofTypeManagerException("BestaatBestuurder - Bestuurder bestaat niet");
+            if (!_bestuurderRepo.BestaatBestuurder(id)) throw new BestuurderManagerException("BestaatBestuurder - Bestuurder bestaat niet");
             return _bestuurderRepo.GeefBestuurder(id);
         }
     }
