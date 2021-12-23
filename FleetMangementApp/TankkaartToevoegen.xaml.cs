@@ -21,14 +21,16 @@ namespace FleetMangementApp
     /// </summary>
     public partial class TankkaartToevoegen : Window
     {
-        private BrandstofTypeManager _brandstofManager;
-        private BestuurderManager _bestuurderManager;
-
+        private readonly BrandstofTypeManager _brandstofManager;
+        private readonly BestuurderManager _bestuurderManager;
+        private readonly TankkaartManager _tankkaartManager;
+        public Bestuurder GeselecteerdBestuurder { get; set; }
         private List<BrandstofType> _brandstoffen = new();
-        public TankkaartToevoegen(BrandstofTypeManager brandstofManager, BestuurderManager bestuurderManager)
+        public TankkaartToevoegen(BrandstofTypeManager brandstofManager, TankkaartManager tankkaartManager, BestuurderManager bestuurderManager)
         {
             _bestuurderManager = bestuurderManager;
             _brandstofManager = brandstofManager;
+            _tankkaartManager = tankkaartManager;
             InitializeComponent();
             SetupTankaart();
         }
@@ -46,6 +48,12 @@ namespace FleetMangementApp
             
         }
 
+        private void ToevoegenTankkaartButtonBrandstof_OnClick(object sender, RoutedEventArgs e)
+        {
+            string r = (string)BrandstofTankkaartComboBox.SelectedValue;
+            if (!BrandstoffenListBox.Items.Contains(r))
+                BrandstoffenListBox.Items.Add(r);
+        }
        
         private void VerwijderTankkaartBrandstofButton_OnClick(object sender, RoutedEventArgs e)
         {
@@ -62,16 +70,29 @@ namespace FleetMangementApp
             }.ShowDialog();
         }
 
-        private void ToevoegenTankkaartButtonBrandstof_OnClick(object sender, RoutedEventArgs e)
-        {
-            string r = (string)BrandstofTankkaartComboBox.SelectedValue;
-            if (!BrandstoffenListBox.Items.Contains(r))
-                BrandstoffenListBox.Items.Add(r);
-        }
 
         private void ToevoegenButton_OnClick(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("ok");
+            List<BrandstofType> brandstoffen = new List<BrandstofType>();
+            var brandstoffenString = BrandstoffenListBox.ItemsSource?.Cast<string>() ?? new List<string>();
+            var bestuurder = BestuurderTextBox.Text;
+            brandstoffen = ((MainWindow) Application.Current.MainWindow)._brandstoffen
+                .Where(b => brandstoffenString.Contains(b.Type)).ToList();
+
+            Tankkaart nieuweTankkaart = new Tankkaart(TextBoxTankkaartKaarnummer.Text,
+                PickerGeldigheidsDatum.SelectedDate.Value, TextBoxTankkaartPincode.Text, null, false, false, brandstoffen);
+
+               
+               //false, false, brandstoffen
+               //);
+
+            if (GeselecteerdBestuurder != null)
+            {
+                nieuweTankkaart.ZetBestuurder(GeselecteerdBestuurder);
+            }
+            _tankkaartManager.VoegTankkaartToe(nieuweTankkaart);
+            MessageBox.Show("Tankkaart Toegevoegd");
+            Close();
         }
 
         private void BrandstoffenListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

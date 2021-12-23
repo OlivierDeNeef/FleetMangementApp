@@ -23,6 +23,7 @@ namespace FleetMangementApp
         private readonly WagenTypeManager _wagenTypeManager;
         private readonly RijbewijsTypeManager _rijbewijsTypeManager;
         private readonly TankkaartManager _tankkaartManager;
+        public Tankkaart tankkaart;
         protected internal List<BrandstofType> _brandstoffen = new();
         protected internal List<WagenType> _wagentypes = new();
         private static readonly Regex _regex = new Regex("[^0-9.-]+");
@@ -327,7 +328,7 @@ namespace FleetMangementApp
       
         private void ButtonNieuwTankkaart_OnClick(object sender, RoutedEventArgs e)
         {
-            new TankkaartToevoegen(_brandstofTypeManager, _bestuurderManager)
+            new TankkaartToevoegen(_brandstofTypeManager,_tankkaartManager, _bestuurderManager)
             {
                 Owner = this
             }.ShowDialog();
@@ -363,6 +364,14 @@ namespace FleetMangementApp
             }
         }
 
+
+        private void ButtonEditTankkaart_OnClick(object sender, RoutedEventArgs e)
+        {
+            new TankkaartAanpassen(tankkaart, _brandstofTypeManager, _tankkaartManager, _bestuurderManager)
+            {
+                Owner = this
+            }.ShowDialog();
+        }
         #endregion
     }
 }
