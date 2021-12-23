@@ -118,8 +118,8 @@ namespace DomainLayer.Models
             }
             catch (RijksregisternummerCheckerException e)
             {
-
-                throw new BestuurderException("ZetRijksregisternummer - inner Exception", e);
+                
+                throw new BestuurderException("Het rijksregisternummer is incorrect");
             }
 
             

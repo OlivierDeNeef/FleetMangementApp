@@ -56,25 +56,33 @@ namespace FleetMangementApp
 
         private void ToevoegenButton_Click(object sender, RoutedEventArgs e)
         {
-            List<RijbewijsType> rijbewijzen = new List<RijbewijsType>();
-            var rijbewijzenInString = RijbewijzenListBox.ItemsSource?.Cast<string>() ?? new List<string>();
-            rijbewijzen = ((MainWindow)Application.Current.MainWindow)._allRijbewijsTypes.Where(r => rijbewijzenInString.Contains(r.Type)).ToList();
-
-            Bestuurder nieuweBestuurder = new Bestuurder( TextBoxBestuurderNaam.Text, TextBoxVoornaamBestuurder.Text, PickerGeboorteDatum.SelectedDate.Value, Rijksregisternummer.Text, rijbewijzen, false);
-
-            if (GeselecteerdVoertuig != null)
+            try
             {
-                nieuweBestuurder.ZetVoertuig(GeselecteerdVoertuig);
-            }
+                List<RijbewijsType> rijbewijzen = new List<RijbewijsType>();
+                var rijbewijzenInString = RijbewijzenListBox.ItemsSource?.Cast<string>() ?? new List<string>();
+                rijbewijzen = ((MainWindow)Application.Current.MainWindow)._allRijbewijsTypes.Where(r => rijbewijzenInString.Contains(r.Type)).ToList();
 
-            if (GeselecteerdeTankkaart != null)
+                Bestuurder nieuweBestuurder = new Bestuurder( TextBoxBestuurderNaam.Text, TextBoxVoornaamBestuurder.Text, PickerGeboorteDatum.SelectedDate.Value, Rijksregisternummer.Text, rijbewijzen, false);
+
+                if (GeselecteerdVoertuig != null)
+                {
+                    nieuweBestuurder.ZetVoertuig(GeselecteerdVoertuig);
+                }
+
+                if (GeselecteerdeTankkaart != null)
+                {
+                    nieuweBestuurder.ZetTankkaart(GeselecteerdeTankkaart);
+                }
+
+                _bestuurderManager.VoegBestuurderToe(nieuweBestuurder);
+
+                Close();
+            }
+            catch (Exception exception)
             {
-                nieuweBestuurder.ZetTankkaart(GeselecteerdeTankkaart);
+                MessageBox.Show("Er ging iets mis met de registratie:  " + exception.Message);
             }
-
-            _bestuurderManager.VoegBestuurderToe(nieuweBestuurder);
             
-            Close();
         }
 
         private void ButtonSelecteerVoertuig_Click(object sender, RoutedEventArgs e)
