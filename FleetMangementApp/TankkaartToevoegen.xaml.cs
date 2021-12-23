@@ -45,11 +45,6 @@ namespace FleetMangementApp
             Close();
             
         }
-
-       
-
-      
-
         private void VerwijderTankkaartBrandstofButton_OnClick(object sender, RoutedEventArgs e)
         {
             string r = (string)BrandstofTankkaartComboBox.SelectedValue;
