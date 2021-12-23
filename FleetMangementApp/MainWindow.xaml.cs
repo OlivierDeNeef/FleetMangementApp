@@ -201,7 +201,6 @@ namespace FleetMangementApp
         #region VoertuigenTab
 
 
-
         private void SetupVoertuigWindowView()
         {
             _brandstoffen = _brandstofTypeManager.GeefAlleBrandstofTypes().ToList(); // ADO methode returned list van Brandstoftype != 
