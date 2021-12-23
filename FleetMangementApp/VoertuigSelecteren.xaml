@@ -93,7 +93,7 @@
                 <DataGridCheckBoxColumn Width="100" Header="Bestuurder" Binding="{Binding Bestuurder}"></DataGridCheckBoxColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Grid.Column="1" Grid.Row="11" Name="AnnulerenButton" HorizontalAlignment="Left" Padding="60,2,60,2">Annuleren</Button>
+        <Button Grid.Column="1" Grid.Row="11" Name="AnnulerenButton" HorizontalAlignment="Left" Padding="60,2,60,2" Click="AnnulerenButton_OnClick">Annuleren</Button>
         <Button Focusable="False" Grid.Column="3" Grid.Row="11" Name="GeenVoertuigButton" HorizontalAlignment="Center" Padding="50,0,50,0" Click="GeenVoertuigButton_Click">Geen Voertuig</Button>
         <Button Focusable="False" Grid.Column="4" Grid.Row="11" Name="SelectieToevoegenButton" Padding="50,0,50,0" HorizontalAlignment="Right" IsEnabled="False" Click="SelectieToevoegenButton_Click">Selectie Toevoegen</Button>
 

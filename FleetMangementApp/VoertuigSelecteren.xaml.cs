@@ -67,6 +67,7 @@ namespace FleetMangementApp
 
                 }
             }
+            Close();
             
         }
 
@@ -142,6 +143,11 @@ namespace FleetMangementApp
             }
 
             return result;
+        }
+
+        private void AnnulerenButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }
