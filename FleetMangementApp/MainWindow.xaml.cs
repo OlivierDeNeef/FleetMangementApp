@@ -151,7 +151,7 @@ namespace FleetMangementApp
         private void ButtonNieuweBestuurder_OnClick(object sender, RoutedEventArgs e)
         {
            
-            new BestuurderToevoegen()
+            new BestuurderToevoegen(_bestuurderManager, _voertuigManager, _tankkaartManager)
             {
                 Owner = this
             }.ShowDialog();

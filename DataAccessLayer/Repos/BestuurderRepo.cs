@@ -187,8 +187,8 @@ namespace DataAccessLayer.Repos
                 transaction = connection.BeginTransaction();
 
                 var command = new SqlCommand(
-                    "INSERT INTO dbo.BESTUURDERS (Naam, Voornaam,  Geboortedatum, Rijksregisternummer, Straat, Busnummer, Huisnummer, Stad, Postcode, Land, TankkaartId, VoertuigId, Gearchiveerd) " +
-                    "OUTPUT INSERTED.Id VALUES (@Naam, @Voornaam, @Geboortedatum, @Rijksregisternummer, @straat, @busnummer, @huisnummer, @Stad, @Postcode, @Land, @TankkaartenId, @VoertuigId, @IsGearchiveerd)", connection, transaction);
+                    "INSERT INTO dbo.BESTUURDERS (Naam, Voornaam,  Geboortedatum, Rijksregisternummer, Straat, Huisnummer, Stad, Postcode, Land, TankkaartId, VoertuigId, Gearchiveerd) " +
+                    "OUTPUT INSERTED.Id VALUES (@Naam, @Voornaam, @Geboortedatum, @Rijksregisternummer, @straat, @huisnummer, @Stad, @Postcode, @Land, @TankkaartenId, @VoertuigId, @IsGearchiveerd)", connection, transaction);
                 command.Parameters.AddWithValue("@Naam", bestuurder.Naam);
                 command.Parameters.AddWithValue("@Voornaam", bestuurder.Voornaam);
                 command.Parameters.AddWithValue("@Geboortedatum", bestuurder.Geboortedatum);
@@ -205,7 +205,7 @@ namespace DataAccessLayer.Repos
 
                 foreach (var rijbewijsType in bestuurder.GeefRijbewijsTypes())
                 {
-                    var command3 = new SqlCommand("insert into dbo.RijbewijsTypes_Bestuurders (BestuurderId,RijbewijsTypeId) values (@Id,@RijbeswijsTypeId)", connection, transaction);
+                    var command3 = new SqlCommand("insert into dbo.RijbewijsTypes_Bestuurders (BestuurderId,RijbewijsTypeId) values (@Id,@RijbewijsTypeId)", connection, transaction);
                     command3.Parameters.AddWithValue("@Id", id);
                     command3.Parameters.AddWithValue("@RijbewijsTypeId", rijbewijsType.Id);
                     command3.ExecuteNonQuery();

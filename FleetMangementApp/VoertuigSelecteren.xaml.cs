@@ -37,19 +37,11 @@ namespace FleetMangementApp
         {
             SelectieToevoegenButton.IsEnabled = true;
 
-            //var datagridrow = sender as DataGridRow;
-            //if (datagridrow?.Item is ResultVoertuig selectedResult) _selectedBestuurderId = selectedResult.Id;
-
         }
         private void RowLostFocus(object sender, RoutedEventArgs e)
         {
             SelectieToevoegenButton.IsEnabled = false;
-            //if (Owner.GetType() == typeof(BestuurderToevoegen))
-            //{
-            //    var main = Owner as BestuurderToevoegen;
-            //    main.SelectedVoertuig = null;
-            //}
-
+            
         }
 
         private void SelectieToevoegenButton_Click(object sender, RoutedEventArgs e)
@@ -78,19 +70,19 @@ namespace FleetMangementApp
             
         }
 
-        private void GeenBestuurderButton_Click(object sender, RoutedEventArgs e)
+        private void GeenVoertuigButton_Click(object sender, RoutedEventArgs e)
         {
             if (Owner.GetType() == typeof(BestuurderToevoegen))
             {
                 var main = Owner as BestuurderToevoegen;
                 main.GeselecteerdVoertuig = null;
-                main.TankkaartTextBox.Text = "Geen Voertuig";
+                main.VoertuigTextBox.Text = "Geen Voertuig";
             }
             else if (Owner.GetType() == typeof(BestuurderAanpassen))
             {
                 var main = Owner as BestuurderAanpassen;
                 main.GeselecteerdVoertuig = null;
-                main.TankkaartTextBox.Text = "Geen Voertuig";
+                main.VoertuigTextBox.Text = "Geen Voertuig";
             }
 
             Close();

@@ -2,6 +2,7 @@
 using DomainLayer.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,8 +28,8 @@ namespace FleetMangementApp
         private readonly TankkaartManager _tankkaartManager;
         public Voertuig GeselecteerdVoertuig;
         public Tankkaart GeselecteerdeTankkaart;
-        internal bool tankkaartChanged = false;
-
+        private ObservableCollection<string> _rijbewijzen ;
+        
         public BestuurderAanpassen()
         {
             InitializeComponent();
@@ -52,7 +53,8 @@ namespace FleetMangementApp
             TextBoxVoornaamBestuurder.Text = bestuurder.Voornaam;
             PickerGeboorteDatum.SelectedDate = bestuurder.Geboortedatum;
             Rijksregisternummer.Text = bestuurder.Rijksregisternummer;
-            RijbewijzenListBox.ItemsSource = bestuurder.GeefRijbewijsTypes().Select(r => r.Type);
+            _rijbewijzen = new ObservableCollection<string>(bestuurder.GeefRijbewijsTypes().Select(r => r.Type));
+            RijbewijzenListBox.ItemsSource = _rijbewijzen ;
             if (bestuurder.Voertuig != null)
                 VoertuigTextBox.Text = $"Id: {bestuurder.Voertuig.Id}, Wagen: {bestuurder.Voertuig.Merk} met nummerplaat {bestuurder.Voertuig.Nummerplaat}";
             else
@@ -100,6 +102,34 @@ namespace FleetMangementApp
             {
                 Owner = this
             }.ShowDialog();
+        }
+
+        private void ButtonSelecteerTankkaart_Click(object sender, RoutedEventArgs e)
+        {
+            new TankkaartSelecteren(_tankkaartManager)
+            {
+                Owner = this
+            }.ShowDialog();
+        }
+
+        private void ListBoxRijbewijzen_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            RijbewijsComboBox.SelectedItem = RijbewijzenListBox.SelectedItem;
+            
+        }
+
+        private void ToevoegenRijbewijsButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            string r = (string)RijbewijsComboBox.SelectedValue;
+            if (!RijbewijzenListBox.Items.Contains(r))
+                _rijbewijzen.Add(r);
+                
+        }
+
+        private void VerwijderRijbewijsButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            string r = (string)RijbewijsComboBox.SelectedValue;
+            _rijbewijzen.Remove(r);
         }
     }
 }

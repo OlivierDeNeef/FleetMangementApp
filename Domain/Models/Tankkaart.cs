@@ -253,7 +253,16 @@ namespace DomainLayer.Models
         /// <returns></returns>
         public override int GetHashCode()
         {
-            return HashCode.Combine(_brandstofTypes, Id, Kaartnummer, Geldigheidsdatum, Pincode, Bestuurder, IsGeblokkeerd, IsGearchiveerd);
+            var hashCode = new HashCode();
+            hashCode.Add(_brandstofTypes);
+            hashCode.Add(Id);
+            hashCode.Add(Kaartnummer);
+            hashCode.Add(Geldigheidsdatum);
+            hashCode.Add(Pincode);
+            hashCode.Add(Bestuurder);
+            hashCode.Add(IsGeblokkeerd);
+            hashCode.Add(IsGearchiveerd);
+            return hashCode.ToHashCode();
         }
     }
 }
