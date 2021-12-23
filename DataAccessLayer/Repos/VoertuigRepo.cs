@@ -265,15 +265,15 @@ namespace DataAccessLayer.Repos
 
                         if (reader[15] != DBNull.Value)
                         {
-                            var bestuurder = new Bestuurder((int)reader[15], (string)reader[16], (string)reader[18],
-                                (DateTime)reader[18], (string)reader[19], new List<RijbewijsType>(), (bool)reader[20]);
+                            var bestuurder = new Bestuurder((int)reader[15], (string)reader[16], (string)reader[17],
+                                (DateTime)reader[18], (string)reader[19], new List<RijbewijsType>() { new((int)reader[28], (string)reader[30]) }, (bool)reader[20]);
 
                             if (reader[23] != DBNull.Value)
                             {
                                 bestuurder.ZetAdres(new Adres((string)reader[23], (string)reader[24], (string)reader[27], (string)reader[25], (string)reader[26]));
                             }
 
-                            if (reader[28] != DBNull.Value)
+                            if (reader[28] != DBNull.Value && bestuurder.GeefRijbewijsTypes().All(r => r.Id != (int)reader[28]))
                             {
                                 bestuurder.VoegRijbewijsTypeToe(new RijbewijsType((int)reader[28], (string)reader[30]));
                             }
