@@ -3,6 +3,13 @@
 2. Volg te stappen om met de databank te verbinden in VS.
 3. Run het script "TableScript.sql om te tabellen aan te maken.
 4. Run het script "DummyData.sql" om de eerste data in te laden.
+5. Voeg het bestant "appsettings.json" toe in het project FleetManagementApp met deze code
+
+{
+  "ConnectionStrings": {
+    "defaultconnection": "Data Source=PC-VAN-LUCA\\SQLEXPRESS;Initial Catalog=FleetManagement;Integrated Security=True;",
+  }
+}
 
 
 -------------------------------------Startup------------------------------------------------------------------------
@@ -15,7 +22,7 @@
 
 Een Bestuurder heeft een Voertuig, Rijbewijs.
 
-----TabBestuurders
+--TabBestuurders
 2. De eerste tab geeft een overzicht van de Bestuurders in het programma. 
 3. Vul een aantal velden in om te filteren op de gegevens van de bestuurder die je wilt vinden door een klik op "Zoeken".
 4. Met de knop "nieuw", kan u een volledig nieuwe Bestuurder aanmaken.
