@@ -90,72 +90,74 @@ namespace DataAccessLayer.Repos
                             "left JOIN dbo.RijbewijsTypes r on rb.RijbewijsTypeId = r.Id " +
                             "left join dbo.Tankkaarten t on b.TankkaartId = t.Id " +
                             "left join dbo.Tankkaarten_BrandstofTypes tb on tb.TankkaartId = t.Id " +
-                            "left join dbo.BrandstofTypes btb on tb.BrandstofTypeId = btb.Id where v.Gearchiveerd = @Gearchiveerd";
+                            "left join dbo.BrandstofTypes btb on tb.BrandstofTypeId = btb.Id  where v.Gearchiveerd=@Gearchiveerd ";
 
                 command.Parameters.AddWithValue("@Gearchiveerd", gearchiveerd);
 
                 bool next = false;
                 if (!string.IsNullOrWhiteSpace(merk))
                 {
-                    query += ", v.Merk=@Merk";
+                    query += "and v.Merk=@Merk ";
                     command.Parameters.AddWithValue("@Merk", merk);
                     next = true;
                 }
 
                 if (!string.IsNullOrWhiteSpace(model))
                 {
-                    if (next) query += ", ";
-                    query += "v.Model=@Model";
+                    if (next) query += "and ";
+                    query += "v.Model=@Model ";
                     command.Parameters.AddWithValue("@Model", model);
                     next = true;
                 }
 
                 if (aantalDeuren > 0)
                 {
-                    if (next) query += ", ";
-                    query += "v.AantalDeuren=@AantalDeuren";
+                    if (next) query += "and ";
+                    query += "v.AantalDeuren=@AantalDeuren ";
                     command.Parameters.AddWithValue("@AantalDeuren", aantalDeuren);
                     next = true;
                 }
 
                 if (!string.IsNullOrWhiteSpace(nummerplaat))
                 {
-                    if (next) query += ", ";
-                    query += "v.Nummerplaat=@Nummerplaat";
+                    if (next) query += "and ";
+                    query += "v.Nummerplaat=@Nummerplaat ";
                     command.Parameters.AddWithValue("@Nummerplaat", nummerplaat);
                     next = true;
                 }
 
                 if (!string.IsNullOrWhiteSpace(chassisnummer))
                 {
-                    if (next) query += ", ";
-                    query += "v.Chassisnummer=@Chassisnummer";
+                    if (next) query += "and ";
+                    query += "v.Chassisnummer=@Chassisnummer ";
                     command.Parameters.AddWithValue("@Chassisnummer", chassisnummer);
                     next = true;
                 }
 
                 if (!string.IsNullOrWhiteSpace(kleur))
                 {
-                    if (next) query += ", ";
-                    query += "v.Kleur=@Kleur";
+                    if (next) query += "and ";
+                    query += "v.Kleur=@Kleur ";
                     command.Parameters.AddWithValue("@Kleur", kleur);
                     next = true;
                 }
 
                 if (wagenType != null)
                 {
-                    if (next) query += ", ";
-                    query += "v.WagenTypeId=@WagenTypeId";
+                    if (next) query += "and ";
+                    query += "v.WagenTypeId=@WagenTypeId ";
                     command.Parameters.AddWithValue("@WagenTypeId", wagenType.Id);
                     next = true;
                 }
 
                 if (brandstofType != null)
                 {
-                    if (next) query += ", ";
-                    query += "v.BrandstofId=@BrandstofId";
+                    if (next) query += "and ";
+                    query += "v.BrandstofId=@BrandstofId ";
                     command.Parameters.AddWithValue("@BrandstofId", brandstofType.Id);
                 }
+
+                
 
                 command.Connection = connection;
                 command.CommandText = query;

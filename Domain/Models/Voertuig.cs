@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using DomainLayer.Exceptions;
 using DomainLayer.Exceptions.Models;
 
@@ -179,7 +180,7 @@ namespace DomainLayer.Models
         /// </summary>
         /// <param name="obj">object om te vergelijken</param>
         /// <returns>True wanneer voertuigen gelijk zijn ander false</returns>
-        public override bool Equals(object obj) //Todo: tests schrijven
+        /*public override bool Equals(object obj) //Todo: tests schrijven
         {
             return obj is Voertuig other && Id == other.Id && Merk == other.Merk && Model == other.Model && Chassisnummer == other.Chassisnummer && Equals(WagenType, other.WagenType) && Equals(BrandstofType, other.BrandstofType) && Nummerplaat == other.Nummerplaat && Kleur == other.Kleur && AantalDeuren == other.AantalDeuren && Equals(Bestuurder, other.Bestuurder) && IsGearchiveerd == other.IsGearchiveerd ;
         }
@@ -203,12 +204,45 @@ namespace DomainLayer.Models
             hashCode.Add(Bestuurder);
             hashCode.Add(IsGearchiveerd);
             return hashCode.ToHashCode();
-        }
+        }*/
 
 
         public void ZetHybride(bool isHybride)
         {
             IsHybride = isHybride;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Voertuig voertuig &&
+                   Id == voertuig.Id &&
+                   Merk == voertuig.Merk &&
+                   Model == voertuig.Model &&
+                   Chassisnummer == voertuig.Chassisnummer &&
+                   EqualityComparer<WagenType>.Default.Equals(WagenType, voertuig.WagenType) &&
+                   EqualityComparer<BrandstofType>.Default.Equals(BrandstofType, voertuig.BrandstofType) &&
+                   Nummerplaat == voertuig.Nummerplaat &&
+                   Kleur == voertuig.Kleur &&
+                   AantalDeuren == voertuig.AantalDeuren &&
+                   IsGearchiveerd == voertuig.IsGearchiveerd &&
+                   IsHybride == voertuig.IsHybride;
+        }
+
+        public override int GetHashCode()
+        {
+            HashCode hash = new HashCode();
+            hash.Add(Id);
+            hash.Add(Merk);
+            hash.Add(Model);
+            hash.Add(Chassisnummer);
+            hash.Add(WagenType);
+            hash.Add(BrandstofType);
+            hash.Add(Nummerplaat);
+            hash.Add(Kleur);
+            hash.Add(AantalDeuren);
+            hash.Add(IsGearchiveerd);
+            hash.Add(IsHybride);
+            return hash.ToHashCode();
         }
     }
 }

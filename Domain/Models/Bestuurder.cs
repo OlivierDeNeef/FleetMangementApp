@@ -269,12 +269,29 @@ namespace DomainLayer.Models
             return _rijbewijsTypes;
         }
 
+        public override bool Equals(object obj)
+        {
+            return obj is Bestuurder bestuurder &&
+                   Id == bestuurder.Id &&
+                   Naam == bestuurder.Naam &&
+                   Voornaam == bestuurder.Voornaam &&
+                   EqualityComparer<List<RijbewijsType>>.Default.Equals(_rijbewijsTypes, bestuurder._rijbewijsTypes) &&
+                   Geboortedatum == bestuurder.Geboortedatum &&
+                   Rijksregisternummer == bestuurder.Rijksregisternummer &&
+                   IsGearchiveerd == bestuurder.IsGearchiveerd;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id, Naam, Voornaam, _rijbewijsTypes, Geboortedatum, Rijksregisternummer, IsGearchiveerd);
+        }
+
         /// <summary>
         /// Controlleert of 2 bestuurder hetzelfde zijn
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
-        public override bool Equals(object obj) //Todo: tests schrijven
+        /*public override bool Equals(object obj) //Todo: tests schrijven
         {
             return obj is Bestuurder other &&
                    _rijbewijsTypes.All(other._rijbewijsTypes.Contains) &&
@@ -284,9 +301,6 @@ namespace DomainLayer.Models
                    Voornaam == other.Voornaam &&
                    Geboortedatum.Equals(other.Geboortedatum) &&
                    Rijksregisternummer == other.Rijksregisternummer &&
-                   Equals(Adres, other.Adres) &&
-                   Equals(Tankkaart, other.Tankkaart) &&
-                   Equals(Voertuig, other.Voertuig) &&
                    IsGearchiveerd == other.IsGearchiveerd;
         }
 
@@ -308,6 +322,6 @@ namespace DomainLayer.Models
             hashCode.Add(Voertuig);
             hashCode.Add(IsGearchiveerd);
             return hashCode.ToHashCode();
-        }
+        }*/
     }
 }

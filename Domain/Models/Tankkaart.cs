@@ -231,12 +231,29 @@ namespace DomainLayer.Models
             if (bestuurder.Tankkaart != null) bestuurder.VerwijderTankkaart();
         }
 
+        public override bool Equals(object obj)
+        {
+            return obj is Tankkaart tankkaart &&
+                   Id == tankkaart.Id &&
+                   Kaartnummer == tankkaart.Kaartnummer &&
+                   Geldigheidsdatum == tankkaart.Geldigheidsdatum &&
+                   Pincode == tankkaart.Pincode &&
+                   EqualityComparer<List<BrandstofType>>.Default.Equals(_brandstofTypes, tankkaart._brandstofTypes) &&
+                   IsGeblokkeerd == tankkaart.IsGeblokkeerd &&
+                   IsGearchiveerd == tankkaart.IsGearchiveerd;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id, Kaartnummer, Geldigheidsdatum, Pincode, _brandstofTypes, IsGeblokkeerd, IsGearchiveerd);
+        }
+
         /// <summary>
         /// Controlleerd of 2 tankkaarten hetzelfde zijn 
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
-        public override bool Equals(object obj)//Todo: tests schrijven
+        /*public override bool Equals(object obj)//Todo: tests schrijven
         {
             
             var result = obj is Tankkaart other && _brandstofTypes.All(other._brandstofTypes.Contains) &&
@@ -245,13 +262,13 @@ namespace DomainLayer.Models
                          Pincode == other.Pincode && Equals(Bestuurder, other.Bestuurder) &&
                          IsGeblokkeerd == other.IsGeblokkeerd && IsGearchiveerd == other.IsGearchiveerd;
              return result;
-        }
+        }*/
 
         /// <summary>
         /// Geeft de hashcode van een tankkaart
         /// </summary>
         /// <returns></returns>
-        public override int GetHashCode()
+        /*public override int GetHashCode()
         {
             var hashCode = new HashCode();
             hashCode.Add(_brandstofTypes);
@@ -263,6 +280,8 @@ namespace DomainLayer.Models
             hashCode.Add(IsGeblokkeerd);
             hashCode.Add(IsGearchiveerd);
             return hashCode.ToHashCode();
-        }
+        }*/
+
+
     }
 }
