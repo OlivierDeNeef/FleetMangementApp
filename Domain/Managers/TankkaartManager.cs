@@ -27,5 +27,12 @@ namespace DomainLayer.Managers
             if (!_tankkaartRepo.BestaatTankkaart(id)) throw new TankkaartManagerException("GeefTankkaart - tankkaart bestaat niet");
             return _tankkaartRepo.GeefTankkaart(id);
         }
+
+        public IReadOnlyList<Tankkaart> GeefGefilterdeTankkaarten(string kaartnummer, DateTime geldigheidsdatum, List<BrandstofType> lijstBrandstoftypes, bool geachiveerd)
+        {
+
+            return _tankkaartRepo.GeefGefilterdeTankkaarten(kaartnummer, geldigheidsdatum, lijstBrandstoftypes, geachiveerd);
+            
+        }
     }
 }

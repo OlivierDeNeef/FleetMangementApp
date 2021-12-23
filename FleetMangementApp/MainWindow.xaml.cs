@@ -299,8 +299,6 @@ namespace FleetMangementApp
 
 
 
-
-
         private void ListBoxBrandstofTypesTankkaart_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             BrandstoftypeTankkaartCombobox.SelectedItem = ListBoxBrandstofTypesTankkaart.SelectedItem;
@@ -318,7 +316,7 @@ namespace FleetMangementApp
             string r = (string)BrandstoftypeTankkaartCombobox.SelectedValue;
             ListBoxBrandstofTypesTankkaart.Items.Remove(r);
         }
-        #endregion
+        
 
       
         private void ButtonNieuwTankkaart_OnClick(object sender, RoutedEventArgs e)
@@ -340,5 +338,25 @@ namespace FleetMangementApp
                 }.ShowDialog();
             }
         }
+
+        private void ZoekenButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var kaartnummer = TankkaartKaartnummer.Text;
+                var geldigheidsdatum = DatePickerGeldigheidsdatumTankkaart.SelectedDate ?? DateTime.MinValue;
+                var brandstoffenInString = ListBoxBrandstofTypesTankkaart.ItemsSource?.Cast<string>() ?? new List<string>();
+                var lijstBrandstoftypes = _brandstoffen.Where(r => brandstoffenInString.Contains(r.Type)).ToList();
+                var gearchiveerd = CheckBoxGearchiveerdTankkaart.IsChecked.Value;
+
+                ResultatenTankkaarten.ItemsSource = _tankkaartManager.GeefGefilterdeTankkaarten(kaartnummer, geldigheidsdatum, lijstBrandstoftypes, gearchiveerd);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "Fout", MessageBoxButton.OK);
+            }
+        }
+
+        #endregion
     }
 }
