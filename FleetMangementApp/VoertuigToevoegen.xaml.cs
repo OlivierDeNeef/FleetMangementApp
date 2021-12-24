@@ -26,12 +26,14 @@ namespace FleetMangementApp
     {
         private BrandstofTypeManager _brandstofManager;
         private WagenTypeManager _wagenTypeManager;
+        private BestuurderManager _bestuurderManager;
         private List<BrandstofType> _brandstoffen = new();
         private List<WagenType> _wagentypes = new();
         private int _aantalDeuren;
-        public VoertuigToevoegen(BrandstofTypeManager brandstofManager, WagenTypeManager wagenTypeManager)
+        public VoertuigToevoegen(BestuurderManager bestuurderManager,BrandstofTypeManager brandstofManager, WagenTypeManager wagenTypeManager)
         {
             _brandstofManager = brandstofManager;
+            _bestuurderManager = bestuurderManager;
             _wagenTypeManager = wagenTypeManager;
             InitializeComponent();
             SetupVoertuigWindowView();
@@ -69,7 +71,7 @@ namespace FleetMangementApp
 
         private void ToevoegenVoerthuigSelecteerBestuurderbutton_Click(object sender, RoutedEventArgs e)
         {
-            new BestuurderSelecteren()
+            new BestuurderSelecteren(_bestuurderManager)
             {
                 Owner = this
             }.ShowDialog();

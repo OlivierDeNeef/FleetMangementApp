@@ -11,6 +11,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using DomainLayer.Managers;
+using DomainLayer.Models;
+using FleetMangementApp.Mappers;
 
 namespace FleetMangementApp
 {
@@ -19,9 +22,11 @@ namespace FleetMangementApp
     /// </summary>
     public partial class BestuurderSelecteren : Window
     {
-        public BestuurderSelecteren()
+        private readonly BestuurderManager _bestuurderManager;
+        public BestuurderSelecteren(BestuurderManager bestuurderManager)
         {
             InitializeComponent();
+            _bestuurderManager = bestuurderManager;
         }
 
         private void RowGotFocus(object sender, RoutedEventArgs e)
@@ -51,7 +56,30 @@ namespace FleetMangementApp
 
         private void ZoekBestuurderButton_Click(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if(ValidateBestuurderFields()) return;
+                var id = string.IsNullOrWhiteSpace(TextBoxBestuurderId.Text) ? 0 : int.Parse(TextBoxBestuurderId.Text);
+                var naam = TextBoxNaamBestuurder.Text;
+                var voornaam = TextBoxVoornaamBestuurder.Text;
+                var geboortedatum = DatePickerGeboortedatumBestuurder.SelectedDate.Value;
+                var rijksregisternummer = TextBoxRijksregisternummerBestuurder.Text;
+
+                List<RijbewijsType> lijstRijbewijzen = new List<RijbewijsType>();
+                foreach (RijbewijsType rijbewijs in ListBoxRijbewijzen.Items)
+                {
+                    lijstRijbewijzen.Add(rijbewijs);
+                }
+
+                var result = _bestuurderManager.GeefGefilterdeBestuurder(id, voornaam, naam, geboortedatum, lijstRijbewijzen, rijksregisternummer, false);
+                ResultatenBestuurders.ItemsSource = result.Select(BestuurderUIMapper.ToUI);
+
+
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "Fout ", MessageBoxButton.OK);
+            }
 
         }
         private bool ValidateBestuurderFields()

@@ -85,17 +85,15 @@ namespace FleetMangementApp
         {
             BrandstofTankkaartAanpassenComboBox.SelectedItem = BrandstoffenTankkaartAanpassenListBox.SelectedValue;
         }
-
         //Bestuurder
         private void ButtonTankkaartAanpassenSelecteerBestuurder_OnClick(object sender, RoutedEventArgs e)
         {
-            new BestuurderSelecteren()
+            new BestuurderSelecteren(_bestuurderManager)
             {
                 Owner = this
             }.ShowDialog();
         }
         
-
         //Tankkaart Aanpassen / Annulerens
         private void AanpassenToevoegenButtonTankkaartAanpassen_OnClick(object sender, RoutedEventArgs e)
         {

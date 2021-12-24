@@ -64,7 +64,7 @@ namespace FleetMangementApp
 
         private void ButtonSelecteerBestuurder_Click(object sender, RoutedEventArgs e)
         {
-            new BestuurderSelecteren()
+            new BestuurderSelecteren(_bestuurderManager)
             {
                 Owner = this
             }.ShowDialog();
