@@ -41,8 +41,6 @@ namespace FleetMangementApp
             SelectieToevoegenButton.IsEnabled = false;
 
         }
-
-
         private void GeenTankkaartButton_Click(object sender, RoutedEventArgs e)
         {
             if (Owner.GetType() == typeof(BestuurderToevoegen))
@@ -60,7 +58,6 @@ namespace FleetMangementApp
 
             Close();
         }
-
         private void SelectieToevoegenButton_Click(object sender, RoutedEventArgs e)
         {
             if (ResultatenTankkaarten.SelectedItem != null)
@@ -84,12 +81,10 @@ namespace FleetMangementApp
                 
             }
         }
-
         private void AnnulerenButton_Click(object sender, RoutedEventArgs e)
         {
-
+            Close();
         }
-
         private void ZoekenButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -107,20 +102,17 @@ namespace FleetMangementApp
                 MessageBox.Show(exception.Message, "Fout", MessageBoxButton.OK);
             }
         }
-
         private void ToevoegenTankkaartButton_OnClick(object sender, RoutedEventArgs e)
         {
             string r = (string)BrandstoftypeTankkaartCombobox.SelectedValue;
             if (!ListBoxBrandstofTypesTankkaart.Items.Contains(r))
                 ListBoxBrandstofTypesTankkaart.Items.Add(r);
         }
-
         private void VerwijderTankkaartButton_OnClick(object sender, RoutedEventArgs e)
         {
             string r = (string)BrandstoftypeTankkaartCombobox.SelectedValue;
             ListBoxBrandstofTypesTankkaart.Items.Remove(r);
         }
-
         private void ListBoxBrandstofTypesTankkaart_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             BrandstoftypeTankkaartCombobox.SelectedItem = ListBoxBrandstofTypesTankkaart.SelectedItem;

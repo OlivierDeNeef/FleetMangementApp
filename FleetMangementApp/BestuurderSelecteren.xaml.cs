@@ -43,13 +43,11 @@ namespace FleetMangementApp
         private void RowGotFocus(object sender, RoutedEventArgs e)
         {
             SelectieToevoegenButton.IsEnabled = true;
-
         }
         private void RowLostFocus(object sender, RoutedEventArgs e)
         {
             SelectieToevoegenButton.IsEnabled = false;
         }
-
         private void ToevoegenRijbewijsButton_OnClick(object sender, RoutedEventArgs e)
         {
             string r = (string)ComboBoxRijbewijzen.SelectedValue;
@@ -57,14 +55,12 @@ namespace FleetMangementApp
                 ListBoxRijbewijzen.Items.Add(r);
 
         }
-
         private void VerwijderRijbewijsButton_OnClick(object sender, RoutedEventArgs e)
         {
             string r = (string)ComboBoxRijbewijzen.SelectedValue;
             if (ListBoxRijbewijzen.Items.Contains(r))
                 ListBoxRijbewijzen.Items.Remove(r);
         }
-
         private void ZoekBestuurderButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -115,10 +111,47 @@ namespace FleetMangementApp
             }
             return result;
         }
-
         private void ListBoxRijbewijzen_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBoxRijbewijzen.SelectedItem = ListBoxRijbewijzen.SelectedValue;
+        }
+        private void AnnulerenButton_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+        private void GeenBestuurderButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (Owner.GetType() == typeof(TankkaartToevoegen))
+            {
+                var main = Owner as TankkaartToevoegen;
+                main.GeselecteerdBestuurder = null;
+                main.BestuurderTextBox.Text = "Geen bestuuder";
+
+            }
+            else if (Owner.GetType() == typeof(TankkaartAanpassen))
+            {
+                var main = Owner as TankkaartAanpassen;
+                main.GeselecteerdBestuurder = null;
+                main.TankkaartAanpassenBestuurderTextBox.Text = "Geen bestuurder";
+            }
+            Close();
+        }
+        private void SelectieToevoegenButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (ResultatenBestuurders.SelectedItem != null)
+            {
+                var main = Owner as TankkaartToevoegen;
+                main.GeselecteerdBestuurder = (Bestuurder) ResultatenBestuurders.SelectedItem;
+                main.BestuurderTextBox.Text = $"Bestuurder met naam: {main.GeselecteerdBestuurder.Voornaam} {main.GeselecteerdBestuurder.Naam}";
+                Close();
+            }
+            else if (Owner.GetType() == typeof(TankkaartAanpassen))
+            {
+                var main = Owner as TankkaartToevoegen;
+                main.GeselecteerdBestuurder = (Bestuurder)ResultatenBestuurders.SelectedItem;
+                main.BestuurderTextBox.Text = $"Bestuurder met naam: {main.GeselecteerdBestuurder.Voornaam} {main.GeselecteerdBestuurder.Naam}";
+                Close();
+            }
         }
     }
 }
