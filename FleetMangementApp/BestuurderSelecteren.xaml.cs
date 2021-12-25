@@ -22,11 +22,22 @@ namespace FleetMangementApp
     /// </summary>
     public partial class BestuurderSelecteren : Window
     {
+        private readonly RijbewijsTypeManager _rijbewijsTypeManager;
         private readonly BestuurderManager _bestuurderManager;
-        public BestuurderSelecteren(BestuurderManager bestuurderManager)
+        protected internal List<RijbewijsType> _allRijbewijsTypes = new();
+
+        public BestuurderSelecteren(BestuurderManager bestuurderManager, RijbewijsTypeManager rijbewijsTypeManager)
         {
             InitializeComponent();
             _bestuurderManager = bestuurderManager;
+            _rijbewijsTypeManager = rijbewijsTypeManager;
+            SetupBestuurderSelecteren();
+        }
+
+        private void SetupBestuurderSelecteren()
+        {
+            _allRijbewijsTypes = _rijbewijsTypeManager.GeefAlleRijsbewijsTypes().ToList();
+            ComboBoxRijbewijzen.ItemsSource = _allRijbewijsTypes.Select(r => r.Type).OrderBy(r => r);
         }
 
         private void RowGotFocus(object sender, RoutedEventArgs e)
@@ -103,6 +114,11 @@ namespace FleetMangementApp
                 result = false;
             }
             return result;
+        }
+
+        private void ListBoxRijbewijzen_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBoxRijbewijzen.SelectedItem = ListBoxRijbewijzen.SelectedValue;
         }
     }
 }

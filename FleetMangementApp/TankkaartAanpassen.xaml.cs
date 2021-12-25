@@ -26,14 +26,16 @@ namespace FleetMangementApp
         private readonly BrandstofTypeManager _brandstofManager;
         private readonly BestuurderManager _bestuurderManager;
         private readonly TankkaartManager _tankkaartManager;
+        private readonly RijbewijsTypeManager _rijbewijsTypeManager;
         public Bestuurder GeselecteerdBestuurder { get; set; }
         private List<BrandstofType> _brandstoffen = new();
-        public TankkaartAanpassen(Tankkaart tankkaart,BrandstofTypeManager brandstofManager, TankkaartManager tankkaartManager, BestuurderManager bestuurderManager)
+        public TankkaartAanpassen(Tankkaart tankkaart,BrandstofTypeManager brandstofManager, TankkaartManager tankkaartManager, BestuurderManager bestuurderManager, RijbewijsTypeManager rijbewijsTypeManager)
         {
             _tankkaart = tankkaart;
             _bestuurderManager = bestuurderManager;
             _brandstofManager = brandstofManager;
             _tankkaartManager = tankkaartManager;
+            _rijbewijsTypeManager = rijbewijsTypeManager;
             InitializeComponent();
             SetupTankaartAanpassen();
             //VulTankkaartDataAan(tankkaart);
@@ -88,7 +90,7 @@ namespace FleetMangementApp
         //Bestuurder
         private void ButtonTankkaartAanpassenSelecteerBestuurder_OnClick(object sender, RoutedEventArgs e)
         {
-            new BestuurderSelecteren(_bestuurderManager)
+            new BestuurderSelecteren(_bestuurderManager, _rijbewijsTypeManager)
             {
                 Owner = this
             }.ShowDialog();

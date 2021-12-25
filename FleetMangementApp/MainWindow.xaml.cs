@@ -218,7 +218,7 @@ namespace FleetMangementApp
         }
         private void ButtonNieuwVoertuig_OnClick(object sender, RoutedEventArgs e)
         {
-            new VoertuigToevoegen(_bestuurderManager,_brandstofTypeManager, _wagenTypeManager)
+            new VoertuigToevoegen(_bestuurderManager,_brandstofTypeManager, _wagenTypeManager, _rijbewijsTypeManager)
             {
                 Owner = this
 
@@ -328,7 +328,7 @@ namespace FleetMangementApp
       
         private void ButtonNieuwTankkaart_OnClick(object sender, RoutedEventArgs e)
         {
-            new TankkaartToevoegen(_brandstofTypeManager,_tankkaartManager, _bestuurderManager)
+            new TankkaartToevoegen(_brandstofTypeManager,_tankkaartManager, _bestuurderManager, _rijbewijsTypeManager)
             {
                 Owner = this
             }.ShowDialog();
@@ -367,7 +367,7 @@ namespace FleetMangementApp
 
         private void ButtonEditTankkaart_OnClick(object sender, RoutedEventArgs e)
         {
-            new TankkaartAanpassen(tankkaart, _brandstofTypeManager, _tankkaartManager, _bestuurderManager)
+            new TankkaartAanpassen(tankkaart, _brandstofTypeManager, _tankkaartManager, _bestuurderManager, _rijbewijsTypeManager)
             {
                 Owner = this
             }.ShowDialog();
