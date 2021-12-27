@@ -90,7 +90,7 @@
                 <DataGridTextColumn Width="110" Header="Nummerplaat" Binding="{Binding Nummerplaat}"></DataGridTextColumn>
                 <DataGridTextColumn Width="*" Header="Chassisnummer" Binding="{Binding Chassisnummer}"></DataGridTextColumn>
                 <DataGridTextColumn Width="90" Header="Wagentype" Binding="{Binding WagenType}"></DataGridTextColumn>
-                <DataGridCheckBoxColumn Width="100" Header="Bestuurder" Binding="{Binding Bestuurder}"></DataGridCheckBoxColumn>
+                <DataGridCheckBoxColumn Width="100" Header="Bestuurder" Binding="{Binding HeeftBestuurder}"></DataGridCheckBoxColumn>
             </DataGrid.Columns>
         </DataGrid>
         <Button Grid.Column="1" Grid.Row="11" Name="AnnulerenButton" HorizontalAlignment="Left" Padding="60,2,60,2" Click="AnnulerenButton_OnClick">Annuleren</Button>

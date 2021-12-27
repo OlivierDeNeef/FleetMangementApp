@@ -112,7 +112,11 @@ namespace FleetMangementApp
 
                 var result = _voertuigManager.GeefGefilterdeVoertuigen(id, merk, model, aantalDeuren, nummerplaat, chassisnummer, kleur, wagenType, brandstofType, gearchiveerd, isHybride).ToList();
                 //Gevonden bestuurder mappen aan datagrid
-                ResultatenVoertuigen.ItemsSource = result.Select(VoertuigUIMapper.ToUI);
+                var results = result.Select(VoertuigUIMapper.ToUI).Where(v => v.HeeftBestuurder == false);
+                if (results.Count() > 0)
+                    ResultatenVoertuigen.ItemsSource = result.Select(VoertuigUIMapper.ToUI).Where(v => v.HeeftBestuurder == false);
+                else
+                    MessageBox.Show("Geen beschikbare voertuigen gevonden");
             }
             catch (Exception exception)
             {
