@@ -7,7 +7,7 @@
         
 
         mc:Ignorable="d"
-        Title="Fleet Project" Height="450" Width="1000" MinWidth="1000" ResizeMode="NoResize">
+        Title="Fleet Project" Height="500" Width="1000" MinWidth="1000" ResizeMode="NoResize">
     <Grid>
         <TabControl>
             <TabItem Header="Bestuurders">
@@ -103,6 +103,7 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="20"/>
                         <RowDefinition Height="5"/>
                         <RowDefinition Height="Auto"/>
@@ -126,7 +127,7 @@
                         <ColumnDefinition Width="20"/>
                     </Grid.ColumnDefinitions>
                     <Rectangle Grid.Row="0" Grid.Column="0" Grid.RowSpan="9" Grid.ColumnSpan="8" Fill="#FF507ECD" Margin="0,0,0,5"/>
-                    <Label Grid.Column="1" Grid.Row="1" Content="Id" HorizontalAlignment="Left" Margin="0,0,0,20" Grid.RowSpan="2"/>
+                    <Label Grid.Column="1" Grid.Row="1" Content="Id" HorizontalAlignment="Left" Margin="0,0,0,40" Grid.RowSpan="2"/>
                     <TextBox Grid.Row="2" Grid.Column="1" Name="TextBoxVoertuigId" Width="200" Margin="0,0,30,26" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
 
                     <Label Grid.Column="3" Grid.Row="1" Content="Merk" HorizontalAlignment="Left" Margin="0,0,0,20" Grid.RowSpan="2"/>
@@ -139,8 +140,8 @@
                     <StackPanel Grid.Row="2" Grid.Column="5" Orientation="Horizontal" Margin="0,0,0,26" Grid.RowSpan="2">
 
                         <TextBox  Text="0" IsReadOnly="True" Name="TextBoxAantalDeuren" Margin="0,0,0,0" Width="150"/>
-                        <Button Name="VerhoogAantalDeurenButton" Width="15">+</Button>
-                        <Button Name="VerlaagAantalDeurenButton" Width="15">-</Button>
+                        <Button Name="VerhoogAantalDeurenButton" Width="15" Click="VerhoogAantalDeurenButton_OnClick">+</Button>
+                        <Button Name="VerlaagAantalDeurenButton" Width="15" Click="VerlaagAantalDeurenButton_OnClick">-</Button>
                     </StackPanel>
 
 
@@ -150,7 +151,7 @@
                     <Label Grid.Column="3" Grid.Row="3" Content="Chassisnummer" HorizontalAlignment="Left" Margin="0,0,0,18" Grid.RowSpan="2"/>
                     <TextBox Grid.Row="4" Grid.Column="3" Name="TextBoxChassisnummerVoertuigen" Width="200" Margin="0,0,30,26" Grid.RowSpan="2"></TextBox>
 
-                    <Label Grid.Column="4" Grid.Row="3" Content="Kleur" HorizontalAlignment="Left" Margin="0,0,0,18" Grid.RowSpan="2"/>
+                    <Label Grid.Column="4" Grid.Row="3" Content="Kleur" HorizontalAlignment="Left" Margin="0,0,30,0" Grid.RowSpan="2"/>
                     <TextBox Grid.Row="4" Grid.Column="4" Name="TextBoxKleurVoertuigen" Width="200" Margin="0,0,30,26" Grid.RowSpan="2"></TextBox>
 
 

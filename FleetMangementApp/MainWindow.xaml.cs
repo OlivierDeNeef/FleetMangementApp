@@ -24,6 +24,7 @@ namespace FleetMangementApp
         private readonly RijbewijsTypeManager _rijbewijsTypeManager;
         private readonly TankkaartManager _tankkaartManager;
         public Tankkaart tankkaart;
+        private int _aantalDeuren;
         protected internal List<BrandstofType> _brandstoffen = new();
         protected internal List<WagenType> _wagentypes = new();
         private static readonly Regex _regex = new Regex("[^0-9.-]+");
@@ -373,5 +374,21 @@ namespace FleetMangementApp
             }.ShowDialog();
         }
         #endregion
+
+        private void VerhoogAantalDeurenButton_OnClick(object sender, RoutedEventArgs e)
+        {
+               _aantalDeuren += 1;
+                TextBoxAantalDeuren.Text = _aantalDeuren.ToString();
+        }
+
+        private void VerlaagAantalDeurenButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (_aantalDeuren != 0)
+            {
+                _aantalDeuren -= 1;
+                TextBoxAantalDeuren.Text = _aantalDeuren.ToString();
+
+            }
+        }
     }
 }

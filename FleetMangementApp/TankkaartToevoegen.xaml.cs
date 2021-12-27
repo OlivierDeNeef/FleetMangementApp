@@ -47,23 +47,20 @@ namespace FleetMangementApp
         private void AnnulerenButton_OnClick(object sender, RoutedEventArgs e)
         {
             Close();
-            
-        }
 
+        }
         private void ToevoegenTankkaartButtonBrandstof_OnClick(object sender, RoutedEventArgs e)
         {
             string r = (string)BrandstofTankkaartComboBox.SelectedValue;
             if (!BrandstoffenListBox.Items.Contains(r))
                 BrandstoffenListBox.Items.Add(r);
         }
-       
         private void VerwijderTankkaartBrandstofButton_OnClick(object sender, RoutedEventArgs e)
         {
             string r = (string)BrandstofTankkaartComboBox.SelectedValue;
             if (BrandstoffenListBox.Items.Contains(r))
                 BrandstoffenListBox.Items.Remove(r);
         }
-
         private void ButtonSelecteerBestuurder_Click(object sender, RoutedEventArgs e)
         {
             new BestuurderSelecteren(_bestuurderManager, _rijbewijsTypeManager)
@@ -71,8 +68,6 @@ namespace FleetMangementApp
                 Owner = this
             }.ShowDialog();
         }
-
-
         private void ToevoegenButton_OnClick(object sender, RoutedEventArgs e)
         {
             List<BrandstofType> brandstoffen = new List<BrandstofType>();
@@ -98,7 +93,6 @@ namespace FleetMangementApp
             MessageBox.Show("Tankkaart Toegevoegd");
             Close();
         }
-
         private void BrandstoffenListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             BrandstofTankkaartComboBox.SelectedItem = BrandstoffenListBox.SelectedValue;

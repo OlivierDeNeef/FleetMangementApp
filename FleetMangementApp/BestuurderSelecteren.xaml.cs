@@ -65,11 +65,11 @@ namespace FleetMangementApp
         {
             try
             {
-                if(ValidateBestuurderFields()) return;
+                //if(!ValidateBestuurderFields()) return;
                 var id = string.IsNullOrWhiteSpace(TextBoxBestuurderId.Text) ? 0 : int.Parse(TextBoxBestuurderId.Text);
                 var naam = TextBoxNaamBestuurder.Text;
                 var voornaam = TextBoxVoornaamBestuurder.Text;
-                var geboortedatum = DatePickerGeboortedatumBestuurder.SelectedDate.Value;
+                var geboortedatum = DatePickerGeboortedatumBestuurder.SelectedDate ?? DateTime.MinValue;
                 var rijksregisternummer = TextBoxRijksregisternummerBestuurder.Text;
 
                 List<RijbewijsType> lijstRijbewijzen = new List<RijbewijsType>();
@@ -137,11 +137,18 @@ namespace FleetMangementApp
             Close();
         }
         private void SelectieToevoegenButton_Click(object sender, RoutedEventArgs e)
-        {
+         {
             if (ResultatenBestuurders.SelectedItem != null)
             {
                 var main = Owner as TankkaartToevoegen;
                 main.GeselecteerdBestuurder = (Bestuurder) ResultatenBestuurders.SelectedItem;
+                main.BestuurderTextBox.Text = $"Bestuurder met naam: {main.GeselecteerdBestuurder.Voornaam} {main.GeselecteerdBestuurder.Naam}";
+                Close();
+            }
+            else if (Owner.GetType() == typeof(TankkaartToevoegen))
+            {
+                var main = Owner as TankkaartToevoegen;
+                main.GeselecteerdBestuurder = (Bestuurder)ResultatenBestuurders.SelectedItem;
                 main.BestuurderTextBox.Text = $"Bestuurder met naam: {main.GeselecteerdBestuurder.Voornaam} {main.GeselecteerdBestuurder.Naam}";
                 Close();
             }
@@ -152,6 +159,12 @@ namespace FleetMangementApp
                 main.BestuurderTextBox.Text = $"Bestuurder met naam: {main.GeselecteerdBestuurder.Voornaam} {main.GeselecteerdBestuurder.Naam}";
                 Close();
             }
+        }
+
+
+        private void SelectieToevoegenButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("OnClick methode");
         }
     }
 }
