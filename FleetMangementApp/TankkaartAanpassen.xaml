@@ -56,6 +56,6 @@
         <Button Grid.Row="9" Grid.Column="2" Margin="0,0,30,0" Name="ButtonTankkaartAanpassenSelecteerBestuurder" Height="20" Grid.RowSpan="3" VerticalAlignment="Top" Click="ButtonTankkaartAanpassenSelecteerBestuurder_OnClick">Selecteer Bestuurder</Button>
 
         <Button Grid.Row="12" Grid.Column="0" Grid.ColumnSpan="2" Margin="10,0,20,0" Name="AnnulerenButton" Click="AnnulerenButton_OnClick">Annuleren</Button>
-        <Button Grid.Row="12" Grid.Column="2" Grid.ColumnSpan="2" Margin="20,0,10,0" Name="AanpassenButtonTankkaartAanpassen" Click="AanpassenToevoegenButtonTankkaartAanpassen_OnClick" >Toevoegen</Button>
+        <Button Grid.Row="12" Grid.Column="2" Grid.ColumnSpan="2" Margin="20,0,10,0" Name="TankkaartAanpassenButton" Click="TankkaartAanpassenButton_OnClick" >Aanpassen</Button>
     </Grid>
 </Window>

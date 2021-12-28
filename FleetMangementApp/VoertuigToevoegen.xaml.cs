@@ -84,7 +84,7 @@ namespace FleetMangementApp
         {
             try
             {
-                Voertuig nieuwVoertuig = new Voertuig(ToevoegenVoertuigMerkTextbox.Text, ToevoegenVoertuigModelTextbox.Text, ToevoegenVoertuigCNummerTextbox.Text, ToevoegenVoertuigNummerplaatTextbox.Text,  )
+            //    Voertuig nieuwVoertuig = new Voertuig(ToevoegenVoertuigMerkTextbox.Text, ToevoegenVoertuigModelTextbox.Text, ToevoegenVoertuigCNummerTextbox.Text, ToevoegenVoertuigNummerplaatTextbox.Text,  )
             }
             catch (Exception ex)
             {

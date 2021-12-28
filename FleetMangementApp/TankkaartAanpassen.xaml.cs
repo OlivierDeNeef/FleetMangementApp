@@ -43,11 +43,11 @@ namespace FleetMangementApp
 
         private void VulTankkaartDataAan(Tankkaart tankkaart)
         {
-            //TODO User Interface Tankkaart FIX
+            
             TextBoxTankkaartAanpassenKaarnummer.Text = tankkaart.Kaartnummer;
             TextBoxTankkaartAanpassenPincode.Text = tankkaart.Pincode;
             PickerGeldigheidsDatumTankkaartAanpassen.SelectedDate = tankkaart.Geldigheidsdatum;
-           //TODO UserInterface FIX
+           
              _brandstoffen = new ObservableCollection<string>(tankkaart.GeefBrandstofTypes().Select(r => r.Type));
             if (tankkaart.Bestuurder != null)
             {
@@ -98,13 +98,33 @@ namespace FleetMangementApp
         }
         
         //Tankkaart Aanpassen / Annulerens
-        //TODO knop fixen
-        private void AanpassenToevoegenButtonTankkaartAanpassen_OnClick(object sender, RoutedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
+        
         private void AnnulerenButton_OnClick(object sender, RoutedEventArgs e)
         {
+            Close();
+        }
+
+        //TODO knop fixen
+        private void TankkaartAanpassenButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            List<BrandstofType> brandstoffen = new List<BrandstofType>();
+            var brandstoffenstring =
+                BrandstoffenTankkaartAanpassenListBox.ItemsSource.Cast<string>() ?? new List<string>();
+            brandstoffen = ((MainWindow) Application.Current.MainWindow)._brandstoffen
+                .Where(b => brandstoffenstring.Contains(b.Type)).ToList();
+
+            Tankkaart aangepasteTankkaart = new Tankkaart(_tankkaart.Id, TextBoxTankkaartAanpassenKaarnummer.Text,
+                PickerGeldigheidsDatumTankkaartAanpassen.SelectedDate.Value, TextBoxTankkaartAanpassenPincode.Text, 
+                _tankkaart.IsGeblokkeerd, _tankkaart.IsGearchiveerd, brandstoffen);
+
+
+            if (GeselecteerdBestuurder != null)
+            {
+                aangepasteTankkaart.ZetBestuurder(GeselecteerdBestuurder);
+            }
+            _tankkaartManager.UpdateTankkaart(aangepasteTankkaart);
+            VulTankkaartDataAan(aangepasteTankkaart);
+            
             Close();
         }
     }
