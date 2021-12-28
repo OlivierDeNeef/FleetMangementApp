@@ -73,8 +73,10 @@ namespace FleetMangementApp
             Tankkaart nieuweTankkaart;
             List<BrandstofType> brandstoffen = new List<BrandstofType>();
             var brandstoffenString = BrandstoffenListBox.ItemsSource?.Cast<string>() ?? new List<string>();
+            Bestuurder b = GeselecteerdBestuurder;
+            
             nieuweTankkaart = new Tankkaart(TextBoxTankkaartKaarnummer.Text,
-                PickerGeldigheidsDatum.SelectedDate.Value,TextBoxTankkaartPincode.Text, null, false, false, brandstoffen);
+                PickerGeldigheidsDatum.SelectedDate.Value,TextBoxTankkaartPincode.Text, b, false, false, brandstoffen);
             
             if (GeselecteerdBestuurder != null)
             {

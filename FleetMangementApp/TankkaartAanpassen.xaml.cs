@@ -38,7 +38,7 @@ namespace FleetMangementApp
             _rijbewijsTypeManager = rijbewijsTypeManager;
             InitializeComponent();
             SetupTankaartAanpassen();
-            //VulTankkaartDataAan(tankkaart);
+            VulTankkaartDataAan(tankkaart);
         }
 
         private void VulTankkaartDataAan(Tankkaart tankkaart)

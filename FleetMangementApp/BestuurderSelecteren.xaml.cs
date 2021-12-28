@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using DomainLayer.Managers;
 using DomainLayer.Models;
 using FleetMangementApp.Mappers;
+using FleetMangementApp.Models.Output;
 
 namespace FleetMangementApp
 {
@@ -144,13 +145,15 @@ namespace FleetMangementApp
                 if (Owner.GetType() == typeof(TankkaartToevoegen))
                 {
                     var main = Owner as TankkaartToevoegen;
-            //        main.GeselecteerdBestuurder = ResultatenBestuurders.SelectedItem;
+                   main.GeselecteerdBestuurder = BestuurderUIMapper.FromUI((ResultBestuurder)ResultatenBestuurders.SelectedItem, _bestuurderManager);
                     main.BestuurderTextBoxTankaartToevoegen.Text = $"Bestuurder met naam: {main.GeselecteerdBestuurder.Voornaam} {main.GeselecteerdBestuurder.Naam}";
                 }
                 else if (Owner.GetType() == typeof(TankkaartAanpassen))
                 {
                     var main = Owner as TankkaartToevoegen;
-                    main.GeselecteerdBestuurder = (Bestuurder)ResultatenBestuurders.SelectedItem;
+                    main.GeselecteerdBestuurder =
+                        BestuurderUIMapper.FromUI((ResultBestuurder) ResultatenBestuurders.SelectedItem,
+                            _bestuurderManager);
                     main.BestuurderTextBoxTankaartToevoegen.Text = $"Bestuurder met naam: {main.GeselecteerdBestuurder.Voornaam} {main.GeselecteerdBestuurder.Naam}";
                 }
             }

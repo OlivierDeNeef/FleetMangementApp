@@ -1,4 +1,5 @@
-﻿using DomainLayer.Models;
+﻿using DomainLayer.Managers;
+using DomainLayer.Models;
 using FleetMangementApp.Models.Output;
 
 namespace FleetMangementApp.Mappers
@@ -16,6 +17,10 @@ namespace FleetMangementApp.Mappers
                 HeeftTankkaart = (bestuurder.Tankkaart != null),
                 HeeftVoertuig = (bestuurder.Voertuig != null)
             };
+        }
+        public static Bestuurder FromUI(ResultBestuurder resultBestuurder, BestuurderManager repo)
+        {
+            return repo.GeefBestuurder(resultBestuurder.Id);
         }
     }
 }
