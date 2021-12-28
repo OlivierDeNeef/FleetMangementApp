@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DomainLayer.Managers;
+using DomainLayer.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +21,38 @@ namespace FleetMangementApp
     /// </summary>
     public partial class VoertuigAanpassen : Window
     {
-        public VoertuigAanpassen()
+        private Voertuig _voertuig;
+        private BestuurderManager _bestuurderManager;
+        private VoertuigManager _voertuigManager;
+        private int _aantalDeuren;
+        public VoertuigAanpassen(Voertuig voertuig, VoertuigManager voertuigManager, BestuurderManager bestuurderManager)
         {
+
             InitializeComponent();
+            _voertuig = voertuig;
+            _bestuurderManager = bestuurderManager;
+            _voertuigManager = voertuigManager;
+        }
+
+        private void AnnulerenButton_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void VerhoogAantalDeurenButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            _aantalDeuren += 1;
+            ToevoegenVoertuigAantalDeurenTextbox.Text = _aantalDeuren.ToString();
+        }
+
+        private void VerlaagAantalDeurenButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (_aantalDeuren != 0)
+            {
+                _aantalDeuren -= 1;
+                ToevoegenVoertuigAantalDeurenTextbox.Text = _aantalDeuren.ToString();
+
+            }
         }
     }
 }

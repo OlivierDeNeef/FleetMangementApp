@@ -291,6 +291,19 @@ namespace FleetMangementApp
             }
 
         }
+
+        private void ButtonPasVoertuigAan_Click(object sender, RoutedEventArgs e)
+        {
+            if (ResultatenVoertuigen.SelectedItem != null)
+            {
+                var selectedVoertuig = (ResultVoertuig)ResultatenVoertuigen.SelectedItem;
+                new VoertuigAanpassen(_voertuigManager.GeefVoertuig(selectedVoertuig.Id), _voertuigManager, _bestuurderManager)
+                {
+                    Owner = this
+                }.ShowDialog();
+            }
+        }
+
         #endregion
 
         #region Tankkaart
@@ -390,5 +403,7 @@ namespace FleetMangementApp
 
             }
         }
+
+        
     }
 }

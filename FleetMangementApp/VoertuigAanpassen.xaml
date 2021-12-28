@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FleetMangementApp"
         mc:Ignorable="d"
-        Title="VoertuigAanpassen" Height="450" Width="550">
+        Title="VoertuigAanpassen" Height="500" Width="550">
     
         <Grid>
             <Grid.ColumnDefinitions>
@@ -35,7 +35,7 @@
             <TextBox Grid.Row="7" Grid.Column="0" Name="ToevoegenVoertuigKleurTextbox" Width="150" Margin="50,0,0,0"></TextBox>
             <Label Grid.Row="8" Grid.Column="0" Content="Bestuurder:" Margin="50,25,5,5"></Label>
             <TextBox Grid.Row="9" Grid.Column="0" Name="ToevoegenVoertuigBestuurderTextbox" Width="150" IsEnabled="False" Margin="50,0,0,0"></TextBox>
-            <Button Grid.Row="10" Grid.Column="0" Content="Annuleren" Name="VoertuigToevoegenButtenAnnuleren" Click="VoertuigToevoegenButtenAnnuleren_OnClick" Margin="25,25,0,0"></Button>
+            <Button Grid.Row="10" Grid.Column="0" Content="Annuleren" Name="AnnulerenButton" Click="AnnulerenButton_Click"  Margin="25,25,0,0"></Button>
             <!--tweede kolom-->
             <Label Grid.Row="0" Grid.Column="1" Content="*Model" Margin="50,25,5,5"/>
             <TextBox Grid.Row="1" Grid.Column="1" Name="ToevoegenVoertuigModelTextbox" Margin="50,0,0,0" Width="150"/>
@@ -50,7 +50,7 @@
                 <Button Name="VerhoogAantalDeurenButton" Click="VerhoogAantalDeurenButton_OnClick" Width="15">+</Button>
                 <Button Name="VerlaagAantalDeurenButton" Click="VerlaagAantalDeurenButton_OnClick" Width="15">-</Button>
             </StackPanel>
-            <Button Grid.Row="9" Grid.Column="1" Margin="50,0,0,0" Name="ToevoegenVoerthuigSelecteerBestuurderbutton" Click="ToevoegenVoerthuigSelecteerBestuurderbutton_Click">Selecteer besuurder</Button>
+            <Button Grid.Row="9" Grid.Column="1" Margin="50,0,0,0" Name="ToevoegenVoerthuigSelecteerBestuurderbutton">Selecteer besuurder</Button>
             <Button Grid.Row="10" Grid.Column="1" Name="VoertuigAanpassenButton"  Margin="125,25,-75,0">Aanpassen</Button>
         </Grid>
     
