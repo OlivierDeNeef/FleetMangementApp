@@ -70,16 +70,25 @@ namespace FleetMangementApp
         }
         private void ToevoegenButton_OnClick(object sender, RoutedEventArgs e)
         {
+            Tankkaart nieuweTankkaart;
             List<BrandstofType> brandstoffen = new List<BrandstofType>();
             var brandstoffenString = BrandstoffenListBox.ItemsSource?.Cast<string>() ?? new List<string>();
-            Bestuurder bestuurder;
+            Bestuurder b = GeselecteerdBestuurder;
+            
+            nieuweTankkaart = new Tankkaart(TextBoxTankkaartKaarnummer.Text,
+                PickerGeldigheidsDatum.SelectedDate.Value,TextBoxTankkaartPincode.Text, b, false, false, brandstoffen);
+            
+            if (GeselecteerdBestuurder != null)
+            {
+                nieuweTankkaart.ZetBestuurder(GeselecteerdBestuurder);
+            }
+
+            
             //TODO FIX BESTUURDERVELD TANKKAART TOEVOEGEN
 
             brandstoffen = ((MainWindow) Application.Current.MainWindow)._brandstoffen
                 .Where(b => brandstoffenString.Contains(b.Type)).ToList();
 
-            Tankkaart nieuweTankkaart = new Tankkaart(TextBoxTankkaartKaarnummer.Text,
-                PickerGeldigheidsDatum.SelectedDate.Value,TextBoxTankkaartPincode.Text, null, false, false, brandstoffen);
 
                
                //false, false, brandstoffen

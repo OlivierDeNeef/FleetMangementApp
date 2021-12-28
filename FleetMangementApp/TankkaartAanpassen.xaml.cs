@@ -38,16 +38,16 @@ namespace FleetMangementApp
             _rijbewijsTypeManager = rijbewijsTypeManager;
             InitializeComponent();
             SetupTankaartAanpassen();
-            //VulTankkaartDataAan(tankkaart);
+            VulTankkaartDataAan(tankkaart);
         }
 
         private void VulTankkaartDataAan(Tankkaart tankkaart)
         {
-            //TODO FIX
+            //TODO User Interface Tankkaart FIX
             TextBoxTankkaartAanpassenKaarnummer.Text = tankkaart.Kaartnummer;
             TextBoxTankkaartAanpassenPincode.Text = tankkaart.Pincode;
             PickerGeldigheidsDatumTankkaartAanpassen.SelectedDate = tankkaart.Geldigheidsdatum;
-           //TODO FIX
+           //TODO UserInterface FIX
             // _brandstoffen = new ObservableCollection<string>(tankkaart.GeefBrandstofTypes().Select(r => r.Type));
             if (tankkaart.Bestuurder != null)
             {

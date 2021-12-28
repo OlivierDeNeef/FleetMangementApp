@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using DomainLayer.Managers;
 using DomainLayer.Models;
 using FleetMangementApp.Mappers;
+using FleetMangementApp.Models.Output;
 
 namespace FleetMangementApp
 {
@@ -125,7 +126,7 @@ namespace FleetMangementApp
             {
                 var main = Owner as TankkaartToevoegen;
                 main.GeselecteerdBestuurder = null;
-                main.BestuurderTextBox.Text = "Geen bestuuder";
+                main.BestuurderTextBoxTankaartToevoegen.Text = "Geen bestuuder";
 
             }
             else if (Owner.GetType() == typeof(TankkaartAanpassen))
@@ -136,35 +137,33 @@ namespace FleetMangementApp
             }
             Close();
         }
-        private void SelectieToevoegenButton_Click(object sender, RoutedEventArgs e)
-         {
-            if (ResultatenBestuurders.SelectedItem != null)
-            {
-                var main = Owner as TankkaartToevoegen;
-                main.GeselecteerdBestuurder = (Bestuurder) ResultatenBestuurders.SelectedItem;
-                main.BestuurderTextBox.Text = $"Bestuurder met naam: {main.GeselecteerdBestuurder.Voornaam} {main.GeselecteerdBestuurder.Naam}";
-                Close();
-            }
-            else if (Owner.GetType() == typeof(TankkaartToevoegen))
-            {
-                var main = Owner as TankkaartToevoegen;
-                main.GeselecteerdBestuurder = (Bestuurder)ResultatenBestuurders.SelectedItem;
-                main.BestuurderTextBox.Text = $"Bestuurder met naam: {main.GeselecteerdBestuurder.Voornaam} {main.GeselecteerdBestuurder.Naam}";
-                Close();
-            }
-            else if (Owner.GetType() == typeof(TankkaartAanpassen))
-            {
-                var main = Owner as TankkaartToevoegen;
-                main.GeselecteerdBestuurder = (Bestuurder)ResultatenBestuurders.SelectedItem;
-                main.BestuurderTextBox.Text = $"Bestuurder met naam: {main.GeselecteerdBestuurder.Voornaam} {main.GeselecteerdBestuurder.Naam}";
-                Close();
-            }
-        }
-
-
         private void SelectieToevoegenButton_OnClick(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("OnClick methode");
+            if (ResultatenBestuurders.SelectedItem != null)
+            {
+ 
+                if (Owner.GetType() == typeof(TankkaartToevoegen))
+                {
+                    var main = Owner as TankkaartToevoegen;
+                   main.GeselecteerdBestuurder = BestuurderUIMapper.FromUI((ResultBestuurder)ResultatenBestuurders.SelectedItem, _bestuurderManager);
+                    main.BestuurderTextBoxTankaartToevoegen.Text = $"Bestuurder met naam: {main.GeselecteerdBestuurder.Voornaam} {main.GeselecteerdBestuurder.Naam}";
+                }
+                else if (Owner.GetType() == typeof(TankkaartAanpassen))
+                {
+                    var main = Owner as TankkaartToevoegen;
+                    main.GeselecteerdBestuurder =
+                        BestuurderUIMapper.FromUI((ResultBestuurder) ResultatenBestuurders.SelectedItem,
+                            _bestuurderManager);
+                    main.BestuurderTextBoxTankaartToevoegen.Text = $"Bestuurder met naam: {main.GeselecteerdBestuurder.Voornaam} {main.GeselecteerdBestuurder.Naam}";
+                }
+            }
+            else
+            {
+                MessageBox.Show("Geen bestuurder geselecteerd");
+            }
+            Close();
         }
+
+      
     }
 }
