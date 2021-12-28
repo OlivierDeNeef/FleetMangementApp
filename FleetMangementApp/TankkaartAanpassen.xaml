@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FleetMangementApp"
         mc:Ignorable="d"
-        Title="Tankkaart Aanpassen" Height="450" Width="500">
+        Title="Tankkaart Aanpassen" Height="450" Width="520">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
@@ -46,7 +46,7 @@
         <ComboBox Grid.Row="6" Grid.Column="2" Name="BrandstofTankkaartAanpassenComboBox" Width="200" Margin="0,0,30,0"/>
 
         <DockPanel Grid.Row="7" Grid.Column="2" Margin="0,10,0,0">
-            <Button Width="85" Name="ToevoegenTankkaartButtonBrandstof" DockPanel.Dock="Left" VerticalAlignment="Top" Click="ToevoegenTankkaartButtonBrandstof_OnClick">Aanpassen</Button>
+            <Button Width="85" Name="ToevoegenTankkaartButtonBrandstof" DockPanel.Dock="Left" VerticalAlignment="Top" Click="ToevoegenTankkaartButtonBrandstof_OnClick">Toevoegen</Button>
             <Button Width="85" Name="VerwijderenTankkaartAanpassen" DockPanel.Dock="Right" VerticalAlignment="Top" Click="VerwijderenTankkaartAanpassen_OnClick">Verwijderen</Button>
         </DockPanel>
 

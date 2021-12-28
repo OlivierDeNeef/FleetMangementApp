@@ -34,5 +34,10 @@ namespace DomainLayer.Managers
             return _tankkaartRepo.GeefGefilterdeTankkaarten(kaartnummer, geldigheidsdatum, lijstBrandstoftypes, geachiveerd);
             
         }
+
+        public void UpdateTankkaart(Tankkaart tankkaart)
+        {
+            _tankkaartRepo.UpdateTankkaart(tankkaart);
+        }
     }
 }

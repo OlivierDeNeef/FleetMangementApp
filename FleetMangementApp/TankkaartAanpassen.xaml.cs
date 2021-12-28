@@ -28,7 +28,7 @@ namespace FleetMangementApp
         private readonly TankkaartManager _tankkaartManager;
         private readonly RijbewijsTypeManager _rijbewijsTypeManager;
         public Bestuurder GeselecteerdBestuurder { get; set; }
-        private List<BrandstofType> _brandstoffen = new();
+        private ObservableCollection<string> _brandstoffen = new();
         public TankkaartAanpassen(Tankkaart tankkaart,BrandstofTypeManager brandstofManager, TankkaartManager tankkaartManager, BestuurderManager bestuurderManager, RijbewijsTypeManager rijbewijsTypeManager)
         {
             _tankkaart = tankkaart;
@@ -37,8 +37,8 @@ namespace FleetMangementApp
             _tankkaartManager = tankkaartManager;
             _rijbewijsTypeManager = rijbewijsTypeManager;
             InitializeComponent();
-            SetupTankaartAanpassen();
             VulTankkaartDataAan(tankkaart);
+            SetupTankaartAanpassen();
         }
 
         private void VulTankkaartDataAan(Tankkaart tankkaart)
@@ -48,7 +48,7 @@ namespace FleetMangementApp
             TextBoxTankkaartAanpassenPincode.Text = tankkaart.Pincode;
             PickerGeldigheidsDatumTankkaartAanpassen.SelectedDate = tankkaart.Geldigheidsdatum;
            //TODO UserInterface FIX
-            // _brandstoffen = new ObservableCollection<string>(tankkaart.GeefBrandstofTypes().Select(r => r.Type));
+             _brandstoffen = new ObservableCollection<string>(tankkaart.GeefBrandstofTypes().Select(r => r.Type));
             if (tankkaart.Bestuurder != null)
             {
                 TankkaartAanpassenBestuurderTextBox.Text =
@@ -65,8 +65,9 @@ namespace FleetMangementApp
 
         private void SetupTankaartAanpassen()
         {
-            _brandstoffen = _brandstofManager.GeefAlleBrandstofTypes().ToList(); // ADO methode returned list van Brandstoftype != 
-            BrandstofTankkaartAanpassenComboBox.ItemsSource = _brandstoffen.Select(b => b.Type);
+             // ADO methode returned list van Brandstoftype != 
+            BrandstofTankkaartAanpassenComboBox.ItemsSource = _brandstofManager.GeefAlleBrandstofTypes().Select(t => t.Type);
+            BrandstoffenTankkaartAanpassenListBox.ItemsSource = _brandstoffen;
         }
 
         //Brandstoffen aanpassen
@@ -75,13 +76,13 @@ namespace FleetMangementApp
         {
             string r = (string)BrandstofTankkaartAanpassenComboBox.SelectedValue;
             if (!BrandstoffenTankkaartAanpassenListBox.Items.Contains(r))
-                BrandstoffenTankkaartAanpassenListBox.Items.Add(r);
+                _brandstoffen.Add(r);
         }
         private void VerwijderenTankkaartAanpassen_OnClick(object sender, RoutedEventArgs e)
         {
             string r = (string)BrandstofTankkaartAanpassenComboBox.SelectedValue;
             if (BrandstoffenTankkaartAanpassenListBox.Items.Contains(r))
-                BrandstoffenTankkaartAanpassenListBox.Items.Remove(r);
+                _brandstoffen.Remove(r);
         }
         private void BrandstoffenTankkaartAanpassenListBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -97,6 +98,7 @@ namespace FleetMangementApp
         }
         
         //Tankkaart Aanpassen / Annulerens
+        //TODO knop fixen
         private void AanpassenToevoegenButtonTankkaartAanpassen_OnClick(object sender, RoutedEventArgs e)
         {
             throw new NotImplementedException();

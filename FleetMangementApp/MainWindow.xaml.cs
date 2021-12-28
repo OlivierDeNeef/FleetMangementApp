@@ -381,7 +381,9 @@ namespace FleetMangementApp
 
         private void ButtonEditTankkaart_OnClick(object sender, RoutedEventArgs e)
         {
-            new TankkaartAanpassen(tankkaart, _brandstofTypeManager, _tankkaartManager, _bestuurderManager, _rijbewijsTypeManager)
+
+            var selectedTankkaart = (Tankkaart)ResultatenTankkaarten.SelectedItem;
+            new TankkaartAanpassen(_tankkaartManager.GeefTankkaart(selectedTankkaart.Id), _brandstofTypeManager, _tankkaartManager, _bestuurderManager, _rijbewijsTypeManager)
             {
                 Owner = this
             }.ShowDialog();
@@ -404,6 +406,17 @@ namespace FleetMangementApp
             }
         }
 
-        
+       
+        private void ButtonArchiveerTankkaart_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (ResultatenTankkaarten.SelectedItem != null)
+            {
+                var selectedItem = (Tankkaart)ResultatenTankkaarten.SelectedItem;
+                Tankkaart selectedTankkaart = _tankkaartManager.GeefTankkaart(selectedItem.Id);
+                selectedTankkaart.ZetGearchiveerd(!selectedTankkaart.IsGearchiveerd);
+                _tankkaartManager.UpdateTankkaart(selectedTankkaart);
+                MessageBox.Show("(De)Archiveren gelukt");
+            }
+        }
     }
 }
