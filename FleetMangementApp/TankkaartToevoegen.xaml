@@ -51,7 +51,7 @@
         </DockPanel>
 
         <Label Grid.Row="8" Grid.Column="1"  Content="Bestuurder" HorizontalAlignment="Left" Margin="0,0,30,0"/>
-        <TextBox Grid.Row="9" Grid.Column="1" Name="BestuurderTextBox" Width="200" Margin="0,0,30,0"/>
+        <TextBox Grid.Row="9" Grid.Column="1" Name="BestuurderTextBoxTankaartToevoegen" Width="200" Margin="0,0,30,0"/>
 
         <Button  Grid.Row="9" Grid.Column="2" Margin="0,0,30,0" Name="ButtonSelecteerBestuurder" Height="20" Grid.RowSpan="3" VerticalAlignment="Top" Click="ButtonSelecteerBestuurder_Click">Selecteer Bestuurder</Button>
 
