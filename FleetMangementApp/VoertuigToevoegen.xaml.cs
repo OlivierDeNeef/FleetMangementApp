@@ -71,13 +71,25 @@ namespace FleetMangementApp
             }
         }
 
-        private void ToevoegenVoerthuigSelecteerBestuurderbutton_Click(object sender, RoutedEventArgs e)
+        private void ToevoegenVoertuigSelecteerBestuurderbutton_Click(object sender, RoutedEventArgs e)
         {
             new BestuurderSelecteren(_bestuurderManager, _rijbewijsTypeManager )
             {
                 Owner = this
             }.ShowDialog();
 
+        }
+
+        private void VoertuigToevoegenButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Voertuig nieuwVoertuig = new Voertuig(ToevoegenVoertuigMerkTextbox.Text, ToevoegenVoertuigModelTextbox.Text, ToevoegenVoertuigCNummerTextbox.Text, ToevoegenVoertuigNummerplaatTextbox.Text,  )
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Voertuig toevoegen mislukt:" + ex.Message);
+            }
         }
     }
 }
