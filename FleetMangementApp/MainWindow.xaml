@@ -188,7 +188,7 @@
                     </DataGrid>
                     <Button Name="ButtonNieuwVoertuig"  Grid.Column="5" Width="200" Grid.Row="10" Margin="0,20,0,10" HorizontalAlignment="Left" Click="ButtonNieuwVoertuig_OnClick">Nieuw</Button>
                     <Button Name="ButtonDetailsVoertuig" Focusable="False" Grid.Column="5" Width="200" Grid.Row="11" Margin="0,0,0,10" HorizontalAlignment="Left" IsEnabled="False" Click="ButtonDetailsVoertuig_OnClick">Details</Button>
-                    <Button Name="ButtonEditVoertuig" Focusable="False" Grid.Column="5" Width="200" Grid.Row="12" Margin="0,0,0,10" HorizontalAlignment="Left" IsEnabled="False">Aanpassen</Button>
+                    <Button Name="ButtonEditVoertuig" Focusable="False" Grid.Column="5" Width="200" Grid.Row="12" Margin="0,0,0,10" HorizontalAlignment="Left" IsEnabled="False" Click="ButtonPasVoertuigAan_Click">Aanpassen</Button>
                     <Button Name="ButtonArchiveerVoertuig" Focusable="False" Grid.Column="5" Width="200" Grid.Row="13" HorizontalAlignment="Left" IsEnabled="False" Margin="0,0,0,49" Grid.RowSpan="3">(De)Archiveren</Button>
                 </Grid>
             </TabItem>
