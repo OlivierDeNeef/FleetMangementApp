@@ -135,6 +135,12 @@ namespace FleetMangementApp
                 main.GeselecteerdBestuurder = null;
                 main.TankkaartAanpassenBestuurderTextBox.Text = "Geen bestuurder";
             }
+            else if (Owner.GetType() == typeof(VoertuigToevoegen))
+            {
+                var main = Owner as VoertuigToevoegen;
+                main.GeselecteerdeBestuurder = null;
+                main.ToevoegenVoertuigBestuurderTextbox.Text = "Geen bestuurder";
+            }
             Close();
         }
         private void SelectieToevoegenButton_OnClick(object sender, RoutedEventArgs e)
@@ -155,6 +161,13 @@ namespace FleetMangementApp
                         BestuurderUIMapper.FromUI((ResultBestuurder) ResultatenBestuurders.SelectedItem,
                             _bestuurderManager);
                     main.TankkaartAanpassenBestuurderTextBox.Text = $"Bestuurder met naam: {main.GeselecteerdBestuurder.Voornaam} {main.GeselecteerdBestuurder.Naam}";
+                }
+                else if(Owner.GetType() == typeof(VoertuigToevoegen))
+                {
+                    var main = Owner as VoertuigToevoegen;
+                    main.GeselecteerdeBestuurder = BestuurderUIMapper.FromUI((ResultBestuurder)ResultatenBestuurders.SelectedItem,
+                            _bestuurderManager);
+                    main.ToevoegenVoertuigBestuurderTextbox.Text = $"Bestuurder met naam: {main.GeselecteerdeBestuurder.Voornaam} {main.GeselecteerdeBestuurder.Naam}";
                 }
             }
             else
