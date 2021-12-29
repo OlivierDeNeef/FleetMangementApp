@@ -31,7 +31,7 @@ namespace FleetMangementApp
         private readonly RijbewijsTypeManager _rijbewijsTypeManager;
         private List<BrandstofType> _brandstoffen = new();
         private List<WagenType> _wagentypes = new();
-        Bestuurder GeselecteerdeBestuurder = null;
+        public Bestuurder GeselecteerdeBestuurder = null;
         private int _aantalDeuren;
         public VoertuigToevoegen(BestuurderManager bestuurderManager,VoertuigManager voertuigManager,BrandstofTypeManager brandstofManager, WagenTypeManager wagenTypeManager, RijbewijsTypeManager rijbewijsTypeManager)
         {
