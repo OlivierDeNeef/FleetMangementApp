@@ -27,14 +27,17 @@ namespace FleetMangementApp
         private readonly BrandstofTypeManager _brandstofManager;
         private readonly WagenTypeManager _wagenTypeManager;
         private readonly BestuurderManager _bestuurderManager;
+        private readonly VoertuigManager _voertuigManager;
         private readonly RijbewijsTypeManager _rijbewijsTypeManager;
         private List<BrandstofType> _brandstoffen = new();
         private List<WagenType> _wagentypes = new();
+        Bestuurder GeselecteerdeBestuurder = null;
         private int _aantalDeuren;
-        public VoertuigToevoegen(BestuurderManager bestuurderManager,BrandstofTypeManager brandstofManager, WagenTypeManager wagenTypeManager, RijbewijsTypeManager rijbewijsTypeManager)
+        public VoertuigToevoegen(BestuurderManager bestuurderManager,VoertuigManager voertuigManager,BrandstofTypeManager brandstofManager, WagenTypeManager wagenTypeManager, RijbewijsTypeManager rijbewijsTypeManager)
         {
             _brandstofManager = brandstofManager;
             _bestuurderManager = bestuurderManager;
+            _voertuigManager = voertuigManager;
             _wagenTypeManager = wagenTypeManager;
             _rijbewijsTypeManager = rijbewijsTypeManager;
             InitializeComponent();
@@ -46,9 +49,9 @@ namespace FleetMangementApp
         private void SetupVoertuigWindowView()
         {
             _brandstoffen = _brandstofManager.GeefAlleBrandstofTypes().ToList(); // ADO methode returned list van Brandstoftype != 
-            VoertuigToevoegenComboBoxBrandstof.ItemsSource = _brandstoffen.Select(b => b.Type);
+            VoertuigToevoegenBrandstofComboBox.ItemsSource = _brandstoffen.Select(b => b.Type);
             _wagentypes = _wagenTypeManager.GeefAlleWagenTypes().ToList();
-            ToevoegenVoertuigWagenTypeTextbox.ItemsSource = _wagentypes.Select(w => w.Type);
+            ToevoegenVoertuigWagenTypeComboBox.ItemsSource = _wagentypes.Select(w => w.Type);
         }
         private void VoertuigToevoegenButtenAnnuleren_OnClick(object sender, RoutedEventArgs e)
         {
@@ -84,7 +87,19 @@ namespace FleetMangementApp
         {
             try
             {
-            //    Voertuig nieuwVoertuig = new Voertuig(ToevoegenVoertuigMerkTextbox.Text, ToevoegenVoertuigModelTextbox.Text, ToevoegenVoertuigCNummerTextbox.Text, ToevoegenVoertuigNummerplaatTextbox.Text,  )
+                string brandstofString = (string)VoertuigToevoegenBrandstofComboBox.SelectedItem;
+                string wagentypeString = (string)ToevoegenVoertuigWagenTypeComboBox.SelectedItem;
+                BrandstofType brandstof = ((MainWindow)Application.Current.MainWindow)._brandstoffen.Where(b => b.Type == brandstofString).FirstOrDefault();
+                WagenType wagen = ((MainWindow)Application.Current.MainWindow)._wagentypes.Where(w => w.Type == wagentypeString).FirstOrDefault();
+                Voertuig nieuwVoertuig = new Voertuig(ToevoegenVoertuigMerkTextbox.Text, ToevoegenVoertuigModelTextbox.Text, ToevoegenVoertuigCNummerTextbox.Text, ToevoegenVoertuigNummerplaatTextbox.Text, brandstof, wagen);
+                if(GeselecteerdeBestuurder != null)
+                {
+                    nieuwVoertuig.ZetBestuurder(GeselecteerdeBestuurder);
+                }
+
+                _voertuigManager.VoegVoertuigToe(nieuwVoertuig);
+                MessageBox.Show("Voertuig toegevoegd");
+                Close();
             }
             catch (Exception ex)
             {

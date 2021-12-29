@@ -219,7 +219,7 @@ namespace FleetMangementApp
         }
         private void ButtonNieuwVoertuig_OnClick(object sender, RoutedEventArgs e)
         {
-            new VoertuigToevoegen(_bestuurderManager,_brandstofTypeManager, _wagenTypeManager, _rijbewijsTypeManager)
+            new VoertuigToevoegen(_bestuurderManager,_voertuigManager, _brandstofTypeManager, _wagenTypeManager, _rijbewijsTypeManager)
             {
                 Owner = this
 

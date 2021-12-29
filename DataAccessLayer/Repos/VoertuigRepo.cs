@@ -94,7 +94,7 @@ namespace DataAccessLayer.Repos
 
                 command.Parameters.AddWithValue("@Gearchiveerd", gearchiveerd);
 
-                bool next = false;
+                bool next = true;
                 if (!string.IsNullOrWhiteSpace(merk))
                 {
                     query += "and v.Merk=@Merk ";
@@ -156,6 +156,8 @@ namespace DataAccessLayer.Repos
                     query += "v.BrandstofId=@BrandstofId ";
                     command.Parameters.AddWithValue("@BrandstofId", brandstofType.Id);
                 }
+
+                
 
                 
 
@@ -359,8 +361,8 @@ namespace DataAccessLayer.Repos
             var connection = new SqlConnection(_connectionString);
             const string query =
                 "INSERT INTO dbo.voertuigen (Merk, Model, Chassisnummer, Nummerplaat, Gearchiveerd, Kleur, AantalDeuren, Hybride, WagenTypeId, BrandstofId) " +
-                "VALUES (@Merk, @Model, @Chassisnummer, @Nummerplaat, @Gearchiveerd, @Kleur, @AantalDeuren, @Hybride, @WagenTypeId, @BrandstofId) " +
-                "OUTPUT INSERTED.Id";
+                "VALUES (@Merk, @Model, @Chassisnummer, @Nummerplaat, @Gearchiveerd, @Kleur, @AantalDeuren, @Hybride, @WagenTypeId, @BrandstofId) ";
+                //"OUTPUT INSERTED.Id"; 
 
             try
             {

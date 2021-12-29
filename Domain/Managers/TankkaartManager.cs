@@ -37,7 +37,7 @@ namespace DomainLayer.Managers
 
         public void UpdateTankkaart(Tankkaart tankkaart)
         {
-            _tankkaartRepo.UpdateTankkaart(tankkaart);
+            if(_tankkaartRepo.BestaatTankkaart(tankkaart.Id))_tankkaartRepo.UpdateTankkaart(tankkaart);
         }
     }
 }
