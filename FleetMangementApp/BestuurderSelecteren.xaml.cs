@@ -150,11 +150,11 @@ namespace FleetMangementApp
                 }
                 else if (Owner.GetType() == typeof(TankkaartAanpassen))
                 {
-                    var main = Owner as TankkaartToevoegen;
+                    var main = Owner as TankkaartAanpassen;
                     main.GeselecteerdBestuurder =
                         BestuurderUIMapper.FromUI((ResultBestuurder) ResultatenBestuurders.SelectedItem,
                             _bestuurderManager);
-                    main.BestuurderTextBoxTankaartToevoegen.Text = $"Bestuurder met naam: {main.GeselecteerdBestuurder.Voornaam} {main.GeselecteerdBestuurder.Naam}";
+                    main.TankkaartAanpassenBestuurderTextBox.Text = $"Bestuurder met naam: {main.GeselecteerdBestuurder.Voornaam} {main.GeselecteerdBestuurder.Naam}";
                 }
             }
             else

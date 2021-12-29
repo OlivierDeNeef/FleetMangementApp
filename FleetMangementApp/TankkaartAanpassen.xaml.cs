@@ -52,7 +52,7 @@ namespace FleetMangementApp
             if (tankkaart.Bestuurder != null)
             {
                 TankkaartAanpassenBestuurderTextBox.Text =
-                    $"{tankkaart.Bestuurder.Id},Naam: {tankkaart.Bestuurder.Voornaam}, Voornaam: {tankkaart.Bestuurder.Voornaam}";
+                    $"{tankkaart.Bestuurder.Id},Naam: {tankkaart.Bestuurder.Naam}, Voornaam: {tankkaart.Bestuurder.Voornaam}";
             }
             else
                 TankkaartAanpassenBestuurderTextBox.Text = "Geen bestuurder";
