@@ -96,6 +96,16 @@ namespace FleetMangementApp
                 {
                     nieuwVoertuig.ZetBestuurder(GeselecteerdeBestuurder);
                 }
+                if (string.IsNullOrEmpty(ToevoegenVoertuigKleurTextbox.Text))
+                    nieuwVoertuig.ZetKleur("Geen kleur ingesteld");
+                else
+                    nieuwVoertuig.ZetKleur(ToevoegenVoertuigKleurTextbox.Text);
+                if (_aantalDeuren < 3)
+                {
+                    nieuwVoertuig.ZetAantalDeuren(3);
+                }
+                else
+                    nieuwVoertuig.ZetAantalDeuren(_aantalDeuren);
 
                 _voertuigManager.VoegVoertuigToe(nieuwVoertuig);
                 MessageBox.Show("Voertuig toegevoegd");

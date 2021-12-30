@@ -264,7 +264,11 @@ namespace DataAccessLayer.Repos
                         {
                             voertuig.ZetKleur((string)reader[6]);
                         }
-                        voertuig.ZetAantalDeuren((int)reader[7]);
+
+                        if ((int)reader[7] >= 3)
+                            voertuig.ZetAantalDeuren((int)reader[7]);
+                        else
+                            voertuig.ZetAantalDeuren(3);
 
                         if (reader[15] != DBNull.Value)
                         {
@@ -325,7 +329,7 @@ namespace DataAccessLayer.Repos
         {
             var connection = new SqlConnection(_connectionString);
 
-            const string query = "UPDATE BESTUURDERS SET Merk=@Merk, Model=@Model, Chassisnummer=@Chassisnummer, Nummerplaat=@Nummerplaat, Gearchiveerd=@Gearchiveerd, Kleur=@Kleur, AantalDeuren=@AantalDeuren, Hybride=@Hybride, WagenTypeId=@WagenTypeId, BrandstofId=@BrandstofId WHERE Id=@Id";
+            const string query = "UPDATE VOERTUIGEN SET Merk=@Merk, Model=@Model, Chassisnummer=@Chassisnummer, Nummerplaat=@Nummerplaat, Gearchiveerd=@Gearchiveerd, Kleur=@Kleur, AantalDeuren=@AantalDeuren, Hybride=@Hybride, WagenTypeId=@WagenTypeId, BrandstofId=@BrandstofId WHERE Id=@Id";
 
             try
             {

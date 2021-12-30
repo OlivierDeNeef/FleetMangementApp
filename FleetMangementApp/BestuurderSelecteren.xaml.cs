@@ -141,6 +141,12 @@ namespace FleetMangementApp
                 main.GeselecteerdeBestuurder = null;
                 main.ToevoegenVoertuigBestuurderTextbox.Text = "Geen bestuurder";
             }
+            else if (Owner.GetType() == typeof(VoertuigAanpassen))
+            {
+                var main = Owner as VoertuigAanpassen;
+                main.GeselecteerdeBestuurder = null;
+                main.ToevoegenVoertuigBestuurderTextbox.Text = "Geen bestuurder";
+            }
             Close();
         }
         private void SelectieToevoegenButton_OnClick(object sender, RoutedEventArgs e)
@@ -165,6 +171,13 @@ namespace FleetMangementApp
                 else if(Owner.GetType() == typeof(VoertuigToevoegen))
                 {
                     var main = Owner as VoertuigToevoegen;
+                    main.GeselecteerdeBestuurder = BestuurderUIMapper.FromUI((ResultBestuurder)ResultatenBestuurders.SelectedItem,
+                            _bestuurderManager);
+                    main.ToevoegenVoertuigBestuurderTextbox.Text = $"Bestuurder met naam: {main.GeselecteerdeBestuurder.Voornaam} {main.GeselecteerdeBestuurder.Naam}";
+                }
+                else if (Owner.GetType() == typeof(VoertuigAanpassen))
+                {
+                    var main = Owner as VoertuigAanpassen;
                     main.GeselecteerdeBestuurder = BestuurderUIMapper.FromUI((ResultBestuurder)ResultatenBestuurders.SelectedItem,
                             _bestuurderManager);
                     main.ToevoegenVoertuigBestuurderTextbox.Text = $"Bestuurder met naam: {main.GeselecteerdeBestuurder.Voornaam} {main.GeselecteerdeBestuurder.Naam}";

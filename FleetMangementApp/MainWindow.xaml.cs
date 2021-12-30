@@ -297,7 +297,7 @@ namespace FleetMangementApp
             if (ResultatenVoertuigen.SelectedItem != null)
             {
                 var selectedVoertuig = (ResultVoertuig)ResultatenVoertuigen.SelectedItem;
-                new VoertuigAanpassen(_voertuigManager.GeefVoertuig(selectedVoertuig.Id), _voertuigManager, _bestuurderManager)
+                new VoertuigAanpassen(_voertuigManager.GeefVoertuig(selectedVoertuig.Id), _voertuigManager, _bestuurderManager, _rijbewijsTypeManager)
                 {
                     Owner = this
                 }.ShowDialog();

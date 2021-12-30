@@ -25,13 +25,17 @@ namespace FleetMangementApp
         private BestuurderManager _bestuurderManager;
         private VoertuigManager _voertuigManager;
         private int _aantalDeuren;
-        public VoertuigAanpassen(Voertuig voertuig, VoertuigManager voertuigManager, BestuurderManager bestuurderManager)
+        public Bestuurder GeselecteerdeBestuurder = null;
+        private RijbewijsTypeManager _rijbewijsTypeManager;
+
+        public VoertuigAanpassen(Voertuig voertuig, VoertuigManager voertuigManager, BestuurderManager bestuurderManager, RijbewijsTypeManager rijbewijsTypeManager)
         {
 
             InitializeComponent();
             _voertuig = voertuig;
             _bestuurderManager = bestuurderManager;
             _voertuigManager = voertuigManager;
+            _rijbewijsTypeManager = rijbewijsTypeManager;
             SetupVoertuigWindowView();
             VulVoertuigdataAan();
         }
@@ -44,8 +48,8 @@ namespace FleetMangementApp
         private void SetupVoertuigWindowView()
         {
             
-            VoertuigAanpassenBrandstofComboBox.ItemsSource = ((MainWindow)Application.Current.MainWindow)._brandstoffen;
-            AanpassenVoertuigWagenTypeComboBox.ItemsSource = ((MainWindow)Application.Current.MainWindow)._wagentypes;
+            VoertuigAanpassenBrandstofComboBox.ItemsSource = ((MainWindow)Application.Current.MainWindow)._brandstoffen.Select(b => b.Type);
+            AanpassenVoertuigWagenTypeComboBox.ItemsSource = ((MainWindow)Application.Current.MainWindow)._wagentypes.Select(w => w.Type);
         }
 
         private void VerhoogAantalDeurenButton_OnClick(object sender, RoutedEventArgs e)
@@ -71,8 +75,68 @@ namespace FleetMangementApp
             ToevoegenVoertuigNummerplaatTextbox.Text = _voertuig.Nummerplaat;
             ToevoegenVoertuigCNummerTextbox.Text = _voertuig.Chassisnummer;
 
+            VoertuigAanpassenBrandstofComboBox.SelectedItem = _voertuig.BrandstofType.Type;
+            AanpassenVoertuigWagenTypeComboBox.SelectedItem = _voertuig.WagenType.Type;
+
+            if (!string.IsNullOrEmpty(_voertuig.Kleur))
+                ToevoegenVoertuigKleurTextbox.Text = _voertuig.Kleur;
+            else
+                ToevoegenVoertuigKleurTextbox.Text = "Geen kleur ingesteld";
+
+            _aantalDeuren = _voertuig.AantalDeuren;
+            ToevoegenVoertuigAantalDeurenTextbox.Text = _voertuig.AantalDeuren.ToString();
+
+            GeselecteerdeBestuurder = _voertuig.Bestuurder;
+            if (GeselecteerdeBestuurder == null)
+            {
+                ToevoegenVoertuigBestuurderTextbox.Text = "Geen bestuurder";
+            }
+            else
+                ToevoegenVoertuigBestuurderTextbox.Text = $"Bestuurder met naam {_voertuig.Bestuurder.Voornaam} {_voertuig.Bestuurder.Naam}."; 
 
 
+        }
+
+        private void SelecteerBestuurderButton_Click(object sender, RoutedEventArgs e)
+        {
+            new BestuurderSelecteren(_bestuurderManager, _rijbewijsTypeManager)
+            {
+                Owner = this
+            }.ShowDialog();
+        }
+
+        private void VoertuigAanpassenButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string brandstofString = (string)VoertuigAanpassenBrandstofComboBox.SelectedItem;
+                string wagentypeString = (string)AanpassenVoertuigWagenTypeComboBox.SelectedItem;
+                BrandstofType brandstof = ((MainWindow)Application.Current.MainWindow)._brandstoffen.Where(b => b.Type == brandstofString).FirstOrDefault();
+                WagenType wagen = ((MainWindow)Application.Current.MainWindow)._wagentypes.Where(w => w.Type == wagentypeString).FirstOrDefault();
+                Voertuig aangepastVoertuig = new Voertuig(_voertuig.Id, ToevoegenVoertuigMerkTextbox.Text, ToevoegenVoertuigModelTextbox.Text, ToevoegenVoertuigCNummerTextbox.Text, ToevoegenVoertuigNummerplaatTextbox.Text, brandstof, wagen);
+                if(GeselecteerdeBestuurder != null)
+                {
+                    aangepastVoertuig.ZetBestuurder(GeselecteerdeBestuurder);
+                }
+                if (string.IsNullOrEmpty(ToevoegenVoertuigKleurTextbox.Text))
+                    aangepastVoertuig.ZetKleur("Geen kleur ingesteld");
+                else
+                    aangepastVoertuig.ZetKleur(ToevoegenVoertuigKleurTextbox.Text);
+                if (_aantalDeuren < 3)
+                {
+                    aangepastVoertuig.ZetAantalDeuren(3);
+                }
+                else
+                    aangepastVoertuig.ZetAantalDeuren(_aantalDeuren);
+
+                _voertuigManager.UpdateVoertuig(aangepastVoertuig);
+                MessageBox.Show("Voertuig Aangepast");
+                Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Voertuig toevoegen mislukt:" + ex.Message);
+            }
         }
     }
 }
