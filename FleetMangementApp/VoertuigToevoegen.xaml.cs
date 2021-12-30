@@ -95,6 +95,7 @@ namespace FleetMangementApp
                 if(GeselecteerdeBestuurder != null)
                 {
                     nieuwVoertuig.ZetBestuurder(GeselecteerdeBestuurder);
+                    _bestuurderManager.UpdateBestuurder(GeselecteerdeBestuurder);
                 }
                 if (string.IsNullOrEmpty(ToevoegenVoertuigKleurTextbox.Text))
                     nieuwVoertuig.ZetKleur("Geen kleur ingesteld");

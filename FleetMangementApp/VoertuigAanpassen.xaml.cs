@@ -117,6 +117,7 @@ namespace FleetMangementApp
                 if(GeselecteerdeBestuurder != null)
                 {
                     aangepastVoertuig.ZetBestuurder(GeselecteerdeBestuurder);
+                    _bestuurderManager.UpdateBestuurder(GeselecteerdeBestuurder);
                 }
                 if (string.IsNullOrEmpty(ToevoegenVoertuigKleurTextbox.Text))
                     aangepastVoertuig.ZetKleur("Geen kleur ingesteld");
@@ -130,6 +131,7 @@ namespace FleetMangementApp
                     aangepastVoertuig.ZetAantalDeuren(_aantalDeuren);
 
                 _voertuigManager.UpdateVoertuig(aangepastVoertuig);
+                
                 MessageBox.Show("Voertuig Aangepast");
                 Close();
             }
