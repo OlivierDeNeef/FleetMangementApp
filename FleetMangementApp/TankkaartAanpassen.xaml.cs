@@ -107,21 +107,24 @@ namespace FleetMangementApp
         //TODO knop fixen
         private void TankkaartAanpassenButton_OnClick(object sender, RoutedEventArgs e)
         {
+            
             List<BrandstofType> brandstoffen = new List<BrandstofType>();
             var brandstoffenstring =
                 BrandstoffenTankkaartAanpassenListBox.ItemsSource.Cast<string>() ?? new List<string>();
             brandstoffen = ((MainWindow) Application.Current.MainWindow)._brandstoffen
                 .Where(b => brandstoffenstring.Contains(b.Type)).ToList();
 
-            Tankkaart aangepasteTankkaart = new Tankkaart(_tankkaart.Id, TextBoxTankkaartAanpassenKaarnummer.Text,
+            Tankkaart aangepasteTankkaart = new Tankkaart(_tankkaart.Id,TextBoxTankkaartAanpassenKaarnummer.Text,
                 PickerGeldigheidsDatumTankkaartAanpassen.SelectedDate.Value, TextBoxTankkaartAanpassenPincode.Text, 
                 _tankkaart.IsGeblokkeerd, _tankkaart.IsGearchiveerd, brandstoffen);
 
 
-            if (GeselecteerdBestuurder != null)
+            if (GeselecteerdBestuurder != null && _tankkaart.Bestuurder != GeselecteerdBestuurder)
             {
                 aangepasteTankkaart.ZetBestuurder(GeselecteerdBestuurder);
+                _bestuurderManager.UpdateBestuurder(GeselecteerdBestuurder);
             }
+
             _tankkaartManager.UpdateTankkaart(aangepasteTankkaart);
             VulTankkaartDataAan(aangepasteTankkaart);
             
