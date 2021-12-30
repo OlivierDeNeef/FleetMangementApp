@@ -89,7 +89,7 @@
                     <Button Name="ButtonNieuweBestuurder"  Grid.Column="4" Width="200" Grid.Row="9" Margin="0,20,0,10" HorizontalAlignment="Left" Click="ButtonNieuweBestuurder_OnClick">Nieuw</Button>
                     <Button Name="ButtonDetailBestuurder" Focusable="False" Grid.Column="4" Width="200" Grid.Row="10" Margin="0,0,0,10" HorizontalAlignment="Left" IsEnabled="False" Click="ButtonDetailsBestuurder_OnClick">Details</Button>
                     <Button Name="ButtonEditBestuurder" Focusable="False" Grid.Column="4" Width="200" Grid.Row="11" Margin="0,0,0,10" HorizontalAlignment="Left" IsEnabled="False" Click="ButtonBestuurderAanpassen_Click">Aanpassen</Button>
-                    <Button Name="ButtonArchiveerBestuurder" Focusable="False" Grid.Column="4" Width="200" Grid.Row="12" HorizontalAlignment="Left" IsEnabled="False"  Click="ButtonArchiveerVoertuig_Click">(De)Archiveren</Button>
+                    <Button Name="ButtonArchiveerBestuurder" Focusable="False" Grid.Column="4" Width="200" Grid.Row="12" HorizontalAlignment="Left" IsEnabled="False"  Click="ButtonArchiveerBestuurder_Click">(De)Archiveren</Button>
 
                 </Grid>
             </TabItem>
@@ -189,7 +189,7 @@
                     <Button Name="ButtonNieuwVoertuig"  Grid.Column="5" Width="200" Grid.Row="10" Margin="0,20,0,10" HorizontalAlignment="Left" Click="ButtonNieuwVoertuig_OnClick">Nieuw</Button>
                     <Button Name="ButtonDetailsVoertuig" Focusable="False" Grid.Column="5" Width="200" Grid.Row="11" Margin="0,0,0,10" HorizontalAlignment="Left" IsEnabled="False" Click="ButtonDetailsVoertuig_OnClick">Details</Button>
                     <Button Name="ButtonEditVoertuig" Focusable="False" Grid.Column="5" Width="200" Grid.Row="12" Margin="0,0,0,10" HorizontalAlignment="Left" IsEnabled="False" Click="ButtonPasVoertuigAan_Click">Aanpassen</Button>
-                    <Button Name="ButtonArchiveerVoertuig" Focusable="False" Grid.Column="5" Width="200" Grid.Row="13" HorizontalAlignment="Left" IsEnabled="False" Margin="0,0,0,49" Grid.RowSpan="3">(De)Archiveren</Button>
+                    <Button Name="ButtonArchiveerVoertuig" Focusable="False" Grid.Column="5" Width="200" Grid.Row="13" HorizontalAlignment="Left" IsEnabled="False" Margin="0,0,0,49" Grid.RowSpan="3" Click="ButtonArchiveerVoertuig_Click">(De)Archiveren</Button>
                 </Grid>
             </TabItem>
             <TabItem Header="Tankkaarten">

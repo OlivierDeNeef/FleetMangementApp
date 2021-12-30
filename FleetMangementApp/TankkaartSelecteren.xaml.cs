@@ -95,7 +95,12 @@ namespace FleetMangementApp
                 var lijstBrandstoftypes = ((MainWindow)Application.Current.MainWindow)._brandstoffen.Where(r => brandstoffenInString.Contains(r.Type)).ToList();
                 var gearchiveerd = CheckBoxGearchiveerdTankkaart.IsChecked.Value;
 
-                ResultatenTankkaarten.ItemsSource = _manager.GeefGefilterdeTankkaarten(kaartnummer, geldigheidsdatum, lijstBrandstoftypes, gearchiveerd);
+                var results = _manager.GeefGefilterdeTankkaarten(kaartnummer, geldigheidsdatum, lijstBrandstoftypes, gearchiveerd);
+                ResultatenTankkaarten.ItemsSource = results.Where(t => t.Bestuurder == null);
+                if(results.Count() < 1)
+                {
+                    MessageBox.Show("Geen beschikbare tankkaarten gevonden");
+                }
             }
             catch (Exception exception)
             {

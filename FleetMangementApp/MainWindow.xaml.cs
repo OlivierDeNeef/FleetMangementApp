@@ -192,7 +192,7 @@ namespace FleetMangementApp
             
         }
 
-        private void ButtonArchiveerVoertuig_Click(object sender, RoutedEventArgs e)
+        private void ButtonArchiveerBestuurder_Click(object sender, RoutedEventArgs e)
         {
             if (ResultatenBestuurders.SelectedItem != null)
             {
@@ -217,14 +217,25 @@ namespace FleetMangementApp
             _wagentypes = _wagenTypeManager.GeefAlleWagenTypes().ToList();
             VoertuigComboBoxTypeWagen.ItemsSource = _wagentypes.Select(w => w.Type);
         }
-        private void ButtonNieuwVoertuig_OnClick(object sender, RoutedEventArgs e)
-        {
-            new VoertuigToevoegen(_bestuurderManager,_voertuigManager, _brandstofTypeManager, _wagenTypeManager, _rijbewijsTypeManager)
-            {
-                Owner = this
+        
 
-            }.ShowDialog();
+        private void VerhoogAantalDeurenButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            _aantalDeuren += 1;
+            TextBoxAantalDeuren.Text = _aantalDeuren.ToString();
         }
+
+        private void VerlaagAantalDeurenButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (_aantalDeuren != 0)
+            {
+                _aantalDeuren -= 1;
+                TextBoxAantalDeuren.Text = _aantalDeuren.ToString();
+
+            }
+        }
+
+
         private void ZoekVoertuigButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -279,6 +290,16 @@ namespace FleetMangementApp
 
             return result;
         }
+
+        private void ButtonNieuwVoertuig_OnClick(object sender, RoutedEventArgs e)
+        {
+            new VoertuigToevoegen(_bestuurderManager, _voertuigManager, _brandstofTypeManager, _wagenTypeManager, _rijbewijsTypeManager)
+            {
+                Owner = this
+
+            }.ShowDialog();
+        }
+
         private void ButtonDetailsVoertuig_OnClick(object sender, RoutedEventArgs e)
         {
             if (ResultatenVoertuigen.SelectedItem != null)
@@ -301,6 +322,17 @@ namespace FleetMangementApp
                 {
                     Owner = this
                 }.ShowDialog();
+            }
+        }
+
+        private void ButtonArchiveerVoertuig_Click(object sender, RoutedEventArgs e)
+        {
+            if (ResultatenVoertuigen.SelectedItem != null)
+            {
+                var selectedItem = (ResultVoertuig)ResultatenVoertuigen.SelectedItem;
+                Voertuig selectedVoertuig = _voertuigManager.GeefVoertuig(selectedItem.Id);
+                selectedVoertuig.ZetGearchiveerd(!selectedVoertuig.IsGearchiveerd);
+                _voertuigManager.UpdateVoertuig(selectedVoertuig);
             }
         }
 
@@ -388,25 +420,7 @@ namespace FleetMangementApp
                 Owner = this
             }.ShowDialog();
         }
-        #endregion
 
-        private void VerhoogAantalDeurenButton_OnClick(object sender, RoutedEventArgs e)
-        {
-               _aantalDeuren += 1;
-                TextBoxAantalDeuren.Text = _aantalDeuren.ToString();
-        }
-
-        private void VerlaagAantalDeurenButton_OnClick(object sender, RoutedEventArgs e)
-        {
-            if (_aantalDeuren != 0)
-            {
-                _aantalDeuren -= 1;
-                TextBoxAantalDeuren.Text = _aantalDeuren.ToString();
-
-            }
-        }
-
-       
         private void ButtonArchiveerTankkaart_OnClick(object sender, RoutedEventArgs e)
         {
             if (ResultatenTankkaarten.SelectedItem != null)
@@ -418,5 +432,12 @@ namespace FleetMangementApp
                 MessageBox.Show("(De)Archiveren gelukt");
             }
         }
+
+
+
+
+        #endregion
+
+        
     }
 }

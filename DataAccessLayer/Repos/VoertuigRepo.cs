@@ -176,6 +176,7 @@ namespace DataAccessLayer.Repos
                            (string)reader[3],
                            (string)reader[4], new BrandstofType((int)reader[10], (string)reader[14]),
                            new WagenType((int)reader[9], (string)reader[12]));
+                        voertuig.ZetGearchiveerd((bool)reader[5]);
                         voertuigen.Add(voertuig);
                         if (reader[15] != DBNull.Value)
                         {
@@ -224,7 +225,7 @@ namespace DataAccessLayer.Repos
             }
             catch (Exception e)
             {
-                throw new VoertuigRepoException("GeefVoertuig - Er ging iets mis", e);
+                throw new VoertuigRepoException("GeefVoertuig - Er ging iets mis", e.InnerException);
             }
             finally
             {
@@ -260,7 +261,9 @@ namespace DataAccessLayer.Repos
                            (string)reader[4], new BrandstofType((int)reader[10], (string)reader[14]),
                            new WagenType((int)reader[9], (string)reader[12]));
 
-                        if(reader[6] != DBNull.Value)
+                        voertuig.ZetGearchiveerd((bool)reader[5]);
+
+                        if (reader[6] != DBNull.Value)
                         {
                             voertuig.ZetKleur((string)reader[6]);
                         }

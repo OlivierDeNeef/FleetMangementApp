@@ -80,7 +80,15 @@ namespace FleetMangementApp
                 }
 
                 var result = _bestuurderManager.GeefGefilterdeBestuurder(id, voornaam, naam, geboortedatum, lijstRijbewijzen, rijksregisternummer, false);
-                ResultatenBestuurders.ItemsSource = result.Select(BestuurderUIMapper.ToUI);
+
+                if (Owner.GetType() == typeof(TankkaartToevoegen) || Owner.GetType() == typeof(TankkaartAanpassen))
+                {
+                    ResultatenBestuurders.ItemsSource = result.Select(BestuurderUIMapper.ToUI).Where(b => b.HeeftTankkaart == false);
+                }
+                else
+                {
+                    ResultatenBestuurders.ItemsSource = result.Select(BestuurderUIMapper.ToUI).Where(b => b.HeeftVoertuig == false);
+                }
 
 
             }
