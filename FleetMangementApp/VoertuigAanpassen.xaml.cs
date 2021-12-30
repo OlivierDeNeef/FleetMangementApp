@@ -32,11 +32,20 @@ namespace FleetMangementApp
             _voertuig = voertuig;
             _bestuurderManager = bestuurderManager;
             _voertuigManager = voertuigManager;
+            SetupVoertuigWindowView();
+            VulVoertuigdataAan();
         }
 
         private void AnnulerenButton_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private void SetupVoertuigWindowView()
+        {
+            
+            VoertuigAanpassenBrandstofComboBox.ItemsSource = ((MainWindow)Application.Current.MainWindow)._brandstoffen;
+            AanpassenVoertuigWagenTypeComboBox.ItemsSource = ((MainWindow)Application.Current.MainWindow)._wagentypes;
         }
 
         private void VerhoogAantalDeurenButton_OnClick(object sender, RoutedEventArgs e)
@@ -53,6 +62,17 @@ namespace FleetMangementApp
                 ToevoegenVoertuigAantalDeurenTextbox.Text = _aantalDeuren.ToString();
 
             }
+        }
+
+        private void VulVoertuigdataAan()
+        {
+            ToevoegenVoertuigMerkTextbox.Text = _voertuig.Merk;
+            ToevoegenVoertuigModelTextbox.Text = _voertuig.Model;
+            ToevoegenVoertuigNummerplaatTextbox.Text = _voertuig.Nummerplaat;
+            ToevoegenVoertuigCNummerTextbox.Text = _voertuig.Chassisnummer;
+
+
+
         }
     }
 }

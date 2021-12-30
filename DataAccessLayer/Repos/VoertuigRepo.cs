@@ -237,6 +237,7 @@ namespace DataAccessLayer.Repos
             using var connection = new SqlConnection(_connectionString);
             try
             {
+                connection.Open();
                 var command = new SqlCommand("select * from dbo.Voertuigen v " +
                                              "left join dbo.WagenTypes w on v.WagenTypeId= w.Id " +
                                              "left join  dbo.BrandstofTypes bt ON v.BrandstofId = bt.Id " +
@@ -247,7 +248,7 @@ namespace DataAccessLayer.Repos
                                              "left join dbo.Tankkaarten_BrandstofTypes tb on tb.TankkaartId = t.Id " +
                                              "left join dbo.BrandstofTypes btb on tb.BrandstofTypeId = btb.Id where v.Id = @Id", connection);
                 command.Parameters.AddWithValue("@Id", id);
-                connection.Open();
+                
                 var reader = command.ExecuteReader();
                 if (!reader.HasRows) throw new VoertuigRepoException(nameof(GeefVoertuig) + " - Geen voertuig gevonden");
                 Voertuig voertuig = null;
@@ -255,16 +256,14 @@ namespace DataAccessLayer.Repos
                 {
                     if (voertuig == null)
                     {
-                        voertuig = new Voertuig((int)reader[0], (string)reader[1], (string)reader[2],
-                           (string)reader[3],
+                        voertuig = new Voertuig((int)reader[0], (string)reader[1], (string)reader[2], (string)reader[3],
                            (string)reader[4], new BrandstofType((int)reader[10], (string)reader[14]),
                            new WagenType((int)reader[9], (string)reader[12]));
 
-                        /*if(reader[6] != DBNull.Value)
+                        if(reader[6] != DBNull.Value)
                         {
                             voertuig.ZetKleur((string)reader[6]);
-                        }*/
-                        voertuig.ZetKleur((string)reader[6]);
+                        }
                         voertuig.ZetAantalDeuren((int)reader[7]);
 
                         if (reader[15] != DBNull.Value)
