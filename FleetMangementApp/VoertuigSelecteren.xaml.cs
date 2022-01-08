@@ -27,6 +27,7 @@ namespace FleetMangementApp
 
         public VoertuigSelecteren(VoertuigManager manager)
         {
+            
             InitializeComponent();
             _voertuigManager = manager;
             VoertuigComboBoxBrandstof.ItemsSource = ((MainWindow)Application.Current.MainWindow)._brandstoffen.Select(b => b.Type).OrderBy(b => b);
