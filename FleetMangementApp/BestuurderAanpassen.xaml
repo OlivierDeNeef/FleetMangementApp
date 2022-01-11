@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FleetMangementApp"
         mc:Ignorable="d"
-        Title="BestuurderAanpassen" Height="420" Width="520" ResizeMode="NoResize">
+        Title="BestuurderAanpassen" Height="Auto" Width="Auto" ResizeMode="NoResize" SizeToContent="WidthAndHeight">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
@@ -20,7 +20,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
             <RowDefinition Height="25"/>
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
@@ -28,9 +28,10 @@
             <ColumnDefinition Width="20"/>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="20"/>
         </Grid.ColumnDefinitions>
-        
+
+        <Rectangle Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="0" Grid.RowSpan="14" Fill="#FF507ECD" Margin="0,0,0,50"/>
+
         <Label Grid.Row="1" Grid.Column="1"  Content="*Naam" HorizontalAlignment="Left" Margin="0,0,30,0"/>
         <TextBox Grid.Row="2" Grid.Column="1" Name="TextBoxBestuurderNaam" Width="200" Margin="0,0,30,0"/>
 
@@ -64,10 +65,10 @@
 
         <Button Grid.Row="11" Grid.Column="2" Margin="0,0,30,0" Name="ButtonSelecteerTankkaart" Click="ButtonSelecteerTankkaart_Click">Selecteer Tankkaart</Button>
 
-        <Button Grid.Row="13" Grid.Column="0" Grid.ColumnSpan="2" Margin="10,0,20,0" Name="AnnulerenButton" Click="AnnulerenButton_Click">
+        <Button Grid.Row="13" Grid.Column="1" Width="200" Margin="0,0,30,0" Name="AnnulerenButton" Click="AnnulerenButton_Click">
              Annuleren
         </Button>
-        <Button Grid.Row="13" Grid.Column="2" Grid.ColumnSpan="2" Margin="20,0,10,0" Name="AanpassenButton" Click="AanpassenButton_Click">
+        <Button Grid.Row="13" Grid.Column="2"  Width="200" Margin="0,0,30,0" Name="AanpassenButton" Click="AanpassenButton_Click">
            Aanpassen
         </Button>
     </Grid>
