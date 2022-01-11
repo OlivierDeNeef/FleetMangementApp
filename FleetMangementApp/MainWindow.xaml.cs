@@ -71,7 +71,7 @@ namespace FleetMangementApp
                 var voornaam = TextBoxNaamBestuurder.Text;
                 var naam = TextBoxVoornaamBestuurder.Text;
                 var gearchiveerd = CheckBoxGearchiveerBestuurder.IsChecked.Value;
-
+                
                 //Bestuurders op vragen voor de ingevulde parameters
                 var result = _bestuurderManager.GeefGefilterdeBestuurder(id, naam, voornaam, geboortedatum, selectedRijbewijzen, rijksregisternummer, gearchiveerd).ToList();
 
@@ -384,7 +384,7 @@ namespace FleetMangementApp
         {
             if (ResultatenTankkaarten.SelectedItem != null)
             {
-                var selectedTankkaart = (Tankkaart)ResultatenTankkaarten.SelectedItem;
+                var selectedTankkaart = (ResultTankkaart)ResultatenTankkaarten.SelectedItem;
                 new Details(_tankkaartManager.GeefTankkaart(selectedTankkaart.Id))
                 {
                     Owner = this
@@ -402,7 +402,7 @@ namespace FleetMangementApp
                 var lijstBrandstoftypes = _brandstoffen.Where(r => brandstoffenInString.Contains(r.Type)).ToList();
                 var gearchiveerd = CheckBoxGearchiveerdTankkaart.IsChecked.Value;
 
-                ResultatenTankkaarten.ItemsSource = _tankkaartManager.GeefGefilterdeTankkaarten(kaartnummer, geldigheidsdatum, lijstBrandstoftypes, gearchiveerd);
+                ResultatenTankkaarten.ItemsSource = _tankkaartManager.GeefGefilterdeTankkaarten(kaartnummer, geldigheidsdatum, lijstBrandstoftypes, gearchiveerd).Select(TankkaartUIMapper.ToUI);
             }
             catch (Exception exception)
             {
@@ -414,18 +414,19 @@ namespace FleetMangementApp
         private void ButtonEditTankkaart_OnClick(object sender, RoutedEventArgs e)
         {
 
-            var selectedTankkaart = (Tankkaart)ResultatenTankkaarten.SelectedItem;
+            var selectedTankkaart = (ResultTankkaart)ResultatenTankkaarten.SelectedItem;
             new TankkaartAanpassen(_tankkaartManager.GeefTankkaart(selectedTankkaart.Id), _brandstofTypeManager, _tankkaartManager, _bestuurderManager, _rijbewijsTypeManager)
             {
                 Owner = this
             }.ShowDialog();
+            ZoekenButton_Click(this,e);
         }
 
         private void ButtonArchiveerTankkaart_OnClick(object sender, RoutedEventArgs e)
         {
             if (ResultatenTankkaarten.SelectedItem != null)
             {
-                var selectedItem = (Tankkaart)ResultatenTankkaarten.SelectedItem;
+                var selectedItem = (ResultTankkaart)ResultatenTankkaarten.SelectedItem;
                 Tankkaart selectedTankkaart = _tankkaartManager.GeefTankkaart(selectedItem.Id);
                 selectedTankkaart.ZetGearchiveerd(!selectedTankkaart.IsGearchiveerd);
                 _tankkaartManager.UpdateTankkaart(selectedTankkaart);

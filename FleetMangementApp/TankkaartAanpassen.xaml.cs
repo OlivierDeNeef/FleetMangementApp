@@ -121,8 +121,15 @@ namespace FleetMangementApp
 
             if (GeselecteerdBestuurder != null && _tankkaart.Bestuurder != GeselecteerdBestuurder)
             {
+
                 aangepasteTankkaart.ZetBestuurder(GeselecteerdBestuurder);
+                if(_tankkaart.Bestuurder != null) _bestuurderManager.UpdateBestuurder(_tankkaart.Bestuurder);
                 _bestuurderManager.UpdateBestuurder(GeselecteerdBestuurder);
+            } else if(GeselecteerdBestuurder == null)
+            {
+                var oldBestuurder = _tankkaart.Bestuurder;
+                _tankkaart.Bestuurder.VerwijderTankkaart();
+                _bestuurderManager.UpdateBestuurder(oldBestuurder);
             }
 
             _tankkaartManager.UpdateTankkaart(aangepasteTankkaart);

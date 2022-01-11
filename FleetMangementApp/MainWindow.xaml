@@ -257,7 +257,7 @@
                             <DataGridTextColumn Width="*" Header="Kaartnummer" Binding="{Binding Kaartnummer}" CanUserResize="False"/>
                             <DataGridTextColumn Width="90" Header="Pincode" Binding="{Binding Pincode}"></DataGridTextColumn>
                             <DataGridTextColumn Width="120" Header="Geldigheidsdatum" Binding="{Binding Geldigheidsdatum}"/>
-                            <DataGridTextColumn Width="100" Header="Geblokkeerd" Binding="{Binding Geblokkeerd}"/>
+                            <DataGridCheckBoxColumn Width="100" Header="Geblokkeerd" Binding="{Binding IsGeblokkeerd}"/>
                             <DataGridCheckBoxColumn Width="80" Header="Bestuurder" Binding="{Binding HeeftBestuurder}"/>
                         </DataGrid.Columns>
                     </DataGrid>

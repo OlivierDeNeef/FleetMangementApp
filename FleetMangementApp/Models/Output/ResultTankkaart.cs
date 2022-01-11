@@ -12,7 +12,6 @@ namespace FleetMangementApp.Models.Output
         public string Kaartnummer { get; set; }
         public string Pincode { get; set; }
         public string Geldigheidsdatum { get; set; }
-
         public bool IsGeblokkeerd { get; set; }
         public bool HeeftBestuurder { get; set; }
 
