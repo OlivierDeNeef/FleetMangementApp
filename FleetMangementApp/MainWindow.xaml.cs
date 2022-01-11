@@ -298,6 +298,7 @@ namespace FleetMangementApp
                 Owner = this
 
             }.ShowDialog();
+            ZoekVoertuigButton_Click(this, e);
         }
 
         private void ButtonDetailsVoertuig_OnClick(object sender, RoutedEventArgs e)
@@ -323,6 +324,7 @@ namespace FleetMangementApp
                     Owner = this
                 }.ShowDialog();
             }
+            ZoekVoertuigButton_Click(this, e);
         }
 
         private void ButtonArchiveerVoertuig_Click(object sender, RoutedEventArgs e)
@@ -378,6 +380,7 @@ namespace FleetMangementApp
             {
                 Owner = this
             }.ShowDialog();
+            ZoekenButton_Click(this, e);
         }
 
         private void ButtonDetailsTankkaart_Click(object sender, RoutedEventArgs e)

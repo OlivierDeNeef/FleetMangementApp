@@ -253,7 +253,7 @@
                             </Style>
                         </DataGrid.RowStyle>
                         <DataGrid.Columns>
-                            <DataGridTextColumn Width="30" Header="Id" Binding="{Binding Id}" CanUserResize="False"/>
+                            <DataGridTextColumn Width="50" Header="Id" Binding="{Binding Id}" CanUserResize="False"/>
                             <DataGridTextColumn Width="*" Header="Kaartnummer" Binding="{Binding Kaartnummer}" CanUserResize="False"/>
                             <DataGridTextColumn Width="90" Header="Pincode" Binding="{Binding Pincode}"></DataGridTextColumn>
                             <DataGridTextColumn Width="120" Header="Geldigheidsdatum" Binding="{Binding Geldigheidsdatum}"/>
