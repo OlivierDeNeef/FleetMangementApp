@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FleetMangementApp"
         mc:Ignorable="d"
-        Title="TankkaartToevoegen" Height="450" Width="500">
+        Title="TankkaartToevoegen" Height="Auto" Width="Auto" SizeToContent="WidthAndHeight">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
@@ -19,7 +19,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
             <RowDefinition Height="25"/>
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
@@ -27,9 +27,9 @@
             <ColumnDefinition Width="20"/>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="20"/>
         </Grid.ColumnDefinitions>
 
+        <Rectangle Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="0" Grid.RowSpan="10" Margin="0,0,0,-20" Fill="#FF507ECD" ></Rectangle>
         <Label Grid.Row="1" Grid.Column="1"  Content="*Kaartnummer" HorizontalAlignment="Left" Margin="0,0,30,0"/>
         <TextBox Grid.Row="2" Grid.Column="1" Name="TextBoxTankkaartKaarnummer" Width="200" Margin="0,0,30,0"/>
 
@@ -55,7 +55,7 @@
 
         <Button  Grid.Row="9" Grid.Column="2" Margin="0,0,30,0" Name="ButtonSelecteerBestuurder" Height="20" Grid.RowSpan="3" VerticalAlignment="Top" Click="ButtonSelecteerBestuurder_Click">Selecteer Bestuurder</Button>
 
-        <Button Grid.Row="12" Grid.Column="0" Grid.ColumnSpan="2" Margin="20,0,20,0" Name="AnnulerenButton" Click="AnnulerenButton_OnClick">Annuleren</Button>
-        <Button Grid.Row="12" Grid.Column="2" Grid.ColumnSpan="1" Margin="20,0,20,0" Name="ToevoegenButton" Click="ToevoegenButton_OnClick">Toevoegen</Button>
+        <Button Grid.Row="12" Grid.Column="1" Width="200"  Margin="0,0,20,0" Name="AnnulerenButton" Click="AnnulerenButton_OnClick">Annuleren</Button>
+        <Button Grid.Row="12" Grid.Column="2" Width="200" Margin="0,0,20,0" Name="ToevoegenButton" Click="ToevoegenButton_OnClick">Toevoegen</Button>
     </Grid>
 </Window>
