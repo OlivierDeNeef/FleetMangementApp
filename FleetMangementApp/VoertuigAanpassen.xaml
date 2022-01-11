@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FleetMangementApp"
         mc:Ignorable="d"
-        Title="VoertuigAanpassen" Height="500" Width="550">
+        Title="VoertuigAanpassen" Height="Auto" Width="Auto" SizeToContent="WidthAndHeight">
     
         <Grid>
             <Grid.ColumnDefinitions>
@@ -23,35 +23,38 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="50"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Label Grid.Row="0" Grid.Column="0" Content="*Merk:" Margin="50,25,5,5"></Label>
-            <TextBox Grid.Row="1" Grid.Column="0" Width="150" Name="ToevoegenVoertuigMerkTextbox" Margin="50,0,0,0" VerticalAlignment="Top" Grid.RowSpan="2"/>
-            <Label Grid.Row="2" Grid.Column="0" Content="*Nummerplaat:" Margin="50,25,5,5" ></Label>
-            <TextBox Grid.Row="3" Grid.Column="0" Name="ToevoegenVoertuigNummerplaatTextbox" Width="150" Margin="50,0,0,0"></TextBox>
-            <Label Grid.Row="4" Grid.Column="0" Content="*Brandstof:" Margin="50,25,5,5"></Label>
-            <ComboBox Grid.Column="0" Grid.Row="5" Margin="50,0,0,0" Name="VoertuigAanpassenBrandstofComboBox"></ComboBox>
-            <Label Grid.Row="6" Grid.Column="0" Content="*Kleur:" Margin="50,25,5,5"></Label>
-            <TextBox Grid.Row="7" Grid.Column="0" Name="ToevoegenVoertuigKleurTextbox" Width="150" Margin="50,0,0,0"></TextBox>
-            <Label Grid.Row="8" Grid.Column="0" Content="Bestuurder:" Margin="50,25,5,5"></Label>
-            <TextBox Grid.Row="9" Grid.Column="0" Name="ToevoegenVoertuigBestuurderTextbox" Width="150" IsEnabled="False" Margin="50,0,0,0"></TextBox>
-            <Button Grid.Row="10" Grid.Column="0" Content="Annuleren" Name="AnnulerenButton" Click="AnnulerenButton_Click"  Margin="25,25,0,0"></Button>
+
+        <Rectangle Grid.Row="0" Grid.RowSpan="10" Grid.Column="0" Grid.ColumnSpan="2" Fill="#FF507ECD" Margin="0,0,0,-20"></Rectangle>
+            <Label Grid.Row="0" Grid.Column="0" Width="200" Content="*Merk:" Margin="20,20,30,0"></Label>
+            <TextBox Grid.Row="1" Grid.Column="0" Width="200" Name="ToevoegenVoertuigMerkTextbox" Margin="20,0,30,0" VerticalAlignment="Top" Grid.RowSpan="2"/>
+            <Label Grid.Row="2" Grid.Column="0" Content="*Nummerplaat:" Margin="20,0,30,0" ></Label>
+        <TextBox Grid.Row="3" Grid.Column="0" Width="200" Name="ToevoegenVoertuigNummerplaatTextbox" Margin="20,0,30,0"></TextBox>
+        <Label Grid.Row="4" Grid.Column="0" Content="*Brandstof:" Margin="20,0,30,0"></Label>
+        <ComboBox Grid.Column="0" Grid.Row="5" Margin="20,0,30,0" Name="VoertuigAanpassenBrandstofComboBox"></ComboBox>
+        <Label Grid.Row="6" Grid.Column="0" Content="*Kleur:" Margin="20,0,30,0"></Label>
+        <TextBox Grid.Row="7" Grid.Column="0" Name="ToevoegenVoertuigKleurTextbox" Width="200" Margin="20,0,30,0"></TextBox>
+        <Label Grid.Row="8" Grid.Column="0" Content="Bestuurder:" Margin="20,0,30,0"></Label>
+        <TextBox Grid.Row="9" Grid.Column="0" Name="ToevoegenVoertuigBestuurderTextbox" Width="200" IsEnabled="False" Margin="20,0,30,0"></TextBox>
+            <Button Grid.Row="11" Grid.Column="0" Content="Annuleren" Name="AnnulerenButton" Click="AnnulerenButton_Click" Width="200" Margin="20,0,30,20"></Button>
             <!--tweede kolom-->
-            <Label Grid.Row="0" Grid.Column="1" Content="*Model" Margin="50,25,5,5"/>
-            <TextBox Grid.Row="1" Grid.Column="1" Name="ToevoegenVoertuigModelTextbox" Margin="50,0,0,0" Width="150"/>
-            <Label Grid.Row="2" Grid.Column="1" Content="*Chassisnummer:" Margin="50,25,5,5"/>
-            <TextBox Grid.Row="3" Grid.Column="1" Name="ToevoegenVoertuigCNummerTextbox" Margin="50,0,0,0" Width="150"/>
-            <Label Grid.Row="4" Grid.Column="1" Content="*Wagen Type:" Margin="50,25,5,5"/>
-            <ComboBox Grid.Row="5" Grid.Column="1" Name="AanpassenVoertuigWagenTypeComboBox" Margin="50,0,0,0" Width="150"/>
-            <Label Grid.Row="6" Grid.Column="1" Content="Aantal Deuren" Margin="50,25,5,5"/>
+            <Label Grid.Row="0" Grid.Column="1" Width="200" Content="*Model" Margin="0,20,30,0"/>
+            <TextBox Grid.Row="1" Grid.Column="1" Name="ToevoegenVoertuigModelTextbox" Margin="0,0,30,0" Width="200"/>
+        <Label Grid.Row="2" Grid.Column="1" Content="*Chassisnummer:" Margin="0,0,30,0"/>
+        <TextBox Grid.Row="3" Grid.Column="1" Name="ToevoegenVoertuigCNummerTextbox" Margin="0,0,30,0" Width="200"/>
+        <Label Grid.Row="4" Grid.Column="1" Content="*Wagen Type:" Margin="0,0,30,0"/>
+        <ComboBox Grid.Row="5" Grid.Column="1" Name="AanpassenVoertuigWagenTypeComboBox" Margin="0,0,30,0" Width="200"/>
+        <Label Grid.Row="6" Grid.Column="1" Content="Aantal Deuren" Margin="0,0,30,0"/>
             <StackPanel Grid.Row="7" Grid.Column="1" Orientation="Horizontal">
 
-                <TextBox  Text="0" IsReadOnly="True" Name="ToevoegenVoertuigAantalDeurenTextbox" Margin="50,0,0,0" Width="150"/>
+                <TextBox  Text="0" IsReadOnly="True" Name="ToevoegenVoertuigAantalDeurenTextbox"  Width="170"/>
                 <Button Name="VerhoogAantalDeurenButton" Click="VerhoogAantalDeurenButton_OnClick" Width="15">+</Button>
                 <Button Name="VerlaagAantalDeurenButton" Click="VerlaagAantalDeurenButton_OnClick" Width="15">-</Button>
             </StackPanel>
-            <Button Grid.Row="9" Grid.Column="1" Margin="50,0,0,0" Name="SelecteerBestuurderButton" Click="SelecteerBestuurderButton_Click">Selecteer bestuurder</Button>
-            <Button Grid.Row="10" Grid.Column="1" Name="VoertuigAanpassenButton"  Margin="125,25,-75,0" Click="VoertuigAanpassenButton_Click">Aanpassen</Button>
+        <Button Grid.Row="9" Grid.Column="1" Margin="0,0,30,0" Name="SelecteerBestuurderButton" Click="SelecteerBestuurderButton_Click">Selecteer bestuurder</Button>
+            <Button Grid.Row="11" Grid.Column="1" Name="VoertuigAanpassenButton"  Margin="0,0,30,20" Click="VoertuigAanpassenButton_Click">Aanpassen</Button>
         </Grid>
     
 </Window>
