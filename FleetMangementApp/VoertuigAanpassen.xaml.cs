@@ -92,7 +92,11 @@ namespace FleetMangementApp
                 ToevoegenVoertuigBestuurderTextbox.Text = "Geen bestuurder";
             }
             else
-                ToevoegenVoertuigBestuurderTextbox.Text = $"Bestuurder met naam {_voertuig.Bestuurder.Voornaam} {_voertuig.Bestuurder.Naam}."; 
+            {
+                ToevoegenVoertuigBestuurderTextbox.Text = $"Bestuurder met naam {_voertuig.Bestuurder.Voornaam} {_voertuig.Bestuurder.Naam}.";
+                GeselecteerdeBestuurder = _voertuig.Bestuurder;
+            }
+                
 
 
         }
@@ -131,7 +135,7 @@ namespace FleetMangementApp
                 else
                 {
                     var bestuurder = _voertuig.Bestuurder;
-                    aangepastVoertuig.VerwijderBestuurder();
+                    _voertuig.VerwijderBestuurder();
                     _bestuurderManager.UpdateBestuurder(bestuurder);
                 }
 
