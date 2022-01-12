@@ -53,13 +53,21 @@ namespace FleetMangementApp
         {
             string r = (string)BrandstofTankkaartComboBox.SelectedValue;
             if (!BrandstoffenListBox.Items.Contains(r))
+            {
                 BrandstoffenListBox.Items.Add(r);
+                VerplichteVeldenChecker();
+            }
+                
         }
         private void VerwijderTankkaartBrandstofButton_OnClick(object sender, RoutedEventArgs e)
         {
             string r = (string)BrandstofTankkaartComboBox.SelectedValue;
             if (BrandstoffenListBox.Items.Contains(r))
+            {
                 BrandstoffenListBox.Items.Remove(r);
+                VerplichteVeldenChecker();
+            }
+                
         }
         private void ButtonSelecteerBestuurder_Click(object sender, RoutedEventArgs e)
         {
@@ -105,6 +113,47 @@ namespace FleetMangementApp
         private void BrandstoffenListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             BrandstofTankkaartComboBox.SelectedItem = BrandstoffenListBox.SelectedValue;
+            VerplichteVeldenChecker();
+        }
+
+        private void VerplichteVeldenChecker()
+        {
+            if (string.IsNullOrWhiteSpace(TextBoxTankkaartKaarnummer.Text)|| string.IsNullOrWhiteSpace(TextBoxTankkaartPincode.Text) 
+                || BrandstoffenListBox.Items.Count < 1 || PickerGeldigheidsDatum.SelectedDate < DateTime.Now || PickerGeldigheidsDatum.SelectedDate == null)
+            {
+                ToevoegenButton.IsEnabled = false;
+            }
+            else
+            {
+                ToevoegenButton.IsEnabled = true;
+            }
+
+        }
+
+        private void TextBoxTankkaartKaarnummer_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            VerplichteVeldenChecker();
+        }
+
+        private void TextBoxTankkaartPincode_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if(TextBoxTankkaartPincode.Text.Length == 4)
+            {
+                PincodeLabel.Foreground = new SolidColorBrush(Colors.White);
+                VerplichteVeldenChecker();
+            }
+                
+            else
+            {
+                PincodeLabel.Foreground = new SolidColorBrush(Colors.Red);
+            }
+        }
+
+        private void PickerGeldigheidsDatum_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            VerplichteVeldenChecker();
         }
     }
+
+    
 }
