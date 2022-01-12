@@ -97,16 +97,16 @@ namespace DataAccessLayer.Repos
                 bool next = true;
                 if (!string.IsNullOrWhiteSpace(merk))
                 {
-                    query += "and v.Merk=@Merk ";
-                    command.Parameters.AddWithValue("@Merk", merk);
+                    query += "and v.Merk like @Merk ";
+                    command.Parameters.AddWithValue("@Merk", merk + "%");
                     next = true;
                 }
 
                 if (!string.IsNullOrWhiteSpace(model))
                 {
                     if (next) query += "and ";
-                    query += "v.Model=@Model ";
-                    command.Parameters.AddWithValue("@Model", model);
+                    query += "v.Model like @Model ";
+                    command.Parameters.AddWithValue("@Model", model + "%");
                     next = true;
                 }
 
@@ -121,8 +121,8 @@ namespace DataAccessLayer.Repos
                 if (!string.IsNullOrWhiteSpace(nummerplaat))
                 {
                     if (next) query += "and ";
-                    query += "v.Nummerplaat=@Nummerplaat ";
-                    command.Parameters.AddWithValue("@Nummerplaat", nummerplaat);
+                    query += "v.Nummerplaat like @Nummerplaat ";
+                    command.Parameters.AddWithValue("@Nummerplaat", "%" + nummerplaat + "%");
                     next = true;
                 }
 
@@ -137,8 +137,8 @@ namespace DataAccessLayer.Repos
                 if (!string.IsNullOrWhiteSpace(kleur))
                 {
                     if (next) query += "and ";
-                    query += "v.Kleur=@Kleur ";
-                    command.Parameters.AddWithValue("@Kleur", kleur);
+                    query += "v.Kleur like @Kleur ";
+                    command.Parameters.AddWithValue("@Kleur", "%" + kleur + "%");
                     next = true;
                 }
 
@@ -157,15 +157,11 @@ namespace DataAccessLayer.Repos
                     command.Parameters.AddWithValue("@BrandstofId", brandstofType.Id);
                 }
 
-                
-
-                
-
                 command.Connection = connection;
                 command.CommandText = query;
                 connection.Open();
                 var reader = command.ExecuteReader();
-                if (!reader.HasRows) throw new VoertuigRepoException(nameof(GeefVoertuig) + " - Geen voertuig gevonden");
+                if (!reader.HasRows) throw new VoertuigRepoException(" Geen voertuig gevonden");
                 Voertuig voertuig = null;
                 var voertuigen = new List<Voertuig>();
                 while (reader.Read())
@@ -225,7 +221,7 @@ namespace DataAccessLayer.Repos
             }
             catch (Exception e)
             {
-                throw new VoertuigRepoException("GeefVoertuig - Er ging iets mis", e.InnerException);
+                throw new VoertuigRepoException("GeefVoertuig - Er ging iets mis", e);
             }
             finally
             {

@@ -33,10 +33,17 @@ namespace DomainLayer.Managers
 
         public IReadOnlyList<Voertuig> GeefGefilterdeVoertuigen( int id,  string merk, string model,  int aantalDeuren, string nummerplaat, string chassisnummer,  string kleur,  WagenType wagenType, BrandstofType brandstofType, bool gearchiveerd,  bool isHybride)
         {
-            var lijstVoertuigen = new List<Voertuig>();
-            if (id <= 0) return _voertuigRepo.GeefGefilterdeVoertuigen(merk, model, aantalDeuren, nummerplaat, chassisnummer, kleur, wagenType, brandstofType, gearchiveerd, isHybride);
-            lijstVoertuigen.Add(_voertuigRepo.GeefVoertuig(id));
-            return lijstVoertuigen;
+            try
+            {
+                var lijstVoertuigen = new List<Voertuig>();
+                if (id <= 0) return _voertuigRepo.GeefGefilterdeVoertuigen(merk, model, aantalDeuren, nummerplaat, chassisnummer, kleur, wagenType, brandstofType, gearchiveerd, isHybride);
+                lijstVoertuigen.Add(_voertuigRepo.GeefVoertuig(id));
+                return lijstVoertuigen;
+            }
+            catch (Exception e)
+            {
+                throw new VoertuigManagerException(nameof(GeefGefilterdeVoertuigen) + " Er ging iets mis", e);
+            }
         }
 
 
