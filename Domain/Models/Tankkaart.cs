@@ -102,10 +102,17 @@ namespace DomainLayer.Models
         /// <param name="pincode">pincode van de tankkaart</param>
         public void ZetPincode(string pincode) //moet 4 cijfers zijn
         {
+            try
+            {
+                if (!int.TryParse(pincode, out int pinAsNumber)) throw new TankkaartException("pincode mag enkel cijfers bevatten");
+                if(pincode.Length > 4) throw new TankkaartException("pincode mag maar 4 cijfers bevatten");
+                if(pincode.Length < 4) throw new TankkaartException("pincode moet 4 cijfers bevatten");
+            }
+            catch (Exception e)
+            {
+                throw new TankkaartException(e.Message);
+            }
             
-            if (!int.TryParse(pincode, out int pinAsNumber)) throw new TankkaartException("pincode mag enkel cijfers bevatten");
-            if(pincode.Length > 4) throw new TankkaartException("pincode mag maar 4 cijfers bevatten");
-            if(pincode.Length < 4) throw new TankkaartException("pincode moet 4 cijfers bevatten");
             
             Pincode = pincode;
         }
