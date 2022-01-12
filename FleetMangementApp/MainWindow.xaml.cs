@@ -164,6 +164,7 @@ namespace FleetMangementApp
             {
                 Owner = this
             }.ShowDialog();
+            ZoekBestuurderButton_Click(this,e);
 
         }
 
@@ -176,6 +177,7 @@ namespace FleetMangementApp
                 {
                     Owner = this
                 }.ShowDialog();
+                ZoekBestuurderButton_Click(this,e);
             }
         }
 
