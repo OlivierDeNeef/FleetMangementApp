@@ -46,6 +46,7 @@ namespace FleetMangementApp
         {
             _aantalDeuren += 1;
             ToevoegenVoertuigAantalDeurenTextbox.Text = _aantalDeuren.ToString();
+            VerplichteVeldenChecker();
         }
 
         private void VerlaagAantalDeurenButton_OnClick(object sender, RoutedEventArgs e)
@@ -56,6 +57,7 @@ namespace FleetMangementApp
                 ToevoegenVoertuigAantalDeurenTextbox.Text = _aantalDeuren.ToString();
 
             }
+            VerplichteVeldenChecker();
         }
 
         private void VulVoertuigdataAan()
@@ -150,6 +152,29 @@ namespace FleetMangementApp
             {
                 MessageBox.Show("Voertuig toevoegen mislukt:" + ex.Message);
             }
+        }
+
+        private void VerplichteVeldenChecker()
+        {
+            if (string.IsNullOrWhiteSpace(ToevoegenVoertuigMerkTextbox.Text) || string.IsNullOrWhiteSpace(ToevoegenVoertuigModelTextbox.Text)
+                || string.IsNullOrWhiteSpace(ToevoegenVoertuigCNummerTextbox.Text) || string.IsNullOrWhiteSpace(ToevoegenVoertuigNummerplaatTextbox.Text)
+                || string.IsNullOrWhiteSpace(ToevoegenVoertuigKleurTextbox.Text) || AanpassenVoertuigWagenTypeComboBox.SelectedItem == null
+                || VoertuigAanpassenBrandstofComboBox.SelectedItem == null || _aantalDeuren < 3)
+            {
+                VoertuigAanpassenButton.IsEnabled = false;
+            }
+            else
+                VoertuigAanpassenButton.IsEnabled = true;
+        }
+
+        private void Textbox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            VerplichteVeldenChecker();
+        }
+
+        private void ComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            VerplichteVeldenChecker();
         }
     }
 }
