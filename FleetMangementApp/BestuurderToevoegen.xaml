@@ -33,16 +33,16 @@
         <!--Rectangle Grid.Row="1" Grid.Column="1" Grid.RowSpan="11" Grid.ColumnSpan="2" Fill="#FF507ECD"></Rectangle-->
         <Rectangle Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="5" Grid.RowSpan="12" Margin="0,0,0,-20" Fill="#FF507ECD"></Rectangle>
         <Label Grid.Row="1" Grid.Column="1"  Content="*Naam" HorizontalAlignment="Left" Margin="0,0,30,0"/>
-        <TextBox Grid.Row="2" Grid.Column="1" Name="TextBoxBestuurderNaam" Width="200" Margin="0,0,30,0"/>
+        <TextBox Grid.Row="2" Grid.Column="1" Name="TextBoxBestuurderNaam" Width="200" Margin="0,0,30,0" TextChanged="TextBox_TextChanged"/>
 
         <Label Grid.Row="1" Grid.Column="2"  Content="*Voornaam" HorizontalAlignment="Left" Margin="0,0,30,0"/>
-        <TextBox Grid.Row="2" Grid.Column="2" Name="TextBoxVoornaamBestuurder" Width="200" Margin="0,0,30,0"/>
+        <TextBox Grid.Row="2" Grid.Column="2" Name="TextBoxVoornaamBestuurder" Width="200" Margin="0,0,30,0" TextChanged="TextBox_TextChanged"/>
         
         <Label Grid.Row="3" Grid.Column="1"  Content="*Geboortedatum" HorizontalAlignment="Left" Margin="0,0,30,0"/>
-        <DatePicker Grid.Row="4" Grid.Column="1" Width="200" Margin="0,0,30,0" Name="PickerGeboorteDatum"/>
+        <DatePicker Grid.Row="4" Grid.Column="1" Width="200" Margin="0,0,30,0" Name="PickerGeboorteDatum" SelectedDateChanged="PickerGeboorteDatum_SelectedDateChanged"/>
         
         <Label Grid.Row="3" Grid.Column="2"  Content="*Rijksregisternummer" HorizontalAlignment="Left" Margin="0,0,30,0"/>
-        <TextBox Grid.Row="4" Grid.Column="2" Name="Rijksregisternummer" Width="200" Margin="0,0,30,0"/>
+        <TextBox Grid.Row="4" Grid.Column="2" Name="Rijksregisternummer" Width="200" Margin="0,0,30,0" TextChanged="TextBox_TextChanged"/>
         
         <Label Grid.Row="5" Grid.Column="1" Content="*Rijbewijzen Bestuurder" HorizontalAlignment="Left" Margin="0,0,30,0"/>
         <ListBox Grid.Row="6" Grid.Column="1" Grid.RowSpan="2" Width="200" Margin="0,0,30,0" Name="RijbewijzenListBox" SelectionChanged="ListBoxRijbewijzen_SelectionChanged"/>
@@ -68,7 +68,7 @@
         <Button Grid.Row="13" Grid.Column="1" Grid.ColumnSpan="1" Margin="0,0,20,0" Width="200" Name="AnnulerenButton" Click="AnnulerenButton_Click">
              Annuleren
         </Button>
-        <Button Grid.Row="13" Grid.Column="2" Grid.ColumnSpan="1" Margin="0,0,20,0"  Width="200" Name="ToevoegenButton" Click="ToevoegenButton_Click">
+        <Button Grid.Row="13" Grid.Column="2" Grid.ColumnSpan="1" Margin="0,0,20,0"  Width="200" Name="ToevoegenButton" Click="ToevoegenButton_Click" IsEnabled="False">
              Toevoegen
         </Button>
 

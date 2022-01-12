@@ -31,7 +31,7 @@
 
         <Rectangle Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="11" Margin="0,0,0,-20" Fill="#FF507ECD" ></Rectangle>
         <Label Grid.Row="1" Grid.Column="1"  Content="*Kaartnummer" HorizontalAlignment="Left" Margin="0,0,30,0"/>
-        <TextBox Grid.Row="2" Grid.Column="1" Name="TextBoxTankkaartAanpassenKaartnummer" Width="200" Margin="0,0,30,0" TextChanged="TextBoxTankkaartKaarnummer_TextChanged"/>
+        <TextBox Grid.Row="2" Grid.Column="1" Name="TextBoxTankkaartAanpassenKaartnummer" Width="200" Margin="0,0,30,0" TextChanged="TextBox_TextChanged"/>
 
         <Label Grid.Row="1" Grid.Column="2"  Content="*Pincode" HorizontalAlignment="Left" Margin="0,0,30,0" Name="PincodeLabel"/>
         <TextBox Grid.Row="2" Grid.Column="2" Name="TextBoxTankkaartAanpassenPincode" Width="200" Margin="0,0,30,0" TextChanged="TextBoxTankkaartPincode_TextChanged"/>
@@ -51,7 +51,7 @@
         </DockPanel>
 
         <Label Grid.Row="8" Grid.Column="1"  Content="Bestuurder" HorizontalAlignment="Left" Margin="0,0,30,0"/>
-        <TextBox IsEnabled="False"  Grid.Row="9" Grid.Column="1" Name="TankkaartAanpassenBestuurderTextBox" Width="200" Margin="0,0,30,0"/>
+        <TextBox IsEnabled="False"  Grid.Row="9" Grid.Column="1" Name="TankkaartAanpassenBestuurderTextBox" Width="200" Margin="0,0,30,0" TextChanged="TextBox_TextChanged"/>
 
         <Button Grid.Row="9" Grid.Column="2" Margin="0,0,30,0" Name="ButtonTankkaartAanpassenSelecteerBestuurder" Height="20" Grid.RowSpan="3" VerticalAlignment="Top" Click="ButtonTankkaartAanpassenSelecteerBestuurder_OnClick">Selecteer Bestuurder</Button>
 

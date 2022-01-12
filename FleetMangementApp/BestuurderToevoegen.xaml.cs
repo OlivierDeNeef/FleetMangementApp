@@ -113,12 +113,42 @@ namespace FleetMangementApp
             if (!RijbewijzenListBox.Items.Contains(r))
                 _rijbewijzen.Add(r);
 
+            VerplichteVeldenChecker();
+
         }
 
         private void VerwijderRijbewijsButton_OnClick(object sender, RoutedEventArgs e)
         {
             string r = (string)RijbewijsComboBox.SelectedValue;
             _rijbewijzen.Remove(r);
+
+            VerplichteVeldenChecker();
+        }
+
+
+
+        private void VerplichteVeldenChecker()
+        {
+            if(string.IsNullOrWhiteSpace(TextBoxBestuurderNaam.Text) || string.IsNullOrWhiteSpace(TextBoxVoornaamBestuurder.Text) 
+                || string.IsNullOrWhiteSpace(Rijksregisternummer.Text) || PickerGeboorteDatum.SelectedDate == null 
+                || RijbewijzenListBox.Items.Count < 1  )
+            {
+                ToevoegenButton.IsEnabled = false;
+            }
+            else
+            {
+                ToevoegenButton.IsEnabled = true;
+            }
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            VerplichteVeldenChecker();
+        }
+
+        private void PickerGeboorteDatum_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            VerplichteVeldenChecker();
         }
     }
 }
