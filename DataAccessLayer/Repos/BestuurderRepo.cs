@@ -85,8 +85,8 @@ namespace DataAccessLayer.Repos
                 if (!string.IsNullOrWhiteSpace(naam))
                 {
                     
-                    query += " AND b.Naam = @Naam";
-                    cmd.Parameters.AddWithValue("@Naam", naam);
+                    query += " AND b.Naam like @Naam";
+                    cmd.Parameters.AddWithValue("@Naam", naam + "%");
                    
                 }
 
@@ -109,7 +109,7 @@ namespace DataAccessLayer.Repos
                 cmd.CommandText = query;
                 connection.Open();
                 var reader = cmd.ExecuteReader();
-                if (!reader.HasRows) throw new BestuurderRepoException(nameof(GeefBestuurder) + " - Geen bestuurder gevonden");
+                if (!reader.HasRows) throw new BestuurderRepoException(" Geen bestuurder gevonden");
                 var bestuurders = new List<Bestuurder>();
                 Bestuurder bestuurder = null;
                 while (reader.Read())

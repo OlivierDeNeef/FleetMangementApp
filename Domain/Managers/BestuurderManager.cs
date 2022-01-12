@@ -54,10 +54,18 @@ namespace DomainLayer.Managers
         /// <param name="gearchiveerd"></param>
         public IReadOnlyList<Bestuurder> GeefGefilterdeBestuurder(int id, string voornaam, string naam, DateTime geboortedatum, List<RijbewijsType> lijstRijbewijstypes, string rijksregisternummer, bool gearchiveerd)
         {
-            var lijstBestuurders = new List<Bestuurder>();
-            if (id <= 0) return _bestuurderRepo.GeefGefilderdeBestuurders(voornaam, naam, geboortedatum, lijstRijbewijstypes, rijksregisternummer, gearchiveerd);
-            lijstBestuurders.Add(_bestuurderRepo.GeefBestuurder(id));
-            return lijstBestuurders;
+            try
+            {
+                var lijstBestuurders = new List<Bestuurder>();
+                if (id <= 0) return _bestuurderRepo.GeefGefilderdeBestuurders(voornaam, naam, geboortedatum, lijstRijbewijstypes, rijksregisternummer, gearchiveerd);
+                lijstBestuurders.Add(_bestuurderRepo.GeefBestuurder(id));
+                return lijstBestuurders;
+
+            }
+            catch (Exception e)
+            {
+                throw new VoertuigManagerException(nameof(GeefGefilterdeBestuurder) + " Er ging iets mis", e);
+            }
         }
 
         public bool BestaatBestuurder(Bestuurder bestuurder)
