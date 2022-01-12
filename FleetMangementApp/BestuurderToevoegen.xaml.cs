@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -63,6 +64,12 @@ namespace FleetMangementApp
                 rijbewijzen = ((MainWindow)Application.Current.MainWindow)._allRijbewijsTypes.Where(r => rijbewijzenInString.Contains(r.Type)).ToList();
 
                 Bestuurder nieuweBestuurder = new Bestuurder( TextBoxBestuurderNaam.Text, TextBoxVoornaamBestuurder.Text, PickerGeboorteDatum.SelectedDate.Value, Rijksregisternummer.Text, rijbewijzen, false);
+
+                //if (Strat is not null && ....)
+                //{
+                //    var adres = new Adres(...);
+                //    nieuweBestuurder.ZetAdres(adres);
+                //}
 
                 if (GeselecteerdVoertuig != null)
                 {
