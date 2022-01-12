@@ -111,14 +111,31 @@ namespace FleetMangementApp
             {
                 string brandstofString = (string)VoertuigAanpassenBrandstofComboBox.SelectedItem;
                 string wagentypeString = (string)AanpassenVoertuigWagenTypeComboBox.SelectedItem;
-                BrandstofType brandstof = ((MainWindow)Application.Current.MainWindow)._brandstoffen.Where(b => b.Type == brandstofString).FirstOrDefault();
-                WagenType wagen = ((MainWindow)Application.Current.MainWindow)._wagentypes.Where(w => w.Type == wagentypeString).FirstOrDefault();
+                BrandstofType brandstof = ((MainWindow)Application.Current.MainWindow)._brandstoffen.FirstOrDefault(b => b.Type == brandstofString);
+                WagenType wagen = ((MainWindow)Application.Current.MainWindow)._wagentypes.FirstOrDefault(w => w.Type == wagentypeString);
                 Voertuig aangepastVoertuig = new Voertuig(_voertuig.Id, ToevoegenVoertuigMerkTextbox.Text, ToevoegenVoertuigModelTextbox.Text, ToevoegenVoertuigCNummerTextbox.Text, ToevoegenVoertuigNummerplaatTextbox.Text, brandstof, wagen);
                 if(GeselecteerdeBestuurder != null)
                 {
-                    aangepastVoertuig.ZetBestuurder(GeselecteerdeBestuurder);
-                    _bestuurderManager.UpdateBestuurder(GeselecteerdeBestuurder);
+                    if (GeselecteerdeBestuurder != _voertuig.Bestuurder)
+                    {
+                        if (_voertuig.Bestuurder != null )
+                        {
+                            var bestuurder = _voertuig.Bestuurder;
+                            _bestuurderManager.UpdateBestuurder(bestuurder);
+                        }
+                        aangepastVoertuig.ZetBestuurder(GeselecteerdeBestuurder);
+                        _bestuurderManager.UpdateBestuurder(GeselecteerdeBestuurder);
+                    }
+                    
                 }
+                else
+                {
+                    var bestuurder = _voertuig.Bestuurder;
+                    aangepastVoertuig.VerwijderBestuurder();
+                    _bestuurderManager.UpdateBestuurder(bestuurder);
+                }
+
+
                 if (string.IsNullOrEmpty(ToevoegenVoertuigKleurTextbox.Text))
                     aangepastVoertuig.ZetKleur("Geen kleur ingesteld");
                 else

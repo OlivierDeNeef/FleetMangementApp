@@ -256,8 +256,8 @@ namespace FleetMangementApp
                 var gearchiveerd = CheckBoxGearchiveerdVoertuig.IsChecked.Value;
                 var isHybride = false;
 
-                var wagenType = VoertuigComboBoxTypeWagen.SelectedItem == null ? null :  _wagenTypeManager.GeefAlleWagenTypes().Where(w => w.Type == VoertuigComboBoxTypeWagen.SelectedItem.ToString()).FirstOrDefault();
-                var brandstofType = VoertuigComboBoxBrandstof.SelectedItem == null ? null : _brandstofTypeManager.GeefAlleBrandstofTypes().Where(b => b.Type == VoertuigComboBoxBrandstof.SelectedItem.ToString()).FirstOrDefault();
+                var wagenType = VoertuigComboBoxTypeWagen.SelectedItem == null ? null :  _wagenTypeManager.GeefAlleWagenTypes().FirstOrDefault(w => w.Type == VoertuigComboBoxTypeWagen.SelectedItem.ToString());
+                var brandstofType = VoertuigComboBoxBrandstof.SelectedItem == null ? null : _brandstofTypeManager.GeefAlleBrandstofTypes().FirstOrDefault(b => b.Type == VoertuigComboBoxBrandstof.SelectedItem.ToString());
 
                 var result = _voertuigManager.GeefGefilterdeVoertuigen(id, merk, model, aantalDeuren, nummerplaat, chassisnummer, kleur, wagenType, brandstofType, gearchiveerd, isHybride).ToList();
                 //Gevonden bestuurder mappen aan datagrid

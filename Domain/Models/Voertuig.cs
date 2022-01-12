@@ -111,7 +111,7 @@ namespace DomainLayer.Models
                 throw new VoertuigException("ZetNummerplaat - Nummerplaat moet beginnen met een cijfer");
             if ((nummerplaat.Length != 7 && nummerplaat.Length != 9)) 
                 throw new VoertuigException("ZetNummerplaat - Nummerplaat is niet lang genoeg volgens formaat (1-)ABC-123");
-            Nummerplaat = nummerplaat;
+            Nummerplaat = nummerplaat.ToUpper();
         }
         /// <summary>
         /// Trim functie op de kleur van de auto

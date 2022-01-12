@@ -129,7 +129,7 @@ namespace DataAccessLayer.Repos
                 if (!string.IsNullOrWhiteSpace(chassisnummer))
                 {
                     if (next) query += "and ";
-                    query += "v.Chassisnummer=@Chassisnummer ";
+                    query += "v.Chassinummer=@Chassisnummer ";
                     command.Parameters.AddWithValue("@Chassisnummer", chassisnummer);
                     next = true;
                 }
@@ -332,7 +332,7 @@ namespace DataAccessLayer.Repos
         {
             var connection = new SqlConnection(_connectionString);
 
-            const string query = "UPDATE VOERTUIGEN SET Merk=@Merk, Model=@Model, Chassisnummer=@Chassisnummer, Nummerplaat=@Nummerplaat, Gearchiveerd=@Gearchiveerd, Kleur=@Kleur, AantalDeuren=@AantalDeuren, Hybride=@Hybride, WagenTypeId=@WagenTypeId, BrandstofId=@BrandstofId WHERE Id=@Id";
+            const string query = "UPDATE VOERTUIGEN SET Merk=@Merk, Model=@Model, Chassinummer=@Chassisnummer, Nummerplaat=@Nummerplaat, Gearchiveerd=@Gearchiveerd, Kleur=@Kleur, AantalDeuren=@AantalDeuren, Hybride=@Hybride, WagenTypeId=@WagenTypeId, BrandstofId=@BrandstofId WHERE Id=@Id";
 
             try
             {
@@ -366,8 +366,8 @@ namespace DataAccessLayer.Repos
         {
             var connection = new SqlConnection(_connectionString);
             const string query =
-                "INSERT INTO dbo.voertuigen (Merk, Model, Chassisnummer, Nummerplaat, Gearchiveerd, Kleur, AantalDeuren, Hybride, WagenTypeId, BrandstofId) " +
-                "VALUES (@Merk, @Model, @Chassisnummer, @Nummerplaat, @Gearchiveerd, @Kleur, @AantalDeuren, @Hybride, @WagenTypeId, @BrandstofId) ";
+                "INSERT INTO dbo.voertuigen (Merk, Model, Chassinummer, Nummerplaat, Gearchiveerd, Kleur, AantalDeuren, Hybride, WagenTypeId, BrandstofId) " +
+                "VALUES (@Merk, @Model, @Chassinummer, @Nummerplaat, @Gearchiveerd, @Kleur, @AantalDeuren, @Hybride, @WagenTypeId, @BrandstofId) ";
                 //"OUTPUT INSERTED.Id"; 
 
             try
@@ -377,7 +377,7 @@ namespace DataAccessLayer.Repos
                 command.Parameters.AddWithValue("@Id", voertuig.Id);
                 command.Parameters.AddWithValue("@Merk", voertuig.Merk);
                 command.Parameters.AddWithValue("@Model", voertuig.Model);
-                command.Parameters.AddWithValue("@Chassisnummer", voertuig.Chassisnummer);
+                command.Parameters.AddWithValue("@Chassinummer", voertuig.Chassisnummer);
                 command.Parameters.AddWithValue("@Nummerplaat", voertuig.Nummerplaat);
                 command.Parameters.AddWithValue("@Gearchiveerd", (object)voertuig.IsGearchiveerd ?? DBNull.Value);
                 command.Parameters.AddWithValue("@Kleur", (object)voertuig.Kleur ?? DBNull.Value);
