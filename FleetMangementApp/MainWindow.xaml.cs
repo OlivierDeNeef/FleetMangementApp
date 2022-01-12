@@ -6,7 +6,6 @@ using FleetMangementApp.Models.Output;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -404,13 +403,20 @@ namespace FleetMangementApp
 
         private void ButtonDetailsTankkaart_Click(object sender, RoutedEventArgs e)
         {
-            if (ResultatenTankkaarten.SelectedItem != null)
+            try
             {
-                var selectedTankkaart = (ResultTankkaart)ResultatenTankkaarten.SelectedItem;
-                new Details(_tankkaartManager.GeefTankkaart(selectedTankkaart.Id))
+                if (ResultatenTankkaarten.SelectedItem != null)
                 {
-                    Owner = this
-                }.ShowDialog();
+                    var selectedTankkaart = (ResultTankkaart)ResultatenTankkaarten.SelectedItem;
+                    new Details(_tankkaartManager.GeefTankkaart(selectedTankkaart.Id))
+                    {
+                        Owner = this
+                    }.ShowDialog();
+                }
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.InnerException?.InnerException?.Message ?? exception.Message, "Fout", MessageBoxButton.OK);
             }
         }
 
@@ -452,13 +458,20 @@ namespace FleetMangementApp
 
         private void ButtonArchiveerTankkaart_OnClick(object sender, RoutedEventArgs e)
         {
-            if (ResultatenTankkaarten.SelectedItem != null)
+            try
             {
-                var selectedItem = (ResultTankkaart)ResultatenTankkaarten.SelectedItem;
-                Tankkaart selectedTankkaart = _tankkaartManager.GeefTankkaart(selectedItem.Id);
-                selectedTankkaart.ZetGearchiveerd(!selectedTankkaart.IsGearchiveerd);
-                _tankkaartManager.UpdateTankkaart(selectedTankkaart);
-                MessageBox.Show("(De)Archiveren gelukt");
+                if (ResultatenTankkaarten.SelectedItem != null)
+                {
+                    var selectedItem = (ResultTankkaart)ResultatenTankkaarten.SelectedItem;
+                    Tankkaart selectedTankkaart = _tankkaartManager.GeefTankkaart(selectedItem.Id);
+                    selectedTankkaart.ZetGearchiveerd(!selectedTankkaart.IsGearchiveerd);
+                    _tankkaartManager.UpdateTankkaart(selectedTankkaart);
+                    MessageBox.Show("(De)Archiveren gelukt");
+                }
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.InnerException?.InnerException?.Message ?? exception.Message, "Fout", MessageBoxButton.OK);
             }
         }
 

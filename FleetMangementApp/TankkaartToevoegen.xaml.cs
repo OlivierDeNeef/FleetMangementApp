@@ -80,7 +80,7 @@ namespace FleetMangementApp
         {
             Tankkaart nieuweTankkaart;
             List<BrandstofType> brandstoffen = new List<BrandstofType>();
-            var brandstoffenString = BrandstoffenListBox.ItemsSource?.Cast<string>() ?? new List<string>();
+            var brandstoffenString = BrandstoffenListBox.Items?.Cast<string>() ?? new List<string>();
             Bestuurder b = GeselecteerdBestuurder;
             
             nieuweTankkaart = new Tankkaart(TextBoxTankkaartKaarnummer.Text,
@@ -94,10 +94,10 @@ namespace FleetMangementApp
             
             //TODO FIX BESTUURDERVELD TANKKAART TOEVOEGEN
 
-            brandstoffen = ((MainWindow) Application.Current.MainWindow)._brandstoffen
-                .Where(b => brandstoffenString.Contains(b.Type)).ToList();
+             ((MainWindow) Application.Current.MainWindow)._brandstoffen
+                .Where(b => brandstoffenString.Contains(b.Type)).ToList().ForEach(b=> nieuweTankkaart.VoegBrandstofTypeToe(b));
 
-
+           
                
                //false, false, brandstoffen
                //);
