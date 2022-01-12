@@ -1,18 +1,8 @@
 ﻿using DomainLayer.Managers;
 using DomainLayer.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace FleetMangementApp
 {
@@ -132,7 +122,7 @@ namespace FleetMangementApp
                     }
                     
                 }
-                else
+                else if(_voertuig.Bestuurder is not null)
                 {
                     var bestuurder = _voertuig.Bestuurder;
                     _voertuig.VerwijderBestuurder();
