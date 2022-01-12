@@ -114,7 +114,6 @@ namespace FleetMangementApp
                 {
                     if (GeselecteerdeBestuurder != _voertuig.Bestuurder)
                     {
-                        
                         var bestuurder = _voertuig.Bestuurder;
                         aangepastVoertuig.ZetBestuurder(GeselecteerdeBestuurder);
 

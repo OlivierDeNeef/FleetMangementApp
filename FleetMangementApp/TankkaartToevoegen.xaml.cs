@@ -91,10 +91,7 @@ namespace FleetMangementApp
                 nieuweTankkaart.ZetBestuurder(GeselecteerdBestuurder);
             }
 
-            
-            //TODO FIX BESTUURDERVELD TANKKAART TOEVOEGEN
-
-             ((MainWindow) Application.Current.MainWindow)._brandstoffen
+            ((MainWindow) Application.Current.MainWindow)._brandstoffen
                 .Where(b => brandstoffenString.Contains(b.Type)).ToList().ForEach(b=> nieuweTankkaart.VoegBrandstofTypeToe(b));
 
            
