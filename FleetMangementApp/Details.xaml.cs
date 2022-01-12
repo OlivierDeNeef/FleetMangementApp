@@ -83,8 +83,13 @@ namespace FleetMangementApp
             BestuurderVoornaam.Text += _bestuurder.Voornaam;
             BestuurderGeboortedatum.Text += _bestuurder.Geboortedatum.ToString("d");
             Rijksregisternummer.Text += _bestuurder.Rijksregisternummer;
-            
-            foreach(RijbewijsType type in _bestuurder.GeefRijbewijsTypes())
+            Straat.Text += _bestuurder?.Adres?.Straat;
+            Huisnummer.Text += _bestuurder?.Adres?.Huisnummer;
+            Stad.Text += _bestuurder?.Adres?.Stad;
+            Postcode.Text += _bestuurder?.Adres?.Postcode;
+            Land.Text += _bestuurder?.Adres?.Land;
+
+            foreach (RijbewijsType type in _bestuurder.GeefRijbewijsTypes())
             {
                 Rijbewijzen.Text +="\n" +"-" + type.Type  ;
             }
