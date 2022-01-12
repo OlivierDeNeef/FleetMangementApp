@@ -152,6 +152,10 @@ namespace FleetMangementApp
         private void PickerGeldigheidsDatum_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             VerplichteVeldenChecker();
+            if (PickerGeldigheidsDatum.SelectedDate < DateTime.Now || PickerGeldigheidsDatum.SelectedDate == null)
+            {
+                MessageBox.Show("Ongeldige Datum");
+            }
         }
     }
 
