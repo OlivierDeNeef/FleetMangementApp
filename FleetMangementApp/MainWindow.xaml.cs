@@ -434,7 +434,6 @@ namespace FleetMangementApp
             }
             TankkaartId.Text = "";
             TankkaartKaartnummer.Text = "";
-            DatePickerGeldigheidsdatumTankkaart.SelectedDate = null;
             BrandstoftypeTankkaartCombobox.SelectedItem = null;
             CheckBoxGearchiveerdTankkaart.IsChecked = false;
         }
