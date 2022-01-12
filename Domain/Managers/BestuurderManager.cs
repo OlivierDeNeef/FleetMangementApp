@@ -67,7 +67,7 @@ namespace DomainLayer.Managers
                 throw new VoertuigManagerException(nameof(GeefGefilterdeBestuurder) + " Er ging iets mis", e);
             }
         }
-
+        
         public bool BestaatBestuurder(Bestuurder bestuurder)
         {
             if (_bestuurderRepo.BestaatBestuurder(bestuurder.Id)) throw new BestuurderManagerException("Bestaat bestuurder - Bestuurder bestaat al");

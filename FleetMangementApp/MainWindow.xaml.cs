@@ -401,6 +401,7 @@ namespace FleetMangementApp
         {
             try
             {
+                var id = TankkaartId.Text;
                 var kaartnummer = TankkaartKaartnummer.Text;
                 var geldigheidsdatum = DatePickerGeldigheidsdatumTankkaart.SelectedDate ?? DateTime.MinValue;
                 var brandstoffenInString = ListBoxBrandstofTypesTankkaart.ItemsSource?.Cast<string>() ?? new List<string>();
@@ -411,7 +412,7 @@ namespace FleetMangementApp
             }
             catch (Exception exception)
             {
-                MessageBox.Show(exception.Message, "Fout", MessageBoxButton.OK);
+                MessageBox.Show(exception.InnerException?.InnerException?.Message ?? exception.Message, "Fout", MessageBoxButton.OK);
             }
         }
 

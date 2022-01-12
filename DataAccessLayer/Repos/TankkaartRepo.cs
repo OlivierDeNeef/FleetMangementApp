@@ -104,7 +104,7 @@ namespace DataAccessLayer.Repos
                 commandTankkaart.Connection = con;
                 con.Open();
                 var reader = commandTankkaart.ExecuteReader();
-                if (!reader.HasRows) throw new BestuurderRepoException(nameof(GeefTankkaart) + " - Geen tankkaart gevonden");
+                if (!reader.HasRows) throw new BestuurderRepoException(" Geen tankkaart gevonden");
                 Tankkaart tankkaart = null;
                 while (reader.Read())
                 {
@@ -292,13 +292,13 @@ namespace DataAccessLayer.Repos
                 bool next = false;
                 if (!string.IsNullOrWhiteSpace(kaartnummer))
                 {
-                    query += ", t.Kaartnummer=@Kaartnummer";
+                    query += " AND t.Kaartnummer=@Kaartnummer";
                     cmd.Parameters.AddWithValue("@Kaartnummer", kaartnummer);
                     next = true;
                 }
                 if (geldigheidsdatum != DateTime.MinValue)
                 {
-                    if (next) query += ", ";
+                    if (next) query += " AND ";
                     query += "t.Geldigheidsdatum = @Geldigheidsdatum";
                     cmd.Parameters.AddWithValue("@Geldigheidsdatum", geldigheidsdatum);
                     next = true;
@@ -308,7 +308,7 @@ namespace DataAccessLayer.Repos
                 cmd.CommandText = query;
                 con.Open();
                 var reader = cmd.ExecuteReader();
-                if (!reader.HasRows) throw new BestuurderRepoException(nameof(GeefTankkaart) + " - Geen tankkaart gevonden");
+                if (!reader.HasRows) throw new BestuurderRepoException(" Geen tankkaart gevonden");
                 Tankkaart tankkaart = null;
                 var tankkaarten = new List<Tankkaart>();
                 while (reader.Read())
