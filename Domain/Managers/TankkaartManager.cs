@@ -19,14 +19,28 @@ namespace DomainLayer.Managers
 
         public void VoegTankkaartToe(Tankkaart tankkaart)
         {
-            _tankkaartRepo.VoegTankkaartToe(tankkaart);
+            try
+            {
+                _tankkaartRepo.VoegTankkaartToe(tankkaart);
+            }
+            catch (Exception e)
+            {
+                throw new TankkaartManagerException("Er ging iets mis", e);
+            }
         }
 
         public Tankkaart GeefTankkaart(int id)
         {
-            if (!_tankkaartRepo.BestaatTankkaart(id))
-                throw new TankkaartManagerException("GeefTankkaart - tankkaart bestaat niet");
-            return _tankkaartRepo.GeefTankkaart(id);
+            try
+            {
+                if (!_tankkaartRepo.BestaatTankkaart(id))
+                    throw new TankkaartManagerException("GeefTankkaart - tankkaart bestaat niet");
+                return _tankkaartRepo.GeefTankkaart(id);
+            }
+            catch (Exception e)
+            {
+                throw new BrandstofTypeManagerException("Er ging iets mis", e);
+            }
         }
 
         public IReadOnlyList<Tankkaart> GeefGefilterdeTankkaarten(string kaartnummer, DateTime geldigheidsdatum, List<BrandstofType> lijstBrandstoftypes, bool geachiveerd)
@@ -46,7 +60,15 @@ namespace DomainLayer.Managers
 
         public void UpdateTankkaart(Tankkaart tankkaart)
         {
-            if(_tankkaartRepo.BestaatTankkaart(tankkaart.Id))_tankkaartRepo.UpdateTankkaart(tankkaart);
+            try
+            {
+                if(_tankkaartRepo.BestaatTankkaart(tankkaart.Id))_tankkaartRepo.UpdateTankkaart(tankkaart);
+
+            }
+            catch (Exception e)
+            {
+                throw new BrandstofTypeManagerException("Er ging iets mis", e);
+            }
         }
     }
 }

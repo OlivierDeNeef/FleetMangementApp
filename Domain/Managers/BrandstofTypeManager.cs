@@ -1,6 +1,8 @@
-﻿using DomainLayer.Interfaces.Repos;
+﻿using System;
+using DomainLayer.Interfaces.Repos;
 using DomainLayer.Models;
 using System.Collections.Generic;
+using DomainLayer.Exceptions.Managers;
 
 namespace DomainLayer.Managers
 {
@@ -19,7 +21,15 @@ namespace DomainLayer.Managers
         /// <param name="brandstofType">Brandstof dat toegevoegd moet worden</param>
         public void VoegBrandstofTypeToe(BrandstofType brandstofType)
         {
+            try
+            {
              _brandstofTypeRepo.VoegBrandstofTypeToe(brandstofType);
+
+            }
+            catch (Exception e)
+            {
+                throw new BrandstofTypeManagerException("Er ging iets mis", e);
+            }
         }
 
         /// <summary>
@@ -28,7 +38,14 @@ namespace DomainLayer.Managers
         /// <param name="brandstofType">Brandstof dat verwijderd moet worden</param>
         public void VerwijderBrandstofType(BrandstofType brandstofType)
         {
-            if (_brandstofTypeRepo.BestaatBrandstofType(brandstofType)) _brandstofTypeRepo.VerwijderBrandstofType(brandstofType.Id);
+            try
+            {
+                if (_brandstofTypeRepo.BestaatBrandstofType(brandstofType)) _brandstofTypeRepo.VerwijderBrandstofType(brandstofType.Id);
+            }
+            catch (Exception e)
+            {
+                throw new BrandstofTypeManagerException("Er ging iets mis", e);
+            }
         }
 
         /// <summary>
@@ -37,7 +54,14 @@ namespace DomainLayer.Managers
         /// <param name="brandstofType">Brandstof dat geupdate moet worden</param>
         public void UpdateBrandstofType(BrandstofType brandstofType)
         {
-            if (_brandstofTypeRepo.BestaatBrandstofType(brandstofType)) _brandstofTypeRepo.UpdateBrandstofType(brandstofType);
+            try
+            {
+                if (_brandstofTypeRepo.BestaatBrandstofType(brandstofType)) _brandstofTypeRepo.UpdateBrandstofType(brandstofType);
+            }
+            catch (Exception e)
+            {
+                throw new BrandstofTypeManagerException("Er ging iets mis", e);
+            }
         }
 
         /// <summary>
@@ -46,7 +70,14 @@ namespace DomainLayer.Managers
         /// <returns>List van brandstoffen</returns>
         public IEnumerable<BrandstofType> GeefAlleBrandstofTypes()
         {
-            return _brandstofTypeRepo.GeefAlleBrandstofTypes();
+            try
+            {
+                return _brandstofTypeRepo.GeefAlleBrandstofTypes();
+            }
+            catch (Exception e)
+            {
+                throw new BrandstofTypeManagerException("Er ging iets mis", e);
+            }
         }
     }
 }

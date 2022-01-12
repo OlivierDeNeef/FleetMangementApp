@@ -22,7 +22,14 @@ namespace DomainLayer.Managers
         /// <param name="wagenType">wagentype dat moet toegevoegd worden</param>
         public void VoegWagenTypeToe(WagenType wagenType)
         {
-            _wagenTypeRepo.VoegWagenTypeToe(wagenType);
+            try
+            {
+                _wagenTypeRepo.VoegWagenTypeToe(wagenType);
+            }
+            catch (Exception e)
+            {
+                throw new WagenTypeManagerException("Er ging iets mis", e);
+            }
         }
 
         /// <summary>
@@ -31,7 +38,14 @@ namespace DomainLayer.Managers
         /// <param name="wagenType">wagentype dat moet verwijderd worden</param>
         public void VerwijderWagenType(WagenType wagenType)
         {
-            if (_wagenTypeRepo.BestaatWagenType(wagenType))_wagenTypeRepo.VerwijderWagenType(wagenType.Id);
+            try
+            {
+                if (_wagenTypeRepo.BestaatWagenType(wagenType))_wagenTypeRepo.VerwijderWagenType(wagenType.Id);
+            }
+            catch (Exception e)
+            {
+                throw new WagenTypeManagerException("Er ging iets mis", e);
+            }
         }
 
         /// <summary>
@@ -40,7 +54,15 @@ namespace DomainLayer.Managers
         /// <param name="wagenType">het up te daten wagentype</param>
         public void UpdateWagenType(WagenType wagenType)
         {
-            if (_wagenTypeRepo.BestaatWagenType(wagenType)) _wagenTypeRepo.UpdateWagenType(wagenType);
+            try
+            {
+
+                if (_wagenTypeRepo.BestaatWagenType(wagenType)) _wagenTypeRepo.UpdateWagenType(wagenType);
+            }
+            catch (Exception e)
+            {
+                throw new WagenTypeManagerException("Er ging iets mis", e);
+            }
         }
 
         /// <summary>
@@ -49,7 +71,14 @@ namespace DomainLayer.Managers
         /// <returns>een IEnumerable van Wagentypes</returns>
         public IEnumerable<WagenType> GeefAlleWagenTypes()
         {
-            return _wagenTypeRepo.GeefAlleWagenTypes();
+            try
+            {
+                return _wagenTypeRepo.GeefAlleWagenTypes();
+            }
+            catch (Exception e)
+            {
+                throw new WagenTypeManagerException("Er ging iets mis", e);
+            }
         }
     }
 }
