@@ -156,7 +156,7 @@ namespace FleetMangementApp
 
         }
 
-        private void TextBoxTankkaartKaarnummer_TextChanged(object sender, TextChangedEventArgs e)
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             VerplichteVeldenChecker();
         }
