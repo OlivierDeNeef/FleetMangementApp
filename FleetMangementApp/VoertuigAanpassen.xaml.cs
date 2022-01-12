@@ -37,7 +37,7 @@ namespace FleetMangementApp
 
         private void SetupVoertuigWindowView()
         {
-            
+
             VoertuigAanpassenBrandstofComboBox.ItemsSource = ((MainWindow)Application.Current.MainWindow)._brandstoffen.Select(b => b.Type);
             AanpassenVoertuigWagenTypeComboBox.ItemsSource = ((MainWindow)Application.Current.MainWindow)._wagentypes.Select(w => w.Type);
         }
@@ -88,7 +88,7 @@ namespace FleetMangementApp
                 ToevoegenVoertuigBestuurderTextbox.Text = $"Bestuurder met naam {_voertuig.Bestuurder.Voornaam} {_voertuig.Bestuurder.Naam}.";
                 GeselecteerdeBestuurder = _voertuig.Bestuurder;
             }
-                
+
 
 
         }
@@ -110,11 +110,11 @@ namespace FleetMangementApp
                 BrandstofType brandstof = ((MainWindow)Application.Current.MainWindow)._brandstoffen.FirstOrDefault(b => b.Type == brandstofString);
                 WagenType wagen = ((MainWindow)Application.Current.MainWindow)._wagentypes.FirstOrDefault(w => w.Type == wagentypeString);
                 Voertuig aangepastVoertuig = new Voertuig(_voertuig.Id, ToevoegenVoertuigMerkTextbox.Text, ToevoegenVoertuigModelTextbox.Text, ToevoegenVoertuigCNummerTextbox.Text, ToevoegenVoertuigNummerplaatTextbox.Text, brandstof, wagen);
-                if(GeselecteerdeBestuurder != null)
+                if (GeselecteerdeBestuurder != null)
                 {
                     if (GeselecteerdeBestuurder != _voertuig.Bestuurder)
                     {
-                        
+
                         var bestuurder = _voertuig.Bestuurder;
                         aangepastVoertuig.ZetBestuurder(GeselecteerdeBestuurder);
 
@@ -125,9 +125,9 @@ namespace FleetMangementApp
                         }
                         _bestuurderManager.UpdateBestuurder(GeselecteerdeBestuurder);
                     }
-                    
+
                 }
-                else if(_voertuig.Bestuurder is not null)
+                else if (_voertuig.Bestuurder is not null)
                 {
                     var bestuurder = _voertuig.Bestuurder;
                     _voertuig.VerwijderBestuurder();
@@ -147,7 +147,7 @@ namespace FleetMangementApp
                     aangepastVoertuig.ZetAantalDeuren(_aantalDeuren);
 
                 _voertuigManager.UpdateVoertuig(aangepastVoertuig);
-                
+
                 MessageBox.Show("Voertuig Aangepast");
                 Close();
             }
