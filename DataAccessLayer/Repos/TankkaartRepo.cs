@@ -289,19 +289,18 @@ namespace DataAccessLayer.Repos
                             "left join dbo.BrandstofTypes bta on v.BrandstofId = bta.Id where t.Gearchiveerd =@Gearchiveerd  ";
 
                 cmd.Parameters.AddWithValue("@Gearchiveerd", geachiveerd);
-                bool next = false;
                 if (!string.IsNullOrWhiteSpace(kaartnummer))
                 {
                     query += " AND t.Kaartnummer=@Kaartnummer";
                     cmd.Parameters.AddWithValue("@Kaartnummer", kaartnummer);
-                    next = true;
+                    
                 }
                 if (geldigheidsdatum != DateTime.MinValue)
                 {
-                    if (next) query += " AND ";
-                    query += "t.Geldigheidsdatum = @Geldigheidsdatum";
+                    
+                    query += " AND t.Geldigheidsdatum = @Geldigheidsdatum";
                     cmd.Parameters.AddWithValue("@Geldigheidsdatum", geldigheidsdatum);
-                    next = true;
+                    
                 }
 
                 cmd.Connection = con;
