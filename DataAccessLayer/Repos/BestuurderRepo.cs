@@ -77,8 +77,8 @@ namespace DataAccessLayer.Repos
                 
                 if (!string.IsNullOrWhiteSpace(voornaam))
                 {
-                    query += "AND b.voornaam = @Voornaam";
-                    cmd.Parameters.AddWithValue("@Voornaam", voornaam);
+                    query += "AND b.voornaam like @Voornaam";
+                    cmd.Parameters.AddWithValue("@Voornaam", voornaam +"%");
                     
                 }
 
