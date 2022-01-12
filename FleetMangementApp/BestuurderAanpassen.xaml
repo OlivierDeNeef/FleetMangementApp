@@ -20,6 +20,12 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="50"/>
             <RowDefinition Height="25"/>
             <RowDefinition Height="20"/>
@@ -30,7 +36,7 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
-        <Rectangle Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="0" Grid.RowSpan="14" Fill="#FF507ECD" Margin="0,0,0,50"/>
+        <Rectangle Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="5" Grid.RowSpan="18" Margin="0,0,0,-20" Fill="#FF507ECD"></Rectangle>
 
         <Label Grid.Row="1" Grid.Column="1"  Content="*Naam" HorizontalAlignment="Left" Margin="0,0,30,0"/>
         <TextBox Grid.Row="2" Grid.Column="1" Name="TextBoxBestuurderNaam" Width="200" Margin="0,0,30,0" TextChanged="TextBox_TextChanged"/>
@@ -65,10 +71,27 @@
 
         <Button Grid.Row="11" Grid.Column="2" Margin="0,0,30,0" Name="ButtonSelecteerTankkaart" Click="ButtonSelecteerTankkaart_Click">Selecteer Tankkaart</Button>
 
-        <Button Grid.Row="13" Grid.Column="1" Width="200" Margin="0,0,30,0" Name="AnnulerenButton" Click="AnnulerenButton_Click">
+        <Label Grid.Row="12" Grid.Column="1"  Content="Straat" HorizontalAlignment="Left" Margin="0,0,30,0"/>
+        <TextBox Grid.Row="13" Grid.Column="1" Name="TextBoxBestuurderStraat" Width="200" Margin="0,0,30,0" TextChanged="TextBox_TextChanged"/>
+
+        <Label Grid.Row="12" Grid.Column="2"  Content="Huisnummer" HorizontalAlignment="Left" Margin="0,0,30,0"/>
+        <TextBox Grid.Row="13" Grid.Column="2" Name="TextBoxBestuurderHuisnummer" Width="200" Margin="0,0,30,0" TextChanged="TextBox_TextChanged"/>
+
+
+        <Label Grid.Row="14" Grid.Column="1"  Content="Postcode" HorizontalAlignment="Left" Margin="0,0,30,0"/>
+        <TextBox Grid.Row="15" Grid.Column="1" Name="TextBoxBestuurderPostcode" Width="200" Margin="0,0,30,0" TextChanged="TextBox_TextChanged"/>
+
+        <Label Grid.Row="14" Grid.Column="2"  Content="Stad" HorizontalAlignment="Left" Margin="0,0,30,0"/>
+        <TextBox Grid.Row="15" Grid.Column="2" Name="TextBoxBestuurderStad" Width="200" Margin="0,0,30,0" TextChanged="TextBox_TextChanged"/>
+
+        <Label Grid.Row="16" Grid.Column="1"  Content="Land" HorizontalAlignment="Left" Margin="0,0,30,0"/>
+        <TextBox Grid.Row="17" Grid.Column="1" Name="TextBoxBestuurderLand" Width="200" Margin="0,0,30,0" TextChanged="TextBox_TextChanged"/>
+
+
+        <Button Grid.Row="19" Grid.Column="1" Width="200" Margin="0,0,30,0" Name="AnnulerenButton" Click="AnnulerenButton_Click">
              Annuleren
         </Button>
-        <Button Grid.Row="13" Grid.Column="2"  Width="200" Margin="0,0,30,0" Name="AanpassenButton" Click="AanpassenButton_Click">
+        <Button Grid.Row="19" Grid.Column="2"  Width="200" Margin="0,0,30,0" Name="AanpassenButton" Click="AanpassenButton_Click">
            Aanpassen
         </Button>
     </Grid>

@@ -53,6 +53,23 @@ namespace FleetMangementApp
             TextBoxVoornaamBestuurder.Text = bestuurder.Voornaam;
             PickerGeboorteDatum.SelectedDate = bestuurder.Geboortedatum;
             Rijksregisternummer.Text = bestuurder.Rijksregisternummer;
+
+            if (bestuurder.Adres is not null)
+            {
+
+                if (bestuurder.Adres.Straat is not null)
+                    TextBoxBestuurderStraat.Text = bestuurder.Adres.Straat;
+                if (bestuurder.Adres.Huisnummer is not null)
+                    TextBoxBestuurderHuisnummer.Text = bestuurder.Adres.Huisnummer;
+                if (bestuurder.Adres.Stad is not null)
+                    TextBoxBestuurderStad.Text = bestuurder.Adres.Stad;
+                if (bestuurder.Adres.Postcode is not null)
+                    TextBoxBestuurderPostcode.Text = bestuurder.Adres.Postcode;
+                if (bestuurder.Adres.Land is not null)
+                    TextBoxBestuurderLand.Text = bestuurder.Adres.Land;
+
+            }
+
             _rijbewijzen = new ObservableCollection<string>(bestuurder.GeefRijbewijsTypes().Select(r => r.Type));
             RijbewijzenListBox.ItemsSource = _rijbewijzen ;
             if (bestuurder.Voertuig != null)
@@ -82,8 +99,35 @@ namespace FleetMangementApp
                 rijbewijzen = ((MainWindow)Application.Current.MainWindow)._allRijbewijsTypes.Where(r => rijbewijzenInString.Contains(r.Type)).ToList();
 
                 Bestuurder aangepasteBestuurder = new Bestuurder(_bestuurder.Id, TextBoxBestuurderNaam.Text, TextBoxVoornaamBestuurder.Text, PickerGeboorteDatum.SelectedDate.Value, Rijksregisternummer.Text, rijbewijzen, _bestuurder.IsGearchiveerd);
-            
-                if(GeselecteerdVoertuig != null)
+
+
+                if (!string.IsNullOrWhiteSpace(TextBoxBestuurderStraat.Text) ||
+                   !string.IsNullOrWhiteSpace(TextBoxBestuurderHuisnummer.Text) ||
+                   !string.IsNullOrWhiteSpace(TextBoxBestuurderStad.Text) ||
+                   !string.IsNullOrWhiteSpace(TextBoxBestuurderPostcode.Text) ||
+                   !string.IsNullOrWhiteSpace(TextBoxBestuurderLand.Text))
+
+                {
+                    if (!string.IsNullOrWhiteSpace(TextBoxBestuurderStraat.Text) &&
+                        !string.IsNullOrWhiteSpace(TextBoxBestuurderHuisnummer.Text) &&
+                        !string.IsNullOrWhiteSpace(TextBoxBestuurderStad.Text) &&
+                        !string.IsNullOrWhiteSpace(TextBoxBestuurderPostcode.Text) &&
+                        !string.IsNullOrWhiteSpace(TextBoxBestuurderLand.Text))
+                    {
+
+                        var adres = new Adres(TextBoxBestuurderStraat.Text,
+                            TextBoxBestuurderHuisnummer.Text, TextBoxBestuurderStad.Text,
+                            TextBoxBestuurderPostcode.Text, TextBoxBestuurderLand.Text);
+                        aangepasteBestuurder.ZetAdres(adres);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Adres is onvolledig ingevuld");
+                    }
+                }
+
+
+                if (GeselecteerdVoertuig != null)
                 {
                     aangepasteBestuurder.ZetVoertuig(GeselecteerdVoertuig);
                 }
