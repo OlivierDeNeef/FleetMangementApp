@@ -21,7 +21,15 @@ namespace DomainLayer.Managers
         /// <param name="bestuurder"></param>
         public void VoegBestuurderToe(Bestuurder bestuurder)
         {
-            _bestuurderRepo.VoegBestuurderToe(bestuurder);
+            try
+            {
+                _bestuurderRepo.VoegBestuurderToe(bestuurder);
+
+            }
+            catch (Exception e)
+            {
+                throw new BestuurderManagerException("Er ging iets mis", e);
+            }
         }
         /// <summary>
         /// dit verwijdert een bestuurder
@@ -29,8 +37,18 @@ namespace DomainLayer.Managers
         /// <param name="id"></param>
         public void VerwijderBestuurder(int id)
         {
-            if (_bestuurderRepo.BestaatBestuurder(id)) _bestuurderRepo.VerwijderBestuurder(id);
+            try
+            {
+                if (_bestuurderRepo.BestaatBestuurder(id)) _bestuurderRepo.VerwijderBestuurder(id);
+
+            }
+            catch(Exception e)
+            {
+                throw new BestuurderManagerException("Er ging iets mis", e);
+            }
+
         }
+
 
         /// <summary>
         /// update een bestuurder 
@@ -38,7 +56,15 @@ namespace DomainLayer.Managers
         /// <param name="bestuurder"></param>
         public void UpdateBestuurder(Bestuurder bestuurder)
         {
-            if (_bestuurderRepo.BestaatBestuurder(bestuurder.Id)) _bestuurderRepo.UpdateBestuurder(bestuurder);
+            try
+            {
+                if (_bestuurderRepo.BestaatBestuurder(bestuurder.Id)) _bestuurderRepo.UpdateBestuurder(bestuurder);
+
+            }
+            catch (Exception e)
+            {
+                throw new BestuurderManagerException("Er ging iets mis", e);
+            }
         }
 
         /// <summary>
@@ -64,14 +90,21 @@ namespace DomainLayer.Managers
             }
             catch (Exception e)
             {
-                throw new VoertuigManagerException(nameof(GeefGefilterdeBestuurder) + " Er ging iets mis", e);
+                throw new BestuurderManagerException(nameof(GeefGefilterdeBestuurder) + " Er ging iets mis", e);
             }
         }
         
         public bool BestaatBestuurder(Bestuurder bestuurder)
         {
-            if (_bestuurderRepo.BestaatBestuurder(bestuurder.Id)) throw new BestuurderManagerException("Bestaat bestuurder - Bestuurder bestaat al");
-            return _bestuurderRepo.BestaatBestuurder(bestuurder.Id);
+            try
+            {
+                if (_bestuurderRepo.BestaatBestuurder(bestuurder.Id)) throw new BestuurderManagerException("Bestaat bestuurder - Bestuurder bestaat al");
+                    return _bestuurderRepo.BestaatBestuurder(bestuurder.Id);
+            }
+            catch (Exception e)
+            {
+                throw new BestuurderManagerException("Er ging iets mis", e);
+            }
         }
 
         /// <summary>
@@ -81,8 +114,15 @@ namespace DomainLayer.Managers
         /// <returns></returns>
         public Bestuurder GeefBestuurder(int id)
         {
-            if (!_bestuurderRepo.BestaatBestuurder(id)) throw new BestuurderManagerException("BestaatBestuurder - Bestuurder bestaat niet");
-            return _bestuurderRepo.GeefBestuurder(id);
+            try
+            {
+                if (!_bestuurderRepo.BestaatBestuurder(id)) throw new BestuurderManagerException("BestaatBestuurder - Bestuurder bestaat niet");
+                return _bestuurderRepo.GeefBestuurder(id);
+            }
+            catch (Exception e)
+            {
+                throw new BestuurderManagerException("Er ging iets mis", e);
+            }
         }
     }
 }
