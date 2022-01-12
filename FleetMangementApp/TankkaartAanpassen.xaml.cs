@@ -165,14 +165,10 @@ namespace FleetMangementApp
         {
             if (TextBoxTankkaartAanpassenPincode.Text.Length == 4)
             {
-                PincodeLabel.Foreground = new SolidColorBrush(Colors.White);
                 VerplichteVeldenChecker();
             }
 
-            else
-            {
-                PincodeLabel.Foreground = new SolidColorBrush(Colors.Red);
-            }
+            
         }
 
         private void PickerGeldigheidsDatum_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
