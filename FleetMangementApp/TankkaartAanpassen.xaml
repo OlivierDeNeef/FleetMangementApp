@@ -31,13 +31,13 @@
 
         <Rectangle Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="11" Margin="0,0,0,-20" Fill="#FF507ECD" ></Rectangle>
         <Label Grid.Row="1" Grid.Column="1"  Content="*Kaartnummer" HorizontalAlignment="Left" Margin="0,0,30,0"/>
-        <TextBox Grid.Row="2" Grid.Column="1" Name="TextBoxTankkaartAanpassenKaarnummer" Width="200" Margin="0,0,30,0"/>
+        <TextBox Grid.Row="2" Grid.Column="1" Name="TextBoxTankkaartAanpassenKaartnummer" Width="200" Margin="0,0,30,0" TextChanged="TextBoxTankkaartKaarnummer_TextChanged"/>
 
-        <Label Grid.Row="1" Grid.Column="2"  Content="*Pincode" HorizontalAlignment="Left" Margin="0,0,30,0"/>
-        <TextBox Grid.Row="2" Grid.Column="2" Name="TextBoxTankkaartAanpassenPincode" Width="200" Margin="0,0,30,0"/>
+        <Label Grid.Row="1" Grid.Column="2"  Content="*Pincode" HorizontalAlignment="Left" Margin="0,0,30,0" Name="PincodeLabel"/>
+        <TextBox Grid.Row="2" Grid.Column="2" Name="TextBoxTankkaartAanpassenPincode" Width="200" Margin="0,0,30,0" TextChanged="TextBoxTankkaartPincode_TextChanged"/>
 
         <Label Grid.Row="3" Grid.Column="1"  Content="*Geldigheidsdatum" HorizontalAlignment="Left" Margin="0,0,30,0"/>
-        <DatePicker Grid.Row="4" Grid.Column="1" Width="200" Margin="0,0,30,0" Name="PickerGeldigheidsDatumTankkaartAanpassen"/>
+        <DatePicker Grid.Row="4" Grid.Column="1" Width="200" Margin="0,0,30,0" Name="PickerGeldigheidsDatumTankkaartAanpassen" SelectedDateChanged="PickerGeldigheidsDatum_SelectedDateChanged"/>
 
         <Label Grid.Row="5" Grid.Column="1" Content="*Brandstoffen" HorizontalAlignment="Left" Margin="0,0,30,0"/>
         <ListBox Grid.Row="6" Grid.Column="1" Grid.RowSpan="2" Width="200" Margin="0,0,30,0" Name="BrandstoffenTankkaartAanpassenListBox" SelectionChanged="BrandstoffenTankkaartAanpassenListBox_OnSelectionChanged"/>
