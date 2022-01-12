@@ -129,16 +129,14 @@ namespace DomainLayerTests.Models
             
         }
 
-        [Theory]
-        [InlineData("1-123-DEF")]
-        [InlineData("123-ABC")]
-        public void ZetNummerplaatTest(string plaat)
+        [Fact]
+        public void ZetNummerplaatTest()
         {
-            Assert.Equal("1-abc-123",_voertuig.Nummerplaat);
+            Assert.Equal("1-ABC-123",_voertuig.Nummerplaat);
 
-            _voertuig.ZetNummerplaat(plaat);
+            _voertuig.ZetNummerplaat("1-DEF-123");
 
-            Assert.Equal(plaat, _voertuig.Nummerplaat);
+            Assert.Equal("1-DEF-123", _voertuig.Nummerplaat);
         }
 
         [Theory]
