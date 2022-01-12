@@ -6,6 +6,7 @@ using FleetMangementApp.Models.Output;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -82,6 +83,15 @@ namespace FleetMangementApp
             {
                 MessageBox.Show(exception.InnerException?.InnerException?.Message ?? exception.Message, "Fout", MessageBoxButton.OK);
             }
+
+            TextBoxBestuurderId.Text = "";
+            DatePickerGeboortedatumBestuurder.SelectedDate = null;
+            ComboBoxRijbewijzen.SelectedItem = null;
+            TextBoxRijksregisternummerBestuurder.Text = "";
+            TextBoxVoornaamBestuurder.Text = "";
+            TextBoxNaamBestuurder.Text = "";
+            CheckBoxGearchiveerBestuurder.IsChecked = false;
+
 
         }
         private bool ValidateBestuurderFields()
@@ -267,6 +277,16 @@ namespace FleetMangementApp
                 MessageBox.Show(exception.InnerException?.InnerException?.Message ?? exception.Message, "Fout", MessageBoxButton.OK);
             }
 
+            TextBoxVoertuigId.Text = "";
+            TextBoxMerkVoertuig.Text = "";
+            TextBoxModelVoertuig.Text = "";
+            TextBoxVoertuigenNummerplaat.Text = "";
+            TextBoxChassisnummerVoertuigen.Text = "";
+            TextBoxKleurVoertuigen.Text = "";
+            VoertuigComboBoxTypeWagen.SelectedItem = null;
+            VoertuigComboBoxBrandstof.SelectedItem = null;
+            CheckBoxGearchiveerdVoertuig.IsChecked = false;
+
         }
         private bool ValidateVoertuigFields()
         {
@@ -406,11 +426,17 @@ namespace FleetMangementApp
                 var gearchiveerd = CheckBoxGearchiveerdTankkaart.IsChecked.Value;
 
                 ResultatenTankkaarten.ItemsSource = _tankkaartManager.GeefGefilterdeTankkaarten(kaartnummer, geldigheidsdatum, lijstBrandstoftypes, gearchiveerd).Select(TankkaartUIMapper.ToUI);
+
             }
             catch (Exception exception)
             {
                 MessageBox.Show(exception.InnerException?.InnerException?.Message ?? exception.Message, "Fout", MessageBoxButton.OK);
             }
+            TankkaartId.Text = "";
+            TankkaartKaartnummer.Text = "";
+            DatePickerGeldigheidsdatumTankkaart.SelectedDate = null;
+            BrandstoftypeTankkaartCombobox.SelectedItem = null;
+            CheckBoxGearchiveerdTankkaart.IsChecked = false;
         }
 
 
