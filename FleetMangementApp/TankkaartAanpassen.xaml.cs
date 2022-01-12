@@ -44,7 +44,7 @@ namespace FleetMangementApp
         private void VulTankkaartDataAan(Tankkaart tankkaart)
         {
             
-            TextBoxTankkaartAanpassenKaarnummer.Text = tankkaart.Kaartnummer;
+            TextBoxTankkaartAanpassenKaartnummer.Text = tankkaart.Kaartnummer;
             TextBoxTankkaartAanpassenPincode.Text = tankkaart.Pincode;
             PickerGeldigheidsDatumTankkaartAanpassen.SelectedDate = tankkaart.Geldigheidsdatum;
            
@@ -77,12 +77,16 @@ namespace FleetMangementApp
             string r = (string)BrandstofTankkaartAanpassenComboBox.SelectedValue;
             if (!BrandstoffenTankkaartAanpassenListBox.Items.Contains(r))
                 _brandstoffen.Add(r);
+
+            VerplichteVeldenChecker();
         }
         private void VerwijderenTankkaartAanpassen_OnClick(object sender, RoutedEventArgs e)
         {
             string r = (string)BrandstofTankkaartAanpassenComboBox.SelectedValue;
             if (BrandstoffenTankkaartAanpassenListBox.Items.Contains(r))
                 _brandstoffen.Remove(r);
+
+            VerplichteVeldenChecker();
         }
         private void BrandstoffenTankkaartAanpassenListBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -114,7 +118,7 @@ namespace FleetMangementApp
             brandstoffen = ((MainWindow) Application.Current.MainWindow)._brandstoffen
                 .Where(b => brandstoffenstring.Contains(b.Type)).ToList();
 
-            Tankkaart aangepasteTankkaart = new Tankkaart(_tankkaart.Id,TextBoxTankkaartAanpassenKaarnummer.Text,
+            Tankkaart aangepasteTankkaart = new Tankkaart(_tankkaart.Id,TextBoxTankkaartAanpassenKaartnummer.Text,
                 PickerGeldigheidsDatumTankkaartAanpassen.SelectedDate.Value, TextBoxTankkaartAanpassenPincode.Text, 
                 _tankkaart.IsGeblokkeerd, _tankkaart.IsGearchiveerd, brandstoffen);
 
@@ -136,6 +140,44 @@ namespace FleetMangementApp
             VulTankkaartDataAan(aangepasteTankkaart);
             
             Close();
+        }
+
+        private void VerplichteVeldenChecker()
+        {
+            if (string.IsNullOrWhiteSpace(TextBoxTankkaartAanpassenKaartnummer.Text) || string.IsNullOrWhiteSpace(TextBoxTankkaartAanpassenPincode.Text)
+                || BrandstoffenTankkaartAanpassenListBox.Items.Count < 1 || PickerGeldigheidsDatumTankkaartAanpassen.SelectedDate == null)
+            {
+                TankkaartAanpassenButton.IsEnabled = false;
+            }
+            else
+            {
+                TankkaartAanpassenButton.IsEnabled = true;
+            }
+
+        }
+
+        private void TextBoxTankkaartKaarnummer_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            VerplichteVeldenChecker();
+        }
+
+        private void TextBoxTankkaartPincode_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (TextBoxTankkaartAanpassenPincode.Text.Length == 4)
+            {
+                PincodeLabel.Foreground = new SolidColorBrush(Colors.White);
+                VerplichteVeldenChecker();
+            }
+
+            else
+            {
+                PincodeLabel.Foreground = new SolidColorBrush(Colors.Red);
+            }
+        }
+
+        private void PickerGeldigheidsDatum_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            VerplichteVeldenChecker();
         }
     }
 }
