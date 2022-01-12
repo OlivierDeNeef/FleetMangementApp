@@ -64,12 +64,30 @@ namespace FleetMangementApp
                 rijbewijzen = ((MainWindow)Application.Current.MainWindow)._allRijbewijsTypes.Where(r => rijbewijzenInString.Contains(r.Type)).ToList();
 
                 Bestuurder nieuweBestuurder = new Bestuurder( TextBoxBestuurderNaam.Text, TextBoxVoornaamBestuurder.Text, PickerGeboorteDatum.SelectedDate.Value, Rijksregisternummer.Text, rijbewijzen, false);
-
-                //if (Strat is not null && ....)
-                //{
-                //    var adres = new Adres(...);
-                //    nieuweBestuurder.ZetAdres(adres);
-                //}
+                
+                if (!string.IsNullOrWhiteSpace(TextBoxBestuurderStraat.Text) ||
+                    !string.IsNullOrWhiteSpace(TextBoxBestuurderHuisnummer.Text) ||
+                    !string.IsNullOrWhiteSpace(TextBoxBestuurderStad.Text) ||
+                    !string.IsNullOrWhiteSpace(TextBoxBestuurderPostcode.Text) ||
+                    !string.IsNullOrWhiteSpace(TextBoxBestuurderLand.Text))
+                
+                {
+                    if (!string.IsNullOrWhiteSpace(TextBoxBestuurderStraat.Text) &&
+                        !string.IsNullOrWhiteSpace(TextBoxBestuurderHuisnummer.Text) &&
+                        !string.IsNullOrWhiteSpace(TextBoxBestuurderStad.Text) &&
+                        !string.IsNullOrWhiteSpace(TextBoxBestuurderPostcode.Text) &&
+                        !string.IsNullOrWhiteSpace(TextBoxBestuurderLand.Text)) {
+                        
+                    var adres = new Adres(TextBoxBestuurderStraat.Text, 
+                        TextBoxBestuurderHuisnummer.Text, TextBoxBestuurderStad.Text,
+                        TextBoxBestuurderPostcode.Text, TextBoxBestuurderLand.Text);
+                    nieuweBestuurder.ZetAdres(adres);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Adres is onvolledig ingevuld");
+                    }
+                }
 
                 if (GeselecteerdVoertuig != null)
                 {
