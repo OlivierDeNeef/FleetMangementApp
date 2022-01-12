@@ -75,25 +75,32 @@ namespace FleetMangementApp
 
         private void AanpassenButton_Click(object sender, RoutedEventArgs e)
         {
-            List<RijbewijsType> rijbewijzen = new List<RijbewijsType>();
-            var rijbewijzenInString = RijbewijzenListBox.ItemsSource?.Cast<string>() ?? new List<string>();
-            rijbewijzen = ((MainWindow)Application.Current.MainWindow)._allRijbewijsTypes.Where(r => rijbewijzenInString.Contains(r.Type)).ToList();
+            try
+            {
+                List<RijbewijsType> rijbewijzen = new List<RijbewijsType>();
+                var rijbewijzenInString = RijbewijzenListBox.ItemsSource?.Cast<string>() ?? new List<string>();
+                rijbewijzen = ((MainWindow)Application.Current.MainWindow)._allRijbewijsTypes.Where(r => rijbewijzenInString.Contains(r.Type)).ToList();
 
-            Bestuurder aangepasteBestuurder = new Bestuurder(_bestuurder.Id, TextBoxBestuurderNaam.Text, TextBoxVoornaamBestuurder.Text, PickerGeboorteDatum.SelectedDate.Value, Rijksregisternummer.Text, rijbewijzen, _bestuurder.IsGearchiveerd);
+                Bestuurder aangepasteBestuurder = new Bestuurder(_bestuurder.Id, TextBoxBestuurderNaam.Text, TextBoxVoornaamBestuurder.Text, PickerGeboorteDatum.SelectedDate.Value, Rijksregisternummer.Text, rijbewijzen, _bestuurder.IsGearchiveerd);
             
-            if(GeselecteerdVoertuig != null)
-            {
-                aangepasteBestuurder.ZetVoertuig(GeselecteerdVoertuig);
-            }
+                if(GeselecteerdVoertuig != null)
+                {
+                    aangepasteBestuurder.ZetVoertuig(GeselecteerdVoertuig);
+                }
 
-            if(GeselecteerdeTankkaart != null)
-            {
-                aangepasteBestuurder.ZetTankkaart(GeselecteerdeTankkaart);
-            }
+                if(GeselecteerdeTankkaart != null)
+                {
+                    aangepasteBestuurder.ZetTankkaart(GeselecteerdeTankkaart);
+                }
 
-            _bestuurderManager.UpdateBestuurder(aangepasteBestuurder);
-            VulBestuurderDataAan(aangepasteBestuurder);
-            Close();
+                _bestuurderManager.UpdateBestuurder(aangepasteBestuurder);
+                VulBestuurderDataAan(aangepasteBestuurder);
+                Close();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.InnerException?.InnerException?.Message ?? exception.Message, "Fout", MessageBoxButton.OK);
+            }
         }
 
         private void ButtonSelecteerVoertuig_Click(object sender, RoutedEventArgs e)
