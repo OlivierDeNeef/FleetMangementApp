@@ -1,6 +1,8 @@
-﻿using DomainLayer.Interfaces.Repos;
+﻿using System;
+using DomainLayer.Interfaces.Repos;
 using DomainLayer.Models;
 using System.Collections.Generic;
+using DomainLayer.Exceptions.Managers;
 
 namespace DomainLayer.Managers
 {
@@ -18,7 +20,14 @@ namespace DomainLayer.Managers
         /// <param name="rijbewijsType">rijbewijstype dat moet worden toegevoegd</param>
         public void VoegRijbewijsTypeToe(RijbewijsType rijbewijsType)
         {
-            _rijbewijsTypeRepo.VoegRijbewijsToe(rijbewijsType);
+            try
+            {
+                _rijbewijsTypeRepo.VoegRijbewijsToe(rijbewijsType);
+            }
+            catch (Exception e)
+            {
+                throw new RijbewijsTypeManagerException("Er ging iets mis", e);
+            }
         }
 
         /// <summary>
@@ -27,7 +36,14 @@ namespace DomainLayer.Managers
         /// <param name="rijbewijsType">rijbewijstype dat moet worden verwijderd</param>
         public void VerwijderRijbewijsType(RijbewijsType rijbewijsType)
         {
-            if (_rijbewijsTypeRepo.BestaatRijbewijsType(rijbewijsType)) _rijbewijsTypeRepo.VerwijderRijbewijsType(rijbewijsType);
+            try
+            {
+                if (_rijbewijsTypeRepo.BestaatRijbewijsType(rijbewijsType)) _rijbewijsTypeRepo.VerwijderRijbewijsType(rijbewijsType);
+            }
+            catch (Exception e)
+            {
+                throw new RijbewijsTypeManagerException("Er ging iets mis", e);
+            }
         }
 
         /// <summary>
@@ -36,7 +52,15 @@ namespace DomainLayer.Managers
         /// <param name="rijbewijsType">rijbewijstype dat moet worden geupdate</param>
         public void UpdateRijbewijsType(RijbewijsType rijbewijsType)
         {
-            if (_rijbewijsTypeRepo.BestaatRijbewijsType(rijbewijsType)) _rijbewijsTypeRepo.UpdateRijbewijsType(rijbewijsType);
+
+            try
+            {
+                if (_rijbewijsTypeRepo.BestaatRijbewijsType(rijbewijsType)) _rijbewijsTypeRepo.UpdateRijbewijsType(rijbewijsType);
+            }
+            catch (Exception e)
+            {
+                throw new RijbewijsTypeManagerException("Er ging iets mis", e);
+            }
         }
 
         /// <summary>
@@ -45,7 +69,14 @@ namespace DomainLayer.Managers
         /// <returns>een IEnumerable van RijbewijsType</returns>
         public IEnumerable<RijbewijsType> GeefAlleRijsbewijsTypes()
         {
-            return _rijbewijsTypeRepo.GeefAlleRijbewijsTypes();
+            try
+            {
+                return _rijbewijsTypeRepo.GeefAlleRijbewijsTypes();
+            }
+            catch (Exception e)
+            {
+                throw new RijbewijsTypeManagerException("Er ging iets mis", e);
+            }
         }
     }
 }
