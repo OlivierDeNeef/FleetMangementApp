@@ -10,17 +10,6 @@ Projectwerk - Graduaatsproef
 
 
 
-## Todo's 
-
-- Classen diagram van de data access layer
-- Classdiagram uitbreiden van domain laag VoertuigManager, BestuurderManager, TankkaartManager BrandstofTypeManager en VoertuigTypeManager 
-- ERD diagram ontwerpen (databank)
-
-
-
-
-## Vragen
-
 
 
 
