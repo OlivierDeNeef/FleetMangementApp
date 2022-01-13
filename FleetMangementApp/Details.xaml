@@ -36,6 +36,11 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="20"/>
             </Grid.RowDefinitions>
@@ -49,16 +54,16 @@
         <TextBlock  Grid.Row="4" HorizontalAlignment="Left" Margin="0,8,0,8"  Name="BestuurderGeboortedatum">Geboortedatum: </TextBlock>
         <TextBlock  Grid.Row="5" HorizontalAlignment="Left" Margin="0,8,0,8"  Name="Rijksregisternummer">Rijksregisternummer: </TextBlock>
         <TextBlock Grid.Row="6" HorizontalAlignment="Left" Margin="0,8,0,8"  Name="Rijbewijzen">Rijbewijzen: </TextBlock>
-        <CheckBox  Grid.Row="7"  HorizontalAlignment="Left" Margin="0,8,0,8"  IsEnabled="False" Name="BestuurderGearchiveerdCheckBox">Gearchiveerd</CheckBox>
+            <TextBlock  Grid.Row="7" HorizontalAlignment="Left" Margin="0,8,0,8"  Name="Straat">Straat:</TextBlock>
+            <TextBlock  Grid.Row="8" HorizontalAlignment="Left" Margin="0,8,0,8"  Name="Huisnummer">Huisnummer:</TextBlock>
+            <TextBlock  Grid.Row="9" HorizontalAlignment="Left" Margin="0,8,0,8"  Name="Stad">Stad:</TextBlock>
+            <TextBlock  Grid.Row="10" HorizontalAlignment="Left" Margin="0,8,0,8"  Name="Postcode">Postcode:</TextBlock>
+            <TextBlock  Grid.Row="11" HorizontalAlignment="Left" Margin="0,8,0,8"  Name="Land">Land:</TextBlock>
+            <CheckBox  Grid.Row="12"  HorizontalAlignment="Left" Margin="0,8,0,8"  IsEnabled="False" Name="BestuurderGearchiveerdCheckBox">Gearchiveerd</CheckBox>
         </Grid>
 
         <Grid Grid.Column="2" Grid.Row="4">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -84,13 +89,8 @@
         <TextBlock  Grid.Row="6" HorizontalAlignment="Left" Margin="0,8,0,8"  Name="Chassisnummer">Chassisnummer:</TextBlock>
         <TextBlock  Grid.Row="7" HorizontalAlignment="Left" Margin="0,8,0,8"  Name="Kleur">Kleur:</TextBlock>
         <TextBlock  Grid.Row="8" HorizontalAlignment="Left" Margin="0,8,0,8"  Name="BrandstofVoertuig">Type Brandstof:</TextBlock>
-            <TextBlock  Grid.Row="9" HorizontalAlignment="Left" Margin="0,8,0,8"  Name="Straat">Straat:</TextBlock>
-            <TextBlock  Grid.Row="10" HorizontalAlignment="Left" Margin="0,8,0,8"  Name="Huisnummer">Huisnummer:</TextBlock>
-            <TextBlock  Grid.Row="11" HorizontalAlignment="Left" Margin="0,8,0,8"  Name="Stad">Stad:</TextBlock>
-            <TextBlock  Grid.Row="12" HorizontalAlignment="Left" Margin="0,8,0,8"  Name="Postcode">Postcode:</TextBlock>
-            <TextBlock  Grid.Row="13" HorizontalAlignment="Left" Margin="0,8,0,8"  Name="Land">Land:</TextBlock>
-            <TextBlock  Grid.Row="14" HorizontalAlignment="Left" Margin="0,8,0,8"  Name="VoertuigWagenType">Type Wagen:</TextBlock>
-            <CheckBox  Grid.Row="15"  HorizontalAlignment="Left" Margin="0,8,0,8"  IsEnabled="False" Name="VoertuigGearchiveerdCheckbox">Gearchiveerd</CheckBox>
+        <TextBlock  Grid.Row="9" HorizontalAlignment="Left" Margin="0,8,0,8"  Name="VoertuigWagenType">Type Wagen:</TextBlock>
+        <CheckBox  Grid.Row="10"  HorizontalAlignment="Left" Margin="0,8,0,8"  IsEnabled="False" Name="VoertuigGearchiveerdCheckbox">Gearchiveerd</CheckBox>
         </Grid>
 
         <Grid Grid.Column="3" Grid.Row="4">
